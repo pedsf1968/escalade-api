@@ -1,20 +1,50 @@
 package com.dsf.escalade.model.global;
 
+import javax.persistence.*;
+
+@Entity
 public class Utilisateur {
+   @Id
+   //@GeneratedValue(strategy =  GenerationType.AUTO)
    private Integer id;
+   @Column(name = "civilite")
    private String civilite;
+   @Column(name = "nom")
    private String nom;
+   @Column(name = "prenom")
    private String prenom;
+   @Column(name = "pseudo")
    private String pseudo;
+   @Column(name = "telephone")
    private String telephone;
+   @Column(name = "mail")
    private String mail;
+   @Column(name = "login")
    private String login;
+   @Column(name = "mot_de_passe")
    private String motDePasse;
-   private Boolean isMenbre;
+   @Column(name = "est_membre")
+   private Boolean estMembre;
+   @Column(name = "adresse_id")
    private Integer adresse;
 
    public Utilisateur() {
    }
+
+   public Utilisateur(Integer id, String civilite, String nom, String prenom, String mail, String login, String motDePasse) {
+      this.id = id;
+      this.civilite = civilite;
+      this.nom = nom;
+      this.prenom = prenom;
+      this.pseudo = null;
+      this.telephone = null;
+      this.mail = mail;
+      this.login = login;
+      this.motDePasse = motDePasse;
+      this.estMembre = false;
+      this.adresse = null;
+   }
+
 
    public Utilisateur(Integer id, String civilite, String nom, String prenom, String pseudo, String telephone, String mail, String login, String motDePasse, Boolean isMenbre, Integer adresse) {
       this.id = id;
@@ -26,7 +56,7 @@ public class Utilisateur {
       this.mail = mail;
       this.login = login;
       this.motDePasse = motDePasse;
-      this.isMenbre = isMenbre;
+      this.estMembre = estMembre;
       this.adresse = adresse;
    }
 
@@ -102,12 +132,12 @@ public class Utilisateur {
       this.motDePasse = motDePasse;
    }
 
-   public Boolean getMenbre() {
-      return isMenbre;
+   public Boolean getEstMembre() {
+      return estMembre;
    }
 
-   public void setMenbre(Boolean menbre) {
-      isMenbre = menbre;
+   public void setEstMembre(Boolean membre) {
+      estMembre = membre;
    }
 
    public Integer getAdresse() {
@@ -130,7 +160,7 @@ public class Utilisateur {
             ", mail='" + mail + '\'' +
             ", login='" + login + '\'' +
             ", motDePasse='" + motDePasse + '\'' +
-            ", isMenbre=" + isMenbre +
+            ", isMenbre=" + estMembre +
             ", adresse=" + adresse +
             '}';
    }

@@ -4,8 +4,11 @@ import com.dsf.escalade.dao.contract.SiteDao;
 import com.dsf.escalade.model.metier.Site;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,7 +18,6 @@ public class SiteControler {
    @Autowired
    private SiteDao siteDao;
 
-   //Site
    @GetMapping(value = "Site")
    public List<Site> displayAllSite(){
 
@@ -29,7 +31,18 @@ public class SiteControler {
    }
 
    @PostMapping(value = "/Site")
-   public void addSite(@RequestBody Site site){
-      siteDao.save(site);
+   public ResponseEntity<Object> addSite(@RequestBody Site site){
+      Site siteAdded = siteDao.save(site);
+
+      if (siteAdded == null)
+         return ResponseEntity.noContent().build();
+
+      URI location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(siteAdded.getId())
+            .toUri();
+
+      return ResponseEntity.created(location).build();
    }
 }
