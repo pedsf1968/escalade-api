@@ -1,21 +1,28 @@
 package com.dsf.escalade.model.metier;
 
+import com.dsf.escalade.model.global.TypeSite;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
-@Table(name="voie", schema="public")
-public class Voie extends Site implements Serializable {
+@Table(name = "voie")
+@PrimaryKeyJoinColumn(name = "id")
+public class Voie extends Site {
+   @Column(name = "secteur_id")
    private Integer secteur;
    private Boolean estEquipee;
    private Integer hauteur;
    private String cotation;
 
-   protected Voie() {}
+   protected Voie() {
+      super();
+   }
 
    public Voie(int id, String nom, Integer secteur, Boolean estEquipee, Integer hauteur, String cotation) {
-      super(id, nom, SiteType.VOIE);
+      super(id, nom, TypeSite.VOIE);
       this.secteur = secteur;
       this.estEquipee = estEquipee;
       this.hauteur = hauteur;
@@ -60,14 +67,13 @@ public class Voie extends Site implements Serializable {
       return String.format(
             "Voie {id=%d, " +
                   "nom='%s', " +
-                  "type='%s', " +
                   "secteur='%s', " +
                   "est équipée='%b'," +
                   "hauteur='%d', " +
                   "cotation='%s'," +
-                  "aCommentaire='%b', " +
+                  "a un commentaire='%b', " +
                   "photo='%s', " +
                   "carte='%s'}"
-            , id, nom,  type, secteur, estEquipee, hauteur,cotation, aCommentaire, lienPhoto, lienCarte);
+            , id, nom,  secteur, estEquipee, hauteur,cotation, aCommentaire, lienPhoto, lienCarte);
    }
 }

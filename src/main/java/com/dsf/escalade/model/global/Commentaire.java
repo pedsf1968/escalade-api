@@ -1,7 +1,15 @@
 package com.dsf.escalade.model.global;
 
-public class Commentaire {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+public class Commentaire implements Serializable {
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "site_id")
    private Integer id;
+   @Column(name = "grimpeur_id")
    private Integer grimpeur;
    private String texte;
 

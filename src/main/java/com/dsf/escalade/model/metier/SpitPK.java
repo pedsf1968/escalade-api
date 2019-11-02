@@ -1,11 +1,13 @@
 package com.dsf.escalade.model.metier;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class SpitPK implements Serializable {
+   @Column(name = "topo_id")
    private Integer topo;
    private Integer numero;
 

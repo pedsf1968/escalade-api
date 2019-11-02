@@ -1,14 +1,19 @@
 package com.dsf.escalade.model.metier;
 
+import com.dsf.escalade.model.global.TypeSite;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name="topo", schema="public")
-public class Topo extends Site implements Serializable {
+@Table(name = "topo")
+@PrimaryKeyJoinColumn(name = "id")
+public class Topo extends Site {
    private String region;
+   @Column(name = "adresse_id")
    private Integer adresse;
    private Date date;
    private String description;
@@ -16,15 +21,20 @@ public class Topo extends Site implements Serializable {
    private String acces;
    private String longitude;
    private String latitude;
+   @Column(name = "promoteur_id")
    private Integer promoteur;
+   @Column(name = "grimpeur_id")
    private Integer grimpeur;
    private String statut;
+   @Column(name = "statut_auto")
    private Boolean statutAuto;
 
-   protected Topo() {}
+   protected Topo() {
+      super();
+   }
 
-   public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, String longitude, String latitude, Integer promoteur, Integer grimpeur, String statut, Boolean statutAuto) {
-      super(id, nom, SiteType.TOPO);
+     public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, String longitude, String latitude, Integer promoteur, Integer grimpeur, String statut, Boolean statutAuto) {
+      super(id, nom, TypeSite.TOPO );
       this.region = region;
       this.adresse = adresse;
       this.date = date;
@@ -141,7 +151,6 @@ public class Topo extends Site implements Serializable {
             "Topo {" +
                   "id=%d, " +
                   "nom='%s', " +
-                  "type='%s', " +
                   "region='%s', " +
                   "adresse='%s'," +
                   "date='%td/%tm/%ty', " +
@@ -154,10 +163,10 @@ public class Topo extends Site implements Serializable {
                   "grimpeur='%s'," +
                   "statut='%s'," +
                   "auto='%b', " +
-                  "aCommentaire='%b', " +
+                  "a un commentaire='%b', " +
                   "photo='%s', " +
                   "carte='%s'}",
-            id, nom,  type, region, adresse,
+            id, nom, region, adresse,
             date, description, technique, acces, longitude,
             latitude, promoteur, grimpeur,statut,statutAuto,
             aCommentaire, lienPhoto, lienCarte);

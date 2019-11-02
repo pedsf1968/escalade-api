@@ -2,9 +2,9 @@ package com.dsf.escalade.model.metier;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Table(name="spit", schema="public")
 public class Spit implements Serializable {
    @EmbeddedId
    @AttributeOverrides({
@@ -13,7 +13,9 @@ public class Spit implements Serializable {
    })
    private SpitPK spitPK;
 
+   @Column(name = "secteur_id")
    private Integer secteur;
+   @Column(name = "longueur_id")
    private Integer longueur;
    private String cotation;
    private Boolean estRelai;
@@ -49,4 +51,21 @@ public class Spit implements Serializable {
             spitPK.getTopo(), spitPK.getNumero(), secteur, longueur, cotation, estRelai, commentaire);
    }
 
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Spit)) return false;
+      Spit spit = (Spit) o;
+      return getSpitPK().equals(spit.getSpitPK()) &&
+            secteur.equals(spit.secteur) &&
+            longueur.equals(spit.longueur) &&
+            cotation.equals(spit.cotation) &&
+            estRelai.equals(spit.estRelai) &&
+            commentaire.equals(spit.commentaire);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getSpitPK(), secteur, longueur, cotation, estRelai, commentaire);
+   }
 }

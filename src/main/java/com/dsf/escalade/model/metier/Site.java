@@ -1,27 +1,36 @@
 package com.dsf.escalade.model.metier;
 
+import com.dsf.escalade.model.global.TypeSite;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 
+//@MappedSuperclass
 @Entity
-public class Site {
-   public enum SiteType {TOPO,SECTEUR,VOIE}
-
+@Table(name = "site")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Site implements Serializable {
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "id")
    protected int id;
    @Column(name = "nom", length = 50, nullable = false)
-   String nom;
+   protected String nom;
+   @Column(name = "type")
    @Enumerated(EnumType.STRING)
-   SiteType type;
-   Boolean aCommentaire;
-   String lienPhoto;
-   String lienCarte;
+   protected TypeSite type;
+   @Column(name = "a_commentaire")
+   protected Boolean aCommentaire;
+   @Column(name = "photo_url")
+   protected String lienPhoto;
+   @Column(name = "map_url")
+   protected String lienCarte;
 
    protected Site() {
    }
 
-   Site(int id, String nom, SiteType type) {
+   Site(int id, String nom, TypeSite type) {
       this.id = id;
       this.nom = nom;
       this.type = type;
@@ -30,7 +39,7 @@ public class Site {
       this.lienCarte = null;
    }
 
-   public Site(int id, String nom, SiteType type, Boolean aCommentaire, String lienPhoto, String lienCarte) {
+   public Site(int id, String nom,  TypeSite type, Boolean aCommentaire, String lienPhoto, String lienCarte) {
       this.id = id;
       this.nom = nom;
       this.type = type;
@@ -55,11 +64,11 @@ public class Site {
       this.nom = nom;
    }
 
-   public SiteType getType() {
+   public TypeSite getType() {
       return type;
    }
 
-   public void setType(SiteType type) {
+   public void setType(TypeSite type) {
       this.type = type;
    }
 
@@ -90,8 +99,8 @@ public class Site {
    @Override
    public String toString() {
       return String.format(
-            "Site {id=%d, nom='%s', type='%s', aCommentaire='%b', photo='%s', carte='%s'}",
-            id, nom,  type, aCommentaire, lienPhoto, lienCarte);
+            "Site {id=%d, nom='%s',type='%s', a un commentaire='%b', photo='%s', carte='%s'}",
+            id, nom,   type, aCommentaire, lienPhoto, lienCarte);
    }
 
 }

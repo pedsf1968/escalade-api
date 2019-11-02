@@ -1,10 +1,10 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-//@Table(name = "adresse", schema = "public")
-public class Adresse {
+public class Adresse implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Integer id;

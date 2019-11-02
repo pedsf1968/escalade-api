@@ -1,10 +1,14 @@
 package com.dsf.escalade.model.metier;
 
+import com.dsf.escalade.model.global.TypeSite;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="secteur", schema="public")
+@Table(name="secteur")
+@PrimaryKeyJoinColumn(name = "id")
 public class Secteur extends Site {
+   @Column(name = "topo_id")
    private Integer topo;
    private String longitude;
    private String latitude;
@@ -15,7 +19,7 @@ public class Secteur extends Site {
    }
 
    public Secteur(int id, String nom, Integer topo, String longitude, String latitude, String equipement) {
-      super(id, nom, SiteType.SECTEUR);
+      super(id, nom, TypeSite.SECTEUR);
       this.topo = topo;
       this.longitude = longitude;
       this.latitude = latitude;
@@ -57,8 +61,8 @@ public class Secteur extends Site {
    @Override
    public String toString() {
       return String.format(
-            "Secteur {id=%d, nom='%s', type='%s', topo='%s', longitude='%s', latitude='%s', aCommentaire='%b', photo='%s', carte='%s', équipement='%s'}",
-             id, nom,  type, topo, longitude, latitude, aCommentaire, lienPhoto, lienCarte, equipement);
+            "Secteur {id=%d, nom='%s', topo='%s', longitude='%s', latitude='%s', a un commentaire='%b', photo='%s', carte='%s', équipement='%s'}",
+             id, nom,   topo, longitude, latitude, aCommentaire, lienPhoto, lienCarte, equipement);
    }
 
 }

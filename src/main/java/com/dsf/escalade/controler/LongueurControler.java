@@ -1,6 +1,6 @@
 package com.dsf.escalade.controler;
 
-import com.dsf.escalade.dao.contract.LongueurDao;
+import com.dsf.escalade.dao.LongueurDao;
 import com.dsf.escalade.model.metier.Longueur;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

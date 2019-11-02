@@ -8,7 +8,8 @@ public class Utilisateur {
    //@GeneratedValue(strategy =  GenerationType.AUTO)
    private Integer id;
    @Column(name = "civilite")
-   private String civilite;
+   @Enumerated(EnumType.STRING)
+   private Civilite civilite;
    @Column(name = "nom")
    private String nom;
    @Column(name = "prenom")
@@ -31,7 +32,7 @@ public class Utilisateur {
    public Utilisateur() {
    }
 
-   public Utilisateur(Integer id, String civilite, String nom, String prenom, String mail, String login, String motDePasse) {
+   public Utilisateur(Integer id, Civilite civilite, String nom, String prenom, String mail, String login, String motDePasse) {
       this.id = id;
       this.civilite = civilite;
       this.nom = nom;
@@ -46,7 +47,7 @@ public class Utilisateur {
    }
 
 
-   public Utilisateur(Integer id, String civilite, String nom, String prenom, String pseudo, String telephone, String mail, String login, String motDePasse, Boolean isMenbre, Integer adresse) {
+   public Utilisateur(Integer id, Civilite civilite, String nom, String prenom, String pseudo, String telephone, String mail, String login, String motDePasse, Boolean isMenbre, Integer adresse) {
       this.id = id;
       this.civilite = civilite;
       this.nom = nom;
@@ -68,11 +69,11 @@ public class Utilisateur {
       this.id = id;
    }
 
-   public String getCivilite() {
+   public Civilite getCivilite() {
       return civilite;
    }
 
-   public void setCivilite(String civilite) {
+   public void setCivilite(Civilite civilite) {
       this.civilite = civilite;
    }
 
