@@ -13,13 +13,15 @@ public class Spit implements Serializable {
    })
    private SpitPK spitPK;
 
-   @Column(name = "secteur_id")
+   @Column(name = "secteur_id", columnDefinition = "INTEGER(10)")
    private Integer secteur;
-   @Column(name = "longueur_id")
+   @Column(name = "longueur_id", columnDefinition = "INTEGER(10)")
    private Integer longueur;
-   @Column(name = "cotation_id")
+   @Column(name = "cotation_id", columnDefinition = "INTEGER(2)")
    private Integer cotation;
+   @Column(name = "est_relai", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean estRelai;
+   @Column(name = "commentaire", columnDefinition = "TEXT")
    private String commentaire;
 
    public SpitPK getSpitPK(){

@@ -5,28 +5,29 @@ import javax.persistence.*;
 @Entity
 public class Utilisateur {
    @Id
-   //@GeneratedValue(strategy =  GenerationType.AUTO)
+   @GeneratedValue(strategy =  GenerationType.AUTO)
+   @Column(name = "id", columnDefinition = "INTEGER(10)")
    private Integer id;
    @Column(name = "civilite")
    @Enumerated(EnumType.STRING)
    private Civilite civilite;
-   @Column(name = "nom")
+   @Column(name = "nom", columnDefinition = "VARCHAR(50)")
    private String nom;
-   @Column(name = "prenom")
+   @Column(name = "prenom", columnDefinition = "VARCHAR(50)")
    private String prenom;
-   @Column(name = "pseudo")
+   @Column(name = "pseudo", columnDefinition = "VARCHAR(20)")
    private String pseudo;
-   @Column(name = "telephone")
+   @Column(name = "telephone", columnDefinition = "VARCHAR(10)")
    private String telephone;
-   @Column(name = "mail")
+   @Column(name = "mail", columnDefinition = "VARCHAR(255)")
    private String mail;
-   @Column(name = "login")
+   @Column(name = "login", columnDefinition = "VARCHAR(20)")
    private String login;
-   @Column(name = "mot_de_passe")
+   @Column(name = "mot_de_passe", columnDefinition = "VARCHAR(255)")
    private String motDePasse;
    @Column(name = "est_membre")
    private Boolean estMembre;
-   @Column(name = "adresse_id")
+   @Column(name = "adresse_id", columnDefinition = "INTEGER(10)")
    private Integer adresse;
 
    public Utilisateur() {

@@ -7,20 +7,35 @@ import java.io.Serializable;
 public class Adresse implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", columnDefinition = "INTEGER(10)")
    private Integer id;
+   @Column(name = "appartement", columnDefinition = "VARCHAR(5)")
    private String appartement;
+   @Column(name = "etage", columnDefinition = "VARCHAR(3)")
    private String etage;
+   @Column(name = "couloir", columnDefinition = "VARCHAR(5)")
    private String couloir;
+   @Column(name = "escalier", columnDefinition = "VARCHAR(5)")
    private String escalier;
+   @Column(name = "entree", columnDefinition = "VARCHAR(5)")
    private String entree;
+   @Column(name = "immeuble", columnDefinition = "VARCHAR(10)")
    private String immeuble;
+   @Column(name = "residence", columnDefinition = "VARCHAR(20)")
    private String residence;
+   @Column(name = "numero", columnDefinition = "VARCHAR(5)")
    private String numero;
+   @Column(name = "voie", columnDefinition = "VARCHAR(50)")
    private String voie;
+   @Column(name = "place", columnDefinition = "VARCHAR(50)")
    private String place;
+   @Column(name = "code", columnDefinition = "VARCHAR(6)")
    private String code;
+   @Column(name = "ville", columnDefinition = "VARCHAR(50)")
    private String ville;
+   @Column(name = "pays", columnDefinition = "VARCHAR(50) DEFAULT 'France'")
    private String pays;
+   @Column(name = "commentaire", columnDefinition = "TEXT")
    private String commentaire;
 
    public Adresse() {

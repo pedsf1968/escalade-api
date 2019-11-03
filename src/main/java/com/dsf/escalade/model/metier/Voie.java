@@ -9,11 +9,13 @@ import javax.persistence.Table;
 @Table(name = "voie")
 @PrimaryKeyJoinColumn(name = "id")
 public class Voie extends Site {
-   @Column(name = "secteur_id")
+   @Column(name = "secteur_id", columnDefinition = "INTEGER(10)")
    private Integer secteur;
+   @Column(name = "est_equipee", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean estEquipee;
+   @Column(name = "hauteur", columnDefinition = "INTEGER(3)")
    private Integer hauteur;
-   @Column(name = "cotation_id")
+   @Column(name = "cotation_id", columnDefinition = "VARCHAR(2)")
    private Integer cotation;
 
    protected Voie() {

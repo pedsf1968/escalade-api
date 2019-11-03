@@ -8,28 +8,31 @@ import java.util.Date;
 @PrimaryKeyJoinColumn(name = "id")
 public class Topo extends Site {
    private String region;
-   @Column(name = "adresse_id")
+   @Column(name = "adresse_id", columnDefinition = "INTEGER(10)")
    private Integer adresse;
+   @Column(name = "date", columnDefinition = "DATE DEFAULT NOW()")
    private Date date;
+   @Column(name = "description", columnDefinition = "TEXT")
    private String description;
+   @Column(name = "technique", columnDefinition = "TEXT")
    private String technique;
+   @Column(name = "acces", columnDefinition = "TEXT")
    private String acces;
-   private String longitude;
-   private String latitude;
-   @Column(name = "promoteur_id")
+   @Column(name = "promoteur_id", columnDefinition = "INTEGER(10)")
    private Integer promoteur;
-   @Column(name = "grimpeur_id")
+   @Column(name = "grimpeur_id", columnDefinition = "INTEGER(10)")
    private Integer grimpeur;
    @Enumerated(EnumType.STRING)
+   @Column(name = "statut", columnDefinition = "VARCHAR(15) DEFAULT 'Indisponible'")
    private StatutType statut;
-   @Column(name = "statut_auto")
+   @Column(name = "statut_auto", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean statutAuto;
 
    protected Topo() {
       super();
    }
 
-     public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, String longitude, String latitude, Integer promoteur, Integer grimpeur, StatutType statut, Boolean statutAuto) {
+     public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, Integer promoteur, Integer grimpeur, StatutType statut, Boolean statutAuto) {
       super(id, nom, SiteType.TOPO );
       this.region = region;
       this.adresse = adresse;
@@ -37,8 +40,6 @@ public class Topo extends Site {
       this.description = description;
       this.technique = technique;
       this.acces = acces;
-      this.longitude = longitude;
-      this.latitude = latitude;
       this.promoteur = promoteur;
       this.grimpeur = grimpeur;
       this.statut = statut;
@@ -93,22 +94,6 @@ public class Topo extends Site {
       this.acces = acces;
    }
 
-   public String getLongitude() {
-      return longitude;
-   }
-
-   public void setLongitude(String longitude) {
-      this.longitude = longitude;
-   }
-
-   public String getLatitude() {
-      return latitude;
-   }
-
-   public void setLatitude(String latitude) {
-      this.latitude = latitude;
-   }
-
    public Integer getPromoteur() {
       return promoteur;
    }
@@ -153,8 +138,6 @@ public class Topo extends Site {
                   "description='%s', " +
                   "technique='%s'," +
                   "accès='%s', " +
-                  "longitude='%s', " +
-                  "latitude='%s', " +
                   "promoteur='%s'," +
                   "grimpeur='%s'," +
                   "statut='%s'," +
@@ -163,8 +146,8 @@ public class Topo extends Site {
                   "photo='%s', " +
                   "carte='%s'}",
             id, nom, region, adresse,
-            date, description, technique, acces, longitude,
-            latitude, promoteur, grimpeur,statut,statutAuto,
+            date, description, technique, acces,
+            promoteur, grimpeur,statut,statutAuto,
             aCommentaire, lienPhoto, lienCarte);
    }
 

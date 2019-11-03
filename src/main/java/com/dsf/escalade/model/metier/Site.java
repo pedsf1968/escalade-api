@@ -11,18 +11,22 @@ import java.io.Serializable;
 public abstract class Site implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id")
+   @Column(name = "id", columnDefinition = "INTEGER(10)")
    protected int id;
-   @Column(name = "nom", length = 50, nullable = false)
+   @Column(name = "nom", columnDefinition = "VARCHAR(50)", nullable = false)
    protected String nom;
-   @Column(name = "type")
+   @Column(name = "type", columnDefinition = "VARCHAR(7) DEFAULT 'TOPO'")
    @Enumerated(EnumType.STRING)
    protected SiteType type;
-   @Column(name = "a_commentaire")
+   @Column(name = "longitude", columnDefinition = "VARCHAR(10)")
+   private String longitude;
+   @Column(name = "latitude", columnDefinition = "VARCHAR(10)")
+   private String latitude;
+   @Column(name = "a_commentaire", columnDefinition = "BOOLEAN DEFAULT FALSE")
    protected Boolean aCommentaire;
-   @Column(name = "photo_url")
+   @Column(name = "photo_url", columnDefinition = "VARCHAR(255)")
    protected String lienPhoto;
-   @Column(name = "map_url")
+   @Column(name = "map_url", columnDefinition = "VARCHAR(255)")
    protected String lienCarte;
 
    protected Site() {

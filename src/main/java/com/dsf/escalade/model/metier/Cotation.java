@@ -8,8 +8,9 @@ import java.util.Objects;
 public class Cotation {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", columnDefinition = "INTEGER(2)")
    private Integer id;
-   @Column(name = "niveau_fr")
+   @Column(name = "niveau_fr", columnDefinition = "VARCHAR(3)")
    private String niveauFr;
 
    public Cotation() {

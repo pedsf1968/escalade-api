@@ -7,10 +7,11 @@ import java.io.Serializable;
 public class Commentaire implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "site_id")
+   @Column(name = "site_id", columnDefinition = "INTEGER(10)")
    private Integer id;
-   @Column(name = "grimpeur_id")
+   @Column(name = "grimpeur_id", columnDefinition = "INTEGER(10)")
    private Integer grimpeur;
+   @Column(name = "texte", columnDefinition = "TEXT")
    private String texte;
 
    public Commentaire() {

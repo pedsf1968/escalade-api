@@ -7,12 +7,17 @@ import java.io.Serializable;
 public class Longueur implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", columnDefinition = "INTEGER(10)")
    private Integer id;
+   @Column(name = "nom", columnDefinition = "VARCHAR(50)")
    private String nom;
-   @Column(name = "cotation_id")
+   @Column(name = "cotation_id", columnDefinition = "INTEGER(2)")
    private Integer cotation;
+   @Column(name = "voie", columnDefinition = "INTEGER(10)")
    private Integer voie;
+   @Column(name = "hauteur", columnDefinition = "INTEGER(4)")
    private Integer hauteur;
+   @Column(name = "nb_spits", columnDefinition = "INTEGER(3)")
    private Integer nbSpits;
 
    protected Longueur() {

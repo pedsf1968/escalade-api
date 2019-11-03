@@ -6,21 +6,18 @@ import javax.persistence.*;
 @Table(name="secteur")
 @PrimaryKeyJoinColumn(name = "id")
 public class Secteur extends Site {
-   @Column(name = "topo_id")
+   @Column(name = "topo_id", columnDefinition = "INTEGER(10)")
    private Integer topo;
-   private String longitude;
-   private String latitude;
+   @Column(name = "equipement", columnDefinition = "TEXT")
    private String equipement;
 
    protected Secteur() {
       super();
    }
 
-   public Secteur(int id, String nom, Integer topo, String longitude, String latitude, String equipement) {
+   public Secteur(int id, String nom, Integer topo, String equipement) {
       super(id, nom, SiteType.SECTEUR);
       this.topo = topo;
-      this.longitude = longitude;
-      this.latitude = latitude;
       this.equipement = equipement;
    }
 
@@ -30,22 +27,6 @@ public class Secteur extends Site {
 
    public void setTopo(Integer topo) {
       this.topo = topo;
-   }
-
-   public String getLongitude() {
-      return longitude;
-   }
-
-   public void setLongitude(String longitude) {
-      this.longitude = longitude;
-   }
-
-   public String getLatitude() {
-      return latitude;
-   }
-
-   public void setLatitude(String latitude) {
-      this.latitude = latitude;
    }
 
    public String getEquipement() {
@@ -59,8 +40,8 @@ public class Secteur extends Site {
    @Override
    public String toString() {
       return String.format(
-            "Secteur {id=%d, nom='%s', topo='%s', longitude='%s', latitude='%s', a un commentaire='%b', photo='%s', carte='%s', équipement='%s'}",
-             id, nom,   topo, longitude, latitude, aCommentaire, lienPhoto, lienCarte, equipement);
+            "Secteur {id=%d, nom='%s', topo='%s', a un commentaire='%b', photo='%s', carte='%s', équipement='%s'}",
+             id, nom,   topo, aCommentaire, lienPhoto, lienCarte, equipement);
    }
 
 }

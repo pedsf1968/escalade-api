@@ -7,9 +7,9 @@ import java.util.Objects;
 
 @Embeddable
 public class TagListPK implements Serializable {
-   @Column(name = "topo_id")
+   @Column(name = "topo_id", columnDefinition = "INTEGER(10)")
    private Integer topo;
-   @Column(name = "tag_id")
+   @Column(name = "tag_id", columnDefinition = "INTEGER(2)")
    private Integer tag;
 
    public TagListPK() {

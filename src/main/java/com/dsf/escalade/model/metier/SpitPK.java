@@ -7,8 +7,9 @@ import java.util.Objects;
 
 @Embeddable
 public class SpitPK implements Serializable {
-   @Column(name = "topo_id")
+   @Column(name = "topo_id", columnDefinition = "INTEGER(10)")
    private Integer topo;
+   @Column(name = "numero", columnDefinition = "INTEGER(3)")
    private Integer numero;
 
    public SpitPK() { }
