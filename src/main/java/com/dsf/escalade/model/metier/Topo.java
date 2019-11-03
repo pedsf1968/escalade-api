@@ -1,11 +1,6 @@
 package com.dsf.escalade.model.metier;
 
-import com.dsf.escalade.model.global.TypeSite;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -25,7 +20,8 @@ public class Topo extends Site {
    private Integer promoteur;
    @Column(name = "grimpeur_id")
    private Integer grimpeur;
-   private String statut;
+   @Enumerated(EnumType.STRING)
+   private StatutType statut;
    @Column(name = "statut_auto")
    private Boolean statutAuto;
 
@@ -33,8 +29,8 @@ public class Topo extends Site {
       super();
    }
 
-     public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, String longitude, String latitude, Integer promoteur, Integer grimpeur, String statut, Boolean statutAuto) {
-      super(id, nom, TypeSite.TOPO );
+     public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, String longitude, String latitude, Integer promoteur, Integer grimpeur, StatutType statut, Boolean statutAuto) {
+      super(id, nom, SiteType.TOPO );
       this.region = region;
       this.adresse = adresse;
       this.date = date;
@@ -129,11 +125,11 @@ public class Topo extends Site {
       this.grimpeur = grimpeur;
    }
 
-   public String getStatut() {
+   public StatutType getStatut() {
       return statut;
    }
 
-   public void setStatut(String statut) {
+   public void setStatut(StatutType statut) {
       this.statut = statut;
    }
 

@@ -9,7 +9,8 @@ public class Longueur implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Integer id;
    private String nom;
-   private String cotation;
+   @Column(name = "cotation_id")
+   private Integer cotation;
    private Integer voie;
    private Integer hauteur;
    private Integer nbSpits;
@@ -17,7 +18,7 @@ public class Longueur implements Serializable {
    protected Longueur() {
    }
 
-   public Longueur(Integer id, String nom, String cotation, Integer voie, Integer hauteur, Integer nbSpits) {
+   public Longueur(Integer id, String nom, Integer cotation, Integer voie, Integer hauteur, Integer nbSpits) {
       this.id = id;
       this.nom = nom;
       this.cotation = cotation;
@@ -42,11 +43,11 @@ public class Longueur implements Serializable {
       this.nom = nom;
    }
 
-   public String getCotation() {
+   public Integer getCotation() {
       return cotation;
    }
 
-   public void setCotation(String cotation) {
+   public void setCotation(Integer cotation) {
       this.cotation = cotation;
    }
 
@@ -79,7 +80,7 @@ public class Longueur implements Serializable {
       return String.format(
             "Longueur {id=%d, " +
                   "nom='%s', " +
-                  "cotation='%s', " +
+                  "cotation=%d, " +
                   "voie='%s', " +
                   "hauteur='%d', " +
                   "nombre de spits='%d'}",

@@ -1,7 +1,5 @@
 package com.dsf.escalade.model.metier;
 
-import com.dsf.escalade.model.global.TypeSite;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -15,14 +13,15 @@ public class Voie extends Site {
    private Integer secteur;
    private Boolean estEquipee;
    private Integer hauteur;
-   private String cotation;
+   @Column(name = "cotation_id")
+   private Integer cotation;
 
    protected Voie() {
       super();
    }
 
-   public Voie(int id, String nom, Integer secteur, Boolean estEquipee, Integer hauteur, String cotation) {
-      super(id, nom, TypeSite.VOIE);
+   public Voie(int id, String nom, Integer secteur, Boolean estEquipee, Integer hauteur, Integer cotation) {
+      super(id, nom, SiteType.VOIE);
       this.secteur = secteur;
       this.estEquipee = estEquipee;
       this.hauteur = hauteur;
@@ -53,11 +52,11 @@ public class Voie extends Site {
       this.hauteur = hauteur;
    }
 
-   public String getCotation() {
+   public Integer getCotation() {
       return cotation;
    }
 
-   public void setCotation(String cotation) {
+   public void setCotation(Integer cotation) {
       this.cotation = cotation;
    }
 
@@ -70,7 +69,7 @@ public class Voie extends Site {
                   "secteur='%s', " +
                   "est équipée='%b'," +
                   "hauteur='%d', " +
-                  "cotation='%s'," +
+                  "cotation=%d," +
                   "a un commentaire='%b', " +
                   "photo='%s', " +
                   "carte='%s'}"

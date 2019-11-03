@@ -1,7 +1,5 @@
 package com.dsf.escalade.model.metier;
 
-import com.dsf.escalade.model.global.TypeSite;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -19,7 +17,7 @@ public abstract class Site implements Serializable {
    protected String nom;
    @Column(name = "type")
    @Enumerated(EnumType.STRING)
-   protected TypeSite type;
+   protected SiteType type;
    @Column(name = "a_commentaire")
    protected Boolean aCommentaire;
    @Column(name = "photo_url")
@@ -30,7 +28,7 @@ public abstract class Site implements Serializable {
    protected Site() {
    }
 
-   Site(int id, String nom, TypeSite type) {
+   Site(int id, String nom, SiteType type) {
       this.id = id;
       this.nom = nom;
       this.type = type;
@@ -39,7 +37,7 @@ public abstract class Site implements Serializable {
       this.lienCarte = null;
    }
 
-   public Site(int id, String nom,  TypeSite type, Boolean aCommentaire, String lienPhoto, String lienCarte) {
+   public Site(int id, String nom, SiteType type, Boolean aCommentaire, String lienPhoto, String lienCarte) {
       this.id = id;
       this.nom = nom;
       this.type = type;
@@ -64,11 +62,11 @@ public abstract class Site implements Serializable {
       this.nom = nom;
    }
 
-   public TypeSite getType() {
+   public SiteType getType() {
       return type;
    }
 
-   public void setType(TypeSite type) {
+   public void setType(SiteType type) {
       this.type = type;
    }
 

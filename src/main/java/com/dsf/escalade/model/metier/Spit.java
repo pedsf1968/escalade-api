@@ -17,7 +17,8 @@ public class Spit implements Serializable {
    private Integer secteur;
    @Column(name = "longueur_id")
    private Integer longueur;
-   private String cotation;
+   @Column(name = "cotation_id")
+   private Integer cotation;
    private Boolean estRelai;
    private String commentaire;
 
@@ -29,12 +30,56 @@ public class Spit implements Serializable {
       super();
    }
 
-   public Spit(SpitPK spitPK, Integer secteur, Integer longueur, String cotation, Boolean estRelai, String commentaire) {
+   public Spit(SpitPK spitPK, Integer secteur, Integer longueur, Integer cotation, Boolean estRelai, String commentaire) {
       this.spitPK = spitPK;
       this.secteur = secteur;
       this.longueur = longueur;
       this.cotation = cotation;
       this.estRelai = estRelai;
+      this.commentaire = commentaire;
+   }
+
+   public void setSpitPK(SpitPK spitPK) {
+      this.spitPK = spitPK;
+   }
+
+   public Integer getSecteur() {
+      return secteur;
+   }
+
+   public void setSecteur(Integer secteur) {
+      this.secteur = secteur;
+   }
+
+   public Integer getLongueur() {
+      return longueur;
+   }
+
+   public void setLongueur(Integer longueur) {
+      this.longueur = longueur;
+   }
+
+   public Integer getCotation() {
+      return cotation;
+   }
+
+   public void setCotation(Integer cotation) {
+      this.cotation = cotation;
+   }
+
+   public Boolean getEstRelai() {
+      return estRelai;
+   }
+
+   public void setEstRelai(Boolean estRelai) {
+      this.estRelai = estRelai;
+   }
+
+   public String getCommentaire() {
+      return commentaire;
+   }
+
+   public void setCommentaire(String commentaire) {
       this.commentaire = commentaire;
    }
 

@@ -1,7 +1,5 @@
 package com.dsf.escalade.model.metier;
 
-import com.dsf.escalade.model.global.TypeSite;
-
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +17,7 @@ public class Secteur extends Site {
    }
 
    public Secteur(int id, String nom, Integer topo, String longitude, String latitude, String equipement) {
-      super(id, nom, TypeSite.SECTEUR);
+      super(id, nom, SiteType.SECTEUR);
       this.topo = topo;
       this.longitude = longitude;
       this.latitude = latitude;

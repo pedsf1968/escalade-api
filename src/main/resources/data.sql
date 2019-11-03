@@ -6,3 +6,4 @@ INSERT INTO site (id, nom, type, a_commentaire, photo_url, map_url) VALUES (3,'L
 INSERT INTO topo (id, date, promoteur_id) VALUES (1, NOW(),1);
 INSERT INTO topo (id, date, promoteur_id) VALUES (2, NOW(),1);
 INSERT INTO topo (id, date, promoteur_id) VALUES (3, NOW(),1);
+
