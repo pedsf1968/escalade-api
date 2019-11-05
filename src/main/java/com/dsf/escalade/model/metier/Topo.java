@@ -18,12 +18,12 @@ public class Topo extends Site {
    private String technique;
    @Column(name = "acces", columnDefinition = "TEXT")
    private String acces;
-   @Column(name = "promoteur_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "promoteur_id", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer promoteur;
    @Column(name = "grimpeur_id", columnDefinition = "INTEGER(10)")
    private Integer grimpeur;
    @Enumerated(EnumType.STRING)
-   @Column(name = "statut", columnDefinition = "VARCHAR(15) DEFAULT 'Indisponible'")
+   @Column(name = "statut", columnDefinition = "VARCHAR(15) DEFAULT 'Indisponible' NOT NULL")
    private StatutType statut;
    @Column(name = "statut_auto", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean statutAuto;
@@ -128,6 +128,22 @@ public class Topo extends Site {
 
    @Override
    public String toString() {
+      return "Topo{" +
+            "region='" + region + '\'' +
+            ", adresse=" + adresse +
+            ", date=" + date +
+            ", description='" + description + '\'' +
+            ", technique='" + technique + '\'' +
+            ", acces='" + acces + '\'' +
+            ", promoteur=" + promoteur +
+            ", grimpeur=" + grimpeur +
+            ", statut=" + statut +
+            ", statutAuto=" + statutAuto +
+            '}';
+   }
+
+   @Override
+   public String toStringOld() {
       return String.format(
             "Topo {" +
                   "id=%d, " +

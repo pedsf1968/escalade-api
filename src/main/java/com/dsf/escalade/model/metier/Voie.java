@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "voie")
 @PrimaryKeyJoinColumn(name = "id")
 public class Voie extends Site {
-   @Column(name = "secteur_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "secteur_id", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer secteur;
    @Column(name = "est_equipee", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean estEquipee;

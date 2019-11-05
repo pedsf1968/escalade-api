@@ -8,14 +8,14 @@ import java.io.Serializable;
 @Entity
 @Table(name = "site")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Site implements Serializable {
+public class Site implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", columnDefinition = "INTEGER(10)")
    protected int id;
-   @Column(name = "nom", columnDefinition = "VARCHAR(50)", nullable = false)
+   @Column(name = "nom", columnDefinition = "VARCHAR(50) NOT NULL")
    protected String nom;
-   @Column(name = "type", columnDefinition = "VARCHAR(7) DEFAULT 'TOPO'")
+   @Column(name = "type", columnDefinition = "VARCHAR(7)  NOT NULL DEFAULT 'TOPO'")
    @Enumerated(EnumType.STRING)
    protected SiteType type;
    @Column(name = "longitude", columnDefinition = "VARCHAR(10)")
@@ -29,10 +29,10 @@ public abstract class Site implements Serializable {
    @Column(name = "map_url", columnDefinition = "VARCHAR(255)")
    protected String lienCarte;
 
-   protected Site() {
+   public Site() {
    }
 
-   Site(int id, String nom, SiteType type) {
+   public Site(int id, String nom, SiteType type) {
       this.id = id;
       this.nom = nom;
       this.type = type;
@@ -98,8 +98,22 @@ public abstract class Site implements Serializable {
       this.lienCarte = lienCarte;
    }
 
+
    @Override
    public String toString() {
+      return "Site{" +
+            "id=" + id +
+            ", nom='" + nom + '\'' +
+            ", type=" + type +
+            ", longitude='" + longitude + '\'' +
+            ", latitude='" + latitude + '\'' +
+            ", aCommentaire=" + aCommentaire +
+            ", lienPhoto='" + lienPhoto + '\'' +
+            ", lienCarte='" + lienCarte + '\'' +
+            '}';
+   }
+
+   public String toStringOld() {
       return String.format(
             "Site {id=%d, nom='%s',type='%s', a un commentaire='%b', photo='%s', carte='%s'}",
             id, nom,   type, aCommentaire, lienPhoto, lienCarte);

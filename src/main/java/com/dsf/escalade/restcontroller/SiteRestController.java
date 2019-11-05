@@ -1,6 +1,6 @@
-package com.dsf.escalade.controler;
+package com.dsf.escalade.restcontroller;
 
-import com.dsf.escalade.dao.SiteDao;
+import com.dsf.escalade.dao.metier.SiteDao;
 import com.dsf.escalade.model.metier.Site;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +14,24 @@ import java.util.Optional;
 
 @RestController
 @Slf4j
-public class SiteControler {
+public class SiteRestController {
 
    @Autowired
    private SiteDao siteDao;
 
-   @GetMapping(value = "/Site")
-   public List<Site> displayAllSite(){
-
+   @GetMapping(value = "/site")
+   public List<Site> findAll(){
       return siteDao.findAll();
    }
 
-   @GetMapping(value = "/Site/{id}")
-   public Optional<Site> displaySite(@PathVariable int id){
+   @GetMapping(value = "/site/{id}")
+   public Optional<Site> findById(@PathVariable int id){
+      log.info("id : " + id + siteDao.findById(1).toString());
       return siteDao.findById(id);
    }
 
-   @PostMapping(value = "/Site")
-   public ResponseEntity<Object> addSite(@RequestBody Site site){
+   @PostMapping(value = "/site")
+   public ResponseEntity<Object> save(@RequestBody Site site){
       Site siteAdded = siteDao.save(site);
 
       if (siteAdded == null)
@@ -45,4 +45,8 @@ public class SiteControler {
 
       return ResponseEntity.created(location).build();
    }
+
+
 }
+
+

@@ -9,7 +9,7 @@ public class Commentaire implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "site_id", columnDefinition = "INTEGER(10)")
    private Integer id;
-   @Column(name = "grimpeur_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "grimpeur_id", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer grimpeur;
    @Column(name = "texte", columnDefinition = "TEXT")
    private String texte;

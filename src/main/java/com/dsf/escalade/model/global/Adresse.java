@@ -29,9 +29,9 @@ public class Adresse implements Serializable {
    private String voie;
    @Column(name = "place", columnDefinition = "VARCHAR(50)")
    private String place;
-   @Column(name = "code", columnDefinition = "VARCHAR(6)")
+   @Column(name = "code", columnDefinition = "VARCHAR(6) NOT NULL")
    private String code;
-   @Column(name = "ville", columnDefinition = "VARCHAR(50)")
+   @Column(name = "ville", columnDefinition = "VARCHAR(50)  NOT NULL")
    private String ville;
    @Column(name = "pays", columnDefinition = "VARCHAR(50) DEFAULT 'France'")
    private String pays;

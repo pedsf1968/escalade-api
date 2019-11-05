@@ -1,4 +1,4 @@
-package com.dsf.escalade.dao;
+package com.dsf.escalade.dao.metier;
 
 import com.dsf.escalade.model.metier.Site;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.dsf.escalade.dao;
+package com.dsf.escalade.dao.global;
 
 import com.dsf.escalade.model.global.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;

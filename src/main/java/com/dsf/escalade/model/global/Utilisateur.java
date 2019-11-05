@@ -8,18 +8,18 @@ public class Utilisateur {
    @GeneratedValue(strategy =  GenerationType.AUTO)
    @Column(name = "id", columnDefinition = "INTEGER(10)")
    private Integer id;
-   @Column(name = "civilite")
+   @Column(name = "civilite", columnDefinition = "VARCHAR(4) DEFAULT 'M'")
    @Enumerated(EnumType.STRING)
    private Civilite civilite;
-   @Column(name = "nom", columnDefinition = "VARCHAR(50)")
+   @Column(name = "nom", columnDefinition = "VARCHAR(50) NOT NULL")
    private String nom;
-   @Column(name = "prenom", columnDefinition = "VARCHAR(50)")
+   @Column(name = "prenom", columnDefinition = "VARCHAR(50) NOT NULL")
    private String prenom;
    @Column(name = "pseudo", columnDefinition = "VARCHAR(20)")
    private String pseudo;
    @Column(name = "telephone", columnDefinition = "VARCHAR(10)")
    private String telephone;
-   @Column(name = "mail", columnDefinition = "VARCHAR(255)")
+   @Column(name = "mail", columnDefinition = "VARCHAR(255) NOT NULL")
    private String mail;
    @Column(name = "login", columnDefinition = "VARCHAR(20)")
    private String login;

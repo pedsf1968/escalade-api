@@ -9,11 +9,11 @@ public class Longueur implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", columnDefinition = "INTEGER(10)")
    private Integer id;
-   @Column(name = "nom", columnDefinition = "VARCHAR(50)")
+   @Column(name = "nom", columnDefinition = "VARCHAR(50) NOT NULL")
    private String nom;
-   @Column(name = "cotation_id", columnDefinition = "INTEGER(2)")
+   @Column(name = "cotation_id", columnDefinition = "INTEGER(2) NOT NULL")
    private Integer cotation;
-   @Column(name = "voie", columnDefinition = "INTEGER(10)")
+   @Column(name = "voie", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer voie;
    @Column(name = "hauteur", columnDefinition = "INTEGER(4)")
    private Integer hauteur;

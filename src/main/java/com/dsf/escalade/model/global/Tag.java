@@ -9,7 +9,7 @@ public class Tag implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", columnDefinition = "INTEGER(2)")
    private Integer id;
-   @Column(name = "nom", columnDefinition = "VARCHAR(20)")
+   @Column(name = "nom", columnDefinition = "VARCHAR(20) NOT NULL")
    private String nom;
 
    public Tag() {

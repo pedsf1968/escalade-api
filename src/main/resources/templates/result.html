@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>Getting Started: Handling Form Submission</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Result</h1>
+<p th:text="'id: ' + ${site.id}" />
+<p th:text="'Nom: ' + ${site.nom}" />
+<p th:text="'type: ' + ${site.type}" />
+<p th:text="'longitude: ' + ${site.longitude}" />
+<p th:text="'latitude: ' + ${site.latitude}" />
+<p th:text="'a_commentaire: ' + ${site.a_commentaire}" />
+<p th:text="'photo_url: ' + ${site.photo_url}" />
+<p th:text="'map_url: ' + ${site.map_url}" />
+
+
+<a href="/sites">Submit another site</a>
+</body>
+</html>

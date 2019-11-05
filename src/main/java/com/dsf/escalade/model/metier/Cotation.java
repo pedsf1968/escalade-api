@@ -10,7 +10,7 @@ public class Cotation {
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", columnDefinition = "INTEGER(2)")
    private Integer id;
-   @Column(name = "niveau_fr", columnDefinition = "VARCHAR(3)")
+   @Column(name = "niveau_fr", columnDefinition = "VARCHAR(3) NOT NULL")
    private String niveauFr;
 
    public Cotation() {
