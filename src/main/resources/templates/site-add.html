@@ -10,24 +10,24 @@
 <form action="#" th:action="@{/addsite}" th:object="${site}" method="post">
 
    <label for="nom">Nom</label>
-   <input type="text" th:field="** {nom}" id="nom" placeholder="Nom">
-   <span th:if="${#fields.hasErrors('nom')}" th:errors="** {nom}"></span>
+   <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
+   <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
 
    <label for="type">Type</label>
-   <input type="text" th:field="** {type}" id="type" placeholder="Type">
-   <span th:if="${#fields.hasErrors('type')}" th:errors="** {type}"></span>
+   <input type="text" th:field="*{type}" id="type" placeholder="Type">
+   <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
 
    <label for="aCommentaire">A un commentaire</label>
-   <input type="text" th:field="** {aCommentaire}" id="aCommentaire">
-   <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="** {aCommentaire}"></span>
+   <input type="text" th:field="*{aCommentaire}" id="aCommentaire">
+   <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="*{aCommentaire}"></span>
 
    <label for="lienPhoto">Lien photo</label>
-   <input type="text" th:field="** {lienPhoto}" id="lienPhoto" placeholder="Lien photo">
-   <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="** {lienPhoto}"></span>
+   <input type="text" th:field="*{lienPhoto}" id="lienPhoto" placeholder="Lien photo">
+   <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="*{lienPhoto}"></span>
 
    <label for="lienCarte">Lien carte</label>
-   <input type="text" th:field="** {lienCarte}" id="lienCarte" placeholder="Lien carte">
-   <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="** {lienCarte}"></span>
+   <input type="text" th:field="*{lienCarte}" id="lienCarte" placeholder="Lien carte">
+   <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="*{lienCarte}"></span>
 
    <input type="submit" value="Ajoute site">
 </form>

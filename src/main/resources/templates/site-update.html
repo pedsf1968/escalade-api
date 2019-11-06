@@ -5,31 +5,31 @@
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Ajout d'un site</h1>
+<h1>Mise à jour d'un site</h1>
 
 <form action="#" th:action="@{/updatesite/{id}(id=${site.id})}" th:object="${site}" method="post">
 
    <label for="nom">Nom</label>
-   <input type="text" th:field="** {nom}" id="nom" placeholder="Nom">
-   <span th:if="${#fields.hasErrors('nom')}" th:errors="** {nom}"></span>
-
+   <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
+   <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+   <br>
    <label for="type">Type</label>
-   <input type="text" th:field="** {type}" id="type" placeholder="Type">
-   <span th:if="${#fields.hasErrors('type')}" th:errors="** {type}"></span>
-
+   <input type="text" th:field="*{type}" id="type" placeholder="Type">
+   <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+   <br>
    <label for="aCommentaire">A un commentaire</label>
-   <input type="text" th:field="** {aCommentaire}" id="aCommentaire">
-   <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="** {aCommentaire}"></span>
-
+   <input type="text" th:field="*{aCommentaire}" id="aCommentaire">
+   <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="*{aCommentaire}"></span>
+   <br>
    <label for="lienPhoto">Lien photo</label>
-   <input type="text" th:field="** {lienPhoto}" id="lienPhoto" placeholder="Lien photo">
-   <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="** {lienPhoto}"></span>
-
+   <input type="text" th:field="*{lienPhoto}" id="lienPhoto" placeholder="Lien photo">
+   <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="*{lienPhoto}"></span>
+   <br>
    <label for="lienCarte">Lien carte</label>
-   <input type="text" th:field="** {lienCarte}" id="lienCarte" placeholder="Lien carte">
-   <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="** {lienCarte}"></span>
-
-   <input type="submit" value="Mise à jour site">
+   <input type="text" th:field="*{lienCarte}" id="lienCarte" placeholder="Lien carte">
+   <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="*{lienCarte}"></span>
+   <br>
+   <input type="submit" value="Update Site">
 </form>
 </body>
 </html>

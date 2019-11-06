@@ -20,18 +20,18 @@
    </tr>
    </thead>
    <tbody>
-   <tr th:if="${sites.empty}">
+   <tr th:if="${siteList.empty}">
       <td colspan="2"> Pas de site disponible </td>
    </tr>
-   <tr th:each="site : ${sites}">
+   <tr th:each="site : ${siteList}">
       <td><span th:text="${site.id}"> Id </span></td>
       <td><span th:text="${site.nom}"> Nom </span></td>
       <td><span th:text="${site.type}"> Type </span></td>
       <td><span th:text="${site.aCommentaire}"> A un commentaire </span></td>
       <td><span th:text="${site.lienPhoto}"> Lien photo </span></td>
       <td><span th:text="${site.lienCarte}"> Lien carte </span></td>
-      <td><a th:href="@{/editsite/{id}(id=${site.id})}">Edit</a></td>
-      <td><a th:href="@{/delete/{id}(id=${site.id})}">Delete</a></td>
+      <td><a th:href="@{/editsite/{id}(id=${site.id})}">Modifier</a></td>
+      <td><a th:href="@{/deletesite/{id}(id=${site.id})}">Supprimer</a></td>
    </tr>
    </tbody>
 </table>

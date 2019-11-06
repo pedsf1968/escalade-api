@@ -1,6 +1,7 @@
 package com.dsf.escalade.model.metier;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 
@@ -14,19 +15,20 @@ public class Site implements Serializable {
    @Column(name = "id", columnDefinition = "INTEGER(10)")
    protected int id;
    @Column(name = "nom", columnDefinition = "VARCHAR(50) NOT NULL")
+   @NotBlank(message = "Spécifiez un nom !")
    protected String nom;
    @Column(name = "type", columnDefinition = "VARCHAR(7)  NOT NULL DEFAULT 'TOPO'")
    @Enumerated(EnumType.STRING)
    protected SiteType type;
-   @Column(name = "longitude", columnDefinition = "VARCHAR(10)")
+   @Column(name = "longitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String longitude;
-   @Column(name = "latitude", columnDefinition = "VARCHAR(10)")
+   @Column(name = "latitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String latitude;
    @Column(name = "a_commentaire", columnDefinition = "BOOLEAN DEFAULT FALSE")
    protected Boolean aCommentaire;
-   @Column(name = "photo_url", columnDefinition = "VARCHAR(255)")
+   @Column(name = "photo_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
    protected String lienPhoto;
-   @Column(name = "map_url", columnDefinition = "VARCHAR(255)")
+   @Column(name = "map_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
    protected String lienCarte;
 
    public Site() {
