@@ -1,5 +1,7 @@
 package com.dsf.escalade.model.metier;
 
+import org.hibernate.annotations.DiscriminatorOptions;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -9,6 +11,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "site")
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorOptions(force=true)
 public class Site implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +35,15 @@ public class Site implements Serializable {
    protected String lienCarte;
 
    public Site() {
+   }
+
+   public Site(Site site){
+      this.id = site.getId();
+      this.nom = site.getNom();
+      this.type = site.getType();
+      this.aCommentaire = site.getaCommentaire();
+      this.lienPhoto = site.getLienPhoto();
+      this.lienCarte = site.getLienCarte();
    }
 
    public Site(int id, String nom, SiteType type) {

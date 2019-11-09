@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>Getting Started: Handling Form Submission</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Ajout d'un site</h1>
+
+<form action="#" th:action="@{/addsite}" th:object="${site}" method="post">
+
+   <label for="nom">Nom</label>
+   <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
+   <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+
+   <label for="type">Type</label>
+   <input type="text" th:field="*{type}" id="type" placeholder="Type">
+   <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+
+   <label for="aCommentaire">A un commentaire</label>
+   <input type="text" th:field="*{aCommentaire}" id="aCommentaire">
+   <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="*{aCommentaire}"></span>
+
+   <label for="lienPhoto">Lien photo</label>
+   <input type="text" th:field="*{lienPhoto}" id="lienPhoto" placeholder="Lien photo">
+   <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="*{lienPhoto}"></span>
+
+   <label for="lienCarte">Lien carte</label>
+   <input type="text" th:field="*{lienCarte}" id="lienCarte" placeholder="Lien carte">
+   <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="*{lienCarte}"></span>
+
+   <input type="submit" value="Ajoute site">
+</form>
+</body>
+</html>

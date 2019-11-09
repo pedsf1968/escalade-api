@@ -5,8 +5,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "topo")
-@PrimaryKeyJoinColumn(name = "id")
-public class Topo extends Site {
+@PrimaryKeyJoinColumn(name = "site_id")
+public class Topo {
+   @Id
+   private Integer id;
    private String region;
    @Column(name = "adresse_id", columnDefinition = "INTEGER(10)")
    private Integer adresse;
@@ -33,7 +35,7 @@ public class Topo extends Site {
    }
 
      public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, Integer promoteur, Integer grimpeur, StatutType statut, Boolean statutAuto) {
-      super(id, nom, SiteType.TOPO );
+      //super(id, nom, SiteType.TOPO );
       this.region = region;
       this.adresse = adresse;
       this.date = date;
@@ -142,12 +144,11 @@ public class Topo extends Site {
             '}';
    }
 
-   @Override
    public String toStringOld() {
       return String.format(
             "Topo {" +
-                  "id=%d, " +
-                  "nom='%s', " +
+               //   "id=%d, " +
+                 // "nom='%s', " +
                   "region='%s', " +
                   "adresse='%s'," +
                   "date='%td/%tm/%ty', " +
@@ -158,13 +159,13 @@ public class Topo extends Site {
                   "grimpeur='%s'," +
                   "statut='%s'," +
                   "auto='%b', " +
-                  "a un commentaire='%b', " +
-                  "photo='%s', " +
-                  "carte='%s'}",
-            id, nom, region, adresse,
+                //  "a un commentaire='%b', " +
+                 // "photo='%s', " +
+                 // "carte='%s'}",
+            region, adresse,
             date, description, technique, acces,
-            promoteur, grimpeur,statut,statutAuto,
-            aCommentaire, lienPhoto, lienCarte);
+            promoteur, grimpeur,statut,statutAuto
+            );
    }
 
 
