@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="secteur")
-@PrimaryKeyJoinColumn(name = "id")
+@PrimaryKeyJoinColumn(name = "site_id")
 public class Secteur extends Site {
    @Column(name = "topo_id", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer topo;

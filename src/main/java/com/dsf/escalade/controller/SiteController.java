@@ -1,10 +1,10 @@
 package com.dsf.escalade.controller;
 
+import com.dsf.escalade.dao.metier.SecteurDao;
 import com.dsf.escalade.dao.metier.SiteDao;
 import com.dsf.escalade.dao.metier.TopoDao;
 import com.dsf.escalade.model.metier.Site;
 import com.dsf.escalade.model.metier.SiteType;
-import com.dsf.escalade.model.metier.Topo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @Slf4j
@@ -22,9 +23,17 @@ public class SiteController {
 
    @Autowired
    private SiteDao siteDao;
+
    @Autowired
    private TopoDao topoDao;
 
+   @Autowired
+   private SecteurDao secteurDao;
+
+   @GetMapping("/")
+   String index(Principal principal) {
+      return principal != null ? "home/homeSignedIn" : "home/homeNotSignedIn";
+   }
 
    @GetMapping("/listsite")
    public String listSite(Model model) {
@@ -55,19 +64,23 @@ public class SiteController {
    }
 
    @PostMapping("/updatesite/{id}")
-   public String updateSite(@PathVariable("id") Integer id, @Valid Topo site, BindingResult result, Model model) {
+   public String updateSite(@PathVariable("id") Integer id, @Valid Site site, BindingResult result, Model model) {
 
       if (result.hasErrors()){
-
          site.setId(id);
          return "site-update";
       }
 
-      log.info("\nINFO :" + site.toString());
-      if (site instanceof Topo) {
-         log.info("\nINFO site instance of Site:");
-         topoDao.save(site);
+
+      if(site.getType().equals(SiteType.TOPO)){
+         log.info("\nTOPO : " +site.toString());
+      } else if(site.getType().equals(SiteType.SECTEUR)){
+         log.info("\nSECTEUR : " +site.toString());
+      } else if(site.getType().equals(SiteType.VOIE)){
+         log.info("\nVOIE : " +site.toString());
       }
+
+      siteDao.save(site);
 
       model.addAttribute("siteList",siteDao.findAll());
       return "site-list";
