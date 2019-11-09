@@ -1,7 +1,10 @@
 package com.dsf.escalade.controller;
 
 import com.dsf.escalade.dao.metier.SiteDao;
+import com.dsf.escalade.dao.metier.TopoDao;
 import com.dsf.escalade.model.metier.Site;
+import com.dsf.escalade.model.metier.SiteType;
+import com.dsf.escalade.model.metier.Topo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,8 @@ public class SiteController {
 
    @Autowired
    private SiteDao siteDao;
+   @Autowired
+   private TopoDao topoDao;
 
 
    @GetMapping("/listsite")
@@ -50,7 +55,7 @@ public class SiteController {
    }
 
    @PostMapping("/updatesite/{id}")
-   public String updateSite(@PathVariable("id") Integer id, @Valid Site site, BindingResult result, Model model) {
+   public String updateSite(@PathVariable("id") Integer id, @Valid Topo site, BindingResult result, Model model) {
 
       if (result.hasErrors()){
 
@@ -58,7 +63,11 @@ public class SiteController {
          return "site-update";
       }
 
-      siteDao.save(site);
+      log.info("\nINFO :" + site.toString());
+      if (site instanceof Topo) {
+         log.info("\nINFO site instance of Site:");
+         topoDao.save(site);
+      }
 
       model.addAttribute("siteList",siteDao.findAll());
       return "site-list";
