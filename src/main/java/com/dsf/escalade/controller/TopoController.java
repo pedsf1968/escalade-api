@@ -19,6 +19,7 @@ import java.util.List;
 @Controller
 @Slf4j
 public class TopoController {
+
     @PersistenceContext
     EntityManager entityManager;
 
@@ -30,11 +31,11 @@ public class TopoController {
 
     @GetMapping("/listtopo")
     public String listTopo(Model model) {
+
         List<Site> listSite = new ArrayList<Site>();
         List<Topo> listTopo;
 
-
-
+        listTopo = topoDao.findAll();
 
         for(Topo topo:listTopo){
             listSite.add(siteDao.getOne(topo.getId()));

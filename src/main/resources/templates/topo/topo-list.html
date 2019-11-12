@@ -24,7 +24,7 @@
    </tr>
    <tr th:each="topo : ${topoList}">
       <td><span th:text="${topo.id}"> Id </span></td>
-      <td><span th:text="${topo.nom}"> Nom </span></td>
+      <td><span th:text="${siteList.get(__${topo.id}__-1).nom}"> Nom </span></td>
       <td><span th:text="${topo.region}"> Région </span></td>
       <td><span th:text="${topo.date}"> Date </span></td>
 
