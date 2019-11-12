@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "site")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Site implements Serializable {
+public class Site implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", columnDefinition = "INTEGER(10)")

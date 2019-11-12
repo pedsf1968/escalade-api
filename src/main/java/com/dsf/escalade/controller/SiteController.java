@@ -30,11 +30,6 @@ public class SiteController {
    @Autowired
    private SecteurDao secteurDao;
 
-   @GetMapping("/")
-   String index(Principal principal) {
-      return principal != null ? "home/homeSignedIn" : "home/homeNotSignedIn";
-   }
-
    @GetMapping("/listsite")
    public String listSite(Model model) {
 

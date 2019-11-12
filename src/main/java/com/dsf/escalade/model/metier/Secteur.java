@@ -5,7 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="secteur")
 @PrimaryKeyJoinColumn(name = "site_id")
-public class Secteur extends Site {
+public class Secteur {
+   @Id
+   private Integer id;
    @Column(name = "topo_id", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer topo;
    @Column(name = "equipement", columnDefinition = "TEXT")
@@ -16,7 +18,7 @@ public class Secteur extends Site {
    }
 
    public Secteur(int id, String nom, Integer topo, String equipement) {
-      super(id, nom, SiteType.SECTEUR);
+      //super(id, nom, SiteType.SECTEUR);
       this.topo = topo;
       this.equipement = equipement;
    }
@@ -37,11 +39,19 @@ public class Secteur extends Site {
       this.equipement = equipement;
    }
 
-   @Override
+ /*  @Override
    public String toString() {
       return String.format(
             "Secteur {id=%d, nom='%s', topo='%s', a un commentaire='%b', photo='%s', carte='%s', équipement='%s'}",
              id, nom,   topo, aCommentaire, lienPhoto, lienCarte, equipement);
-   }
+   }*/
 
+   @Override
+   public String toString() {
+      return "Secteur{" +
+              "id=" + id +
+              ", topo=" + topo +
+              ", equipement='" + equipement + '\'' +
+              '}';
+   }
 }

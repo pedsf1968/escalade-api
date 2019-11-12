@@ -5,16 +5,15 @@
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Liste des topos</h1>
+<div th:replace="~{fragments/header :: header}">Liste des Topos</div>
+<div>
 <table>
    <thead>
    <tr>
       <th> Id </th>
       <th> Nom </th>
-      <th> Type </th>
-      <th> A un commentaire </th>
-      <th> Lien photo </th>
-      <th> Lien carte </th>
+      <th> Date </th>
+
       <th> Edit </th>
       <th> Delete </th>
    </tr>
@@ -27,13 +26,14 @@
       <td><span th:text="${topo.id}"> Id </span></td>
       <td><span th:text="${topo.nom}"> Nom </span></td>
       <td><span th:text="${topo.region}"> Région </span></td>
-      <td><span th:text="${topo.aCommentaire}"> A un commentaire </span></td>
-      <td><span th:text="${topo.lienPhoto}"> Lien photo </span></td>
-      <td><span th:text="${topo.lienCarte}"> Lien carte </span></td>
+      <td><span th:text="${topo.date}"> Date </span></td>
+
       <td><a th:href="@{/editsite/{id}(id=${topo.id})}">Modifier</a></td>
       <td><a th:href="@{/deletesite/{id}(id=${topo.id})}">Supprimer</a></td>
    </tr>
    </tbody>
 </table>
+</div>
+<div th:insert="~{fragments/footer :: footer}">&copy; 2019 The Static Templates</div>
 </body>
 </html>

@@ -5,6 +5,7 @@
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}">Header</div>
 <h1>Liste des sites</h1>
 <table>
    <thead>
@@ -35,5 +36,6 @@
    </tr>
    </tbody>
 </table>
+<div th:insert="~{fragments/footer :: footer}">&copy; 2017 The Static Templates</div>
 </body>
 </html>
