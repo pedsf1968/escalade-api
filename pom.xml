@@ -94,8 +94,6 @@
 			<version>2.1.2.RELEASE</version>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>

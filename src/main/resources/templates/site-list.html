@@ -13,7 +13,7 @@
       <th> Id </th>
       <th> Nom </th>
       <th> Type </th>
-      <th> A un commentaire </th>
+      <th> Commentaire </th>
       <th> Lien photo </th>
       <th> Lien carte </th>
       <th> Edit </th>
@@ -28,7 +28,7 @@
       <td><span th:text="${site.id}"> Id </span></td>
       <td><span th:text="${site.nom}"> Nom </span></td>
       <td><span th:text="${site.type}"> Type </span></td>
-      <td><span th:text="${site.aCommentaire}"> A un commentaire </span></td>
+      <td><input type="checkbox" name="Commentaire" th:checked="${site.aCommentaire}" onclick="return false;" onkeydown="e = e || window.event; if(e.keyCode !== 9) return false;"/></td>
       <td><span th:text="${site.lienPhoto}"> Lien photo </span></td>
       <td><span th:text="${site.lienCarte}"> Lien carte </span></td>
       <td><a th:href="@{/editsite/{id}(id=${site.id})}">Modifier</a></td>

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 
-//@MappedSuperclass
+
 @Entity
 @Table(name = "site")
 @Inheritance(strategy = InheritanceType.JOINED)
