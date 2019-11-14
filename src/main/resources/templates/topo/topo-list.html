@@ -1,39 +1,49 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-   <title>Getting Started: Handling Form Submission</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<head th:replace="~{fragments/header :: header}"></head>
 <body>
-<div th:replace="~{fragments/header :: header}">Liste des Topos</div>
-<div>
-<table>
-   <thead>
-   <tr>
-      <th> Id </th>
-      <th> Nom </th>
-      <th> Date </th>
+<div class="container">
+   <nav th:replace="~{fragments/nav :: navbar}"></nav>
 
-      <th> Edit </th>
-      <th> Delete </th>
-   </tr>
-   </thead>
-   <tbody>
-   <tr th:if="${topoList.empty}">
-      <td colspan="2"> Pas de topo disponible </td>
-   </tr>
-   <tr th:each="topo : ${topoList}">
-      <td><span th:text="${topo.id}"> Id </span></td>
-      <td><span th:text="${siteList.get(__${topo.id}__-1).nom}"> Nom </span></td>
-      <td><span th:text="${topo.region}"> Région </span></td>
-      <td><span th:text="${topo.date}"> Date </span></td>
+   <header class="row">
+      <div class=""col-sm-12>
+         <H1>Liste des Topos</H1>
+      </div>
+   </header>
 
-      <td><a th:href="@{/editsite/{id}(id=${topo.id})}">Modifier</a></td>
-      <td><a th:href="@{/deletesite/{id}(id=${topo.id})}">Supprimer</a></td>
-   </tr>
-   </tbody>
-</table>
+   <section class="row">
+      <div class="col-lg-12">
+      <table>
+         <thead>
+         <tr>
+            <th> Id </th>
+            <th> Nom </th>
+            <th> Date </th>
+            <th> Edit </th>
+            <th> Delete </th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr th:if="${topoList.empty}">
+            <td colspan="2"> Pas de topo disponible </td>
+         </tr>
+         <tr th:each="topo : ${topoList}">
+            <td><span th:text="${topo.id}"> Id </span></td>
+            <td><span th:text="${siteList.get(__${topo.id}__-1).nom}"> Nom </span></td>
+            <td><span th:text="${topo.region}"> Région </span></td>
+            <td><span th:text="${topo.date}"> Date </span></td>
+
+            <td><a th:href="@{/editsite/{id}(id=${topo.id})}">Modifier</a></td>
+            <td><a th:href="@{/deletesite/{id}(id=${topo.id})}">Supprimer</a></td>
+         </tr>
+         </tbody>
+      </table>
+      </div>
+   </section>
+
+   <footer class="row">
+      <div class="col-lg-12" th:replace="~{fragments/footer :: footer}">&copy; 2019 The Static Templates</div>
+   </footer>
 </div>
-<div th:insert="~{fragments/footer :: footer}">&copy; 2019 The Static Templates</div>
 </body>
 </html>

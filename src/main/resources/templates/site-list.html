@@ -1,12 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-   <title>Getting Started: Handling Form Submission</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<head th:replace="~{fragments/header :: header}">Liste des Sites</head>
 <body>
-<div th:replace="~{fragments/header :: header}">Header</div>
-<h1>Liste des sites</h1>
+<div th:insert="~{fragments/nav :: navbar}"></div>
 <table>
    <thead>
    <tr>

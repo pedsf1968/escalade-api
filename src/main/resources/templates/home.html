@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-   <title>Spring Security Example</title>
-</head>
+<head th:replace="~{fragments/header :: header}"></head>
 <body>
-   <h1>Welcome!</h1>
+<div class="container">
+   <nav th:replace="~{fragments/nav :: navbar}"></nav>
+
+   <header class="row">
+      <div class=""col-sm-12>
+         <H1>Bonjour !</H1>
+      </div>
+   </header>
+
+   <section class="row">
+      <div class="col-lg-12">
+
    <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
    <div th:switch="${users}">
       <h2 th:case="null">No users yet!</h2>
@@ -31,6 +40,13 @@
       </table>
    </div>
    <p><a href="/listsite">La liste des sites</a></p>
+   </div>
+      </div>
+   </section>
+
+   <footer class="row">
+      <div class="col-lg-12" th:replace="~{fragments/footer :: footer}">&copy; 2019 The Static Templates</div>
+   </footer>
 </div>
 </body>
 </html>
