@@ -1,13 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-   <title>Getting Started: Handling Form Submission</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<head th:replace="~{fragments/header :: header}"></head>
 <body>
-<h1>Mise à jour d'un site</h1>
+<div class="container">
+   <nav th:replace="~{fragments/nav :: navbar}"></nav>
 
-<form action="#" th:action="@{/updatesite/{id}(id=${site.id})}" th:object="${site}" method="post">
+   <header class="row">
+      <div class=""col-sm-12>
+         <H1>Liste des Topos</H1>
+      </div>
+   </header>
+
+   <section class="row">
+      <div class="col-lg-12">
+      <form action="#" th:action="@{/updatetopo/{id}(id=${site.id})}" th:object="${site}" method="post">
 
    <label for="nom">Nom</label>
    <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
@@ -31,5 +37,13 @@
    <br>
    <input type="submit" value="Update Site">
 </form>
+
+      </div>
+   </section>
+
+   <footer class="row">
+      <div class="col-lg-12" th:replace="~{fragments/footer :: footer}">&copy; 2019 The Static Templates</div>
+   </footer>
+</div>
 </body>
 </html>
