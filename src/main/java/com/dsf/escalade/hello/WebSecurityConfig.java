@@ -31,11 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             User.withDefaultPasswordEncoder()
                   .username("user")
                   .password("p")
-                  .roles("ADMIN")
+                  .roles("USER")
                   .build();
 
       return new InMemoryUserDetailsManager(user);
    }
+
 
 
 }

@@ -1,5 +1,5 @@
  body { 
-  background-color:#DDD;
+  background-color: #DDD;
   padding-top: 10px;
 }
 
@@ -13,9 +13,9 @@ img {
 }
 
 header {
-	padding-left: 20px;
+     margin-top : 50px;
+     padding-left: 20px;
 	text-align: center;
-	color: purple;
 }
 
 section {

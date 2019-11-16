@@ -4,8 +4,8 @@ import com.dsf.escalade.dao.metier.SiteDao;
 import com.dsf.escalade.dao.metier.TopoDao;
 import com.dsf.escalade.model.metier.Site;
 import com.dsf.escalade.model.metier.Topo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,16 +19,15 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class TopoController {
 
     @PersistenceContext
     EntityManager entityManager;
 
-    @Autowired
-    private SiteDao siteDao;
+    private final SiteDao siteDao;
 
-    @Autowired
-    private TopoDao topoDao;
+    private final TopoDao topoDao;
 
     @GetMapping("/listtopo")
     public String listTopo(Model model) {
@@ -48,6 +47,19 @@ public class TopoController {
         return "topo/topo-list";
     }
 
+    @GetMapping("/viewtopo/{id}")
+    public String viewTopo(@PathVariable("id") Integer id, Model model) {
+        Site site = siteDao.findById(id)
+              .orElseThrow(() -> new IllegalArgumentException("Invalid site Id:" + id));
+
+        Topo topo = topoDao.findById(id)
+              .orElseThrow(() -> new IllegalArgumentException("Invalid topo Id:" + id));
+
+        model.addAttribute("site", site);
+        model.addAttribute("topo", topo);
+        return "topo/topo-view";
+    }
+
     @GetMapping("/edittopo/{id}")
     public String editTopo(@PathVariable("id") Integer id, Model model) {
         Site site = siteDao.findById(id)
@@ -57,7 +69,7 @@ public class TopoController {
               .orElseThrow(() -> new IllegalArgumentException("Invalid topo Id:" + id));
 
         model.addAttribute("site", site);
-        model.addAttribute("topo", site);
+        model.addAttribute("topo", topo);
         return "topo/topo-update";
     }
 

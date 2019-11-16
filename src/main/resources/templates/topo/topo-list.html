@@ -1,49 +1,44 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header}"></head>
-<body>
-<div class="container">
-   <nav th:replace="~{fragments/nav :: navbar}"></nav>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-   <header class="row">
-      <div class=""col-sm-12>
-         <H1>Liste des Topos</H1>
-      </div>
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+      <H1 class="display-4">Liste des Topos</H1>
    </header>
 
-   <section class="row">
-      <div class="col-lg-12">
-      <table>
-         <thead>
+   <section>
+      <table class="table table-striped">
+      <thead>
          <tr>
-            <th> Id </th>
-            <th> Nom </th>
-            <th> Date </th>
-            <th> Edit </th>
-            <th> Delete </th>
+            <th width="10%" scope="col"> Id </th>
+            <th width="30%" scope="col"> Nom </th>
+            <th width="30%" scope="col"> Region </th>
+            <th width="20%" scope="col"> Date </th>
+            <th width="10%" scope="col"> </th>
          </tr>
-         </thead>
-         <tbody>
+      </thead>
+      <tbody>
          <tr th:if="${topoList.empty}">
             <td colspan="2"> Pas de topo disponible </td>
          </tr>
          <tr th:each="topo : ${topoList}">
-            <td><span th:text="${topo.id}"> Id </span></td>
+            <th scope="row"><span th:text="${topo.id}"> Id </span></th>
             <td><span th:text="${siteList.get(__${topo.id}__-1).nom}"> Nom </span></td>
             <td><span th:text="${topo.region}"> Région </span></td>
             <td><span th:text="${topo.date}"> Date </span></td>
 
-            <td><a th:href="@{/edittopo/{id}(id=${topo.id})}">Modifier</a></td>
-            <td><a th:href="@{/deletetopo/{id}(id=${topo.id})}">Supprimer</a></td>
+            <td><a th:href="@{/edittopo/{id}(id=${topo.id})}"><button>Consulter</button></a></td>
          </tr>
-         </tbody>
+      </tbody>
       </table>
-      </div>
+
    </section>
 
-   <footer class="row">
-      <div class="col-lg-12" th:replace="~{fragments/footer :: footer}"></div>
-   </footer>
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
 </body>
 </html>

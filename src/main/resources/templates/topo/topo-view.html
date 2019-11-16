@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head}"></head>
+<head th:replace="~{fragments/header :: header}"></head>
 <body>
 <div class="container">
-   <nav th:replace="~{fragments/nav :: nav}"></nav>
+   <nav th:replace="~{fragments/nav :: navbar}"></nav>
 
    <header class="row">
       <div class=""col-sm-12>
@@ -13,7 +13,7 @@
 
    <section class="row">
       <div class="col-lg-12">
-      <form action="#" th:action="@{/updatetopo/{id}(id=${site.id})}" th:object="${site}" method="post">
+      <form action="#" th:action="@{/edittopo/{id}(id=${site.id})}" th:object="${site}" method="post">
 
    <label for="nom">Nom</label>
    <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
@@ -35,7 +35,7 @@
    <input type="text" th:field="*{lienCarte}" id="lienCarte" placeholder="Lien carte">
    <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="*{lienCarte}"></span>
    <br>
-   <input type="submit" value="Update Site">
+   <input type="submit" value="Editer">
 </form>
 
       </div>
