@@ -1,4 +1,4 @@
-package com.dsf.escalade.controller;
+package com.dsf.escalade.web.controller;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -12,8 +12,7 @@ public class MvcConfig implements WebMvcConfigurer {
       registry.addViewController("/home").setViewName("home");
       registry.addViewController("/hello").setViewName("hello");
       registry.addViewController("/login").setViewName("login");
-      registry.addViewController("/topo/topo-list").setViewName("topo/topo-list");
-      registry.addViewController("/topo/topo-update").setViewName("topo/topo-update");
+      registry.addViewController("/topo/**").setViewName("topo/**");
 
    }
 

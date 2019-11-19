@@ -1,8 +1,8 @@
-package com.dsf.escalade.controller;
+package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.dao.metier.SecteurDao;
-import com.dsf.escalade.dao.metier.SiteDao;
-import com.dsf.escalade.dao.metier.TopoDao;
+import com.dsf.escalade.repository.metier.SecteurRepository;
+import com.dsf.escalade.repository.metier.SiteRepository;
+import com.dsf.escalade.repository.metier.TopoRepository;
 import com.dsf.escalade.model.metier.Site;
 import com.dsf.escalade.model.metier.SiteType;
 import lombok.extern.slf4j.Slf4j;
@@ -15,25 +15,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Controller
 @Slf4j
 public class SiteController {
 
    @Autowired
-   private SiteDao siteDao;
+   private SiteRepository siteRepository;
 
    @Autowired
-   private TopoDao topoDao;
+   private TopoRepository topoRepository;
 
    @Autowired
-   private SecteurDao secteurDao;
+   private SecteurRepository secteurRepository;
 
    @GetMapping("/listsite")
    public String listSite(Model model) {
 
-      model.addAttribute("siteList", siteDao.findAll());
+      model.addAttribute("siteList", siteRepository.findAll());
       return "site-list";
    }
 
@@ -44,14 +43,14 @@ public class SiteController {
          return "site-add";
       }
 
-      siteDao.save(site);
-      model.addAttribute("siteList",siteDao.findAll());
+      siteRepository.save(site);
+      model.addAttribute("siteList", siteRepository.findAll());
       return "site-list";
    }
 
    @GetMapping("/editsite/{id}")
    public String editSite(@PathVariable("id") Integer id, Model model) {
-      Site site = siteDao.findById(id)
+      Site site = siteRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid site Id:" + id));
 
       model.addAttribute("site", site);
@@ -75,18 +74,18 @@ public class SiteController {
          log.info("\nVOIE : " +site.toString());
       }
 
-      siteDao.save(site);
+      siteRepository.save(site);
 
-      model.addAttribute("siteList",siteDao.findAll());
+      model.addAttribute("siteList", siteRepository.findAll());
       return "site-list";
    }
 
    @GetMapping("/deletesite/{id}")
    public String deleteSite(@PathVariable("id") Integer id, Model model) {
-      Site site = siteDao.findById(id)
+      Site site = siteRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid site Id:" + id));
-      siteDao.delete(site);
-      model.addAttribute("users", siteDao.findAll());
+      siteRepository.delete(site);
+      model.addAttribute("users", siteRepository.findAll());
       return "site-list";
    }
 

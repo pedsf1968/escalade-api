@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <body>
-   <footer class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-bottom text-center" th:fragment="footer">
+   <footer class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom text-center" th:fragment="footer">
       <table class="table">
          <tr>
             <td>
@@ -22,6 +22,18 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
       <!-- Bootstrap -->
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+      <script>
+         // Initialize tooltip component
+         $(function () {
+           $('[data-toggle="tooltip"]').tooltip()
+         })
+
+         // Initialize popover component
+         $(function () {
+           $('[data-toggle="popover"]').popover()
+         })
+      </script>
    </footer>
 </body>
 </html>

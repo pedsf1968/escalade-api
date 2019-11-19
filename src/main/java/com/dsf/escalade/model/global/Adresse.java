@@ -7,8 +7,8 @@ import java.io.Serializable;
 public class Adresse implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", columnDefinition = "INTEGER(10)")
-   private Integer id;
+   @Column(name = "id")
+   private Long id;
    @Column(name = "appartement", columnDefinition = "VARCHAR(5)")
    private String appartement;
    @Column(name = "etage", columnDefinition = "VARCHAR(3)")
@@ -41,7 +41,7 @@ public class Adresse implements Serializable {
    public Adresse() {
    }
 
-   public Adresse(Integer id, String appartement, String etage, String couloir, String escalier, String entree, String immeuble, String residence, String numero, String voie, String place, String code, String ville, String pays, String commentaire) {
+   public Adresse(Long id, String appartement, String etage, String couloir, String escalier, String entree, String immeuble, String residence, String numero, String voie, String place, String code, String ville, String pays, String commentaire) {
       this.id = id;
       this.appartement = appartement;
       this.etage = etage;
@@ -59,11 +59,11 @@ public class Adresse implements Serializable {
       this.commentaire = commentaire;
    }
 
-   public Integer getId() {
+   public Long getId() {
       return id;
    }
 
-   public void setId(Integer id) {
+   public void setId(Long id) {
       this.id = id;
    }
 

@@ -7,32 +7,32 @@ import java.util.Objects;
 
 @Embeddable
 public class TagListPK implements Serializable {
-   @Column(name = "topo_id", columnDefinition = "INTEGER(10)")
-   private Integer topo;
-   @Column(name = "tag_id", columnDefinition = "INTEGER(2)")
-   private Integer tag;
+   @Column(name = "topo_id")
+   private Long topo;
+   @Column(name = "tag_id")
+   private Long tag;
 
    public TagListPK() {
    }
 
-   public TagListPK(Integer topo, Integer tag) {
+   public TagListPK(Long topo, Long tag) {
       this.topo = topo;
       this.tag = tag;
    }
 
-   public Integer getTopo() {
+   public Long getTopo() {
       return topo;
    }
 
-   public void setTopo(Integer topo) {
+   public void setTopo(Long topo) {
       this.topo = topo;
    }
 
-   public Integer getTag() {
+   public Long getTag() {
       return tag;
    }
 
-   public void setTag(Integer tag) {
+   public void setTag(Long tag) {
       this.tag = tag;
    }
 

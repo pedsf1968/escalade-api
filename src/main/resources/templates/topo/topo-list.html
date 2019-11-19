@@ -1,5 +1,7 @@
-<!DOCTYPE HTML>
-<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/head :: head}"></head>
 <body>
@@ -12,18 +14,18 @@
 
    <section>
       <table class="table table-striped">
-      <thead>
+         <thead>
          <tr>
-            <th width="10%" scope="col"> Id </th>
-            <th width="30%" scope="col"> Nom </th>
-            <th width="30%" scope="col"> Region </th>
-            <th width="20%" scope="col"> Date </th>
-            <th width="10%" scope="col"> </th>
+            <th width="10%" scope="col"> Id</th>
+            <th width="30%" scope="col"> Nom</th>
+            <th width="30%" scope="col"> Region</th>
+            <th width="20%" scope="col"> Date</th>
+            <th width="10%" scope="col"></th>
          </tr>
-      </thead>
-      <tbody>
+         </thead>
+         <tbody>
          <tr th:if="${topoList.empty}">
-            <td colspan="2"> Pas de topo disponible </td>
+            <td colspan="2"> Pas de topo disponible</td>
          </tr>
          <tr th:each="topo : ${topoList}">
             <th scope="row"><span th:text="${topo.id}"> Id </span></th>
@@ -31,9 +33,11 @@
             <td><span th:text="${topo.region}"> Région </span></td>
             <td><span th:text="${topo.date}"> Date </span></td>
 
-            <td><a th:href="@{/edittopo/{id}(id=${topo.id})}"><button>Consulter</button></a></td>
+            <td><a th:href="@{/viewtopo/{id}(id=${topo.id})}">
+               <button>Consulter</button>
+            </a></td>
          </tr>
-      </tbody>
+         </tbody>
       </table>
 
    </section>

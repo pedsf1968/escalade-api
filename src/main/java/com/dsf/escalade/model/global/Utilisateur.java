@@ -1,13 +1,15 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 public class Utilisateur {
    @Id
    @GeneratedValue(strategy =  GenerationType.AUTO)
-   @Column(name = "id", columnDefinition = "INTEGER(10)")
-   private Integer id;
+   @Column(name = "id")
+   private Long id;
    @Column(name = "civilite", columnDefinition = "VARCHAR(4) DEFAULT 'M'")
    @Enumerated(EnumType.STRING)
    private Civilite civilite;
@@ -15,45 +17,41 @@ public class Utilisateur {
    private String nom;
    @Column(name = "prenom", columnDefinition = "VARCHAR(50) NOT NULL")
    private String prenom;
-   @Column(name = "pseudo", columnDefinition = "VARCHAR(20)")
-   private String pseudo;
    @Column(name = "telephone", columnDefinition = "VARCHAR(10)")
    private String telephone;
    @Column(name = "mail", columnDefinition = "VARCHAR(255) NOT NULL")
    private String mail;
-   @Column(name = "login", columnDefinition = "VARCHAR(20)")
+   @Column(name = "login", columnDefinition = "VARCHAR(20) NOT NULL")
    private String login;
-   @Column(name = "mot_de_passe", columnDefinition = "VARCHAR(255)")
+   @Column(name = "mot_de_passe", columnDefinition = "VARCHAR(255) NOT NULL")
    private String motDePasse;
    @Column(name = "est_membre")
    private Boolean estMembre;
-   @Column(name = "adresse_id", columnDefinition = "INTEGER(10)")
-   private Integer adresse;
+   @Column(name = "adresse_id")
+   private Long adresse;
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+   private Collection<Role> roles;
 
    public Utilisateur() {
    }
 
-   public Utilisateur(Integer id, Civilite civilite, String nom, String prenom, String mail, String login, String motDePasse) {
+   public Utilisateur(Long id, Civilite civilite, String nom, String prenom, String telephone, String mail, String login, String motDePasse) {
       this.id = id;
       this.civilite = civilite;
       this.nom = nom;
       this.prenom = prenom;
-      this.pseudo = null;
-      this.telephone = null;
+      this.telephone = telephone;
       this.mail = mail;
       this.login = login;
       this.motDePasse = motDePasse;
-      this.estMembre = false;
-      this.adresse = null;
    }
 
-
-   public Utilisateur(Integer id, Civilite civilite, String nom, String prenom, String pseudo, String telephone, String mail, String login, String motDePasse, Boolean isMenbre, Integer adresse) {
+   public Utilisateur(Long id, Civilite civilite, String nom, String prenom, String telephone, String mail, String login, String motDePasse, String confirmationMotDePasse, Set<Role> roles, Boolean estMembre, Long adresse) {
       this.id = id;
       this.civilite = civilite;
       this.nom = nom;
       this.prenom = prenom;
-      this.pseudo = pseudo;
       this.telephone = telephone;
       this.mail = mail;
       this.login = login;
@@ -62,11 +60,11 @@ public class Utilisateur {
       this.adresse = adresse;
    }
 
-   public Integer getId() {
+   public Long getId() {
       return id;
    }
 
-   public void setId(Integer id) {
+   public void setId(Long id) {
       this.id = id;
    }
 
@@ -92,14 +90,6 @@ public class Utilisateur {
 
    public void setPrenom(String prenom) {
       this.prenom = prenom;
-   }
-
-   public String getPseudo() {
-      return pseudo;
-   }
-
-   public void setPseudo(String pseudo) {
-      this.pseudo = pseudo;
    }
 
    public String getTelephone() {
@@ -134,6 +124,7 @@ public class Utilisateur {
       this.motDePasse = motDePasse;
    }
 
+
    public Boolean getEstMembre() {
       return estMembre;
    }
@@ -142,27 +133,35 @@ public class Utilisateur {
       estMembre = membre;
    }
 
-   public Integer getAdresse() {
+   public Long getAdresse() {
       return adresse;
    }
 
-   public void setAdresse(Integer adresse) {
+   public void setAdresse(Long adresse) {
       this.adresse = adresse;
+   }
+
+   public Collection<Role> getRoles() {
+      return roles;
+   }
+
+   public void setRoles(Collection<Role> roles) {
+      this.roles = roles;
    }
 
    @Override
    public String toString() {
       return "Utilisateur{" +
             "id=" + id +
-            ", civilite='" + civilite + '\'' +
+            ", civilite=" + civilite +
             ", nom='" + nom + '\'' +
             ", prenom='" + prenom + '\'' +
-            ", pseudo='" + pseudo + '\'' +
             ", telephone='" + telephone + '\'' +
             ", mail='" + mail + '\'' +
             ", login='" + login + '\'' +
             ", motDePasse='" + motDePasse + '\'' +
-            ", isMenbre=" + estMembre +
+            ", roles=" + roles +
+            ", estMembre=" + estMembre +
             ", adresse=" + adresse +
             '}';
    }

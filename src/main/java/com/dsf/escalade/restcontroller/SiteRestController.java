@@ -1,6 +1,6 @@
 package com.dsf.escalade.restcontroller;
 
-import com.dsf.escalade.dao.metier.SiteDao;
+import com.dsf.escalade.repository.metier.SiteRepository;
 import com.dsf.escalade.model.metier.Site;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +17,22 @@ import java.util.Optional;
 public class SiteRestController {
 
    @Autowired
-   private SiteDao siteDao;
+   private SiteRepository siteRepository;
 
    @GetMapping(value = "/site")
    public List<Site> findAll(){
-      return siteDao.findAll();
+      return siteRepository.findAll();
    }
 
    @GetMapping(value = "/site/{id}")
    public Optional<Site> findById(@PathVariable int id){
-      log.info("id : " + id + siteDao.findById(1).toString());
-      return siteDao.findById(id);
+      log.info("id : " + id + siteRepository.findById(1).toString());
+      return siteRepository.findById(id);
    }
 
    @PostMapping(value = "/site")
    public ResponseEntity<Object> save(@RequestBody Site site){
-      Site siteAdded = siteDao.save(site);
+      Site siteAdded = siteRepository.save(site);
 
       if (siteAdded == null)
          return ResponseEntity.noContent().build();

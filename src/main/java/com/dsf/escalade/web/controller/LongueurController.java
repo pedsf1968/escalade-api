@@ -1,6 +1,6 @@
-package com.dsf.escalade.controller;
+package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.dao.metier.LongueurDao;
+import com.dsf.escalade.repository.metier.LongueurRepository;
 import com.dsf.escalade.model.metier.Longueur;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +13,12 @@ import java.util.List;
 @Slf4j
 public class LongueurController {
    @Autowired
-   private LongueurDao longueurDao;
+   private LongueurRepository longueurRepository;
 
    @GetMapping(value = "/Longueur")
    public List<Longueur> displayAllSite(){
 
-      return longueurDao.findAll();
+      return longueurRepository.findAll();
    }
 
 

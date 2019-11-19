@@ -7,35 +7,35 @@ import java.io.Serializable;
 public class Commentaire implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "site_id", columnDefinition = "INTEGER(10)")
-   private Integer id;
-   @Column(name = "grimpeur_id", columnDefinition = "INTEGER(10) NOT NULL")
-   private Integer grimpeur;
+   @Column(name = "site_id")
+   private Long id;
+   @Column(name = "grimpeur_id", columnDefinition = "NOT NULL")
+   private Long grimpeur;
    @Column(name = "texte", columnDefinition = "TEXT")
    private String texte;
 
    public Commentaire() {
    }
 
-   public Commentaire(Integer id, Integer grimpeur, String texte) {
+   public Commentaire(Long id, Long grimpeur, String texte) {
       this.id = id;
       this.grimpeur = grimpeur;
       this.texte = texte;
    }
 
-   public Integer getId() {
+   public Long getId() {
       return id;
    }
 
-   public void setId(Integer id) {
+   public void setId(Long id) {
       this.id = id;
    }
 
-   public Integer getGrimpeur() {
+   public Long getGrimpeur() {
       return grimpeur;
    }
 
-   public void setGrimpeur(Integer grimpeur) {
+   public void setGrimpeur(Long grimpeur) {
       this.grimpeur = grimpeur;
    }
 
