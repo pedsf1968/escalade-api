@@ -4,23 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "commentaire")
 public class Commentaire implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "site_id")
    private Long id;
-   @Column(name = "grimpeur_id", columnDefinition = "NOT NULL")
+   @Column(name = "grimpeur_id", nullable = false)
    private Long grimpeur;
    @Column(name = "texte", columnDefinition = "TEXT")
    private String texte;
 
    public Commentaire() {
-   }
-
-   public Commentaire(Long id, Long grimpeur, String texte) {
-      this.id = id;
-      this.grimpeur = grimpeur;
-      this.texte = texte;
+      super();
    }
 
    public Long getId() {

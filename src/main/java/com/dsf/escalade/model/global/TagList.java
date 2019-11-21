@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Table(name = "tag_list")
 public class TagList implements Serializable {
    @EmbeddedId
    @AttributeOverrides({

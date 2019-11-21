@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Cotation")
+@Table(name = "cotation")
 public class Cotation {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,6 +14,7 @@ public class Cotation {
    private String niveauFr;
 
    public Cotation() {
+      super();
    }
 
    public Cotation(Integer id, String niveauFr) {

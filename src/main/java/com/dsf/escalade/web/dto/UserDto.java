@@ -1,7 +1,6 @@
 package com.dsf.escalade.web.dto;
 
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -15,12 +14,10 @@ public class UserDto {
     private String lastName;
 
     @NotNull
-    @NotBlank
     @Size(min = 1)
     private String login;
 
     @NotNull
-    @NotBlank
     @Size(min = 1)
     private String password;
 

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Table(name = "spit")
 public class Spit implements Serializable {
    @EmbeddedId
    @AttributeOverrides({

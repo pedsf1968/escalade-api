@@ -5,15 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
-   Utilisateur findByMail(String email);
-
-   @Override
-   Utilisateur save(Utilisateur utilisateur);
-
-   @Override
-   void delete(Utilisateur utilisateur);
-
-
+public interface UtilisateurRepository extends JpaRepository<Utilisateur,Integer> {
    Utilisateur findByNom(String nom);
+   Utilisateur findByMail(String email);
+   Utilisateur findByLogin(String login);
 }

@@ -32,10 +32,11 @@ public class Site implements Serializable {
    protected String lienCarte;
 
    public Site() {
+      super();
    }
 
-   public Site(int id, String nom, SiteType type) {
-      this.id = id;
+   public Site(String nom, SiteType type) {
+      super();
       this.nom = nom;
       this.type = type;
       this.aCommentaire = false;
@@ -44,6 +45,7 @@ public class Site implements Serializable {
    }
 
    public Site(int id, String nom, SiteType type, Boolean aCommentaire, String lienPhoto, String lienCarte) {
+      super();
       this.id = id;
       this.nom = nom;
       this.type = type;

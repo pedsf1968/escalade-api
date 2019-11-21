@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "tag")
 public class Tag implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)

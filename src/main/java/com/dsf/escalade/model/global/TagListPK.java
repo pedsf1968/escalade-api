@@ -13,11 +13,7 @@ public class TagListPK implements Serializable {
    private Long tag;
 
    public TagListPK() {
-   }
-
-   public TagListPK(Long topo, Long tag) {
-      this.topo = topo;
-      this.tag = tag;
+      super();
    }
 
    public Long getTopo() {

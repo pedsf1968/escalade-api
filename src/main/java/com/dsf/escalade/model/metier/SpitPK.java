@@ -12,7 +12,7 @@ public class SpitPK implements Serializable {
    @Column(name = "numero", columnDefinition = "INTEGER(3)")
    private Integer numero;
 
-   public SpitPK() { }
+   public SpitPK() {super(); }
 
    public SpitPK(Integer topo, Integer numero) {
       this.topo = topo;

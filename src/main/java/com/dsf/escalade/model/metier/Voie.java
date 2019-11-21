@@ -23,7 +23,7 @@ public class Voie extends Site {
    }
 
    public Voie(int id, String nom, Integer secteur, Boolean estEquipee, Integer hauteur, Integer cotation) {
-      super(id, nom, SiteType.VOIE);
+      super(nom, SiteType.VOIE);
       this.secteur = secteur;
       this.estEquipee = estEquipee;
       this.hauteur = hauteur;

@@ -25,8 +25,6 @@ import javax.validation.Valid;
 public class UtilisateurController  {
    @Autowired
    private BCryptPasswordEncoder bCryptPasswordEncoder;
-   @Autowired
-   private PasswordEncoder passwordEncoder;
 
    @Autowired
    private UserService userService;
@@ -34,27 +32,19 @@ public class UtilisateurController  {
    @Autowired
    private SecurityService securityService;
 
-
    @Autowired
-   private UtilisateurRepository utitilisateurDao;
+   private UtilisateurRepository utilisateurRepository;
 
 
    @GetMapping("/enregistrement")
-   public String registration(Model model) {
-      // model.addAttribute("utilisateur", new Utilisateur());
+   public String getRegistration(Model model) {
       model.addAttribute("user", new UserDto());
-
-      log.info("\n\n passwordEncoder : dupont :" + passwordEncoder.encode("dupont"));
-      log.info("\n\n bCryptPasswordEncoder : dupont :" + bCryptPasswordEncoder.encode("dupont"));
-      log.info("\n\n passwordEncoder : tintin :" + passwordEncoder.encode("tintin"));
-      log.info("\n\n bCryptPasswordEncoder : tintin :" + bCryptPasswordEncoder.encode("tintin"));
 
       return "utilisateur/enregistrement";
    }
 
    @PostMapping("/enregistrement")
-   public String registration(@ModelAttribute("user") UserDto user, BindingResult bindingResult) {
-      log.info("\n\n utilisateur"+ user.toString()+"\n\n");
+   public String postRegistration(@ModelAttribute("user") UserDto user, BindingResult bindingResult) {
 
       if (bindingResult.hasErrors()) {
          return "utilisateur/enregistrement";
@@ -64,15 +54,16 @@ public class UtilisateurController  {
          return "utilisateur/enregistrement";
       }
 
-      Utilisateur utilisateur = userService.registerNewUserAccount(user);
+      userService.registerNewUserAccount(user);
 
-      //securityService.autoLogin(utilisateur.getNom(), utilisateur.getConfirmationMotDePasse());
+      securityService.autoLogin(user.getLastName(), bCryptPasswordEncoder.encode(user.getMatchingPassword()));
 
-      return "topo/topo-list";
+      return "redirect:/";
    }
 
    @GetMapping("/login")
    public String login(Model model, String error, String logout) {
+
       if (error != null)
          model.addAttribute("error", "Your username and password is invalid.");
 
@@ -85,27 +76,28 @@ public class UtilisateurController  {
 
 
 
+
    @PostMapping("/adduser")
    public String addUser(@Valid Utilisateur utilisateur, BindingResult result, Model model) {
       if (result.hasErrors()) {
          return "utilisateur-add";
       }
 
-      utitilisateurDao.save(utilisateur);
-      model.addAttribute("utilisateurs", utitilisateurDao.findAll());
+      utilisateurRepository.save(utilisateur);
+      model.addAttribute("utilisateurs", utilisateurRepository.findAll());
       return "index";
    }
 
    @PostMapping("/update/{id}")
-   public String updateUser(@PathVariable("id") Long id, @Valid Utilisateur utilisateur,
+   public String updateUser(@PathVariable("id") Integer id, @Valid Utilisateur utilisateur,
                             BindingResult result, Model model) {
       if (result.hasErrors()) {
          utilisateur.setId(id);
          return "utilisateur-update";
       }
 
-      utitilisateurDao.save(utilisateur);
-      model.addAttribute("utilisateurs", utitilisateurDao.findAll());
+      utilisateurRepository.save(utilisateur);
+      model.addAttribute("utilisateurs", utilisateurRepository.findAll());
       return "index";
    }
 
