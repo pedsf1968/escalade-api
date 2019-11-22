@@ -1,65 +1,66 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
+@Table(name = "utilisateur")
 public class Utilisateur {
+
    @Id
-   @GeneratedValue(strategy =  GenerationType.AUTO)
-   @Column(name = "id", columnDefinition = "INTEGER(10)")
+   @Column(name = "id")
+   @GeneratedValue(strategy =  GenerationType.IDENTITY)
    private Integer id;
+
    @Column(name = "civilite", columnDefinition = "VARCHAR(4) DEFAULT 'M'")
    @Enumerated(EnumType.STRING)
    private Civilite civilite;
+
    @Column(name = "nom", columnDefinition = "VARCHAR(50) NOT NULL")
    private String nom;
+
    @Column(name = "prenom", columnDefinition = "VARCHAR(50) NOT NULL")
    private String prenom;
-   @Column(name = "pseudo", columnDefinition = "VARCHAR(20)")
-   private String pseudo;
+
    @Column(name = "telephone", columnDefinition = "VARCHAR(10)")
    private String telephone;
+
    @Column(name = "mail", columnDefinition = "VARCHAR(255) NOT NULL")
    private String mail;
-   @Column(name = "login", columnDefinition = "VARCHAR(20)")
+
+   @Column(name = "login", columnDefinition = "VARCHAR(20) NOT NULL")
    private String login;
-   @Column(name = "mot_de_passe", columnDefinition = "VARCHAR(255)")
+
+   @Column(name = "mot_de_passe", columnDefinition = "VARCHAR(255) NOT NULL")
    private String motDePasse;
+   private boolean enabled;
+   private boolean tokenExpired;
+
    @Column(name = "est_membre")
    private Boolean estMembre;
-   @Column(name = "adresse_id", columnDefinition = "INTEGER(10)")
-   private Integer adresse;
+   @Column(name = "adresse_id")
+   private Long adresse;
+
+   @ManyToMany//(fetch = FetchType.EAGER)
+   @JoinTable(
+         name = "users_roles",
+         joinColumns = @JoinColumn(
+               name = "user_id", referencedColumnName = "id"),
+         inverseJoinColumns = @JoinColumn(
+               name = "role_id", referencedColumnName = "id"))
+   private Collection<Role> roles;
 
    public Utilisateur() {
+      super();
    }
 
-   public Utilisateur(Integer id, Civilite civilite, String nom, String prenom, String mail, String login, String motDePasse) {
-      this.id = id;
+   public Utilisateur(Civilite civilite, String nom, String prenom, String mail, String login, String motDePasse) {
       this.civilite = civilite;
       this.nom = nom;
       this.prenom = prenom;
-      this.pseudo = null;
-      this.telephone = null;
       this.mail = mail;
       this.login = login;
       this.motDePasse = motDePasse;
-      this.estMembre = false;
-      this.adresse = null;
-   }
-
-
-   public Utilisateur(Integer id, Civilite civilite, String nom, String prenom, String pseudo, String telephone, String mail, String login, String motDePasse, Boolean isMenbre, Integer adresse) {
-      this.id = id;
-      this.civilite = civilite;
-      this.nom = nom;
-      this.prenom = prenom;
-      this.pseudo = pseudo;
-      this.telephone = telephone;
-      this.mail = mail;
-      this.login = login;
-      this.motDePasse = motDePasse;
-      this.estMembre = estMembre;
-      this.adresse = adresse;
    }
 
    public Integer getId() {
@@ -94,14 +95,6 @@ public class Utilisateur {
       this.prenom = prenom;
    }
 
-   public String getPseudo() {
-      return pseudo;
-   }
-
-   public void setPseudo(String pseudo) {
-      this.pseudo = pseudo;
-   }
-
    public String getTelephone() {
       return telephone;
    }
@@ -134,6 +127,22 @@ public class Utilisateur {
       this.motDePasse = motDePasse;
    }
 
+   public boolean isEnabled() {
+      return enabled;
+   }
+
+   public void setEnabled(boolean enabled) {
+      this.enabled = enabled;
+   }
+
+   public boolean isTokenExpired() {
+      return tokenExpired;
+   }
+
+   public void setTokenExpired(boolean tokenExpired) {
+      this.tokenExpired = tokenExpired;
+   }
+
    public Boolean getEstMembre() {
       return estMembre;
    }
@@ -142,28 +151,37 @@ public class Utilisateur {
       estMembre = membre;
    }
 
-   public Integer getAdresse() {
+   public Long getAdresse() {
       return adresse;
    }
 
-   public void setAdresse(Integer adresse) {
+   public void setAdresse(Long adresse) {
       this.adresse = adresse;
+   }
+
+   public Collection<Role> getRoles() {
+      return roles;
+   }
+
+   public void setRoles(Collection<Role> roles) {
+      this.roles = roles;
    }
 
    @Override
    public String toString() {
-      return "Utilisateur{" +
-            "id=" + id +
-            ", civilite='" + civilite + '\'' +
-            ", nom='" + nom + '\'' +
-            ", prenom='" + prenom + '\'' +
-            ", pseudo='" + pseudo + '\'' +
-            ", telephone='" + telephone + '\'' +
-            ", mail='" + mail + '\'' +
-            ", login='" + login + '\'' +
-            ", motDePasse='" + motDePasse + '\'' +
-            ", isMenbre=" + estMembre +
-            ", adresse=" + adresse +
-            '}';
+      final StringBuilder builder = new StringBuilder();
+      builder.append("Utilisateur [")
+            .append("id=").append(id)
+            .append(", civilite=").append(civilite)
+            .append(", nom=").append(nom)
+            .append(", prenom=").append(prenom)
+            .append(", telephone=").append(telephone)
+            .append(", mail=").append(mail)
+            .append(", login=").append(login)
+            .append(", motDePasse=").append(motDePasse)
+            .append(", roles=").append(roles)
+            .append("]");
+
+      return builder.toString();
    }
 }

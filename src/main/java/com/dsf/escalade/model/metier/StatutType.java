@@ -4,5 +4,5 @@ public enum StatutType {
    Indisponible,
    Displonible,
    Demandé,
-   Réservé
+   Réservé;
 }

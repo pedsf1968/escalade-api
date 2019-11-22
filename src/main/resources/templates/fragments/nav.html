@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:fragment="nav">
+      <a class="navbar-brand" href="#">Escalade</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+               <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item active">
+               <a class="nav-link" href="/listtopo">Topo</a>
+            </li>
+         </ul>
+         <ul class="navbar-nav ml-auto">
+            <li>
+               <a class="btn btn-lg active align-right" href="/signin" th:href="@{/login}" sec:authorize="!isAuthenticated()">
+                  <i class="fas fa-sign-in-alt"></i>Se connecter
+               </a>
+            </li>
+            <li>
+               <a class="btn btn-lg active" href="/logout" th:href="@{#}" onclick="$('/logout').submit();" sec:authorize="isAuthenticated()">
+                  <i class="fas fa-sign-out-alt"></i>Se déconnecter
+               </a>
+            </li>
+            <li>
+               <a class="btn btn-lg disable" href="//utilisateur/enregistrement" th:href="@{/enregistrement}" onclick="$('#form').submit();" sec:authorize="!isAuthenticated()">
+                  <i class="fas fa-sign-in-alt"></i></i>&nbsp;S'inscrire
+               </a>
+            </li>
+         </ul>
+      </div>
+   </nav>
+</body>
+</html>

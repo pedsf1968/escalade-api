@@ -1,6 +1,6 @@
 package com.dsf.escalade.restcontroller;
 
-import com.dsf.escalade.dao.global.UtilisateurDao;
+import com.dsf.escalade.repository.global.UtilisateurRepository;
 import com.dsf.escalade.model.global.Utilisateur;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UtilisateurRestController {
 
    @Autowired
-   private UtilisateurDao utitilisateurDao;
+   private UtilisateurRepository utitilisateurDao;
 
    @GetMapping("/utilisateur")
    public ModelAndView showForm() {

@@ -1,41 +1,46 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-   <title>Getting Started: Handling Form Submission</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="~{fragments/head :: head}">Liste des Sites</head>
 <body>
-<div th:replace="~{fragments/header :: header}">Header</div>
-<h1>Liste des sites</h1>
-<table>
-   <thead>
-   <tr>
-      <th> Id </th>
-      <th> Nom </th>
-      <th> Type </th>
-      <th> Commentaire </th>
-      <th> Lien photo </th>
-      <th> Lien carte </th>
-      <th> Edit </th>
-      <th> Delete </th>
-   </tr>
-   </thead>
-   <tbody>
-   <tr th:if="${siteList.empty}">
-      <td colspan="2"> Pas de site disponible </td>
-   </tr>
-   <tr th:each="site : ${siteList}">
-      <td><span th:text="${site.id}"> Id </span></td>
-      <td><span th:text="${site.nom}"> Nom </span></td>
-      <td><span th:text="${site.type}"> Type </span></td>
-      <td><input type="checkbox" name="Commentaire" th:checked="${site.aCommentaire}" onclick="return false;" onkeydown="e = e || window.event; if(e.keyCode !== 9) return false;"/></td>
-      <td><span th:text="${site.lienPhoto}"> Lien photo </span></td>
-      <td><span th:text="${site.lienCarte}"> Lien carte </span></td>
-      <td><a th:href="@{/editsite/{id}(id=${site.id})}">Modifier</a></td>
-      <td><a th:href="@{/deletesite/{id}(id=${site.id})}">Supprimer</a></td>
-   </tr>
-   </tbody>
-</table>
-<div th:insert="~{fragments/footer :: footer}">&copy; 2017 The Static Templates</div>
+   <div class="container-fluid">
+      <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+      <header class="jumbotron">
+            <H1 class="display-4">Liste des Sites</H1>
+      </header>
+
+      <section class="row">
+         <table class="col-lg-12">
+         <thead>
+            <tr>
+               <th> Id </th>
+               <th> Nom </th>
+               <th> Type </th>
+               <th> Commentaire </th>
+               <th> Lien photo </th>
+               <th> Lien carte </th>
+               <th> Edit </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr th:if="${siteList.empty}">
+               <td colspan="2"> Pas de site disponible </td>
+            </tr>
+            <tr th:each="site : ${siteList}">
+               <td><span th:text="${site.id}"> Id </span></td>
+               <td><span th:text="${site.nom}"> Nom </span></td>
+               <td><span th:text="${site.type}"> Type </span></td>
+               <td><input type="checkbox" name="Commentaire" th:checked="${site.aCommentaire}" onclick="return false;" onkeydown="e = e || window.event; if(e.keyCode !== 9) return false;"/></td>
+               <td><span th:text="${site.lienPhoto}"> Lien photo </span></td>
+               <td><span th:text="${site.lienCarte}"> Lien carte </span></td>
+               <td><a class="btn" th:href="@{/editsite/{id}(id=${site.id})}">Modifier</a></td>
+            </tr>
+         </tbody>
+         </table>
+      </section>
+
+      <footer th:insert="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+   </div>
 </body>
 </html>

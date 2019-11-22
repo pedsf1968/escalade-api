@@ -4,27 +4,28 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "tag")
 public class Tag implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", columnDefinition = "INTEGER(2)")
-   private Integer id;
+   @Column(name = "id")
+   private Long id;
    @Column(name = "nom", columnDefinition = "VARCHAR(20) NOT NULL")
    private String nom;
 
    public Tag() {
    }
 
-   public Tag(Integer id, String name) {
+   public Tag(Long id, String name) {
       this.id = id;
       this.nom = name;
    }
 
-   public Integer getId() {
+   public Long getId() {
       return id;
    }
 
-   public void setId(Integer id) {
+   public void setId(Long id) {
       this.id = id;
    }
 

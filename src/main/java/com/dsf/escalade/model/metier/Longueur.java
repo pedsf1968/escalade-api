@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "longueur")
 public class Longueur implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +22,7 @@ public class Longueur implements Serializable {
    private Integer nbSpits;
 
    protected Longueur() {
+      super();
    }
 
    public Longueur(Integer id, String nom, Integer cotation, Integer voie, Integer hauteur, Integer nbSpits) {

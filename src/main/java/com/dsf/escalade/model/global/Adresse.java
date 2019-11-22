@@ -4,11 +4,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "adresse")
 public class Adresse implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", columnDefinition = "INTEGER(10)")
-   private Integer id;
+   @Column(name = "id")
+   private Long id;
    @Column(name = "appartement", columnDefinition = "VARCHAR(5)")
    private String appartement;
    @Column(name = "etage", columnDefinition = "VARCHAR(3)")
@@ -39,31 +40,14 @@ public class Adresse implements Serializable {
    private String commentaire;
 
    public Adresse() {
+      super();
    }
 
-   public Adresse(Integer id, String appartement, String etage, String couloir, String escalier, String entree, String immeuble, String residence, String numero, String voie, String place, String code, String ville, String pays, String commentaire) {
-      this.id = id;
-      this.appartement = appartement;
-      this.etage = etage;
-      this.couloir = couloir;
-      this.escalier = escalier;
-      this.entree = entree;
-      this.immeuble = immeuble;
-      this.residence = residence;
-      this.numero = numero;
-      this.voie = voie;
-      this.place = place;
-      this.code = code;
-      this.ville = ville;
-      this.pays = pays;
-      this.commentaire = commentaire;
-   }
-
-   public Integer getId() {
+    public Long getId() {
       return id;
    }
 
-   public void setId(Integer id) {
+   public void setId(Long id) {
       this.id = id;
    }
 

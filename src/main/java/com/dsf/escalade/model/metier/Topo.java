@@ -6,9 +6,10 @@ import java.util.Date;
 @Entity
 @Table(name = "topo")
 @PrimaryKeyJoinColumn(name = "site_id")
-public class Topo {
-   @Id
-   private Integer id;
+public class Topo extends Site{
+   //@Id
+   //private Integer id;
+   @Column(name = "region", columnDefinition = "VARCHAR(50)")
    private String region;
    @Column(name = "adresse_id", columnDefinition = "INTEGER(10)")
    private Integer adresse;
@@ -34,8 +35,8 @@ public class Topo {
       super();
    }
 
-     public Topo(int id, String nom, String region, Integer adresse, Date date, String description, String technique, String acces, Integer promoteur, Integer grimpeur, StatutType statut, Boolean statutAuto) {
-      //super(id, nom, SiteType.TOPO );
+     public Topo( String nom, String region, Integer adresse, Date date, String description, String technique, String acces, Integer promoteur, Integer grimpeur, StatutType statut, Boolean statutAuto) {
+      super( nom, SiteType.TOPO );
       this.region = region;
       this.adresse = adresse;
       this.date = date;
@@ -48,13 +49,6 @@ public class Topo {
       this.statutAuto = statutAuto;
    }
 
-   public Integer getId() {
-      return id;
-   }
-
-   public void setId(Integer id) {
-      this.id = id;
-   }
 
    public String getRegion() {
       return region;
