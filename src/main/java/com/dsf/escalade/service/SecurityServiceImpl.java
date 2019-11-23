@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -15,8 +16,7 @@ public class SecurityServiceImpl implements SecurityService {
    private AuthenticationManager authenticationManager;
 
    @Autowired
-   private MyUserDetailsService userDetailsService;
-
+   private UserDetailsService userDetailsService;
 
    @Override
    public String findLoggedInUsername() {
@@ -29,18 +29,18 @@ public class SecurityServiceImpl implements SecurityService {
    }
 
    @Override
-   public void autoLogin(String username, String password) {
+   public void autoLogin(String nom, String motDePasse) {
       UserDetails userDetails = null;
-      userDetails = userDetailsService.loadUserByUsername(username);
+      userDetails = userDetailsService.loadUserByUsername(nom);
 
-      UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+      UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, motDePasse, userDetails.getAuthorities());
 
       authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
 
       if (usernamePasswordAuthenticationToken.isAuthenticated()) {
          SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-         log.debug(String.format("Auto login %s successfully!", username));
+         log.debug(String.format("Auto login %s successfully!", nom));
       }
    }
 }

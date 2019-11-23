@@ -1,7 +1,7 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -13,19 +13,7 @@ public class Role {
    private String name;
 
    @ManyToMany(mappedBy = "roles")
-   private Collection<Utilisateur> utilisateurs;
-
-   @ManyToMany
-   @JoinTable(
-         name = "roles_privileges",
-         joinColumns = @JoinColumn(
-               name = "role_id",
-               referencedColumnName = "id"),
-         inverseJoinColumns = @JoinColumn(
-               name = "privilege_id",
-               referencedColumnName = "id"))
-   private Collection<Privilege> privileges;
-
+   private Set<Utilisateur> utilisateurs;
 
    public Role() {
       super();
@@ -36,9 +24,7 @@ public class Role {
       this.name = name;
    }
 
-   //
-
-   public Long getId() {
+     public Long getId() {
       return id;
    }
 
@@ -54,20 +40,12 @@ public class Role {
       this.name = name;
    }
 
-   public Collection<Utilisateur> getUsers() {
+   public Set<Utilisateur> getUtilisateurs() {
       return utilisateurs;
    }
 
-   public void setUsers(final Collection<Utilisateur> users) {
-      this.utilisateurs = users;
-   }
-
-   public Collection<Privilege> getPrivileges() {
-      return privileges;
-   }
-
-   public void setPrivileges(final Collection<Privilege> privileges) {
-      this.privileges = privileges;
+   public void setUtilisateurs(Set<Utilisateur> utilisateurs) {
+      this.utilisateurs = utilisateurs;
    }
 
    @Override

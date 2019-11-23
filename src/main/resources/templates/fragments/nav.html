@@ -22,7 +22,7 @@
                </a>
             </li>
             <li>
-               <a class="btn btn-lg active" href="/logout" th:href="@{#}" onclick="$('/logout').submit();" sec:authorize="isAuthenticated()">
+               <a class="btn btn-lg active" href="/logout" th:href="@{/logout}" sec:authorize="isAuthenticated()">
                   <i class="fas fa-sign-out-alt"></i>Se déconnecter
                </a>
             </li>

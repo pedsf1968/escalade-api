@@ -1,7 +1,7 @@
 package com.dsf.escalade;
 
 
-import com.dsf.escalade.service.MyUserDetailsService;
+import com.dsf.escalade.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    @Autowired
-   private MyUserDetailsService userDetailsService;
+   private UserDetailsServiceImpl userDetailsService;
 
    @Bean
    public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -33,19 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().headers().frameOptions().sameOrigin()
             .and().logout().permitAll();
    }
-
- /*  @Bean
-   @Override
-   public UserDetailsService userDetailsService() {
-      UserDetails user =
-            User.withDefaultPasswordEncoder()
-                  .username("user")
-                  .password("p")
-                  .roles("USER")
-                  .build();
-
-      return new InMemoryUserDetailsManager(user);
-   }*/
 
    @Bean
    public AuthenticationManager customAuthenticationManager() throws Exception {

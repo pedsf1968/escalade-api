@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.HashSet;
 
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
+
    private final UtilisateurRepository utilisateurRepository;
    private final RoleRepository roleRepository;
    private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -27,9 +28,9 @@ public class UserServiceImpl implements UserService {
       this.bCryptPasswordEncoder = bCryptPasswordEncoder;
    }
 
-   @Override
-   public Utilisateur registerNewUserAccount( UserDto accountDto) {
 
+   @Override
+   public Utilisateur save(UserDto accountDto) {
       if (emailExists(accountDto.getEmail())) {
          throw new UserAlreadyExistException("Il y a déjà un compte avec cette adresse : " + accountDto.getEmail());
       }
@@ -42,11 +43,15 @@ public class UserServiceImpl implements UserService {
       utilisateur.setLogin(accountDto.getLogin());
       utilisateur.setMotDePasse((bCryptPasswordEncoder.encode(accountDto.getPassword())));
       utilisateur.setMail(accountDto.getEmail());
-      utilisateur.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+      utilisateur.setRoles(new HashSet<>(roleRepository.findAll()));
 
       return utilisateurRepository.save(utilisateur);
    }
 
+   @Override
+   public Utilisateur findByNom(String nom) {
+      return utilisateurRepository.findByNom(nom);
+   }
    private boolean emailExists(final String email) {
       return utilisateurRepository.findByMail(email) != null;
    }

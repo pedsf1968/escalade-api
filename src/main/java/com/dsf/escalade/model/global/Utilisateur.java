@@ -1,7 +1,7 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "utilisateur")
@@ -10,7 +10,7 @@ public class Utilisateur {
    @Id
    @Column(name = "id")
    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-   private Integer id;
+   private Long id;
 
    @Column(name = "civilite", columnDefinition = "VARCHAR(4) DEFAULT 'M'")
    @Enumerated(EnumType.STRING)
@@ -33,7 +33,9 @@ public class Utilisateur {
 
    @Column(name = "mot_de_passe", columnDefinition = "VARCHAR(255) NOT NULL")
    private String motDePasse;
+   @Column(name = "enabled")
    private boolean enabled;
+   @Column(name = "token_expired")
    private boolean tokenExpired;
 
    @Column(name = "est_membre")
@@ -41,14 +43,8 @@ public class Utilisateur {
    @Column(name = "adresse_id")
    private Long adresse;
 
-   @ManyToMany//(fetch = FetchType.EAGER)
-   @JoinTable(
-         name = "users_roles",
-         joinColumns = @JoinColumn(
-               name = "user_id", referencedColumnName = "id"),
-         inverseJoinColumns = @JoinColumn(
-               name = "role_id", referencedColumnName = "id"))
-   private Collection<Role> roles;
+   @ManyToMany
+   private Set<Role> roles;
 
    public Utilisateur() {
       super();
@@ -63,11 +59,11 @@ public class Utilisateur {
       this.motDePasse = motDePasse;
    }
 
-   public Integer getId() {
+   public Long getId() {
       return id;
    }
 
-   public void setId(Integer id) {
+   public void setId(Long id) {
       this.id = id;
    }
 
@@ -159,11 +155,11 @@ public class Utilisateur {
       this.adresse = adresse;
    }
 
-   public Collection<Role> getRoles() {
+   public Set<Role> getRoles() {
       return roles;
    }
 
-   public void setRoles(Collection<Role> roles) {
+   public void setRoles(Set<Role> roles) {
       this.roles = roles;
    }
 
