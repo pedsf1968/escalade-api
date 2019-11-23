@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,22 +28,23 @@ public class UserServiceImpl implements UserService {
 
 
    @Override
-   public Utilisateur save(UserDto accountDto) {
-      if (emailExists(accountDto.getEmail())) {
-         throw new UserAlreadyExistException("Il y a déjà un compte avec cette adresse : " + accountDto.getEmail());
+   public Utilisateur save(UserDto userDto) {
+      if (emailExists(userDto.getEmail())) {
+         throw new UserAlreadyExistException("Il y a déjà un compte avec cette adresse : " + userDto.getEmail());
       }
 
       Utilisateur utilisateur = new Utilisateur();
 
       utilisateur.setCivilite(Civilite.M);
-      utilisateur.setPrenom(accountDto.getFirstName());
-      utilisateur.setNom(accountDto.getLastName());
-      utilisateur.setLogin(accountDto.getLogin());
-      utilisateur.setMotDePasse((bCryptPasswordEncoder.encode(accountDto.getPassword())));
-      utilisateur.setMail(accountDto.getEmail());
-      utilisateur.setRoles(new HashSet<>(roleRepository.findAll()));
+      utilisateur.setPrenom(userDto.getFirstName());
+      utilisateur.setNom(userDto.getLastName());
+      utilisateur.setLogin(userDto.getLogin());
+      utilisateur.setMotDePasse((bCryptPasswordEncoder.encode(userDto.getPassword())));
+      utilisateur.setMail(userDto.getEmail());
+      utilisateur.addRole(userDto.getRole());
+      utilisateur = utilisateurRepository.save(utilisateur);
 
-      return utilisateurRepository.save(utilisateur);
+      return utilisateur;
    }
 
    @Override

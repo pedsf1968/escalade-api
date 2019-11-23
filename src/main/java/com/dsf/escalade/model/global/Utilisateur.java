@@ -1,6 +1,7 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -161,6 +162,13 @@ public class Utilisateur {
 
    public void setRoles(Set<Role> roles) {
       this.roles = roles;
+   }
+
+   public void addRole(Role role){
+      if(this.roles == null){
+         this.roles = new HashSet<>();
+      }
+      this.roles.add(role);
    }
 
    @Override

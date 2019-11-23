@@ -9,4 +9,5 @@ public interface RoleRepository extends JpaRepository<Role,Long> {
    @Override
    void delete(Role role);
 
+
 }

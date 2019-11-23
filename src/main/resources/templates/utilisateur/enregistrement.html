@@ -16,37 +16,37 @@
       <form action="#" th:action="@{/enregistrement}" th:object="${user}" method="POST" enctype="utf8">
          <div>
             <label class="col-sm-3">Prénom</label>
-            <span class="col-sm-5"><input th:field="*{firstName}"/></span>
+            <span class="col-sm-5"><input th:field="*{firstName}" placeholder="Prénom"/></span>
             <p th:each="error: ${#fields.errors('firstName')}"
                th:text="${error}">Validation error</p>
          </div>
          <div>
             <label class="col-sm-3">Nom</label>
-            <span class="col-sm-5"><input th:field="*{lastName}"/></span>
+            <span class="col-sm-5"><input th:field="*{lastName}" placeholder="Nom"/></span>
             <p th:each="error : ${#fields.errors('lastName')}"
                th:text="${error}">Validation error</p>
          </div>
          <div>
             <label class="col-sm-3">Email</label>
-            <span class="col-sm-5"><input type="email" th:field="*{email}"/></span>
+            <span class="col-sm-5"><input type="email" th:field="*{email}" placeholder="Email"/></span>
             <p th:each="error : ${#fields.errors('email')}"
                th:text="${error}">Validation error</p>
          </div>
          <div>
             <label class="col-sm-3" >Login</label>
-            <span class="col-sm-5"><input th:field="*{login}"/></span>
+            <span class="col-sm-5"><input th:field="*{login}" placeholder="Login"/></span>
             <p th:each="error : ${#fields.errors('login')}"
                th:text="${error}">Validation error</p>
          </div>
          <div>
             <label class="col-sm-3" >Mot de passe</label>
-            <span class="col-sm-5"><input type="password" th:field="*{password}"/></span>
+            <span class="col-sm-5"><input type="password" th:field="*{password}" placeholder="Mot de passe"/></span>
             <p th:each="error : ${#fields.errors('password')}"
                th:text="${error}">Validation error</p>
          </div>
          <div>
             <label class="col-sm-3">Confirmer le mot de passe</label>
-            <span class="col-sm-5"><input type="password" th:field="*{matchingPassword}"/></span>
+            <span class="col-sm-5"><input type="password" th:field="*{matchingPassword}" placeholder="Confirmation mot de passe"/></span>
          </div>
          <input type="submit" value="Valider">
       </form>

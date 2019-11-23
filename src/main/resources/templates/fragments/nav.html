@@ -17,18 +17,24 @@
          </ul>
          <ul class="navbar-nav ml-auto">
             <li>
-               <a class="btn btn-lg active align-right" href="/signin" th:href="@{/login}" sec:authorize="!isAuthenticated()">
-                  <i class="fas fa-sign-in-alt"></i>Se connecter
+               <a class="btn btn-lg active align-right" th:href="@{/login}" sec:authorize="!isAuthenticated()">
+                  <i class="fas fa-sign-in-alt"></i>Connection
                </a>
             </li>
             <li>
-               <a class="btn btn-lg active" href="/logout" th:href="@{/logout}" sec:authorize="isAuthenticated()">
-                  <i class="fas fa-sign-out-alt"></i>Se déconnecter
+               <a class="btn btn-lg active align-right" th:href="@{#}" sec:authorize="isAuthenticated()">
+                  <i ></i><span th:text="${#authentication.name}"/>Mes topos
                </a>
             </li>
+            <li>
+               <a class="btn btn-lg active" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                  <i class="fas fa-sign-out-alt"></i>Déconnection
+               </a>
+            </li>
+
             <li>
                <a class="btn btn-lg disable" href="//utilisateur/enregistrement" th:href="@{/enregistrement}" onclick="$('#form').submit();" sec:authorize="!isAuthenticated()">
-                  <i class="fas fa-sign-in-alt"></i></i>&nbsp;S'inscrire
+                  <i class="fas fa-sign-in-alt"></i></i>&nbsp;Inscription
                </a>
             </li>
          </ul>

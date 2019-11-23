@@ -12,6 +12,15 @@ img {
   box-shadow: 5px 5px 5px black;
 }
 
+
+nav .navbar-nav li a  {
+    color : white;
+}
+
+nav .navbar-nav li a:hover {
+	color: purple;
+}
+
 header {
      margin-top : 50px;
      padding-left: 20px;

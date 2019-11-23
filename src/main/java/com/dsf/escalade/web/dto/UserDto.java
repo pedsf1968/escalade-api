@@ -1,6 +1,8 @@
 package com.dsf.escalade.web.dto;
 
 
+import com.dsf.escalade.model.global.Role;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,7 +31,7 @@ public class UserDto {
     @Size(min = 1)
     private String email;
 
-    private Integer role;
+    private Role role;
 
     public String getFirstName() {
         return firstName;
@@ -79,11 +81,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public Integer getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Integer role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

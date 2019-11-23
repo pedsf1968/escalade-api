@@ -57,21 +57,13 @@ public class Role {
    }
 
    @Override
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (obj == null) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      final Role role = (Role) obj;
-      if (!name.equals(role.name)) {
-         return false;
-      }
-      return true;
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Role)) return false;
+      Role role = (Role) o;
+      return getId().equals(role.getId()) &&
+            getName().equals(role.getName()) &&
+            getUtilisateurs().equals(role.getUtilisateurs());
    }
 
    @Override
