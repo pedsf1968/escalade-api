@@ -1,10 +1,12 @@
 package com.dsf.escalade.service;
 
-import com.dsf.escalade.model.global.Utilisateur;
+import com.dsf.escalade.model.global.User;
 import com.dsf.escalade.web.dto.UserDto;
 
 public interface UserService {
-   Utilisateur save(UserDto accountDto);
+   User save(UserDto userDto);
 
-   Utilisateur findByNom(String nom);
+   User findByLastName(String lastName);
+   User findByAlias(String alias);
+   User findByEmail(String email);
 }

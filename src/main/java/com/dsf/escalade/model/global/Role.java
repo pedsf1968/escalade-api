@@ -1,6 +1,7 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Role {
    private String name;
 
    @ManyToMany(mappedBy = "roles")
-   private Set<Utilisateur> utilisateurs;
+   private Set<User> users;
 
    public Role() {
       super();
@@ -40,20 +41,12 @@ public class Role {
       this.name = name;
    }
 
-   public Set<Utilisateur> getUtilisateurs() {
-      return utilisateurs;
+   public Set<User> getUsers() {
+      return users;
    }
 
-   public void setUtilisateurs(Set<Utilisateur> utilisateurs) {
-      this.utilisateurs = utilisateurs;
-   }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((name == null) ? 0 : name.hashCode());
-      return result;
+   public void setUsers(Set<User> users) {
+      this.users = users;
    }
 
    @Override
@@ -63,13 +56,22 @@ public class Role {
       Role role = (Role) o;
       return getId().equals(role.getId()) &&
             getName().equals(role.getName()) &&
-            getUtilisateurs().equals(role.getUtilisateurs());
+            getUsers().equals(role.getUsers());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getId(), getName(), getUsers());
    }
 
    @Override
    public String toString() {
-      final StringBuilder builder = new StringBuilder();
-      builder.append("Role [name=").append(name).append("]").append("[id=").append(id).append("]");
-      return builder.toString();
+      final StringBuilder stringBuilder = new StringBuilder();
+      stringBuilder.append("Role [")
+            .append("id=").append(id)
+            .append("name=").append(name)
+            .append("]");
+
+      return stringBuilder.toString();
    }
 }

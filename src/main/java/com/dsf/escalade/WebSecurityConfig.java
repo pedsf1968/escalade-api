@@ -32,7 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest()
             .authenticated()
             .and()
-         .formLogin().loginPage("/login").permitAll()
+         .formLogin()
+            .loginPage("/login")
+            .usernameParameter("email")
+            .permitAll()
             .and()
          .csrf()
          .ignoringAntMatchers("/h2-console/**")//don't apply CSRF protection to /h2-console

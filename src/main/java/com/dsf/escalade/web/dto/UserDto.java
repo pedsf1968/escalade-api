@@ -17,7 +17,7 @@ public class UserDto {
 
     @NotNull
     @Size(min = 1)
-    private String login;
+    private String alias;
 
     @NotNull
     @Size(min = 1)
@@ -31,6 +31,7 @@ public class UserDto {
     @Size(min = 1)
     private String email;
 
+    private String phone;
     private Role role;
 
     public String getFirstName() {
@@ -49,12 +50,12 @@ public class UserDto {
         this.lastName = lastName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getPassword() {
@@ -94,9 +95,10 @@ public class UserDto {
         final StringBuilder builder = new StringBuilder();
         builder.append("UserDto [firstName=").append(firstName)
               .append(", lastName=").append(lastName)
-              .append(", login=").append(login)
+              .append(", alias=").append(alias)
               .append(", password=").append(password)
               .append(", matchingPassword=").append(matchingPassword)
+              .append(", phone=").append(phone)
               .append(", email=").append(email)
               .append(", role=").append(role).append("]");
         return builder.toString();

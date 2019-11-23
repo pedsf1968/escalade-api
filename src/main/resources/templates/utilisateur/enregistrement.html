@@ -33,9 +33,9 @@
                th:text="${error}">Validation error</p>
          </div>
          <div>
-            <label class="col-sm-3" >Login</label>
-            <span class="col-sm-5"><input th:field="*{login}" placeholder="Login"/></span>
-            <p th:each="error : ${#fields.errors('login')}"
+            <label class="col-sm-3" >Alias</label>
+            <span class="col-sm-5"><input th:field="*{alias}" placeholder="Alias"/></span>
+            <p th:each="error : ${#fields.errors('alias')}"
                th:text="${error}">Validation error</p>
          </div>
          <div>
@@ -46,9 +46,9 @@
          </div>
          <div>
             <label class="col-sm-3">Confirmer le mot de passe</label>
-            <span class="col-sm-5"><input type="password" th:field="*{matchingPassword}" placeholder="Confirmation mot de passe"/></span>
+            <span class="col-sm-5"><input type="password" th:field="*{matchingPassword}" placeholder="Confirmation"/></span>
          </div>
-         <input type="submit" value="Valider">
+         <input class="col-sm-3" type="submit" value="Valider">
       </form>
 
 

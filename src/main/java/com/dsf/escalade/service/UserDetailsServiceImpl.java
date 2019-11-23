@@ -1,9 +1,9 @@
 package com.dsf.escalade.service;
 
 import com.dsf.escalade.model.global.Role;
-import com.dsf.escalade.model.global.Utilisateur;
+import com.dsf.escalade.model.global.User;
 import com.dsf.escalade.repository.global.RoleRepository;
-import com.dsf.escalade.repository.global.UtilisateurRepository;
+import com.dsf.escalade.repository.global.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
    @Autowired
-   private UtilisateurRepository utilisateurRepository;
+   private UserRepository userRepository;
 
    @Autowired
    private RoleRepository roleRepository;
@@ -30,17 +30,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
    @Override
    @Transactional(readOnly = true)
-   public UserDetails loadUserByUsername(String nom) {
-      Utilisateur utilisateur = utilisateurRepository.findByNom(nom);
-      if (utilisateur == null) throw new UsernameNotFoundException(nom);
+   public UserDetails loadUserByUsername(String email) {
+      User user = userRepository.findByEmail(email);
+
+      if (user == null) throw new UsernameNotFoundException("User not found with email :" + email);
 
       Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-      for (Role role : utilisateur.getRoles()){
+      for (Role role : user.getRoles()){
          grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
       }
 
-      return new org.springframework.security.core.userdetails.User(utilisateur.getNom(), utilisateur.getMotDePasse(), grantedAuthorities);
+      return new org.springframework.security.core.userdetails.User(user.getLastName(), user.getPassword(), grantedAuthorities);
    }
+
 
 }

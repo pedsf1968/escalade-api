@@ -1,7 +1,7 @@
 package com.dsf.escalade.web.controller;
 
 import com.dsf.escalade.repository.global.RoleRepository;
-import com.dsf.escalade.repository.global.UtilisateurRepository;
+import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.service.SecurityServiceImpl;
 import com.dsf.escalade.service.UserServiceImpl;
 import com.dsf.escalade.validator.UserValidator;
@@ -35,7 +35,7 @@ public class UtilisateurController  {
    private RoleRepository roleRepository;
 
    @Autowired
-   private UtilisateurRepository utilisateurRepository;
+   private UserRepository userRepository;
 
    @Autowired
    private UserValidator userValidator;
@@ -60,7 +60,7 @@ public class UtilisateurController  {
       user.setRole(roleRepository.findByName("ROLE_USER"));
 
       userService.save(user);
-      securityService.autoLogin(user.getLastName(), user.getMatchingPassword());
+      securityService.autoLogin(user.getAlias(), user.getMatchingPassword());
 
       return "redirect:/";
    }
@@ -78,7 +78,6 @@ public class UtilisateurController  {
    }
 
    @GetMapping("/logout")
-  // public String logout(Model model, String error, String logout) {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       if (authentication!= null){

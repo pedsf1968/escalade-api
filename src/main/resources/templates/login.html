@@ -17,9 +17,9 @@
          You have been logged out.
       </div>
       <form th:action="@{/login}" method="post">
-         <div><label> Nom : <input type="text" name="username"/> </label></div>
-         <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
-         <div><input type="submit" value="Log in"/></div>
+         <div><label> Email : <input type="text" name="email"/> </label></div>
+         <div><label> Password : <input type="password" name="password"/> </label></div>
+         <div><input type="submit" value="Valider"/></div>
       </form>
    </section>
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
