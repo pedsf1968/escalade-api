@@ -1,12 +1,15 @@
 language: java
 # use Java 8
 jdk:
-  - oraclejdk8
-  #- openjdk8
+  #- oraclejdk8
+  - openjdk8
 
 sudo: false
-script: mvn --activate-profiles dev clean verify
+script: ./mvnw --activate-profiles dev clean verify
 
 cache:
   directories:
     - $HOME/.m2
+
+notifications:
+  email: pe.dsf@free.fr
