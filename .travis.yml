@@ -4,7 +4,10 @@ dist: trusty
 
 # use Java 8
 #jdk: oraclejdk8
-jdk: openjdk8
+jdk:
+  - openjdk8
+
+script: ./mvnw clean install
 
 addons:
   apt:
@@ -14,7 +17,12 @@ addons:
 before_install:
 #  - chmod +x mvnw
 
-script: ./mvnw --activate-profiles dev clean install
+
+jobs:
+  include:
+    - stage: Test
+      script: ./mvnw clean test
+
 
 cache:
   directories:
