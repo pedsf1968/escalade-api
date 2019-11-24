@@ -3,18 +3,18 @@ sudo: true
 dist: trusty
 
 # use Java 8
-jdk: oraclejdk8
-#jdk: openjdk8
+#jdk: oraclejdk8
+jdk: openjdk8
 
 addons:
   apt:
     packages:
-      -oracle-java8-installer
+#      -oracle-java8-installer
 
 before_install:
-  - chmod +x mvnw
+#  - chmod +x mvnw
 
-script: ./mvnw --activate-profiles dev clean verify
+script: ./mvnw --activate-profiles dev clean install
 
 cache:
   directories:
