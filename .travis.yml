@@ -15,7 +15,7 @@ addons:
 #      -oracle-java8-installer
 
 before_install:
-#  - chmod +x mvnw
+  - chmod +x mvnw
 
 
 jobs:
