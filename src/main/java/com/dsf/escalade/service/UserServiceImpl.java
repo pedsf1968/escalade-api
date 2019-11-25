@@ -1,6 +1,8 @@
 package com.dsf.escalade.service;
 
+import com.dsf.escalade.model.global.Address;
 import com.dsf.escalade.model.global.User;
+import com.dsf.escalade.repository.global.AddressRepository;
 import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.web.dto.UserDto;
 import com.dsf.escalade.web.error.UserAlreadyExistException;
@@ -14,16 +16,20 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
    private final UserRepository userRepository;
-      private final BCryptPasswordEncoder bCryptPasswordEncoder;
+   private final AddressRepository addressRepository;
+   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
    @Autowired
-   public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+   public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
       this.userRepository = userRepository;
+      this.addressRepository = addressRepository;
       this.bCryptPasswordEncoder = bCryptPasswordEncoder;
    }
 
    @Override
    public User save(UserDto userDto) {
+      User user = new User();
+
       if (lastNameExists(userDto.getLastName())) {
          throw new UserAlreadyExistException("Il y a déjà un compte avec ce nom : " + userDto.getLastName());
       }
@@ -36,14 +42,24 @@ public class UserServiceImpl implements UserService {
          throw new UserAlreadyExistException("Il y a déjà un compte avec cet alias : " + userDto.getAlias());
       }
 
-      User user = new User();
-
       user.setFirstName(userDto.getFirstName());
       user.setLastName(userDto.getLastName());
       user.setAlias(userDto.getAlias());
       user.setPassword((bCryptPasswordEncoder.encode(userDto.getPassword())));
       user.setEmail(userDto.getEmail());
       user.addRole(userDto.getRole());
+
+      if (userDto.hasAddress()) {
+         Address address = new Address();
+
+         address.setStreet1(userDto.getStreet1());
+         address.setStreet2(userDto.getStreet2());
+         address.setZipCode(userDto.getZipCode());
+         address.setCity(userDto.getCity());
+         address.setCountry(userDto.getCountry());
+         address = addressRepository.save(address);
+         user.setAdressId(address.getId());
+      }
 
       return userRepository.save(user);
    }

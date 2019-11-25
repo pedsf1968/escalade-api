@@ -1,7 +1,7 @@
 package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.repository.metier.LongueurRepository;
-import com.dsf.escalade.model.metier.Longueur;
+import com.dsf.escalade.repository.business.LongueurRepository;
+import com.dsf.escalade.model.business.Longueur;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

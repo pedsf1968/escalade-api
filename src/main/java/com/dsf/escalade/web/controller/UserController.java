@@ -23,38 +23,37 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @Slf4j
-public class UtilisateurController  {
+public class UserController {
+
+   private final UserServiceImpl userService;
+   private final  SecurityServiceImpl securityService;
+   private final  RoleRepository roleRepository;
+   private final  UserRepository userRepository;
+   private final  UserValidator userValidator;
 
    @Autowired
-   private UserServiceImpl userService;
+   public UserController(UserServiceImpl userService, SecurityServiceImpl securityService, RoleRepository roleRepository, UserRepository userRepository, UserValidator userValidator) {
+      this.userService = userService;
+      this.securityService = securityService;
+      this.roleRepository = roleRepository;
+      this.userRepository = userRepository;
+      this.userValidator = userValidator;
+   }
 
-   @Autowired
-   private SecurityServiceImpl securityService;
-
-   @Autowired
-   private RoleRepository roleRepository;
-
-   @Autowired
-   private UserRepository userRepository;
-
-   @Autowired
-   private UserValidator userValidator;
-
-
-   @GetMapping("/enregistrement")
+   @GetMapping("/registration")
    public String getRegistration(Model model) {
       model.addAttribute("user", new UserDto());
 
-      return "utilisateur/enregistrement";
+      return "user/registration";
    }
 
-   @PostMapping("/enregistrement")
+   @PostMapping("/registration")
    public String postRegistration(@ModelAttribute("user") UserDto user, BindingResult bindingResult) {
 
       userValidator.validate(user, bindingResult);
 
       if (bindingResult.hasErrors()) {
-         return "utilisateur/enregistrement";
+         return "user/registration";
       }
 
       user.setRole(roleRepository.findByName("ROLE_USER"));
@@ -87,9 +86,9 @@ public class UtilisateurController  {
       return "login";
    }
 
-   @GetMapping({"/", "/home"})
+   @GetMapping({"/", "/index"})
    public String home(Model model) {
-      return "home";
+      return "index";
    }
 
 }

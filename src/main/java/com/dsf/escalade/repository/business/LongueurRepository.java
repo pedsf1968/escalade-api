@@ -1,6 +1,6 @@
-package com.dsf.escalade.repository.metier;
+package com.dsf.escalade.repository.business;
 
-import com.dsf.escalade.model.metier.Longueur;
+import com.dsf.escalade.model.business.Longueur;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

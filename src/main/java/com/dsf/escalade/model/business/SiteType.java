@@ -1,4 +1,4 @@
-package com.dsf.escalade.model.metier;
+package com.dsf.escalade.model.business;
 
 public enum SiteType {
    TOPO,

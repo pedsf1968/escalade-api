@@ -1,9 +1,9 @@
 package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.repository.metier.SiteRepository;
-import com.dsf.escalade.repository.metier.TopoRepository;
-import com.dsf.escalade.model.metier.Site;
-import com.dsf.escalade.model.metier.Topo;
+import com.dsf.escalade.repository.business.SiteRepository;
+import com.dsf.escalade.repository.business.TopoRepository;
+import com.dsf.escalade.model.business.Site;
+import com.dsf.escalade.model.business.Topo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

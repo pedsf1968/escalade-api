@@ -1,4 +1,4 @@
-package com.dsf.escalade.model.metier;
+package com.dsf.escalade.model.business;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

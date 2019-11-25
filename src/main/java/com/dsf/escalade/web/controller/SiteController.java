@@ -1,10 +1,10 @@
 package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.repository.metier.SecteurRepository;
-import com.dsf.escalade.repository.metier.SiteRepository;
-import com.dsf.escalade.repository.metier.TopoRepository;
-import com.dsf.escalade.model.metier.Site;
-import com.dsf.escalade.model.metier.SiteType;
+import com.dsf.escalade.repository.business.SecteurRepository;
+import com.dsf.escalade.repository.business.SiteRepository;
+import com.dsf.escalade.repository.business.TopoRepository;
+import com.dsf.escalade.model.business.Site;
+import com.dsf.escalade.model.business.SiteType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
