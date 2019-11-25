@@ -12,11 +12,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class SecurityServiceImpl implements SecurityService {
-   @Autowired
-   private AuthenticationManager authenticationManager;
+
+   private final AuthenticationManager authenticationManager;
+   private final UserDetailsService userDetailsService;
 
    @Autowired
-   private UserDetailsService userDetailsService;
+   public SecurityServiceImpl(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+      this.authenticationManager = authenticationManager;
+      this.userDetailsService = userDetailsService;
+   }
 
    @Override
    public String findLoggedInUsername() {
@@ -31,7 +35,7 @@ public class SecurityServiceImpl implements SecurityService {
    @Override
    public void autoLogin(String email, String motDePasse) {
       UserDetails userDetails = null;
-      userDetails = userDetailsService.loadUserByUsername(email);
+     userDetails = userDetailsService.loadUserByUsername(email);
 
 
       UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, motDePasse, userDetails.getAuthorities());

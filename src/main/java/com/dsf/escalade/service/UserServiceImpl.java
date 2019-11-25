@@ -5,7 +5,6 @@ import com.dsf.escalade.model.global.User;
 import com.dsf.escalade.repository.global.AddressRepository;
 import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.web.dto.UserDto;
-import com.dsf.escalade.web.error.UserAlreadyExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,18 +28,6 @@ public class UserServiceImpl implements UserService {
    @Override
    public User save(UserDto userDto) {
       User user = new User();
-
-      if (lastNameExists(userDto.getLastName())) {
-         throw new UserAlreadyExistException("Il y a déjà un compte avec ce nom : " + userDto.getLastName());
-      }
-
-      if (emailExists(userDto.getEmail())) {
-         throw new UserAlreadyExistException("Il y a déjà un compte avec cette adresse : " + userDto.getEmail());
-      }
-
-      if (aliasExists(userDto.getAlias())) {
-         throw new UserAlreadyExistException("Il y a déjà un compte avec cet alias : " + userDto.getAlias());
-      }
 
       user.setFirstName(userDto.getFirstName());
       user.setLastName(userDto.getLastName());

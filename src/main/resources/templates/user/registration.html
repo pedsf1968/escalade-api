@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+      <H1 class="display-4">Enregistrement</H1>
+   </header>
+
+   <section>
+      <form action="#" th:action="@{/registration}" th:object="${userDto}" method="POST" enctype="utf8">
+
+         <div class="form-row">
+            <div class="col">
+               <input type="text" th:field="*{firstName}" class="form-control" placeholder="Prénom">
+               <p th:each="error: ${#fields.errors('firstName')}" th:text="${error}"></p>
+            </div>
+            <div class="col">
+               <input type="text" th:field="*{lastName}" class="form-control" placeholder="Nom">
+               <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></p>
+            </div>
+            <div class="col">
+               <input type="text" th:field="*{alias}" class="form-control" placeholder="Alias">
+               <p th:each="error : ${#fields.errors('alias')}" th:text="${error}"></p>
+            </div>
+         </div>
+
+         <div class="form-row">
+            <div class="form-group col-md-4" >
+               <input type="email" th:field="*{email}" class="form-control" placeholder="Email">
+               <small id="emailHelp" class="form-text text-muted">On ne divulgue pas votre adresse de messagerie.</small>
+               <p th:each="error : ${#fields.errors('email')}" th:text="${error}"></p>
+            </div>
+            <div class="form-group col-md-4">
+               <input type="password" th:field="*{password}" class="form-control" placeholder="Mot de passe">
+               <p th:each="error : ${#fields.errors('password')}" th:text="${error}"></p>
+            </div>
+            <div class="form-group col-md-4">
+               <input type="password" th:field="*{matchingPassword}" class="form-control" placeholder="Confirmation">
+               <p th:each="error : ${#fields.errors('matchingPassword')}" th:text="${error}"></p>
+            </div>
+         </div>
+
+         <div class="form-group">
+            <label>Adresse</label>
+            <input type="text" th:field="*{street1}" class="form-control" id="inputAddress" placeholder="11, rue">
+            <p th:each="error : ${#fields.errors('street1')}" th:text="${error}"></p>
+         </div>
+         <div class="form-group">
+            <input type="text" th:field="*{street2}" class="form-control" placeholder="Appartement N°">
+            <p th:each="error : ${#fields.errors('street2')}" th:text="${error}"></p>
+         </div>
+         <div class="form-row">
+            <div class="form-group col-md-6">
+               <label for="inputCity">Ville</label>
+               <input type="text"th:field="*{city}" class="form-control" id="inputCity">
+               <p th:each="error : ${#fields.errors('city')}" th:text="${error}"></p>
+            </div>
+            <div class="form-group col-md-4">
+               <label for="inputState">Pays</label>
+               <input type="text"th:field="*{country}" class="form-control" id="inputState">
+               <p th:each="error : ${#fields.errors('matchingPassword')}" th:text="${error}"></p>
+            </div>
+            <div class="form-group col-md-2">
+               <label for="inputZip">Code postal</label>
+               <input type="text" th:field="*{zipCode}" class="form-control" id="inputZip">
+               <p th:each="error : ${#fields.errors('zipCode')}" th:text="${error}"></p>
+            </div>
+         </div>
+
+
+
+
+         <button type="submit" class="btn btn-primary">Valider</button>
+
+      </form>
+
+
+
+   </section>
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
+</body>
+</html>

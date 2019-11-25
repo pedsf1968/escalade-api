@@ -42,24 +42,26 @@ public class UserController {
 
    @GetMapping("/registration")
    public String getRegistration(Model model) {
-      model.addAttribute("user", new UserDto());
+      model.addAttribute("userDto", new UserDto());
 
       return "user/registration";
    }
 
    @PostMapping("/registration")
-   public String postRegistration(@ModelAttribute("user") UserDto user, BindingResult bindingResult) {
+   public String postRegistration(@ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
 
-      userValidator.validate(user, bindingResult);
+      userValidator.validate(userDto, bindingResult);
 
       if (bindingResult.hasErrors()) {
          return "user/registration";
       }
 
-      user.setRole(roleRepository.findByName("ROLE_USER"));
+      userDto.setRole(roleRepository.findByName("ROLE_USER"));
 
-      userService.save(user);
-      securityService.autoLogin(user.getAlias(), user.getMatchingPassword());
+      userService.save(userDto);
+
+      //Le login se fait par l'email
+      securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
 
       return "redirect:/";
    }
@@ -68,7 +70,7 @@ public class UserController {
    public String login(Model model, String error, String logout) {
 
       if (error != null)
-         model.addAttribute("error", "Your username and password is invalid.");
+         model.addAttribute("error", "Your email and password is invalid.");
 
       if (logout != null)
          model.addAttribute("message", "You have been logged out successfully.");

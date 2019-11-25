@@ -11,7 +11,7 @@ public class Address implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id")
    private Long id;
-   @Column(name = "street1", columnDefinition = "VARCHAR(5)")
+   @Column(name = "street1", columnDefinition = "VARCHAR(50)")
    private String street1;
    @Column(name = "street2", columnDefinition = "VARCHAR(50)")
    private String street2;

@@ -29,12 +29,22 @@ public class UserValidator implements Validator {
       UserDto userDto = (UserDto) o;
 
       ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
+
       if (userDto.getLastName().length() < NAME_LENGTH_MIN || userDto.getLastName().length() > NAME_LENGTH_MAX) {
          errors.rejectValue("lastName", "Size.userForm.username");
       }
       if (userService.findByLastName(userDto.getLastName()) != null) {
          errors.rejectValue("lastName", "Duplicate.userForm.username");
       }
+
+      if (userService.findByEmail(userDto.getEmail())!= null) {
+         errors.rejectValue("email", "Duplicate.userForm.email");
+      }
+
+      if (userService.findByAlias(userDto.getAlias())!=null) {
+         errors.rejectValue("email", "Duplicate.userForm.alias");
+      }
+
 
       ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
       if (userDto.getPassword().length() < PASSWORD_LENGTH_MIN || userDto.getPassword().length()  > PASSWORD_LENGTH_MAX) {
