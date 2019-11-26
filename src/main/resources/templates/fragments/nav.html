@@ -17,25 +17,20 @@
          </ul>
          <ul class="navbar-nav ml-auto">
             <li>
-               <a class="btn btn-lg active align-right" th:href="@{/login}" sec:authorize="!isAuthenticated()">
-                  <i class="fas fa-sign-in-alt"></i>Connection
-               </a>
+               <i class="fas fa-sign-in-alt" ></i>
+               <a class="btn btn-lg active align-right" th:href="@{/login}" sec:authorize="!isAuthenticated()" th:text="#{label.nav.login}">Login</a>
             </li>
             <li>
-               <a class="btn btn-lg active align-right" th:href="@{#}" sec:authorize="isAuthenticated()">
-                  <i ></i><span th:text="${#authentication.name}"/>Mes topos
-               </a>
+               <a class="btn btn-lg active align-right" th:href="@{#}" sec:authorize="isAuthenticated()">Mes topos</a>
             </li>
             <li>
-               <a class="btn btn-lg active" th:href="@{/logout}" sec:authorize="isAuthenticated()">
-                  <i class="fas fa-sign-out-alt"></i>Logout
-               </a>
+               <i class="fas fa-sign-out-alt"></i>
+               <a class="btn btn-lg active" th:href="@{/logout}" sec:authorize="isAuthenticated()" th:text="#{label.nav.logout}">Logout</a>
             </li>
 
             <li>
-               <a class="btn btn-lg disable" th:href="@{/registration}" onclick="$('#form').submit();" sec:authorize="!isAuthenticated()">
-                  <i class="fas fa-sign-in-alt"></i></i>&nbsp;Inscription
-               </a>
+               <i class="fas fa-sign-in-alt"></i>
+               <a class="btn btn-lg disable" th:href="@{/registration}" onclick="$('#form').submit();" sec:authorize="!isAuthenticated()" th:text="#{label.nav.registration}">Registration</a>
             </li>
          </ul>
       </div>

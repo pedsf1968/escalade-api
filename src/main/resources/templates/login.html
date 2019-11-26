@@ -6,7 +6,7 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4">Login</H1>
+      <H1 th:text="#{label.login.title}">Login</H1>
    </header>
 
    <section>
@@ -16,13 +16,19 @@
       <div th:if="${param.logout}">
          You have been logged out.
       </div>
+
       <form th:action="@{/login}" method="post">
-         <div><label> Email : <input type="email" name="email"/> </label></div>
-         <div><label> Password : <input type="password" name="password"/> </label></div>
-         <div><input type="submit" value="Valider"/>
-            <a th:href="@{/registration}">
-               <button>Inscription</button>
-            </a>
+         <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Adresse mail">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+         </div>
+         <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+         </div>
+         <div class="float-right">
+            <button type="submit" class="btn btn-primary">Valider</button>
          </div>
       </form>
    </section>

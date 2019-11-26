@@ -37,7 +37,6 @@ public class SecurityServiceImpl implements SecurityService {
       UserDetails userDetails = null;
      userDetails = userDetailsService.loadUserByUsername(email);
 
-
       UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, motDePasse, userDetails.getAuthorities());
 
       authenticationManager.authenticate(usernamePasswordAuthenticationToken);

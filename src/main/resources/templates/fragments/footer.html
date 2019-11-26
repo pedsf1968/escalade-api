@@ -8,7 +8,8 @@
                <a href="#"><i class="fas fa-at"></i> Nous contacter</a>
             </td>
             <td>
-               <a href="#"><i class="fas fa-info"></i> Quoi de neuf?</a>
+               <a href="?lang=en" th:text="#{label.footer.English}">login</a> |
+               <a href="?lang=fr" th:text="#{label.footer.French}">login</a>
             </td>
           <td>
              <a href="#"><i class="fas fa-question"></i> Aide</a>
@@ -34,6 +35,17 @@
            $('[data-toggle="popover"]').popover()
          })
       </script>
+      <script type="text/javascript">
+         $(document).ready(function() {
+            $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+               window.location.replace('?lang=' + selectedOption);
+         }
+    });
+});
+</script>
+
    </footer>
 </body>
 </html>

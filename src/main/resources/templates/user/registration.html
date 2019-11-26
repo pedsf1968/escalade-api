@@ -16,33 +16,44 @@
       <form action="#" th:action="@{/registration}" th:object="${userDto}" method="POST" enctype="utf8">
 
          <div class="form-row">
-            <div class="col">
-               <input type="text" th:field="*{firstName}" class="form-control" placeholder="Prénom">
-               <p th:each="error: ${#fields.errors('firstName')}" th:text="${error}"></p>
+            <div class="col-md-4 mb-3">
+               <label for="firstName">Prénom</label>
+               <input id="firstName" type="text" th:field="*{firstName}" class="form-control" placeholder="Prénom">
+               <div th:each="error: ${#fields.errors('firstName')}" th:text="${error}"></div>
             </div>
-            <div class="col">
-               <input type="text" th:field="*{lastName}" class="form-control" placeholder="Nom">
-               <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></p>
+            <div class="col-md-4 mb-3">
+               <label for="lastName">Nom</label>
+               <input id="lastName" type="text" th:field="*{lastName}" class="form-control" placeholder="Nom">
+               <div th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></div>
             </div>
-            <div class="col">
-               <input type="text" th:field="*{alias}" class="form-control" placeholder="Alias">
-               <p th:each="error : ${#fields.errors('alias')}" th:text="${error}"></p>
+            <div class="col-md-4 mb-3">
+               <label for="alias">Alias</label>
+               <input id="alias" type="text" th:field="*{alias}" class="form-control" placeholder="Alias">
+               <div th:each="error : ${#fields.errors('alias')}" th:text="${error}"></div>
             </div>
          </div>
 
          <div class="form-row">
             <div class="form-group col-md-4" >
-               <input type="email" th:field="*{email}" class="form-control" placeholder="Email">
+               <label for="email">email</label>
+               <input id="email" type="email" th:field="*{email}" class="form-control" placeholder="Email">
                <small id="emailHelp" class="form-text text-muted">On ne divulgue pas votre adresse de messagerie.</small>
-               <p th:each="error : ${#fields.errors('email')}" th:text="${error}"></p>
+               <div th:each="error : ${#fields.errors('email')}" th:text="${error}"></div>
             </div>
-            <div class="form-group col-md-4">
-               <input type="password" th:field="*{password}" class="form-control" placeholder="Mot de passe">
-               <p th:each="error : ${#fields.errors('password')}" th:text="${error}"></p>
+            <div class="form-group col-md-3">
+               <label for="password">Mot de passe</label>
+               <input id="password" type="password" th:field="*{password}" class="form-control" placeholder="Mot de passe">
+               <div th:each="error : ${#fields.errors('password')}" th:text="${error}"></div>
             </div>
-            <div class="form-group col-md-4">
-               <input type="password" th:field="*{matchingPassword}" class="form-control" placeholder="Confirmation">
-               <p th:each="error : ${#fields.errors('matchingPassword')}" th:text="${error}"></p>
+            <div class="form-group col-md-3">
+               <label for="matchingPassword">Confirmation</label>
+               <input id="matchingPassword" type="password" th:field="*{matchingPassword}" class="form-control" placeholder="Confirmation">
+               <div th:each="error : ${#fields.errors('matchingPassword')}" th:text="${error}"></div>
+            </div>
+            <div class="form-group col-md-2">
+               <label for="phone">Télépphone</label>
+               <input id="phone" type="text" th:field="*{phone}" class="form-control" placeholder="Téléphone">
+               <div th:each="error : ${#fields.errors('phone')}" th:text="${error}"></div>
             </div>
          </div>
 
@@ -72,11 +83,9 @@
                <p th:each="error : ${#fields.errors('zipCode')}" th:text="${error}"></p>
             </div>
          </div>
-
-
-
-
-         <button type="submit" class="btn btn-primary">Valider</button>
+         <div class="float-right">
+            <button type="submit" class="btn btn-primary">Valider</button>
+         </div>
 
       </form>
 
