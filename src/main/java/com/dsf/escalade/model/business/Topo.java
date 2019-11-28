@@ -1,54 +1,57 @@
 package com.dsf.escalade.model.business;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "topo")
 @PrimaryKeyJoinColumn(name = "site_id")
 public class Topo extends Site{
-   //@Id
-   //private Integer id;
    @Column(name = "region", columnDefinition = "VARCHAR(50)")
    private String region;
-   @Column(name = "adresse_id", columnDefinition = "INTEGER(10)")
-   private Integer adresse;
+   @Column(name = "address_id", columnDefinition = "INTEGER(10)")
+   private Integer address;
    @Column(name = "date", columnDefinition = "DATE DEFAULT NOW()")
    private Date date;
    @Column(name = "description", columnDefinition = "TEXT")
    private String description;
-   @Column(name = "technique", columnDefinition = "TEXT")
-   private String technique;
+   @Column(name = "technic", columnDefinition = "TEXT")
+   private String technic;
    @Column(name = "acces", columnDefinition = "TEXT")
    private String acces;
-   @Column(name = "promoteur_id", columnDefinition = "INTEGER(10) NOT NULL")
-   private Integer promoteur;
-   @Column(name = "grimpeur_id", columnDefinition = "INTEGER(10)")
-   private Integer grimpeur;
+   @Column(name = "manager_id", columnDefinition = "INTEGER(10) NOT NULL")
+   private Long manager;
+   @Column(name = "climber_id", columnDefinition = "INTEGER(10)")
+   private Long climber;
    @Enumerated(EnumType.STRING)
    @Column(name = "statut", columnDefinition = "VARCHAR(15) DEFAULT 'Indisponible' NOT NULL")
    private StatutType statut;
    @Column(name = "statut_auto", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean statutAuto;
 
-   protected Topo() {
+   public Topo() {
       super();
    }
 
-     public Topo( String nom, String region, Integer adresse, Date date, String description, String technique, String acces, Integer promoteur, Integer grimpeur, StatutType statut, Boolean statutAuto) {
-      super( nom, SiteType.TOPO );
+   public Topo(String name, SiteType type, String region, Integer address, Date date, String description, Long manager) {
+      super(name, type);
       this.region = region;
-      this.adresse = adresse;
+      this.address = address;
       this.date = date;
       this.description = description;
-      this.technique = technique;
-      this.acces = acces;
-      this.promoteur = promoteur;
-      this.grimpeur = grimpeur;
-      this.statut = statut;
-      this.statutAuto = statutAuto;
+      this.manager = manager;
    }
 
+   public Topo(int id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink, String region, Integer address, Date date, String description, Long manager) {
+      super(id, name, type, photoLink, mapLink);
+      this.region = region;
+      this.address = address;
+      this.date = date;
+      this.description = description;
+      this.manager = manager;
+   }
 
    public String getRegion() {
       return region;
@@ -58,12 +61,12 @@ public class Topo extends Site{
       this.region = region;
    }
 
-   public Integer getAdresse() {
-      return adresse;
+   public Integer getAddress() {
+      return address;
    }
 
-   public void setAdresse(Integer adresse) {
-      this.adresse = adresse;
+   public void setAddress(Integer address) {
+      this.address = address;
    }
 
    public Date getDate() {
@@ -82,12 +85,12 @@ public class Topo extends Site{
       this.description = description;
    }
 
-   public String getTechnique() {
-      return technique;
+   public String getTechnic() {
+      return technic;
    }
 
-   public void setTechnique(String technique) {
-      this.technique = technique;
+   public void setTechnic(String technic) {
+      this.technic = technic;
    }
 
    public String getAcces() {
@@ -98,20 +101,20 @@ public class Topo extends Site{
       this.acces = acces;
    }
 
-   public Integer getPromoteur() {
-      return promoteur;
+   public Long getManager() {
+      return manager;
    }
 
-   public void setPromoteur(Integer promoteur) {
-      this.promoteur = promoteur;
+   public void setManager(Long manager) {
+      this.manager = manager;
    }
 
-   public Integer getGrimpeur() {
-      return grimpeur;
+   public Long getClimber() {
+      return climber;
    }
 
-   public void setGrimpeur(Integer grimpeur) {
-      this.grimpeur = grimpeur;
+   public void setClimber(Long climber) {
+      this.climber = climber;
    }
 
    public StatutType getStatut() {
@@ -131,44 +134,41 @@ public class Topo extends Site{
    }
 
    @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Topo)) return false;
+      if (!super.equals(o)) return false;
+      Topo topo = (Topo) o;
+      return getRegion().equals(topo.getRegion()) &&
+            getAddress().equals(topo.getAddress()) &&
+            getDate().equals(topo.getDate()) &&
+            getManager().equals(topo.getManager());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(super.hashCode(), getRegion(), getAddress(), getDate(), getManager());
+   }
+
+   @Override
    public String toString() {
       return "Topo{" +
             "region='" + region + '\'' +
-            ", adresse=" + adresse +
+            ", address=" + address +
             ", date=" + date +
             ", description='" + description + '\'' +
-            ", technique='" + technique + '\'' +
+            ", technic='" + technic + '\'' +
             ", acces='" + acces + '\'' +
-            ", promoteur=" + promoteur +
-            ", grimpeur=" + grimpeur +
+            ", manager=" + manager +
+            ", climber=" + climber +
             ", statut=" + statut +
             ", statutAuto=" + statutAuto +
+            ", id=" + id +
+            ", name='" + name + '\'' +
+            ", type=" + type +
+            ", hasComment=" + hasComment +
+            ", photoLink='" + photoLink + '\'' +
+            ", mapLink='" + mapLink + '\'' +
             '}';
    }
-
-   public String toStringOld() {
-      return String.format(
-            "Topo {" +
-               //   "id=%d, " +
-                 // "nom='%s', " +
-                  "region='%s', " +
-                  "adresse='%s'," +
-                  "date='%td/%tm/%ty', " +
-                  "description='%s', " +
-                  "technique='%s'," +
-                  "accès='%s', " +
-                  "promoteur='%s'," +
-                  "grimpeur='%s'," +
-                  "statut='%s'," +
-                  "auto='%b', " +
-                //  "a un commentaire='%b', " +
-                 // "photo='%s', " +
-                 // "carte='%s'}",
-            region, adresse,
-            date, description, technique, acces,
-            promoteur, grimpeur,statut,statutAuto
-            );
-   }
-
-
 }

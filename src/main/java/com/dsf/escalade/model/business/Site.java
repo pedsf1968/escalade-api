@@ -3,7 +3,7 @@ package com.dsf.escalade.model.business;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-
+import java.util.Objects;
 
 
 @Entity
@@ -14,9 +14,9 @@ public class Site implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", columnDefinition = "INTEGER(10)")
    protected int id;
-   @Column(name = "nom", columnDefinition = "VARCHAR(50) NOT NULL")
+   @Column(name = "name", columnDefinition = "VARCHAR(50) NOT NULL")
    @NotBlank(message = "Spécifiez un nom !")
-   protected String nom;
+   protected String name;
    @Column(name = "type", columnDefinition = "VARCHAR(7)  NOT NULL DEFAULT 'TOPO'")
    @Enumerated(EnumType.STRING)
    protected SiteType type;
@@ -24,34 +24,35 @@ public class Site implements Serializable {
    private String longitude;
    @Column(name = "latitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String latitude;
-   @Column(name = "a_commentaire", columnDefinition = "BOOLEAN DEFAULT FALSE")
-   protected Boolean aCommentaire;
+   @Column(name = "has_comment", columnDefinition = "BOOLEAN DEFAULT FALSE")
+   protected Boolean hasComment;
    @Column(name = "photo_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
-   protected String lienPhoto;
+   protected String photoLink;
    @Column(name = "map_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
-   protected String lienCarte;
+   protected String mapLink;
 
    public Site() {
       super();
    }
 
-   public Site(String nom, SiteType type) {
+   public Site(String name, SiteType type) {
       super();
-      this.nom = nom;
+      this.name = name;
       this.type = type;
-      this.aCommentaire = false;
-      this.lienPhoto = null;
-      this.lienCarte = null;
+      this.hasComment = false;
+      this.photoLink = null;
+      this.mapLink = null;
    }
 
-   public Site(int id, String nom, SiteType type, Boolean aCommentaire, String lienPhoto, String lienCarte) {
+
+   public Site(int id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink) {
       super();
       this.id = id;
-      this.nom = nom;
+      this.name = name;
       this.type = type;
-      this.aCommentaire = aCommentaire;
-      this.lienPhoto = lienPhoto;
-      this.lienCarte = lienCarte;
+      this.hasComment = false;
+      this.photoLink = photoLink;
+      this.mapLink = mapLink;
    }
 
    public int getId() {
@@ -62,12 +63,12 @@ public class Site implements Serializable {
       this.id = id;
    }
 
-   public String getNom() {
-      return nom;
+   public String getName() {
+      return name;
    }
 
-   public void setNom(String nom) {
-      this.nom = nom;
+   public void setName(String name) {
+      this.name = name;
    }
 
    public SiteType getType() {
@@ -78,49 +79,77 @@ public class Site implements Serializable {
       this.type = type;
    }
 
-   public Boolean getaCommentaire() {
-      return aCommentaire;
+   public String getLongitude() {
+      return longitude;
    }
 
-   public void setaCommentaire(Boolean aCommentaire) {
-      this.aCommentaire = aCommentaire;
+   public void setLongitude(String longitude) {
+      this.longitude = longitude;
    }
 
-   public String getLienPhoto() {
-      return lienPhoto;
+   public String getLatitude() {
+      return latitude;
    }
 
-   public void setLienPhoto(String lienPhoto) {
-      this.lienPhoto = lienPhoto;
+   public void setLatitude(String latitude) {
+      this.latitude = latitude;
    }
 
-   public String getLienCarte() {
-      return lienCarte;
+   public Boolean getHasComment() {
+      return hasComment;
    }
 
-   public void setLienCarte(String lienCarte) {
-      this.lienCarte = lienCarte;
+   public void setHasComment(Boolean hasComment) {
+      this.hasComment = hasComment;
    }
 
+   public String getPhotoLink() {
+      return photoLink;
+   }
+
+   public void setPhotoLink(String photoLink) {
+      this.photoLink = photoLink;
+   }
+
+   public String getMapLink() {
+      return mapLink;
+   }
+
+   public void setMapLink(String mapLink) {
+      this.mapLink = mapLink;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Site)) return false;
+      Site site = (Site) o;
+      return getId() == site.getId() &&
+            getName().equals(site.getName()) &&
+            getType() == site.getType() &&
+            Objects.equals(getLongitude(), site.getLongitude()) &&
+            Objects.equals(getLatitude(), site.getLatitude()) &&
+            getHasComment().equals(site.getHasComment()) &&
+            Objects.equals(getPhotoLink(), site.getPhotoLink()) &&
+            Objects.equals(getMapLink(), site.getMapLink());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getId(), getName(), getType(), getLongitude(), getLatitude(), getHasComment(), getPhotoLink(), getMapLink());
+   }
 
    @Override
    public String toString() {
       return "Site{" +
             "id=" + id +
-            ", nom='" + nom + '\'' +
+            ", name='" + name + '\'' +
             ", type=" + type +
             ", longitude='" + longitude + '\'' +
             ", latitude='" + latitude + '\'' +
-            ", aCommentaire=" + aCommentaire +
-            ", lienPhoto='" + lienPhoto + '\'' +
-            ", lienCarte='" + lienCarte + '\'' +
+            ", hasComment=" + hasComment +
+            ", photoLink='" + photoLink + '\'' +
+            ", mapLink='" + mapLink + '\'' +
             '}';
    }
-
-   public String toStringOld() {
-      return String.format(
-            "Site {id=%d, nom='%s',type='%s', a un commentaire='%b', photo='%s', carte='%s'}",
-            id, nom,   type, aCommentaire, lienPhoto, lienCarte);
-   }
-
 }

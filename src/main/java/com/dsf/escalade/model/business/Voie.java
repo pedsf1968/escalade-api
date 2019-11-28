@@ -62,19 +62,19 @@ public class Voie extends Site {
       this.cotation = cotation;
    }
 
-
    @Override
    public String toString() {
-      return String.format(
-            "Voie {id=%d, " +
-                  "nom='%s', " +
-                  "secteur='%s', " +
-                  "est équipée='%b'," +
-                  "hauteur='%d', " +
-                  "cotation=%d," +
-                  "a un commentaire='%b', " +
-                  "photo='%s', " +
-                  "carte='%s'}"
-            , id, nom,  secteur, estEquipee, hauteur,cotation, aCommentaire, lienPhoto, lienCarte);
+      return "Voie{" +
+            "secteur=" + secteur +
+            ", estEquipee=" + estEquipee +
+            ", hauteur=" + hauteur +
+            ", cotation=" + cotation +
+            ", id=" + id +
+            ", name='" + name + '\'' +
+            ", type=" + type +
+            ", hasComment=" + hasComment +
+            ", photoLink='" + photoLink + '\'' +
+            ", mapLink='" + mapLink + '\'' +
+            '}';
    }
 }

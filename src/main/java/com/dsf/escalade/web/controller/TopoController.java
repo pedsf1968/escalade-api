@@ -1,11 +1,15 @@
 package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.repository.business.SiteRepository;
-import com.dsf.escalade.repository.business.TopoRepository;
 import com.dsf.escalade.model.business.Site;
 import com.dsf.escalade.model.business.Topo;
-import lombok.RequiredArgsConstructor;
+import com.dsf.escalade.repository.business.SiteRepository;
+import com.dsf.escalade.repository.business.TopoRepository;
+import com.dsf.escalade.repository.global.UserRepository;
+import com.dsf.escalade.web.dto.TopoDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,30 +23,43 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequiredArgsConstructor
 public class TopoController {
 
     @PersistenceContext
     EntityManager entityManager;
 
     private final SiteRepository siteRepository;
-
     private final TopoRepository topoRepository;
+    private  final UserRepository userRepository;
 
-    @GetMapping("/listtopo")
+    @Autowired
+    public TopoController(SiteRepository siteRepository, TopoRepository topoRepository, UserRepository userRepository) {
+        this.siteRepository = siteRepository;
+        this.topoRepository = topoRepository;
+       this.userRepository = userRepository;
+    }
+
+    @GetMapping("/listtopos")
     public String listTopo(Model model) {
 
-        List<Site> listSite = new ArrayList<Site>();
+
+        List<TopoDto> listTopoDto = new ArrayList<TopoDto>();
         List<Topo> listTopo;
 
         listTopo = topoRepository.findAll();
 
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       String currentPrincipalName = authentication.getName();
+
         for(Topo topo:listTopo){
-            listSite.add(siteRepository.getOne(topo.getId()));
+            TopoDto topoDto = new TopoDto(siteRepository.getOne(topo.getId()),topo);
+            topoDto.setPseudo(userRepository.getOne(topo.getManager()).getAlias());
+
+            listTopoDto.add(topoDto);
         }
 
-       model.addAttribute("siteList", listSite);
-        model.addAttribute("topoList", listTopo);
+
+        model.addAttribute("topoList", listTopoDto);
 
         return "topo/topo-list";
     }

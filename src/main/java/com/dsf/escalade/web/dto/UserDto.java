@@ -3,48 +3,48 @@ package com.dsf.escalade.web.dto;
 
 import com.dsf.escalade.model.global.Role;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserDto {
+    static final int FIRSTNAME_MIN = 1;
+    static final int LASTNAME_MIN = 1;
+    static final int ALIAS_MIN = 1;
+    static final int PASSWORD_MIN = 4;
+    static final int EMAIL_MIN = 1;
+
     @NotNull
-    @Size(min = 1)
+    @Size(min = FIRSTNAME_MIN)
     private String firstName;
 
     @NotNull
-    @Size(min = 1)
+    @Size(min = LASTNAME_MIN)
     private String lastName;
 
     @NotNull
-    @Size(min = 1)
+    @Size(min = ALIAS_MIN)
     private String alias;
 
     @NotNull
-    @Size(min = 1)
+    @Size(min = PASSWORD_MIN)
     private String password;
 
     @NotNull
-    @Size(min = 1)
+    @Size(min = PASSWORD_MIN)
     private String matchingPassword;
 
     @NotNull
-    @Size(min = 1)
+    @Size(min = EMAIL_MIN)
     private String email;
 
     private String phone;
     private Role role;
 
     // Adress section
-    @Column(name = "street1", columnDefinition = "VARCHAR(5)")
     private String street1;
-    @Column(name = "street2", columnDefinition = "VARCHAR(50)")
     private String street2;
-    @Column(name = "zip_code", columnDefinition = "VARCHAR(6) NOT NULL")
     private String zipCode;
-    @Column(name = "city", columnDefinition = "VARCHAR(50)  NOT NULL")
     private String city;
-    @Column(name = "country", columnDefinition = "VARCHAR(50) DEFAULT 'France'")
     private String country;
 
     public String getFirstName() {

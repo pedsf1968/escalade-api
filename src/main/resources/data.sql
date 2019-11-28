@@ -13,12 +13,12 @@ INSERT INTO user_roles VALUES (1,1);
 INSERT INTO user_roles VALUES (2,2);
 INSERT INTO user_roles VALUES (3,2);
 -- insertion topo
-INSERT INTO site (id, nom, type, a_commentaire, photo_url, map_url) VALUES (1,'La falaise', 'TOPO', 0,'','');
-INSERT INTO topo (site_id, date, promoteur_id) VALUES (1, NOW(),1);
-INSERT INTO site (id, nom, type, a_commentaire, photo_url, map_url) VALUES (2,'Le Rock', 'TOPO', 0,'','');
-INSERT INTO topo (site_id, date, promoteur_id) VALUES (2, NOW(),1);
-INSERT INTO site (id, nom, type, a_commentaire, photo_url, map_url) VALUES (3,'La gorge', 'TOPO', 0,'','');
-INSERT INTO topo (site_id, date, promoteur_id) VALUES (3, NOW(),1);
-INSERT INTO site (id, nom, type, a_commentaire, photo_url, map_url) VALUES (4,'Côté est', 'SECTEUR', 0,'','');
+INSERT INTO site (id, name, type, has_comment, photo_url, map_url) VALUES (1,'La falaise', 'TOPO', 0,'/resources/static/img/ailefroide.jpg','');
+INSERT INTO topo (site_id, date, manager_id) VALUES (1, NOW(),1);
+INSERT INTO site (id, name, type, has_comment, photo_url, map_url) VALUES (2,'Le Rock', 'TOPO', 0,'/resources/static/img/annot.jpg','');
+INSERT INTO topo (site_id, date, manager_id) VALUES (2, NOW(),2);
+INSERT INTO site (id, name, type, has_comment, photo_url, map_url) VALUES (3,'La gorge', 'TOPO', 0,'/resources/static/img/semiond.jpg','');
+INSERT INTO topo (site_id, date, manager_id) VALUES (3, NOW(),3);
+INSERT INTO site (id, name, type, has_comment, photo_url, map_url) VALUES (4,'Côté est', 'SECTEUR', 0,'/resources/static/img/autoire.jpg','');
 INSERT INTO secteur (site_id, topo_id, equipement) VALUES (4, 1,'100m de corde');
 
