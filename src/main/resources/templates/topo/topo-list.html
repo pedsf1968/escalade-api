@@ -14,16 +14,15 @@
    </header>
 
    <section class="row">
-      <div class="card-deck" th:each="topo : ${topoDtoList}">
+      <div class="card-deck col-lg-4 col-sm-6 col-xs-12" th:each="topo : ${topoDtoList}">
 
          <div class="card">
             <div class="card-header">
                <h5 th:text="${topo.name}"></h5>
-               <label for="region" th:text="#{label.topoList.region}">region</label>
-               <span id="region" th:text="${topo.region}">  </span>
+               <span th:text="${topo.region}"></span>
             </div>
-            <div class="card-body">
-               <img th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
+            <div class="card-body center">
+               <img  class="img-fluid" th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
             </div>
             <div class="card-footer">
                <p th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">  </p>
@@ -35,7 +34,6 @@
                   <a class="btn btn-primary" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.topoList.consult}">
                      Consult
                   </a>
-
             </div>
 
          </div>

@@ -32,7 +32,7 @@ public class User implements Serializable {
    @Id
    @Column(name = "id")
    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-   private Long id;
+   private Integer id;
 
    @NotNull
    @Size(min = FIRSTNAME_MIN, max = FIRSTNAME_MAX)
@@ -69,7 +69,7 @@ public class User implements Serializable {
    @Column(name = "is_member")
    private Boolean isMember;
    @Column(name = "address_id")
-   private Long adressId;
+   private Integer adressId;
 
    @ManyToMany
    private Set<Role> roles;
@@ -88,11 +88,11 @@ public class User implements Serializable {
       this.password = password;
    }
 
-   public Long getId() {
+   public Integer getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(Integer id) {
       this.id = id;
    }
 
@@ -152,11 +152,11 @@ public class User implements Serializable {
       isMember = member;
    }
 
-   public Long getAdressId() {
+   public Integer getAdressId() {
       return adressId;
    }
 
-   public void setAdressId(Long adressId) {
+   public void setAdressId(Integer adressId) {
       this.adressId = adressId;
    }
 

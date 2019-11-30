@@ -6,19 +6,19 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-public class TopoDto extends Site{
+public class TopoDto {
    private static final int NAME_MIN = 1;
    private static final int REGION_MIN = 1;
 
-   protected Long id;
+   private Integer id;
    @NotNull
    @Size(min = NAME_MIN)
-   protected String name;
+   private String name;
    private String longitude;
    private String latitude;
-   protected Boolean hasComment;
-   protected String photoLink;
-   protected String mapLink;
+   private Boolean hasComment;
+   private String photoLink;
+   private String mapLink;
 
    @NotNull
    @Size(min = REGION_MIN)
@@ -31,14 +31,14 @@ public class TopoDto extends Site{
    private String status;
 
 
-   public TopoDto(Site site, Topo topo) {
-      this.id = site.getId();
-      this.name = site.getName();
-      this.longitude = site.getLongitude();
-      this.latitude = site.getLatitude();
-      this.hasComment = site.getHasComment();
-      this.photoLink = site.getPhotoLink();
-      this.mapLink = site.getMapLink();
+   public TopoDto(Topo topo) {
+      this.id = topo.getId();
+      this.name = topo.getName();
+      this.longitude = topo.getLongitude();
+      this.latitude = topo.getLatitude();
+      this.hasComment = topo.getHasComment();
+      this.photoLink = topo.getPhotoLink();
+      this.mapLink = topo.getMapLink();
       this.region = topo.getRegion();
       this.date = topo.getDate();
       this.description = topo.getDescription();
@@ -47,72 +47,58 @@ public class TopoDto extends Site{
       this.status = topo.getStatus().toString();
    }
 
-   @Override
-   public Long getId() {
+   public Integer getId() {
       return id;
    }
 
-   @Override
-   public void setId(Long id) {
+   public void setId(Integer id) {
       this.id = id;
    }
 
-   @Override
    public String getName() {
       return name;
    }
 
-   @Override
    public void setName(String name) {
       this.name = name;
    }
 
-   @Override
    public String getLongitude() {
       return longitude;
    }
 
-   @Override
    public void setLongitude(String longitude) {
       this.longitude = longitude;
    }
 
-   @Override
    public String getLatitude() {
       return latitude;
    }
 
-   @Override
    public void setLatitude(String latitude) {
       this.latitude = latitude;
    }
 
-   @Override
    public Boolean getHasComment() {
       return hasComment;
    }
 
-   @Override
    public void setHasComment(Boolean hasComment) {
       this.hasComment = hasComment;
    }
 
-   @Override
    public String getPhotoLink() {
       return photoLink;
    }
 
-   @Override
    public void setPhotoLink(String photoLink) {
       this.photoLink = photoLink;
    }
 
-   @Override
    public String getMapLink() {
       return mapLink;
    }
 
-   @Override
    public void setMapLink(String mapLink) {
       this.mapLink = mapLink;
    }

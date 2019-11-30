@@ -4,5 +4,5 @@ import com.dsf.escalade.model.business.Topo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface TopoRepository extends JpaRepository <Topo,Long>  {
+public interface TopoRepository extends JpaRepository <Topo,Integer>  {
 }

@@ -9,23 +9,23 @@ public class Tag implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id")
-   private Long id;
+   private Integer id;
    @Column(name = "nom", columnDefinition = "VARCHAR(20) NOT NULL")
    private String nom;
 
    public Tag() {
    }
 
-   public Tag(Long id, String name) {
+   public Tag(Integer id, String name) {
       this.id = id;
       this.nom = name;
    }
 
-   public Long getId() {
+   public Integer getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(Integer id) {
       this.id = id;
    }
 

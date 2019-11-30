@@ -1,39 +1,49 @@
-package com.dsf.escalade.model.global;
+package com.dsf.escalade.web.dto;
 
-import javax.persistence.*;
+import com.dsf.escalade.model.global.Address;
+
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "address")
-public class Address implements Serializable {
+public class AddressDto  implements Serializable {
+   private final int STREET_MAX = 50;
+   private final int ZIP_MIN = 5;
+   private final int ZIP_MAX = 6;
+   private final int CITY_MAX = 50;
+   private final int COUNTRY_MAX = 50;
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id")
    private Integer id;
-
-   @Column(name = "street1", columnDefinition = "VARCHAR(50)")
+   @Size(max = STREET_MAX)
    private String street1;
-   @Column(name = "street2", columnDefinition = "VARCHAR(50)")
+   @Size(max = STREET_MAX)
    private String street2;
-   @Column(name = "zip_code", columnDefinition = "VARCHAR(6)")
+   @Size(min=ZIP_MIN, max = ZIP_MAX)
    private String zipCode;
-   @Column(name = "city", columnDefinition = "VARCHAR(50)")
+   @Size(max = CITY_MAX)
    private String city;
-   @Column(name = "country", columnDefinition = "VARCHAR(50) DEFAULT 'FRANCE'")
+   @Size(max = COUNTRY_MAX)
    private String country;
 
-   public Address() {
+   public AddressDto() {
       super();
    }
 
-   public Address(String street1, String street2, String zipCode, String city, String country) {
+   public AddressDto(String street1, String street2, String zipCode, String city, String country) {
       this.street1 = street1;
       this.street2 = street2;
       this.zipCode = zipCode;
       this.city = city;
       this.country = country;
+   }
+
+   public AddressDto(Address address) {
+      this.id = address.getId();
+      this.street1 = address.getStreet1();
+      this.street2 = address.getStreet2();
+      this.zipCode = address.getZipCode();
+      this.city = address.getCity();
+      this.country = address.getCountry();
    }
 
    public Integer getId() {
@@ -87,8 +97,8 @@ public class Address implements Serializable {
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
-      if (!(o instanceof Address)) return false;
-      Address address = (Address) o;
+      if (!(o instanceof AddressDto)) return false;
+      AddressDto address = (AddressDto) o;
       return getId().equals(address.getId()) &&
             getStreet1().equals(address.getStreet1()) &&
             Objects.equals(getStreet2(), address.getStreet2()) &&

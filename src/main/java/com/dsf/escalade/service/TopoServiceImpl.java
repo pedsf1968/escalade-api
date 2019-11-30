@@ -41,7 +41,6 @@ public class TopoServiceImpl implements TopoService{
       topo.setTechnic(topoDto.getTechnic());
       topo.setManager(userRepository.findByAlias(topoDto.getAlias()).getId());
 
-
       return null;
    }
 }

@@ -1,16 +1,48 @@
- body { 
-  background-color: #DDD;
-  padding-top: 10px;
+a:hover {
+	color: purple;
 }
 
-[class*="col-"] { 
-  margin-bottom: 20px; 
+aside {
+	text-align: center;
+	padding-left: 20px;
+	margin: 10px;
+	color: black;
 }
 
-img { 
-  width: 200px; 
-  box-shadow: 5px 5px 5px black;
+
+ body {
+    background-color: #DDD;
+    padding-top: 10px;
 }
+
+card {
+    display:flex;
+}
+
+[class*="col-"] {
+    margin-bottom: 20px;
+}
+
+footer {
+	text-align: center;
+	padding-top: 20px;
+	color : white;
+}
+
+footer a {
+	color : white;
+}
+
+header {
+    margin-top : 50px;
+    padding-left: 20px;
+    text-align: center;
+}
+
+img {
+    box-shadow: 5px 5px 5px black;
+}
+
 
 nav .navbar-nav li i  {
     color : white;
@@ -24,48 +56,16 @@ nav .navbar-nav li a:hover {
 	color: purple;
 }
 
-header {
-     margin-top : 50px;
-     padding-left: 20px;
-	text-align: center;
-}
-
 section {
-	padding-left: 20px;
+	margin: 10px;
 }
 
-aside {
-	text-align: center;
-	color: black;
-}
-
-footer {
-	text-align: center;
-	padding-top: 20px;
-	color : white;
-}
-
-
-footer a {
-	color : white;
-}
-
-
-a:hover {
-	color: purple;
-}
 
 .center {
 	text-align: center;
 }
 
-card {
-    display:flex;
-}
 
-.thumbnail {
-	display: inline-grid;
-}
 
 @media all and (max-width: 768px) {
 	aside {

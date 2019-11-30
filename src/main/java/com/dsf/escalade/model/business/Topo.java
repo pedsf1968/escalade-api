@@ -22,9 +22,9 @@ public class Topo extends Site{
    @Column(name = "access", columnDefinition = "TEXT")
    private String access;
    @Column(name = "manager_id", columnDefinition = "INTEGER(10) NOT NULL")
-   private Long manager;
+   private Integer manager;
    @Column(name = "climber_id", columnDefinition = "INTEGER(10)")
-   private Long climber;
+   private Integer climber;
    @Enumerated(EnumType.STRING)
    @Column(name = "status", columnDefinition = "VARCHAR(15) DEFAULT 'UNVAILABLE' NOT NULL")
    private StatusType status;
@@ -35,7 +35,7 @@ public class Topo extends Site{
       super();
    }
 
-   public Topo(String name, SiteType type, String region, Integer address, Date date, String description, Long manager) {
+   public Topo(String name, SiteType type, String region, Integer address, Date date, String description, Integer manager) {
       super(name, type);
       this.region = region;
       this.address = address;
@@ -44,7 +44,7 @@ public class Topo extends Site{
       this.manager = manager;
    }
 
-   public Topo(Long id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink, String region, Integer address, Date date, String description, Long manager) {
+   public Topo(Integer id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink, String region, Integer address, Date date, String description, Integer manager) {
       super(id, name, type, photoLink, mapLink);
       this.region = region;
       this.address = address;
@@ -101,19 +101,19 @@ public class Topo extends Site{
       this.access = access;
    }
 
-   public Long getManager() {
+   public Integer getManager() {
       return manager;
    }
 
-   public void setManager(Long manager) {
+   public void setManager(Integer manager) {
       this.manager = manager;
    }
 
-   public Long getClimber() {
+   public Integer getClimber() {
       return climber;
    }
 
-   public void setClimber(Long climber) {
+   public void setClimber(Integer climber) {
       this.climber = climber;
    }
 

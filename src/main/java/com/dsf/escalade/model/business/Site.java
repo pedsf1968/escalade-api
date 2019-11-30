@@ -13,7 +13,7 @@ public class Site implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", columnDefinition = "INTEGER(10)")
-   protected Long id;
+   protected Integer id;
    @Column(name = "name", columnDefinition = "VARCHAR(50) NOT NULL")
    @NotBlank(message = "Spécifiez un nom !")
    protected String name;
@@ -45,7 +45,7 @@ public class Site implements Serializable {
    }
 
 
-   public Site(Long id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink) {
+   public Site(Integer id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink) {
       super();
       this.id = id;
       this.name = name;
@@ -55,11 +55,11 @@ public class Site implements Serializable {
       this.mapLink = mapLink;
    }
 
-   public Long getId() {
+   public Integer getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(Integer id) {
       this.id = id;
    }
 

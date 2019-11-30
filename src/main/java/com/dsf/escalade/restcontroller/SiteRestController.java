@@ -25,8 +25,8 @@ public class SiteRestController {
    }
 
    @GetMapping(value = "/site/{id}")
-   public Optional<Site> findById(@PathVariable Long id){
-      log.info("id : " + id + siteRepository.findById(1l).toString());
+   public Optional<Site> findById(@PathVariable Integer id){
+      log.info("id : " + id + siteRepository.findById(1).toString());
       return siteRepository.findById(id);
    }
 

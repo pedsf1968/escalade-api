@@ -5,53 +5,108 @@
 
 <head th:replace="~{fragments/head :: head}"></head>
 <body>
+<header>
+
+</header>
+
 <div class="container-fluid">
    <nav th:replace="~{fragments/nav :: nav}"></nav>
+   <div class="row">
+      <div class="col-lg-3 col-sm-12">
+         <div class="row">
+            <aside>
+               <label th:text="#{label.topoList.alias}">Alias</label>
+               <div th:text="${topoDto.alias}"></div>
 
-   <header class="jumbotron">
-      <H1 class="display-4" th:text="${topoDto.name}">Topo's name</H1>
-   </header>
+               <label th:text="#{label.topoList.status}">Status</label>
+               <div th:text="${topoDto.status}"></div>
 
-   <section>
-      <div class="row">
-         <div >
 
-            <label th:text="#{label.topoList.longitude}">Longitude</label>
-            <div th:text="${topoDto.longitude}"></div>
+               <div class="card" th:if="${addressDto != null}">
+                  <h5 class="card-header">Address</h5>
+                  <p class="card-text" th:text="${addressDto.street1}"></p>
+                  <p class="card-text" th:text="${addressDto.street2}"></p>
+                  <p class="card-text" th:text="${addressDto.zipCode}"></p>
+                  <p class="card-text" th:text="${addressDto.city}"></p>
+                  <p class="card-text" th:text="${addressDto.country}"></p>
+               </div>
+               <div class="card">
+                  <h5 class="card-header"Coordonnées</h5>
+                  <div class="card-title">
+                     <label th:text="#{label.topoList.longitude}">Longitude</label>
+                  </div>
+                  <div class="card-text">
+                     <div th:text="${topoDto.longitude}"></div>
+                  </div>
+                  <div class="card-title">
+                     <label th:text="#{label.topoList.latitude}">latitude</label>
+                  </div>
+                  <div class="card-text">
+                     <div th:text="${topoDto.latitude}"> </div>
+                  </div>
+               </div>
 
-            <label th:text="#{label.topoList.latitude}">latitude</label>
-            <div th:text="${topoDto.latitude}"> </div>
 
-            <label th:text="#{label.topoList.region}">region</label>
-            <div th:text="${topoDto.region}">  </div>
+               <div class="card">
+                  <div class="card-header">
+                     <h5 th:text="#{label.topoList.access}">access</h5>
+                  </div>
+                  <div class="card-text">
+                     <p th:text="${topoDto.access}"></p>
+                  </div>
+               </div>
 
-            <img th:src="@{/images/{image}(image=${topoDto.photoLink})}" alt="photo"/>
 
-            <label th:text="#{label.topoList.date}">date</label>
-            <div th:text="${topoDto.date}">  </div>
-
-            <label th:text="#{label.topoList.description}">description</label>
-            <div th:text="${topoDto.description}"> </div>
-
-            <label th:text="#{label.topoList.technic}">technic</label>
-            <div th:text="${topoDto.technic}"></div>
-
-            <label th:text="#{label.topoList.access}">access</label>
-            <div th:text="${topoDto.access}"></div>
-
-            <label th:text="#{label.topoList.alias}">alias</label>
-            <div th:text="${topoDto.alias}"></div>
-
-            <label th:text="#{label.topoList.status}">status</label>
-            <div th:text="${topoDto.status}"></div-->
-
-            <a th:href="@{/topo/update/{id}(id=${topo.id})}">
-               <button th:text="#{label.topoList.consult}">Consult</button>
-            </a>
+               <a th:href="@{/topo/update/{id}(id=${topoDto.id})}">
+                  <button th:text="#{label.topoList.consult}">Consult</button>
+               </a>
+            </aside>
          </div>
       </div>
 
-   </section>
+      <div class="col-lg-6 col-sm-12">
+         <div class="row">
+
+            <section class="card bg-dark text-white">
+               <img class="card-img" th:src="@{/images/{image}(image=${topoDto.photoLink})}" alt="photo"/>
+               <div class="card-img-overlay">
+                  <h5 class="card-header" th:text="${topoDto.name}">Topo's name</h5>
+                  <p class="card-title" th:text="${topoDto.region}">  </p>
+                  <p class="card-text" th:text="${#dates.format(topoDto.date,'dd MMMM yyyy')}">  </p>
+               </div>
+            </section>
+
+            <section class="card">
+                  <div class="card-header">
+                     <h5 th:text="#{label.topoList.description}">description</h5>
+                  </div>
+                  <div class="card-text">
+                     <p th:text="${topoDto.description}"></p>
+                  </div>
+            </section>
+            <section  class="card">
+               <div class="card-header">
+                  <h5 th:text="#{label.topoList.technic}">technic</h5>
+               </div>
+               <div class="card-text">
+                  <p th:text="${topoDto.technic}"></p>
+               </div>
+            </section>
+         </div>
+      </div>
+      <div class="col-lg-3 col-sm-12">
+         <div class="row">
+            <aside  class="card col-lg-12" th:each="comment : ${commentDtoList}">
+               <div class="card-header">
+                  <h5 th:text="${comment.alias}"></h5>
+               </div>
+               <div class="card-text">
+                  <p th:text="${comment.text}"></p>
+               </div>
+            </aside>
+         </div>
+      </div>
+   </div>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
