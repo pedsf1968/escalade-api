@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @Controller
 @Slf4j
@@ -48,7 +49,7 @@ public class UserController {
    }
 
    @PostMapping("/registration")
-   public String postRegistration(@ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
+   public String postRegistration(@ModelAttribute("userDto") @Valid UserDto userDto, BindingResult bindingResult) {
 
       userValidator.validate(userDto, bindingResult);
 

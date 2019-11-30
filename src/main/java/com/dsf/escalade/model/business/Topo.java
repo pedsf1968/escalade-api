@@ -19,17 +19,17 @@ public class Topo extends Site{
    private String description;
    @Column(name = "technic", columnDefinition = "TEXT")
    private String technic;
-   @Column(name = "acces", columnDefinition = "TEXT")
-   private String acces;
+   @Column(name = "access", columnDefinition = "TEXT")
+   private String access;
    @Column(name = "manager_id", columnDefinition = "INTEGER(10) NOT NULL")
    private Long manager;
    @Column(name = "climber_id", columnDefinition = "INTEGER(10)")
    private Long climber;
    @Enumerated(EnumType.STRING)
-   @Column(name = "statut", columnDefinition = "VARCHAR(15) DEFAULT 'Indisponible' NOT NULL")
-   private StatutType statut;
-   @Column(name = "statut_auto", columnDefinition = "BOOLEAN DEFAULT FALSE")
-   private Boolean statutAuto;
+   @Column(name = "status", columnDefinition = "VARCHAR(15) DEFAULT 'UNVAILABLE' NOT NULL")
+   private StatusType status;
+   @Column(name = "status_auto", columnDefinition = "BOOLEAN DEFAULT FALSE")
+   private Boolean statusAuto;
 
    public Topo() {
       super();
@@ -44,7 +44,7 @@ public class Topo extends Site{
       this.manager = manager;
    }
 
-   public Topo(int id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink, String region, Integer address, Date date, String description, Long manager) {
+   public Topo(Long id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink, String region, Integer address, Date date, String description, Long manager) {
       super(id, name, type, photoLink, mapLink);
       this.region = region;
       this.address = address;
@@ -93,12 +93,12 @@ public class Topo extends Site{
       this.technic = technic;
    }
 
-   public String getAcces() {
-      return acces;
+   public String getAccess() {
+      return access;
    }
 
-   public void setAcces(String acces) {
-      this.acces = acces;
+   public void setAccess(String access) {
+      this.access = access;
    }
 
    public Long getManager() {
@@ -117,20 +117,20 @@ public class Topo extends Site{
       this.climber = climber;
    }
 
-   public StatutType getStatut() {
-      return statut;
+   public StatusType getStatus() {
+      return status;
    }
 
-   public void setStatut(StatutType statut) {
-      this.statut = statut;
+   public void setStatus(StatusType status) {
+      this.status = status;
    }
 
-   public Boolean getStatutAuto() {
-      return statutAuto;
+   public Boolean getStatusAuto() {
+      return statusAuto;
    }
 
-   public void setStatutAuto(Boolean statutAuto) {
-      this.statutAuto = statutAuto;
+   public void setStatusAuto(Boolean statusAuto) {
+      this.statusAuto = statusAuto;
    }
 
    @Override
@@ -153,19 +153,19 @@ public class Topo extends Site{
    @Override
    public String toString() {
       return "Topo{" +
+            ", id=" + id +
+            ", name='" + name + '\'' +
+            ", type=" + type +
             "region='" + region + '\'' +
             ", address=" + address +
             ", date=" + date +
             ", description='" + description + '\'' +
             ", technic='" + technic + '\'' +
-            ", acces='" + acces + '\'' +
+            ", access='" + access + '\'' +
             ", manager=" + manager +
             ", climber=" + climber +
-            ", statut=" + statut +
-            ", statutAuto=" + statutAuto +
-            ", id=" + id +
-            ", name='" + name + '\'' +
-            ", type=" + type +
+            ", status=" + status +
+            ", statusAuto=" + statusAuto +
             ", hasComment=" + hasComment +
             ", photoLink='" + photoLink + '\'' +
             ", mapLink='" + mapLink + '\'' +

@@ -1,7 +1,6 @@
 package com.dsf.escalade.web.dto;
 
-import com.dsf.escalade.model.business.Site;
-import com.dsf.escalade.model.business.Topo;
+import com.dsf.escalade.model.business.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,7 +10,8 @@ public class TopoDto extends Site{
    private static final int NAME_MIN = 1;
    private static final int REGION_MIN = 1;
 
-      @NotNull
+   protected Long id;
+   @NotNull
    @Size(min = NAME_MIN)
    protected String name;
    private String longitude;
@@ -26,12 +26,13 @@ public class TopoDto extends Site{
    private Date date;
    private String description;
    private String technic;
-   private String acces;
-   private String pseudo;
-   private String statut;
+   private String access;
+   private String alias;
+   private String status;
 
 
    public TopoDto(Site site, Topo topo) {
+      this.id = site.getId();
       this.name = site.getName();
       this.longitude = site.getLongitude();
       this.latitude = site.getLatitude();
@@ -42,8 +43,18 @@ public class TopoDto extends Site{
       this.date = topo.getDate();
       this.description = topo.getDescription();
       this.technic = topo.getTechnic();
-      this.acces = topo.getAcces();
-      this.statut = topo.getStatut().toString();
+      this.access = topo.getAccess();
+      this.status = topo.getStatus().toString();
+   }
+
+   @Override
+   public Long getId() {
+      return id;
+   }
+
+   @Override
+   public void setId(Long id) {
+      this.id = id;
    }
 
    @Override
@@ -138,27 +149,27 @@ public class TopoDto extends Site{
       this.technic = technic;
    }
 
-   public String getAcces() {
-      return acces;
+   public String getAccess() {
+      return access;
    }
 
-   public void setAcces(String acces) {
-      this.acces = acces;
+   public void setAccess(String access) {
+      this.access = access;
    }
 
-   public String getPseudo() {
-      return pseudo;
+   public String getAlias() {
+      return alias;
    }
 
-   public void setPseudo(String pseudo) {
-      this.pseudo = pseudo;
+   public void setAlias(String alias) {
+      this.alias = alias;
    }
 
-   public String getStatut() {
-      return statut;
+   public String getStatus() {
+      return status;
    }
 
-   public void setStatut(String statut) {
-      this.statut = statut;
+   public void setStatus(String status) {
+      this.status = status;
    }
 }

@@ -1,40 +1,70 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * class for user informations
+ */
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
+   static final int FIRSTNAME_MIN = 1;
+   static final int FIRSTNAME_MAX = 20;
+   static final int LASTNAME_MIN = 1;
+   static final int LASTNAME_MAX = 20;
+   static final int ALIAS_MIN = 1;
+   static final int ALIAS_MAX = 20;
+   static final int PASSWORD_MIN = 4;
+   static final int PASSWORD_MAX = 255;
+   static final int EMAIL_MIN = 4;
+   static final int EMAIL_MAX = 255;
+   static final String EMAIL_REGEXP = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+   static final int PHONE_MAX = 14;
+   static final String PHONE_REGEXP = "^(?:(?:\\+|00)33[\\s.-]{0,3}(?:\\(0\\)[\\s.-]{0,3})?|0)[1-9](?:(?:[\\s.-]?\\d{2}){4}|\\d{2}(?:[\\s.-]?\\d{3}){2})$";
+
 
    @Id
    @Column(name = "id")
    @GeneratedValue(strategy =  GenerationType.IDENTITY)
    private Long id;
 
-   @Column(name = "firstname", columnDefinition = "VARCHAR(50) NOT NULL")
+   @NotNull
+   @Size(min = FIRSTNAME_MIN, max = FIRSTNAME_MAX)
+   @Column(name = "firstname")
    private String firstName;
 
-   @Column(name = "lastname", columnDefinition = "VARCHAR(50) NOT NULL")
+   @NotNull
+   @Size(min = LASTNAME_MIN, max = LASTNAME_MAX)
+   @Column(name = "lastname")
    private String lastName;
 
-   @Column(name = "phone", columnDefinition = "VARCHAR(10)")
+
+   @Size(max = PHONE_MAX)
+   @Pattern(regexp = PHONE_REGEXP, message = "Not a valid phone number !")
+   @Column(name = "phone")
    private String phone;
 
-   @Column(name = "email", columnDefinition = "VARCHAR(255) NOT NULL")
+   @NotNull
+   @Size(min = EMAIL_MIN, max = EMAIL_MAX)
+   @Pattern(regexp = EMAIL_REGEXP, message = "Not a valid email address !")
+   @Column(name = "email", unique = true)
    private String email;
 
-   @Column(name = "alias", columnDefinition = "VARCHAR(20) NOT NULL")
+   @NotNull
+   @Size(min = ALIAS_MIN, max = ALIAS_MAX)
+   @Column(name = "alias", unique = true)
    private String alias;
 
-   @Column(name = "password", columnDefinition = "VARCHAR(255) NOT NULL")
+   @NotNull
+   @Size(min = PASSWORD_MIN, max = PASSWORD_MAX)
+   @Column(name = "password")
    private String password;
-   @Column(name = "enabled")
-   private boolean enabled;
-   @Column(name = "token_expired")
-   private boolean tokenExpired;
 
    @Column(name = "is_member")
    private Boolean isMember;
@@ -112,22 +142,6 @@ public class User implements Serializable {
 
    public void setPassword(String password) {
       this.password = password;
-   }
-
-   public boolean isEnabled() {
-      return enabled;
-   }
-
-   public void setEnabled(boolean enabled) {
-      this.enabled = enabled;
-   }
-
-   public boolean isTokenExpired() {
-      return tokenExpired;
-   }
-
-   public void setTokenExpired(boolean tokenExpired) {
-      this.tokenExpired = tokenExpired;
    }
 
    public Boolean getMember() {

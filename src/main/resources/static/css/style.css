@@ -59,6 +59,10 @@ a:hover {
 	text-align: center;
 }
 
+card {
+    display:flex;
+}
+
 .thumbnail {
 	display: inline-grid;
 }

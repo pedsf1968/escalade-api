@@ -7,12 +7,14 @@ import com.dsf.escalade.repository.business.SiteRepository;
 import com.dsf.escalade.repository.business.TopoRepository;
 import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.web.dto.TopoDto;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class TopoServiceImpl implements TopoService{
    private final SiteRepository siteRepository;
    private final TopoRepository topoRepository;
    private final UserRepository userRepository;
 
+   @Autowired
    public TopoServiceImpl(SiteRepository siteRepository, TopoRepository topoRepository, UserRepository userRepository) {
       this.siteRepository = siteRepository;
       this.topoRepository = topoRepository;
@@ -37,7 +39,7 @@ public class TopoServiceImpl implements TopoService{
       topo.setDate(topoDto.getDate());
       topo.setDescription(topoDto.getDescription());
       topo.setTechnic(topoDto.getTechnic());
-      topo.setManager(userRepository.findByAlias(topoDto.getPseudo()).getId());
+      topo.setManager(userRepository.findByAlias(topoDto.getAlias()).getId());
 
 
       return null;

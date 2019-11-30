@@ -49,7 +49,7 @@ public class SiteController {
    }
 
    @GetMapping("/editsite/{id}")
-   public String editSite(@PathVariable("id") Integer id, Model model) {
+   public String editSite(@PathVariable("id") Long id, Model model) {
       Site site = siteRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid site Id:" + id));
 
@@ -58,7 +58,7 @@ public class SiteController {
    }
 
    @PostMapping("/updatesite/{id}")
-   public String updateSite(@PathVariable("id") Integer id, @Valid Site site, BindingResult result, Model model) {
+   public String updateSite(@PathVariable("id") Long id, @Valid Site site, BindingResult result, Model model) {
 
       if (result.hasErrors()){
          site.setId(id);
@@ -81,7 +81,7 @@ public class SiteController {
    }
 
    @GetMapping("/deletesite/{id}")
-   public String deleteSite(@PathVariable("id") Integer id, Model model) {
+   public String deleteSite(@PathVariable("id") Long id, Model model) {
       Site site = siteRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid site Id:" + id));
       siteRepository.delete(site);

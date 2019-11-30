@@ -10,29 +10,56 @@
    </header>
 
    <section>
-      <form action="#" th:action="@{/updatetopo/{id}(id=${site.id})}" th:object="${site}" method="post">
+      <form action="#" th:action="@{/updatetopo/{id}(id=${topoDto.id})}" th:object="${topoDto}" method="post">
+         <label for="name">Name</label>
+         <input type="text" th:field="*{name}" id="name" placeholder="Name">
+         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+         <br>
+         <label for="region">Region</label>
+         <input type="text" th:field="*{region}" id="region" placeholder="region">
+         <span th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></span>
+         <br>
+         <label for="date">Date</label>
+         <input type="text" th:field="*{date}" id="date" placeholder="date">
+         <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+         <br>
+         <label for="pseudo">Manager</label>
+         <input type="text" th:field="*{pseudo}" id="pseudo" placeholder="pseudo">
+         <span th:if="${#fields.hasErrors('pseudo')}" th:errors="*{pseudo}"></span>
+         <br>
 
-         <label for="nom">Nom</label>
-         <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
-         <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+         <label for="longitude">Longitude</label>
+         <input type="text" th:field="*{longitude}" id="longitude" placeholder="Longitude">
+         <span th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}"></span>
          <br>
-         <label for="type">Type</label>
-         <input type="text" th:field="*{type}" id="type" placeholder="Type">
-         <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+         <label for="latitude">latitude</label>
+         <input type="text" th:field="*{latitude}" id="latitude" placeholder="latitude">
+         <span th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"></span>
          <br>
-         <label for="aCommentaire">A un commentaire</label>
-         <input type="text" th:field="*{aCommentaire}" id="aCommentaire">
-         <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="*{aCommentaire}"></span>
+
+         <label for="description">Description</label>
+         <input type="text" th:field="*{description}" id="description">
+         <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
          <br>
-         <label for="lienPhoto">Lien photo</label>
-         <input type="text" th:field="*{lienPhoto}" id="lienPhoto" placeholder="Lien photo">
-         <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="*{lienPhoto}"></span>
+         <label for="technic">technic</label>
+         <input type="text" th:field="*{technic}" id="technic">
+         <span th:if="${#fields.hasErrors('technic')}" th:errors="*{technic}"></span>
          <br>
-         <label for="lienCarte">Lien carte</label>
-         <input type="text" th:field="*{lienCarte}" id="lienCarte" placeholder="Lien carte">
-         <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="*{lienCarte}"></span>
+         <label for="acces">acces</label>
+         <input type="text" th:field="*{acces}" id="acces">
+         <span th:if="${#fields.hasErrors('acces')}" th:errors="*{acces}"></span>
          <br>
-         <input type="submit" value="Update Site">
+
+         <label for="photoLink">Lien photo</label>
+         <input type="text" th:field="*{photoLink}" id="photoLink" placeholder="Lien photo">
+         <span th:if="${#fields.hasErrors('photoLink')}" th:errors="*{photoLink}"></span>
+         <br>
+         <label for="mapLink">Lien carte</label>
+         <input type="text" th:field="*{mapLink}" id="mapLink" placeholder="Lien carte">
+         <span th:if="${#fields.hasErrors('mapLink')}" th:errors="*{mapLink}"></span>
+         <br>
+
+         <input type="submit" value="Update Topo">
 </form>
 
 
