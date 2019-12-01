@@ -1,7 +1,6 @@
 package com.dsf.escalade.model.business;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ public class Topo extends Site{
    @Column(name = "region", columnDefinition = "VARCHAR(50)")
    private String region;
    @Column(name = "address_id", columnDefinition = "INTEGER(10)")
-   private Integer address;
+   private Integer addressId;
    @Column(name = "date", columnDefinition = "DATE DEFAULT NOW()")
    private Date date;
    @Column(name = "description", columnDefinition = "TEXT")
@@ -22,9 +21,9 @@ public class Topo extends Site{
    @Column(name = "access", columnDefinition = "TEXT")
    private String access;
    @Column(name = "manager_id", columnDefinition = "INTEGER(10) NOT NULL")
-   private Integer manager;
+   private Integer managerId;
    @Column(name = "climber_id", columnDefinition = "INTEGER(10)")
-   private Integer climber;
+   private Integer climberId;
    @Enumerated(EnumType.STRING)
    @Column(name = "status", columnDefinition = "VARCHAR(15) DEFAULT 'UNVAILABLE' NOT NULL")
    private StatusType status;
@@ -35,24 +34,6 @@ public class Topo extends Site{
       super();
    }
 
-   public Topo(String name, SiteType type, String region, Integer address, Date date, String description, Integer manager) {
-      super(name, type);
-      this.region = region;
-      this.address = address;
-      this.date = date;
-      this.description = description;
-      this.manager = manager;
-   }
-
-   public Topo(Integer id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink, String region, Integer address, Date date, String description, Integer manager) {
-      super(id, name, type, photoLink, mapLink);
-      this.region = region;
-      this.address = address;
-      this.date = date;
-      this.description = description;
-      this.manager = manager;
-   }
-
    public String getRegion() {
       return region;
    }
@@ -61,12 +42,12 @@ public class Topo extends Site{
       this.region = region;
    }
 
-   public Integer getAddress() {
-      return address;
+   public Integer getAddressId() {
+      return addressId;
    }
 
-   public void setAddress(Integer address) {
-      this.address = address;
+   public void setAddressId(Integer addressId) {
+      this.addressId = addressId;
    }
 
    public Date getDate() {
@@ -101,20 +82,20 @@ public class Topo extends Site{
       this.access = access;
    }
 
-   public Integer getManager() {
-      return manager;
+   public Integer getManagerId() {
+      return managerId;
    }
 
-   public void setManager(Integer manager) {
-      this.manager = manager;
+   public void setManagerId(Integer managerId) {
+      this.managerId = managerId;
    }
 
-   public Integer getClimber() {
-      return climber;
+   public Integer getClimberId() {
+      return climberId;
    }
 
-   public void setClimber(Integer climber) {
-      this.climber = climber;
+   public void setClimberId(Integer climberId) {
+      this.climberId = climberId;
    }
 
    public StatusType getStatus() {
@@ -140,14 +121,20 @@ public class Topo extends Site{
       if (!super.equals(o)) return false;
       Topo topo = (Topo) o;
       return getRegion().equals(topo.getRegion()) &&
-            getAddress().equals(topo.getAddress()) &&
+            getAddressId().equals(topo.getAddressId()) &&
             getDate().equals(topo.getDate()) &&
-            getManager().equals(topo.getManager());
+            getDescription().equals(topo.getDescription()) &&
+            Objects.equals(getTechnic(), topo.getTechnic()) &&
+            Objects.equals(getAccess(), topo.getAccess()) &&
+            getManagerId().equals(topo.getManagerId()) &&
+            Objects.equals(getClimberId(), topo.getClimberId()) &&
+            getStatus() == topo.getStatus() &&
+            getStatusAuto().equals(topo.getStatusAuto());
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(super.hashCode(), getRegion(), getAddress(), getDate(), getManager());
+      return Objects.hash(super.hashCode(), getRegion(), getAddressId(), getDate(), getDescription(), getTechnic(), getAccess(), getManagerId(), getClimberId(), getStatus(), getStatusAuto());
    }
 
    @Override
@@ -156,14 +143,14 @@ public class Topo extends Site{
             ", id=" + id +
             ", name='" + name + '\'' +
             ", type=" + type +
-            "region='" + region + '\'' +
-            ", address=" + address +
+            ", region='" + region + '\'' +
+            ", addressId=" + addressId +
             ", date=" + date +
             ", description='" + description + '\'' +
             ", technic='" + technic + '\'' +
             ", access='" + access + '\'' +
-            ", manager=" + manager +
-            ", climber=" + climber +
+            ", managerId=" + managerId +
+            ", climberId=" + climberId +
             ", status=" + status +
             ", statusAuto=" + statusAuto +
             ", hasComment=" + hasComment +

@@ -1,15 +1,8 @@
 package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.model.business.Topo;
-import com.dsf.escalade.model.global.Comment;
-import com.dsf.escalade.repository.business.SiteRepository;
-import com.dsf.escalade.repository.business.TopoRepository;
-import com.dsf.escalade.repository.global.AddressRepository;
-import com.dsf.escalade.repository.global.CommentRepository;
-import com.dsf.escalade.repository.global.UserRepository;
+import com.dsf.escalade.service.AddressService;
+import com.dsf.escalade.service.CommentService;
 import com.dsf.escalade.service.TopoService;
-import com.dsf.escalade.web.dto.AddressDto;
-import com.dsf.escalade.web.dto.CommentDto;
 import com.dsf.escalade.web.dto.TopoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,85 +23,44 @@ import java.util.List;
 public class TopoController {
 
     @PersistenceContext
-    EntityManager entityManager;
-
-    private final SiteRepository siteRepository;
-    private final TopoRepository topoRepository;
-    private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
-    private final CommentRepository commentRepository;
-
-    private TopoService topoService;
+    private final EntityManager entityManager;
+    private final AddressService addressService;
+    private final TopoService topoService;
+    private final CommentService commentService;
 
     @Autowired
-    public TopoController(SiteRepository siteRepository, TopoRepository topoRepository, UserRepository userRepository, AddressRepository addressRepository, CommentRepository commentRepository) {
-        this.siteRepository = siteRepository;
-        this.topoRepository = topoRepository;
-       this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
-        this.commentRepository = commentRepository;
+    public TopoController(EntityManager entityManager, AddressService addressService, TopoService topoService, CommentService commentService) {
+        this.entityManager = entityManager;
+        this.addressService = addressService;
+        this.topoService = topoService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/topo/list")
     public String listTopo(Model model) {
-        TopoDto topoDto;
-
-        List<TopoDto> topoDtoList = new ArrayList<TopoDto>();
-        List<Topo> listTopo = topoRepository.findAll();
+        List<TopoDto> topoDtoList = topoService.findAll();
 
        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
        String currentPrincipalName = authentication.getName();
-
-        for(Topo topo:listTopo){
-            topoDto = new TopoDto(topo);
-            topoDto.setAlias(userRepository.getOne(topo.getManager()).getAlias());
-            topoDtoList.add(topoDto);
-        }
-
         model.addAttribute("topoDtoList", topoDtoList);
-
         return "topo/topo-list";
     }
 
     @GetMapping("/topo/read/{id}")
     public String readTopo(@PathVariable("id") Integer id, Model model) {
-        TopoDto topoDto;
-        List<CommentDto> commentDtoList = new ArrayList<CommentDto>();
-
-        Topo topo = topoRepository.findById(id)
-              .orElseThrow(() -> new IllegalArgumentException("Invalid topo Id:" + id));
-
-        // initialize topo DTO with topo object
-        topoDto = new TopoDto(topo);
-        // Get the alias of the manager
-        topoDto.setAlias(userRepository.getOne(topo.getManager()).getAlias());
-
-        // initialize address DTO
-        if(topo.getAddress()!=null) {
-            AddressDto addressDto = new AddressDto(addressRepository.getOne(topo.getAddress()));
-            model.addAttribute("addressDto", addressDto);
-        }
-
-        // we get all Topo's comments
-        for(Comment comment:commentRepository.findAll()){
-            CommentDto commentDto = new CommentDto(comment);
-            commentDto.setAlias(userRepository.getOne(comment.getUser_id()).getAlias());
-            commentDtoList.add(commentDto);
-        }
+        TopoDto topoDto = topoService.getOne(id);
 
         model.addAttribute("topoDto", topoDto);
-        model.addAttribute("commentDtoList", commentDtoList);
+        model.addAttribute("addressDto",addressService.getOne(topoDto.getId()));
+        model.addAttribute("commentDtoList", commentService.getBySiteId(id));
+
         return "topo/topo-read";
     }
 
-    @GetMapping("/topo/create/{id}")
-    public String editTopo(@PathVariable("id") Integer id, Model model) {
-        TopoDto topoDto;
+    @GetMapping("/topo/new")
+    public String editTopo( Model model) {
 
-        Topo topo = topoRepository.findById(id)
-              .orElseThrow(() -> new IllegalArgumentException("Invalid topo Id:" + id));
-
-        model.addAttribute("topoDto", new TopoDto(topo));
+        model.addAttribute("topoDto", new TopoDto());
         return "topo/topo-update";
     }
 
@@ -123,25 +74,11 @@ public class TopoController {
 
     @GetMapping("/topo/delete/{id}")
     public String deleteTopo(@PathVariable("id") Integer id, Model model) {
-        TopoDto topoDto;
-        Topo topo = topoRepository.findById(id)
-              .orElseThrow(() -> new IllegalArgumentException("Invalid topo Id:" + id));
-        topoRepository.delete(topo);
-
-        List<TopoDto> listTopoDto = new ArrayList<TopoDto>();
-        List<Topo> listTopo = topoRepository.findAll();
+        //TODO
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        for(Topo t:listTopo){
-            topoDto = new TopoDto(topo);
-            topoDto.setAlias(userRepository.getOne(t.getManager()).getAlias());
-            listTopoDto.add(topoDto);
-        }
-
-
-        model.addAttribute("topoList", listTopoDto);
 
 
         return "topo/topo-list";

@@ -5,18 +5,17 @@
 <div class="container-fluid">
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
-   <header class="jumbotron">
-      <H1 class="display-4" th:text="#{greeting}">Hello! Welcome on our Website!</H1>
+   <header>
    </header>
 
-   <section class="row">
-      <div class="col-lg-12">
-
-      <a href="/topo/list" th:text="#{label.link.topoList}">Topo's list</a>
+   <section class="card bg-dark">
+      <img class="card-img" th:src="@{/images/fond.jpg}" alt="photo"/>
+      <div class="card-img-overlay">
+         <h1 class="card-header" th:text="#{greeting}">Hello! Welcome on our Website!</h1>
       </div>
    </section>
 
-   <footer th:insert="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+   <footer th:insert="~{fragments/footer :: footer}"></footer>
 </div>
 </body>
 </html>

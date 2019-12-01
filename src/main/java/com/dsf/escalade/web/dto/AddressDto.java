@@ -1,17 +1,15 @@
 package com.dsf.escalade.web.dto;
 
-import com.dsf.escalade.model.global.Address;
-
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class AddressDto  implements Serializable {
-   private final int STREET_MAX = 50;
-   private final int ZIP_MIN = 5;
-   private final int ZIP_MAX = 6;
-   private final int CITY_MAX = 50;
-   private final int COUNTRY_MAX = 50;
+   private static final int STREET_MAX = 50;
+   private static final int ZIP_MIN = 5;
+   private static final int ZIP_MAX = 6;
+   private static final int CITY_MAX = 50;
+   private static final int COUNTRY_MAX = 50;
 
    private Integer id;
    @Size(max = STREET_MAX)
@@ -27,23 +25,6 @@ public class AddressDto  implements Serializable {
 
    public AddressDto() {
       super();
-   }
-
-   public AddressDto(String street1, String street2, String zipCode, String city, String country) {
-      this.street1 = street1;
-      this.street2 = street2;
-      this.zipCode = zipCode;
-      this.city = city;
-      this.country = country;
-   }
-
-   public AddressDto(Address address) {
-      this.id = address.getId();
-      this.street1 = address.getStreet1();
-      this.street2 = address.getStreet2();
-      this.zipCode = address.getZipCode();
-      this.city = address.getCity();
-      this.country = address.getCountry();
    }
 
    public Integer getId() {

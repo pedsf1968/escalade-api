@@ -12,9 +12,9 @@ public class Comment implements Serializable {
    @Column(name = "id")
    private Integer id;
    @Column(name = "site_id", nullable = false)
-   private Integer site_id;
+   private Integer siteId;
    @Column(name = "user_id", nullable = false)
-   private Integer user_id;
+   private Integer userId;
    @Column(name = "text", nullable = false, columnDefinition = "TEXT")
    private String text;
 
@@ -22,26 +22,28 @@ public class Comment implements Serializable {
       super();
    }
 
-   public Comment(Integer site_id, Integer user_id, String text) {
-      this.site_id = site_id;
-      this.user_id = user_id;
-      this.text = text;
+   public Integer getId() {
+      return id;
    }
 
-   public Integer getSite_id() {
-      return site_id;
+   public void setId(Integer id) {
+      this.id = id;
    }
 
-   public void setSite_id(Integer site_id) {
-      this.site_id = site_id;
+   public Integer getSiteId() {
+      return siteId;
    }
 
-   public Integer getUser_id() {
-      return user_id;
+   public void setSiteId(Integer siteId) {
+      this.siteId = siteId;
    }
 
-   public void setUser_id(Integer user_id) {
-      this.user_id = user_id;
+   public Integer getUserId() {
+      return userId;
+   }
+
+   public void setUserId(Integer userId) {
+      this.userId = userId;
    }
 
    public String getText() {
@@ -57,25 +59,24 @@ public class Comment implements Serializable {
       if (this == o) return true;
       if (!(o instanceof Comment)) return false;
       Comment comment = (Comment) o;
-      return getSite_id().equals(comment.getSite_id()) &&
-            getUser_id().equals(comment.getUser_id()) &&
+      return getId().equals(comment.getId()) &&
+            getSiteId().equals(comment.getSiteId()) &&
+            getUserId().equals(comment.getUserId()) &&
             getText().equals(comment.getText());
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(getSite_id(), getUser_id(), getText());
+      return Objects.hash(getId(), getSiteId(), getUserId(), getText());
    }
 
    @Override
    public String toString() {
-      final StringBuilder stringBuilder = new StringBuilder();
-      stringBuilder.append("Comment [")
-            .append("id=").append(site_id)
-            .append("grimpeur=").append(user_id)
-            .append("text=").append(text)
-            .append("]");
-
-      return stringBuilder.toString();
+      return "Comment{" +
+            "id=" + id +
+            ", siteId=" + siteId +
+            ", userId=" + userId +
+            ", text='" + text + '\'' +
+            '}';
    }
 }

@@ -4,38 +4,31 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "voie")
 @PrimaryKeyJoinColumn(name = "site_id")
 public class Voie extends Site {
    @Column(name = "secteur_id", columnDefinition = "INTEGER(10) NOT NULL")
-   private Integer secteur;
+   private Integer secteurId;
    @Column(name = "est_equipee", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean estEquipee;
    @Column(name = "hauteur", columnDefinition = "INTEGER(3)")
    private Integer hauteur;
    @Column(name = "cotation_id", columnDefinition = "VARCHAR(2)")
-   private Integer cotation;
+   private Integer cotationId;
 
    protected Voie() {
       super();
    }
 
-   public Voie( String nom, Integer secteur, Boolean estEquipee, Integer hauteur, Integer cotation) {
-      super(nom, SiteType.VOIE);
-      this.secteur = secteur;
-      this.estEquipee = estEquipee;
-      this.hauteur = hauteur;
-      this.cotation = cotation;
+   public Integer getSecteurId() {
+      return secteurId;
    }
 
-   public Integer getSecteur() {
-      return secteur;
-   }
-
-   public void setSecteur(Integer secteur) {
-      this.secteur = secteur;
+   public void setSecteurId(Integer secteurId) {
+      this.secteurId = secteurId;
    }
 
    public Boolean getEstEquipee() {
@@ -54,24 +47,41 @@ public class Voie extends Site {
       this.hauteur = hauteur;
    }
 
-   public Integer getCotation() {
-      return cotation;
+   public Integer getCotationId() {
+      return cotationId;
    }
 
-   public void setCotation(Integer cotation) {
-      this.cotation = cotation;
+   public void setCotationId(Integer cotationId) {
+      this.cotationId = cotationId;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Voie)) return false;
+      if (!super.equals(o)) return false;
+      Voie voie = (Voie) o;
+      return getSecteurId().equals(voie.getSecteurId()) &&
+            getEstEquipee().equals(voie.getEstEquipee()) &&
+            getHauteur().equals(voie.getHauteur()) &&
+            getCotationId().equals(voie.getCotationId());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(super.hashCode(), getSecteurId(), getEstEquipee(), getHauteur(), getCotationId());
    }
 
    @Override
    public String toString() {
       return "Voie{" +
-            "secteur=" + secteur +
-            ", estEquipee=" + estEquipee +
-            ", hauteur=" + hauteur +
-            ", cotation=" + cotation +
             ", id=" + id +
             ", name='" + name + '\'' +
             ", type=" + type +
+            ", secteurId=" + secteurId +
+            ", estEquipee=" + estEquipee +
+            ", hauteur=" + hauteur +
+            ", cotationId=" + cotationId +
             ", hasComment=" + hasComment +
             ", photoLink='" + photoLink + '\'' +
             ", mapLink='" + mapLink + '\'' +

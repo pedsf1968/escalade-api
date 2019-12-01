@@ -1,18 +1,20 @@
 package com.dsf.escalade.web.dto;
 
-import com.dsf.escalade.model.business.*;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Objects;
 
 public class TopoDto {
    private static final int NAME_MIN = 1;
+   private static final int NAME_MAX = 50;
    private static final int REGION_MIN = 1;
+   private static final int REGION_MAX = 50;
 
+   //Site attributes
    private Integer id;
    @NotNull
-   @Size(min = NAME_MIN)
+   @Size(min = NAME_MIN, max = NAME_MAX)
    private String name;
    private String longitude;
    private String latitude;
@@ -20,31 +22,27 @@ public class TopoDto {
    private String photoLink;
    private String mapLink;
 
+   //Topo attributes
    @NotNull
-   @Size(min = REGION_MIN)
+   @Size(min = REGION_MIN, max = REGION_MAX)
    private String region;
+   private Integer addressId;
+   @NotNull
    private Date date;
+   @NotNull
    private String description;
    private String technic;
    private String access;
-   private String alias;
+   // Don't use username for the manager
+   @NotNull
+   private String aliasManager;
+   // Don't use username for the climber who reserve
+   private String aliasClimber;
    private String status;
+   private Boolean statusAuto;
 
-
-   public TopoDto(Topo topo) {
-      this.id = topo.getId();
-      this.name = topo.getName();
-      this.longitude = topo.getLongitude();
-      this.latitude = topo.getLatitude();
-      this.hasComment = topo.getHasComment();
-      this.photoLink = topo.getPhotoLink();
-      this.mapLink = topo.getMapLink();
-      this.region = topo.getRegion();
-      this.date = topo.getDate();
-      this.description = topo.getDescription();
-      this.technic = topo.getTechnic();
-      this.access = topo.getAccess();
-      this.status = topo.getStatus().toString();
+   public TopoDto() {
+      super();
    }
 
    public Integer getId() {
@@ -111,6 +109,14 @@ public class TopoDto {
       this.region = region;
    }
 
+   public Integer getAddressId() {
+      return addressId;
+   }
+
+   public void setAddressId(Integer addressId) {
+      this.addressId = addressId;
+   }
+
    public Date getDate() {
       return date;
    }
@@ -143,12 +149,20 @@ public class TopoDto {
       this.access = access;
    }
 
-   public String getAlias() {
-      return alias;
+   public String getAliasManager() {
+      return aliasManager;
    }
 
-   public void setAlias(String alias) {
-      this.alias = alias;
+   public void setAliasManager(String aliasManager) {
+      this.aliasManager = aliasManager;
+   }
+
+   public String getAliasClimber() {
+      return aliasClimber;
+   }
+
+   public void setAliasClimber(String aliasClimber) {
+      this.aliasClimber = aliasClimber;
    }
 
    public String getStatus() {
@@ -157,5 +171,65 @@ public class TopoDto {
 
    public void setStatus(String status) {
       this.status = status;
+   }
+
+   public Boolean getStatusAuto() {
+      return statusAuto;
+   }
+
+   public void setStatusAuto(Boolean statusAuto) {
+      this.statusAuto = statusAuto;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof TopoDto)) return false;
+      TopoDto topoDto = (TopoDto) o;
+      return getId().equals(topoDto.getId()) &&
+            getName().equals(topoDto.getName()) &&
+            Objects.equals(getLongitude(), topoDto.getLongitude()) &&
+            Objects.equals(getLatitude(), topoDto.getLatitude()) &&
+            getHasComment().equals(topoDto.getHasComment()) &&
+            Objects.equals(getPhotoLink(), topoDto.getPhotoLink()) &&
+            Objects.equals(getMapLink(), topoDto.getMapLink()) &&
+            getRegion().equals(topoDto.getRegion()) &&
+            getAddressId().equals(topoDto.getAddressId()) &&
+            getDate().equals(topoDto.getDate()) &&
+            getDescription().equals(topoDto.getDescription()) &&
+            Objects.equals(getTechnic(), topoDto.getTechnic()) &&
+            Objects.equals(getAccess(), topoDto.getAccess()) &&
+            getAliasManager().equals(topoDto.getAliasManager()) &&
+            Objects.equals(getAliasClimber(), topoDto.getAliasClimber()) &&
+            getStatus().equals(topoDto.getStatus()) &&
+            getStatusAuto().equals(topoDto.getStatusAuto());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getId(), getName(), getLongitude(), getLatitude(), getHasComment(), getPhotoLink(), getMapLink(), getRegion(), getAddressId(), getDate(), getDescription(), getTechnic(), getAccess(), getAliasManager(), getAliasClimber(), getStatus(), getStatusAuto());
+   }
+
+   @Override
+   public String toString() {
+      return "TopoDto{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", longitude='" + longitude + '\'' +
+            ", latitude='" + latitude + '\'' +
+            ", hasComment=" + hasComment +
+            ", photoLink='" + photoLink + '\'' +
+            ", mapLink='" + mapLink + '\'' +
+            ", region='" + region + '\'' +
+            ", addressId=" + addressId +
+            ", date=" + date +
+            ", description='" + description + '\'' +
+            ", technic='" + technic + '\'' +
+            ", access='" + access + '\'' +
+            ", aliasManager='" + aliasManager + '\'' +
+            ", aliasClimber='" + aliasClimber + '\'' +
+            ", status='" + status + '\'' +
+            ", statusAuto=" + statusAuto +
+            '}';
    }
 }

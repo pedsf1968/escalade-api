@@ -1,14 +1,13 @@
 package com.dsf.escalade.model.business;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="secteur")
 @PrimaryKeyJoinColumn(name = "site_id")
 public class Secteur extends Site{
-   //@Id
-  // private Integer id;
-   @Column(name = "topo_id", columnDefinition = "INTEGER(10) NOT NULL")
+   @Column(name = "topoId", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer topo;
    @Column(name = "equipement", columnDefinition = "TEXT")
    private String equipement;
@@ -33,12 +32,18 @@ public class Secteur extends Site{
       this.equipement = equipement;
    }
 
-    @Override
-   public String toString() {
-      return "Secteur{" +
-              "id=" + id +
-              ", topo=" + topo +
-              ", equipement='" + equipement + '\'' +
-              '}';
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Secteur)) return false;
+      if (!super.equals(o)) return false;
+      Secteur secteur = (Secteur) o;
+      return getTopo().equals(secteur.getTopo()) &&
+            getEquipement().equals(secteur.getEquipement());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(super.hashCode(), getTopo(), getEquipement());
    }
 }

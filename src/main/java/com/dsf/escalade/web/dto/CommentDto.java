@@ -1,14 +1,14 @@
 package com.dsf.escalade.web.dto;
 
-import com.dsf.escalade.model.global.Comment;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CommentDto implements Serializable {
 
-   private Integer site_id;
+   private Integer id;
+   private Integer siteId;
    @NotNull
    @NotBlank
    private String alias;
@@ -18,23 +18,20 @@ public class CommentDto implements Serializable {
       super();
    }
 
-   public CommentDto(Integer site_id, String alias, String text) {
-      this.site_id = site_id;
-      this.alias = alias;
-      this.text = text;
+     public Integer getId() {
+      return id;
    }
 
-   public CommentDto(Comment comment){
-      this.site_id = comment.getSite_id();
-      this.text = comment.getText();
+   public void setId(Integer id) {
+      this.id = id;
    }
 
-   public Integer getSite_id() {
-      return site_id;
+   public Integer getSiteId() {
+      return siteId;
    }
 
-   public void setSite_id(Integer site_id) {
-      this.site_id = site_id;
+   public void setSiteId(Integer siteId) {
+      this.siteId = siteId;
    }
 
    public String getAlias() {
@@ -53,4 +50,29 @@ public class CommentDto implements Serializable {
       this.text = text;
    }
 
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof CommentDto)) return false;
+      CommentDto that = (CommentDto) o;
+      return getId().equals(that.getId()) &&
+            getSiteId().equals(that.getSiteId()) &&
+            getAlias().equals(that.getAlias()) &&
+            getText().equals(that.getText());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getId(), getSiteId(), getAlias(), getText());
+   }
+
+   @Override
+   public String toString() {
+      return "CommentDto{" +
+            "id=" + id +
+            ", siteId=" + siteId +
+            ", alias='" + alias + '\'' +
+            ", text='" + text + '\'' +
+            '}';
+   }
 }
