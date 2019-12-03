@@ -1,14 +1,15 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role implements Serializable {
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Integer id;
 
    private String name;
@@ -25,7 +26,7 @@ public class Role {
       this.name = name;
    }
 
-     public Integer getId() {
+   public Integer getId() {
       return id;
    }
 

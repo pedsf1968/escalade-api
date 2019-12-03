@@ -1,11 +1,12 @@
 package com.dsf.escalade.web.dto;
 
 
-import com.dsf.escalade.model.global.Role;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class UserDto {
     static final int FIRSTNAME_MIN = 1;
@@ -21,6 +22,8 @@ public class UserDto {
     static final String EMAIL_REGEXP = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     static final int PHONE_MAX = 14;
     static final String PHONE_REGEXP = "^(?:(?:\\+|00)33[\\s.-]{0,3}(?:\\(0\\)[\\s.-]{0,3})?|0)[1-9](?:(?:[\\s.-]?\\d{2}){4}|\\d{2}(?:[\\s.-]?\\d{3}){2})$";
+
+    private Integer id;
 
     @NotNull
     @Size(min = FIRSTNAME_MIN, max = FIRSTNAME_MAX)
@@ -50,14 +53,16 @@ public class UserDto {
     @Size(max = PHONE_MAX)
     @Pattern(regexp = PHONE_REGEXP, message = "Not a valid phone number !")
     private String phone;
-    private Role role;
+    private Integer addressId;
+    private List<String> roles;
 
-    // Adress section
-    private String street1;
-    private String street2;
-    private String zipCode;
-    private String city;
-    private String country;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -107,13 +112,21 @@ public class UserDto {
         this.email = email;
     }
 
-    public Role getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
+
+    public void addRole(String role) {
+        if(this.roles == null)
+            this.roles = new ArrayList<String>();
+
+        this.roles.add(role);
+    }
+
 
     public String getPhone() {
         return phone;
@@ -123,81 +136,47 @@ public class UserDto {
         this.phone = phone;
     }
 
-    public String getStreet1() {
-        return street1;
+    public Integer getAddressId() {
+        return addressId;
     }
 
-    public void setStreet1(String street1) {
-        this.street1 = street1;
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
     }
 
-    public String getStreet2() {
-        return street2;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDto)) return false;
+        UserDto userDto = (UserDto) o;
+        return getFirstName().equals(userDto.getFirstName()) &&
+              getLastName().equals(userDto.getLastName()) &&
+              getAlias().equals(userDto.getAlias()) &&
+              getPassword().equals(userDto.getPassword()) &&
+              Objects.equals(getMatchingPassword(), userDto.getMatchingPassword()) &&
+              getEmail().equals(userDto.getEmail()) &&
+              Objects.equals(getPhone(), userDto.getPhone()) &&
+              Objects.equals(getRoles(), userDto.getRoles());
     }
 
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public boolean hasAddress(){
-        boolean response = true;
-        if(street1==null) {
-            response =false;
-        } else if(zipCode==null) {
-            response =false;
-        } else if(city==null) {
-            response =false;
-        }
-
-        return response;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getAlias(), getPassword(), getMatchingPassword(), getEmail(), getPhone(), getRoles());
     }
 
     @Override
     public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("UserDto [firstName=").append(firstName)
-              .append(", lastName=").append(lastName)
-              .append(", alias=").append(alias)
-              .append(", password=").append(password)
-              .append(", matchingPassword=").append(matchingPassword)
-              .append(", phone=").append(phone)
-              .append(", email=").append(email)
-              .append(", role=").append(role);
-
-        if(hasAddress()) {
-            stringBuilder.append(", street=").append(street1).append(street2)
-                  .append(", zipCode=").append(zipCode)
-                  .append(", city=").append(city)
-                  .append(", country=").append(country);
-        }
-
-        stringBuilder.append("]");
-
-        return stringBuilder.toString();
+        return "UserDto{" +
+              "id='" + id + '\'' +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", alias='" + alias + '\'' +
+              ", password='" + password + '\'' +
+              ", matchingPassword='" + matchingPassword + '\'' +
+              ", email='" + email + '\'' +
+              ", phone='" + phone + '\'' +
+              ", roles=" + roles +
+              '}';
     }
-
 }

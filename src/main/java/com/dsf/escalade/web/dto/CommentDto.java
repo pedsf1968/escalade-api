@@ -1,6 +1,5 @@
 package com.dsf.escalade.web.dto;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,7 +9,6 @@ public class CommentDto implements Serializable {
    private Integer id;
    private Integer siteId;
    @NotNull
-   @NotBlank
    private String alias;
    private String text;
 

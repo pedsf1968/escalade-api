@@ -1,5 +1,6 @@
 package com.dsf.escalade.web.dto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,12 +13,15 @@ public class AddressDto  implements Serializable {
    private static final int COUNTRY_MAX = 50;
 
    private Integer id;
+   @NotNull
    @Size(max = STREET_MAX)
    private String street1;
    @Size(max = STREET_MAX)
    private String street2;
+   @NotNull
    @Size(min=ZIP_MIN, max = ZIP_MAX)
    private String zipCode;
+   @NotNull
    @Size(max = CITY_MAX)
    private String city;
    @Size(max = COUNTRY_MAX)

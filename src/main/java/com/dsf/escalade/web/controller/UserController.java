@@ -2,11 +2,15 @@ package com.dsf.escalade.web.controller;
 
 import com.dsf.escalade.repository.global.RoleRepository;
 import com.dsf.escalade.repository.global.UserRepository;
+import com.dsf.escalade.service.AddressService;
 import com.dsf.escalade.service.SecurityServiceImpl;
 import com.dsf.escalade.service.UserServiceImpl;
 import com.dsf.escalade.validator.UserValidator;
+import com.dsf.escalade.web.dto.AddressDto;
 import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,14 +31,16 @@ import javax.validation.Valid;
 public class UserController {
 
    private final UserServiceImpl userService;
+   private final AddressService addressService;
    private final  SecurityServiceImpl securityService;
    private final  RoleRepository roleRepository;
    private final  UserRepository userRepository;
    private final  UserValidator userValidator;
 
    @Autowired
-   public UserController(UserServiceImpl userService, SecurityServiceImpl securityService, RoleRepository roleRepository, UserRepository userRepository, UserValidator userValidator) {
+   public UserController(UserServiceImpl userService, AddressService addressService, SecurityServiceImpl securityService, RoleRepository roleRepository, UserRepository userRepository, UserValidator userValidator) {
       this.userService = userService;
+      this.addressService = addressService;
       this.securityService = securityService;
       this.roleRepository = roleRepository;
       this.userRepository = userRepository;
@@ -44,20 +50,23 @@ public class UserController {
    @GetMapping("/registration")
    public String getRegistration(Model model) {
       model.addAttribute("userDto", new UserDto());
+      model.addAttribute("addressDto", new AddressDto());
 
       return "user/registration";
    }
 
    @PostMapping("/registration")
-   public String postRegistration(@ModelAttribute("userDto") @Valid UserDto userDto, BindingResult bindingResult) {
-
-      userValidator.validate(userDto, bindingResult);
+   public String postRegistration(@ModelAttribute("userDto") @Valid UserDto userDto, @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResult) {
 
       if (bindingResult.hasErrors()) {
+
          return "user/registration";
       }
 
-      userDto.setRole(roleRepository.findByName("ROLE_USER"));
+      Integer addressId = addressService.save(addressDto);
+      userDto.setAddressId(addressId);
+
+      userDto.setRoles(Lists.newArrayList("ROLE_USER"));
 
       userService.save(userDto);
 

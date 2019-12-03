@@ -1,6 +1,9 @@
 package com.dsf.escalade.model.business;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -8,20 +11,20 @@ import java.util.Objects;
 @PrimaryKeyJoinColumn(name = "site_id")
 public class Secteur extends Site{
    @Column(name = "topoId", columnDefinition = "INTEGER(10) NOT NULL")
-   private Integer topo;
+   private Integer topoId;
    @Column(name = "equipement", columnDefinition = "TEXT")
    private String equipement;
 
-   protected Secteur() {
+   public Secteur() {
       super();
    }
 
-   public Integer getTopo() {
-      return topo;
+   public Integer getTopoId() {
+      return topoId;
    }
 
-   public void setTopo(Integer topo) {
-      this.topo = topo;
+   public void setTopoId(Integer topoId) {
+      this.topoId = topoId;
    }
 
    public String getEquipement() {
@@ -38,12 +41,26 @@ public class Secteur extends Site{
       if (!(o instanceof Secteur)) return false;
       if (!super.equals(o)) return false;
       Secteur secteur = (Secteur) o;
-      return getTopo().equals(secteur.getTopo()) &&
+      return getTopoId().equals(secteur.getTopoId()) &&
             getEquipement().equals(secteur.getEquipement());
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(super.hashCode(), getTopo(), getEquipement());
+      return Objects.hash(super.hashCode(), getTopoId(), getEquipement());
+   }
+
+   @Override
+   public String toString() {
+      return "Secteur{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", type=" + type +
+            ", topoId=" + topoId +
+            ", equipement='" + equipement + '\'' +
+            ", hasComment=" + hasComment +
+            ", photoLink='" + photoLink + '\'' +
+            ", mapLink='" + mapLink + '\'' +
+            '}';
    }
 }

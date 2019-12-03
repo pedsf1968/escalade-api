@@ -2,39 +2,31 @@ package com.dsf.escalade.model.business;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "longueur")
 public class Longueur implements Serializable {
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", columnDefinition = "INTEGER(10)")
    private Integer id;
-   @Column(name = "nom", columnDefinition = "VARCHAR(50) NOT NULL")
-   private String nom;
+   @Column(name = "name", columnDefinition = "VARCHAR(50) NOT NULL")
+   private String name;
    @Column(name = "cotation_id", columnDefinition = "INTEGER(2) NOT NULL")
-   private Integer cotation;
-   @Column(name = "voie", columnDefinition = "INTEGER(10) NOT NULL")
-   private Integer voie;
-   @Column(name = "hauteur", columnDefinition = "INTEGER(4)")
-   private Integer hauteur;
-   @Column(name = "nb_spits", columnDefinition = "INTEGER(3)")
-   private Integer nbSpits;
+   private Integer cotationId;
+   @Column(name = "voie_id", columnDefinition = "INTEGER(10) NOT NULL")
+   private Integer voieId;
+   @Column(name = "heigth", columnDefinition = "INTEGER(4)")
+   private Integer heigth;
+   @Column(name = "spits", columnDefinition = "INTEGER(3)")
+   private Integer spits;
 
    protected Longueur() {
       super();
    }
 
-   public Longueur(Integer id, String nom, Integer cotation, Integer voie, Integer hauteur, Integer nbSpits) {
-      this.id = id;
-      this.nom = nom;
-      this.cotation = cotation;
-      this.voie = voie;
-      this.hauteur = hauteur;
-      this.nbSpits = nbSpits;
-   }
-
-   public Integer getId() {
+      public Integer getId() {
       return id;
    }
 
@@ -42,57 +34,73 @@ public class Longueur implements Serializable {
       this.id = id;
    }
 
-   public String getNom() {
-      return nom;
+   public String getName() {
+      return name;
    }
 
-   public void setNom(String nom) {
-      this.nom = nom;
+   public void setName(String name) {
+      this.name = name;
    }
 
-   public Integer getCotation() {
-      return cotation;
+   public Integer getCotationId() {
+      return cotationId;
    }
 
-   public void setCotation(Integer cotation) {
-      this.cotation = cotation;
+   public void setCotationId(Integer cotationId) {
+      this.cotationId = cotationId;
    }
 
-   public Integer getVoie() {
-      return voie;
+   public Integer getVoieId() {
+      return voieId;
    }
 
-   public void setVoie(Integer voie) {
-      this.voie = voie;
+   public void setVoieId(Integer voieId) {
+      this.voieId = voieId;
    }
 
-   public Integer getHauteur() {
-      return hauteur;
+   public Integer getHeigth() {
+      return heigth;
    }
 
-   public void setHauteur(Integer hauteur) {
-      this.hauteur = hauteur;
+   public void setHeigth(Integer heigth) {
+      this.heigth = heigth;
    }
 
-   public Integer getNbSpits() {
-      return nbSpits;
+   public Integer getSpits() {
+      return spits;
    }
 
-   public void setNbSpits(Integer nbSpits) {
-      this.nbSpits = nbSpits;
+   public void setSpits(Integer spits) {
+      this.spits = spits;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Longueur)) return false;
+      Longueur longueur = (Longueur) o;
+      return getId().equals(longueur.getId()) &&
+            getName().equals(longueur.getName()) &&
+            Objects.equals(getCotationId(), longueur.getCotationId()) &&
+            getVoieId().equals(longueur.getVoieId()) &&
+            Objects.equals(getHeigth(), longueur.getHeigth()) &&
+            Objects.equals(getSpits(), longueur.getSpits());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getId(), getName(), getCotationId(), getVoieId(), getHeigth(), getSpits());
    }
 
    @Override
    public String toString() {
-      return String.format(
-            "Longueur {id=%d, " +
-                  "nom='%s', " +
-                  "cotation=%d, " +
-                  "voie='%s', " +
-                  "hauteur='%d', " +
-                  "nombre de spits='%d'}",
-                  id, nom,  cotation, voie, hauteur, nbSpits);
+      return "Longueur{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", cotationId=" + cotationId +
+            ", voieId=" + voieId +
+            ", heigth=" + heigth +
+            ", spits=" + spits +
+            '}';
    }
-
-
 }

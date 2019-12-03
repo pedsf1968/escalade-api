@@ -3,12 +3,14 @@ package com.dsf.escalade.service;
 import com.dsf.escalade.model.global.Address;
 import com.dsf.escalade.repository.global.AddressRepository;
 import com.dsf.escalade.web.dto.AddressDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("AddressService")
 public class AddressServiceImpl implements AddressService {
    private final AddressRepository addressRepository;
 
+   @Autowired
    public AddressServiceImpl(AddressRepository addressRepository) {
       this.addressRepository = addressRepository;
    }
@@ -37,7 +39,7 @@ public class AddressServiceImpl implements AddressService {
       address.setStreet2(addressDto.getStreet2());
       address.setZipCode(addressDto.getZipCode());
       address.setCity(addressDto.getCity());
-      address.setCity(addressDto.getCountry());
+      address.setCountry(addressDto.getCountry());
 
       return addressRepository.save(address).getId();
    }

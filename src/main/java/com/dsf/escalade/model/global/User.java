@@ -69,23 +69,13 @@ public class User implements Serializable {
    @Column(name = "is_member")
    private Boolean isMember;
    @Column(name = "address_id")
-   private Integer adressId;
+   private Integer addressId;
 
    @ManyToMany
    private Set<Role> roles;
 
    public User() {
       super();
-   }
-
-   public User(String firstName, String lastName, String phone, String email, String alias, String password) {
-      super();
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.phone = phone;
-      this.email = email;
-      this.alias = alias;
-      this.password = password;
    }
 
    public Integer getId() {
@@ -152,12 +142,12 @@ public class User implements Serializable {
       isMember = member;
    }
 
-   public Integer getAdressId() {
-      return adressId;
+   public Integer getAddressId() {
+      return addressId;
    }
 
    public void setAdressId(Integer adressId) {
-      this.adressId = adressId;
+      this.addressId = adressId;
    }
 
    public Set<Role> getRoles() {

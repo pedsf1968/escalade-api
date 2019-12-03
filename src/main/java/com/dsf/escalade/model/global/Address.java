@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Address implements Serializable {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Integer id;
 
@@ -28,13 +28,6 @@ public class Address implements Serializable {
       super();
    }
 
-   public Address(String street1, String street2, String zipCode, String city, String country) {
-      this.street1 = street1;
-      this.street2 = street2;
-      this.zipCode = zipCode;
-      this.city = city;
-      this.country = country;
-   }
 
    public Integer getId() {
       return id;

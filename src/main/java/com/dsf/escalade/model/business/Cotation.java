@@ -7,19 +7,18 @@ import java.util.Objects;
 @Table(name = "cotation")
 public class Cotation {
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", columnDefinition = "INTEGER(2)")
    private Integer id;
-   @Column(name = "niveau_fr", columnDefinition = "VARCHAR(3) NOT NULL")
-   private String niveauFr;
+   @Column(name = "FR", columnDefinition = "VARCHAR(3) NOT NULL")
+   private String FRLevel;
+   @Column(name = "US", columnDefinition = "VARCHAR(5) NOT NULL")
+   private String USLevel;
+   @Column(name = "GB", columnDefinition = "VARCHAR(2) NOT NULL")
+   private String GBLevel;
 
    public Cotation() {
       super();
-   }
-
-   public Cotation(Integer id, String niveauFr) {
-      this.id = id;
-      this.niveauFr = niveauFr;
    }
 
    public Integer getId() {
@@ -30,20 +29,28 @@ public class Cotation {
       this.id = id;
    }
 
-   public String getNiveauFr() {
-      return niveauFr;
+   public String getFRLevel() {
+      return FRLevel;
    }
 
-   public void setNiveauFr(String niveauFr) {
-      this.niveauFr = niveauFr;
+   public void setFRLevel(String FRLevel) {
+      this.FRLevel = FRLevel;
    }
 
-   @Override
-   public String toString() {
-      return "Cotation{" +
-            "id=" + id +
-            ", niveauFr='" + niveauFr + '\'' +
-            '}';
+   public String getUSLevel() {
+      return USLevel;
+   }
+
+   public void setUSLevel(String USLevel) {
+      this.USLevel = USLevel;
+   }
+
+   public String getGBLevel() {
+      return GBLevel;
+   }
+
+   public void setGBLevel(String GBLevel) {
+      this.GBLevel = GBLevel;
    }
 
    @Override
@@ -52,11 +59,23 @@ public class Cotation {
       if (!(o instanceof Cotation)) return false;
       Cotation cotation = (Cotation) o;
       return getId().equals(cotation.getId()) &&
-            getNiveauFr().equals(cotation.getNiveauFr());
+            getFRLevel().equals(cotation.getFRLevel()) &&
+            Objects.equals(getUSLevel(), cotation.getUSLevel()) &&
+            Objects.equals(getGBLevel(), cotation.getGBLevel());
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(getId(), getNiveauFr());
+      return Objects.hash(getId(), getFRLevel(), getUSLevel(), getGBLevel());
+   }
+
+   @Override
+   public String toString() {
+      return "Cotation{" +
+            "id=" + id +
+            ", FRLevel='" + FRLevel + '\'' +
+            ", USLevel='" + USLevel + '\'' +
+            ", GBLevel='" + GBLevel + '\'' +
+            '}';
    }
 }

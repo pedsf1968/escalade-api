@@ -12,10 +12,10 @@ import java.util.Objects;
 public class Voie extends Site {
    @Column(name = "secteur_id", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer secteurId;
-   @Column(name = "est_equipee", columnDefinition = "BOOLEAN DEFAULT FALSE")
-   private Boolean estEquipee;
-   @Column(name = "hauteur", columnDefinition = "INTEGER(3)")
-   private Integer hauteur;
+   @Column(name = "is_equipped", columnDefinition = "BOOLEAN DEFAULT FALSE")
+   private Boolean isEquipped;
+   @Column(name = "heigth", columnDefinition = "INTEGER(3)")
+   private Integer heigth;
    @Column(name = "cotation_id", columnDefinition = "VARCHAR(2)")
    private Integer cotationId;
 
@@ -31,20 +31,20 @@ public class Voie extends Site {
       this.secteurId = secteurId;
    }
 
-   public Boolean getEstEquipee() {
-      return estEquipee;
+   public Boolean getEquipped() {
+      return isEquipped;
    }
 
-   public void setEstEquipee(Boolean estEquipee) {
-      this.estEquipee = estEquipee;
+   public void setEquipped(Boolean equipped) {
+      isEquipped = equipped;
    }
 
-   public Integer getHauteur() {
-      return hauteur;
+   public Integer getHeigth() {
+      return heigth;
    }
 
-   public void setHauteur(Integer hauteur) {
-      this.hauteur = hauteur;
+   public void setHeigth(Integer heigth) {
+      this.heigth = heigth;
    }
 
    public Integer getCotationId() {
@@ -62,25 +62,25 @@ public class Voie extends Site {
       if (!super.equals(o)) return false;
       Voie voie = (Voie) o;
       return getSecteurId().equals(voie.getSecteurId()) &&
-            getEstEquipee().equals(voie.getEstEquipee()) &&
-            getHauteur().equals(voie.getHauteur()) &&
-            getCotationId().equals(voie.getCotationId());
+            isEquipped.equals(voie.isEquipped) &&
+            Objects.equals(getHeigth(), voie.getHeigth()) &&
+            Objects.equals(getCotationId(), voie.getCotationId());
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(super.hashCode(), getSecteurId(), getEstEquipee(), getHauteur(), getCotationId());
+      return Objects.hash(super.hashCode(), getSecteurId(), isEquipped, getHeigth(), getCotationId());
    }
 
    @Override
    public String toString() {
       return "Voie{" +
-            ", id=" + id +
+            "id=" + id +
             ", name='" + name + '\'' +
             ", type=" + type +
             ", secteurId=" + secteurId +
-            ", estEquipee=" + estEquipee +
-            ", hauteur=" + hauteur +
+            ", isEquipped=" + isEquipped +
+            ", heigth=" + heigth +
             ", cotationId=" + cotationId +
             ", hasComment=" + hasComment +
             ", photoLink='" + photoLink + '\'' +

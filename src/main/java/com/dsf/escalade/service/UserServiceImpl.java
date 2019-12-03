@@ -1,8 +1,9 @@
 package com.dsf.escalade.service;
 
-import com.dsf.escalade.model.global.Address;
+import com.dsf.escalade.model.global.Role;
 import com.dsf.escalade.model.global.User;
 import com.dsf.escalade.repository.global.AddressRepository;
+import com.dsf.escalade.repository.global.RoleRepository;
 import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
@@ -10,23 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
    private final UserRepository userRepository;
+   private final RoleRepository roleRepository;
    private final AddressRepository addressRepository;
    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
    @Autowired
-   public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+   public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, AddressRepository addressRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
       this.userRepository = userRepository;
+      this.roleRepository = roleRepository;
       this.addressRepository = addressRepository;
       this.bCryptPasswordEncoder = bCryptPasswordEncoder;
    }
 
    @Override
-   public User save(UserDto userDto) {
+   public Integer save(UserDto userDto) {
       User user = new User();
 
       user.setFirstName(userDto.getFirstName());
@@ -34,36 +42,103 @@ public class UserServiceImpl implements UserService {
       user.setAlias(userDto.getAlias());
       user.setPassword((bCryptPasswordEncoder.encode(userDto.getPassword())));
       user.setEmail(userDto.getEmail());
-      user.addRole(userDto.getRole());
+      user.setAdressId(userDto.getAddressId());
 
-      if (userDto.hasAddress()) {
-         Address address = new Address();
+      if( userDto.getRoles()!= null) {
+         Set<Role> roles = new HashSet<>();
 
-         address.setStreet1(userDto.getStreet1());
-         address.setStreet2(userDto.getStreet2());
-         address.setZipCode(userDto.getZipCode());
-         address.setCity(userDto.getCity());
-         address.setCountry(userDto.getCountry());
-         address = addressRepository.save(address);
-         user.setAdressId(address.getId());
+         for (String role : userDto.getRoles()) {
+            roles.add(roleRepository.findByName(role));
+         }
+
+         user.setRoles(roles);
       }
 
-      return userRepository.save(user);
+      return userRepository.save(user).getId();
    }
 
    @Override
-   public User findByLastName(String lastName) {
-      return userRepository.findByLastName(lastName);
+   public UserDto findByLastName(String lastName) {
+      User user = userRepository.findByLastName(lastName);
+      UserDto userDto = new UserDto();
+
+      userDto.setId(user.getId());
+      userDto.setFirstName(user.getFirstName());
+      userDto.setLastName(user.getLastName());
+      userDto.setAlias(user.getAlias());
+      userDto.setEmail(user.getEmail());
+      userDto.setPassword(user.getPassword());
+      userDto.setMatchingPassword(user.getPassword());
+      userDto.setPhone(user.getPhone());
+      userDto.setAddressId(user.getAddressId());
+
+      if( user.getRoles()!= null) {
+         List<String> roles = new ArrayList<>();
+
+         for (Role role : user.getRoles()) {
+            roles.add(role.getName());
+         }
+
+         userDto.setRoles(roles);
+      }
+
+      return userDto;
    }
 
    @Override
-   public User findByAlias(String alias) {
-      return userRepository.findByAlias(alias);
+   public UserDto findByAlias(String alias) {
+      User user = userRepository.findByAlias(alias);
+      UserDto userDto = new UserDto();
+
+      userDto.setId(user.getId());
+      userDto.setFirstName(user.getFirstName());
+      userDto.setLastName(user.getLastName());
+      userDto.setAlias(user.getAlias());
+      userDto.setEmail(user.getEmail());
+      userDto.setPassword(user.getPassword());
+      userDto.setMatchingPassword(user.getPassword());
+      userDto.setPhone(user.getPhone());
+      userDto.setAddressId(user.getAddressId());
+
+      if( user.getRoles()!= null) {
+         List<String> roles = new ArrayList<>();
+
+         for (Role role : user.getRoles()) {
+            roles.add(role.getName());
+         }
+
+         userDto.setRoles(roles);
+      }
+
+      return userDto;
    }
 
    @Override
-   public User findByEmail(String email) {
-      return userRepository.findByEmail(email);
+   public UserDto findByEmail(String email) {
+      User user = userRepository.findByEmail(email);
+      UserDto userDto = new UserDto();
+
+      userDto.setId(user.getId());
+      userDto.setFirstName(user.getFirstName());
+      userDto.setLastName(user.getLastName());
+      userDto.setAlias(user.getAlias());
+      userDto.setEmail(user.getEmail());
+      userDto.setPassword(user.getPassword());
+      userDto.setMatchingPassword(user.getPassword());
+      userDto.setPhone(user.getPhone());
+      userDto.setAddressId(user.getAddressId());
+
+      if( user.getRoles()!= null) {
+         List<String> roles = new ArrayList<>();
+
+         for (Role role : user.getRoles()) {
+            roles.add(role.getName());
+         }
+
+         userDto.setRoles(roles);
+      }
+
+      return userDto;
    }
 
    private boolean emailExists(final String email) {

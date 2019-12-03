@@ -7,6 +7,7 @@ import java.util.List;
 public interface TopoService {
 
    List<TopoDto> findAll();
+   List<TopoDto> findByManagerId(Integer id);
    TopoDto getOne(Integer id);
    Integer save(TopoDto topoDto);
 }

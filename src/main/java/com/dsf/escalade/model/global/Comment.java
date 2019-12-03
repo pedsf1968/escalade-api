@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table(name = "comment")
 public class Comment implements Serializable {
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Integer id;
    @Column(name = "site_id", nullable = false)
