@@ -22,17 +22,24 @@ VALUES (1,'3','5.3',''),(2,'3+','5.4',''),(3,'4a','5.5',''),(4,'4b','5.6','4b'),
 
 -- insertion topo
 INSERT INTO site (id, name, type, has_comment, photo_url, map_url)
-VALUES (1,'La falaise', 'TOPO', 0,'ailefroide.jpg','');
+VALUES (1,'La falaise', 'TOPO', 0,'ailefroide.jpg',''),(2,'Le Rock', 'TOPO', 0,'annot.jpg',''),
+    (3,'La gorge', 'TOPO', 0,'ablon.jpg',''),(4,'Grand étang','TOPO',0,'grandetangphoto.jpg',''),
+    (5,'Côté est', 'SECTEUR', 0,'autoire.jpg',''),
+
+    (6,'Coude à coude','SECTEUR',0,'grandetangcoudeacoudephoto.png','grandetangcoudeacoudemap.jpg');
+
+
+
 INSERT INTO topo (site_id, region, address_id, date, description, technic, access, manager_id)
 VALUES (1, 'Corse',1,NOW(),'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',
 'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.',
 'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.',1);
-INSERT INTO site (id, name, type, has_comment, photo_url, map_url) VALUES (2,'Le Rock', 'TOPO', 0,'annot.jpg','');
-INSERT INTO topo (site_id, date, manager_id) VALUES (2, NOW(),2);
-INSERT INTO site (id, name, type, has_comment, photo_url, map_url) VALUES (3,'La gorge', 'TOPO', 0,'ablon.jpg','');
-INSERT INTO topo (site_id, date, manager_id) VALUES (3, NOW(),3);
-INSERT INTO site (id, name, type, has_comment, photo_url, map_url) VALUES (4,'Côté est', 'SECTEUR', 0,'autoire.jpg','');
-INSERT INTO secteur (site_id, topo_id, equipement) VALUES (4, 1,'100m de corde');
+
+INSERT INTO topo (site_id, region, address_id, date, manager_id)
+VALUES (2, 'corse', 1, NOW(),2),(3, 'alpes', 1, NOW(),3),(4,'alpes', 1, NOW(),2);
+
+INSERT INTO secteur (site_id, topo_id, equipement)
+VALUES (5, 1,'100m de corde'),(6,4,'Corde de 50m');
 
 INSERT INTO comment (id,site_id,user_id,text)
 VALUES (1,1,2,'C''est super on s''éclate'),(2,1,2,'Bien pour les débutants'),(3,1,3,'Belle vue pendant l''ascension');

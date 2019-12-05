@@ -12,7 +12,7 @@
                <a class="nav-link" href="/" th:text="#{label.nav.home}">Home</a>
             </li>
             <li class="nav-item active">
-               <a class="nav-link" href="/topo/list" th:text="#{label.nav.topoList}">Topos</a>
+               <a class="nav-link" href="/topo/all" th:text="#{label.nav.topoList}">Topos</a>
             </li>
          </ul>
          <ul class="navbar-nav ml-auto">
@@ -21,7 +21,7 @@
                <a class="btn btn-lg active align-right" th:href="@{/login}"  th:text="#{label.nav.login}">Sign In</a>
             </li>
             <li sec:authorize="isAuthenticated()">
-               <a class="btn btn-lg active align-right" th:href="@{/my/topo/list}"  th:text="#{label.nav.MyTopos}">My Topos</a>
+               <a class="btn btn-lg active align-right" th:href="@{/topo/mylist}"  th:text="#{label.nav.MyTopos}">My Topos</a>
             </li>
             <li sec:authorize="isAuthenticated()">
                <i class="fas fa-sign-out-alt"></i>

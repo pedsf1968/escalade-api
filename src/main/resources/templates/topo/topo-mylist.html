@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+      <H1 class="display-4" th:text="#{label.topoList.title}">Topo's list</H1>
+      <div th:if="${topoDtoList.empty}" th:text="#{label.topoList.noTopo}">No Topo available!</div>
+   </header>
+
+   <section class="row">
+      <div class="card-deck col-lg-4 col-sm-6 col-xs-12" th:each="topo : ${topoDtoList}">
+
+         <div class="card">
+            <div class="card-header">
+               <h5 th:text="${topo.name}"></h5>
+               <span th:text="${topo.region}"></span>
+            </div>
+            <div class="card-body center">
+               <img  class="img-fluid" th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
+            </div>
+            <div class="card-footer">
+               <p th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">  </p>
+               <label for="alias" th:text="#{label.topoList.alias}">Alias</label>:
+               <span id="alias" th:text="${topo.aliasManager}"></span>
+               <br>
+               <span id="status" th:text="${topo.status}"></span>
+               <br>
+                  <a class="btn btn-primary" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.topoList.consult}">
+                     Consult
+                  </a>
+               <br>
+               <a class="btn btn-primary" th:href="@{/topo/update/{id}(id=${topo.id})}" th:text="#{label.topoList.edit}">
+                  Edit
+               </a>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="row">
+      <div class="col-md-12 float-right">
+         <a class="btn btn-primary" th:href="@{/topo/new}" th:text="#{label.topoList.new}">
+            New
+         </a>
+      </div>
+
+   </section>
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
+</body>
+</html>

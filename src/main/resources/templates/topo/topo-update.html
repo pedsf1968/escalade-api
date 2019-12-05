@@ -6,36 +6,104 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4">Consultation Topos</H1>
+      <H1 class="display-4">Nouveau Topo</H1>
    </header>
 
    <section>
-      <form action="#" th:action="@{/updatetopo/{id}(id=${site.id})}" th:object="${site}" method="post">
+         <form action="#" th:action="@{/topo/new}" method="POST" enctype="utf8">
 
-         <label for="nom">Nom</label>
-         <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
-         <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+         <label for="aliasManager">aliasManager</label>
+         <input type="text" th:field="${topoDto.aliasManager}" id="aliasManager" placeholder="aliasManager">
+         <span th:if="${#fields.hasErrors('topoDto.aliasManager')}" th:errors="${topoDto.aliasManager}">Must have name</span>
          <br>
-         <label for="type">Type</label>
-         <input type="text" th:field="*{type}" id="type" placeholder="Type">
-         <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+         <label for="name">Nom</label>
+         <input type="text" th:field="${topoDto.name}" id="name" placeholder="Name">
+         <span th:if="${#fields.hasErrors('topoDto.name')}" th:errors="${topoDto.name}">Must have name</span>
          <br>
-         <label for="aCommentaire">A un commentaire</label>
-         <input type="text" th:field="*{aCommentaire}" id="aCommentaire">
-         <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="*{aCommentaire}"></span>
+         <label for="region">region</label>
+         <input type="text" th:field="${topoDto.region}" id="region" placeholder="region">
+         <span th:if="${#fields.hasErrors('topoDto.region')}" th:errors="${topoDto.region}"></span>
          <br>
-         <label for="lienPhoto">Lien photo</label>
-         <input type="text" th:field="*{lienPhoto}" id="lienPhoto" placeholder="Lien photo">
-         <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="*{lienPhoto}"></span>
+         <label for="date">date</label>
+         <input type="date" th:field="${topoDto.date}" id="date" placeholder="date">
+         <span th:if="${#fields.hasErrors('topoDto.date')}" th:errors="${topoDto.date}"></span>
          <br>
-         <label for="lienCarte">Lien carte</label>
-         <input type="text" th:field="*{lienCarte}" id="lienCarte" placeholder="Lien carte">
-         <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="*{lienCarte}"></span>
+         <label for="longitude">longitude</label>
+         <input type="text" th:field="${topoDto.longitude}" id="longitude" placeholder="longitude">
+         <span th:if="${#fields.hasErrors('topoDto.longitude')}" th:errors="${topoDto.longitude}"></span>
          <br>
-         <input type="submit" value="Update Site">
-</form>
+         <label for="latitude">latitude</label>
+         <input type="text" th:field="${topoDto.latitude}" id="latitude" placeholder="latitude">
+         <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
+         <br>
+         <label for="photoLink">photoLink</label>
+         <input type="text" th:field="${topoDto.photoLink}" id="photoLink" placeholder="photoLink">
+         <span th:if="${#fields.hasErrors('topoDto.photoLink')}" th:errors="${topoDto.photoLink}"></span>
+         <br>
+         <label for="mapLink">mapLink</label>
+         <input type="text" th:field="${topoDto.mapLink}" id="mapLink" placeholder="mapLink">
+         <span th:if="${#fields.hasErrors('topoDto.mapLink')}" th:errors="${topoDto.mapLink}"></span>
+         <br>
+         <label for="description">description</label>
+            <textarea id="description" class="form-control input-sm" rows="1" th:field="${topoDto.description}" placeholder="description"/>
+         <span th:if="${#fields.hasErrors('topoDto.description')}" th:errors="${topoDto.description}"></span>
+         <br>
+         <label for="technic">technic</label>
+            <textarea id="technic" class="form-control input-sm" rows="1" th:field="${topoDto.technic}" placeholder="technic"/>
+         <span th:if="${#fields.hasErrors('topoDto.technic')}" th:errors="${topoDto.technic}"></span>
+         <br>
+         <label for="access">access</label>
+            <textarea id="access" class="form-control input-sm" rows="1" th:field="${topoDto.access}" placeholder="access"/>
+         <span th:if="${#fields.hasErrors('topoDto.access')}" th:errors="${topoDto.access}"></span>
+         <br>
+         <label for="status">status</label>
+            <select th:field="${topoDto.status}" id="status">
+               <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+            </select>
 
+         <span th:if="${#fields.hasErrors('topoDto.status')}" th:errors="${topoDto.status}"></span>
+         <br>
+         <label for="statusAuto">statusAuto</label>
+            <input id="statusAuto" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
 
+         <span th:if="${#fields.hasErrors('topoDto.statusAuto')}" th:errors="${topoDto.statusAuto}"></span>
+         <br>
+
+            <div class="form-group">
+               <label th:text="#{label.registration.address}">Address</label>
+               <input type="text" th:field="${addressDto.street1}" class="form-control" id="inputAddress" th:placeholder="#{placeholder.registration.street1}">
+               <p th:each="error : ${#fields.errors('addressDto.street1')}" th:text="${error}"></p>
+            </div>
+            <div class="form-group">
+               <input type="text" th:field="${addressDto.street2}" class="form-control" th:placeholder="#{placeholder.registration.street2}">
+               <p th:each="error : ${#fields.errors('addressDto.street2')}" th:text="${error}"></p>
+            </div>
+            <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="inputCity" th:text="#{label.registration.City}">City</label>
+                  <input type="text"th:field="${addressDto.city}" class="form-control" id="inputCity" th:placeholder="#{placeholder.registration.city}">
+                  <p th:each="error : ${#fields.errors('addressDto.city')}" th:text="${error}"></p>
+               </div>
+               <div class="form-group col-md-4">
+                  <label for="inputState" th:text="#{label.registration.Country}">Country</label>
+                  <input type="text"th:field="${addressDto.country}" class="form-control" id="inputState" th:placeholder="#{placeholder.registration.country}">
+                  <p th:each="error : ${#fields.errors('addressDto.country')}" th:text="${error}"></p>
+               </div>
+               <div class="form-group col-md-2">
+                  <label for="inputZip" th:text="#{label.registration.zipCode}">Zip code</label>
+                  <input type="text" th:field="${addressDto.zipCode}" class="form-control" id="inputZip" th:placeholder="#{placeholder.registration.zipCode}">
+                  <p th:each="error : ${#fields.errors('addressDto.zipCode')}" th:text="${error}"></p>
+               </div>
+            </div>
+         
+         <div class="form-row">
+            <div class="form-group col-md-12">
+               <div class="float-right" >
+                  <button type="submit" class="btn btn-primary">Valider</button>
+               </div>
+            </div>
+         </div>
+      </form>
    </section>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>

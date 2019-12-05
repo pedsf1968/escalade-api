@@ -26,7 +26,7 @@ public class TopoServiceImpl implements TopoService{
    @Override
    public List<TopoDto> findAll(){
       List<TopoDto> topoDtoList = new ArrayList<>();
-      TopoDto topoDto = null;
+      TopoDto topoDto;
 
       for(Topo topo:topoRepository.findAll()){
          topoDto = new TopoDto();
@@ -63,7 +63,7 @@ public class TopoServiceImpl implements TopoService{
    @Override
    public List<TopoDto> findByManagerId(Integer id) {
       List<TopoDto> topoDtoList = new ArrayList<>();
-      TopoDto topoDto = null;
+      TopoDto topoDto;
 
       for(Topo topo:topoRepository.findByManagerId(id)){
          topoDto = new TopoDto();
@@ -145,10 +145,15 @@ public class TopoServiceImpl implements TopoService{
       topo.setDescription(topoDto.getDescription());
       topo.setTechnic(topoDto.getTechnic());
       topo.setAccess(topoDto.getAccess());
-      topo.setManagerId(userRepository.findByAlias(topoDto.getAliasManager()).getId());
-      topo.setClimberId(userRepository.findByAlias(topoDto.getAliasClimber()).getId());
       topo.setStatus(StatusType.valueOf(topoDto.getStatus()));
       topo.setStatusAuto(topoDto.getStatusAuto());
+
+      if(topoDto.getAliasManager()!=null) {
+         topo.setManagerId(userRepository.findByAlias(topoDto.getAliasManager()).getId());
+      }
+      if(topoDto.getAliasClimber()!=null) {
+         topo.setClimberId(userRepository.findByAlias(topoDto.getAliasClimber()).getId());
+      }
 
       return topoRepository.save(topo).getId();
    }

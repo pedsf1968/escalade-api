@@ -1,5 +1,7 @@
 package com.dsf.escalade.model.business;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -12,6 +14,7 @@ public class Topo extends Site{
    private String region;
    @Column(name = "address_id", columnDefinition = "INTEGER(10)")
    private Integer addressId;
+   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
    @Column(name = "date", columnDefinition = "DATE DEFAULT NOW()")
    private Date date;
    @Column(name = "description", columnDefinition = "TEXT")

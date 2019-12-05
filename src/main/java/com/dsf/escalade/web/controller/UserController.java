@@ -1,11 +1,8 @@
 package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.repository.global.RoleRepository;
-import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.service.AddressService;
 import com.dsf.escalade.service.SecurityServiceImpl;
 import com.dsf.escalade.service.UserServiceImpl;
-import com.dsf.escalade.validator.UserValidator;
 import com.dsf.escalade.web.dto.AddressDto;
 import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
@@ -33,18 +30,13 @@ public class UserController {
    private final UserServiceImpl userService;
    private final AddressService addressService;
    private final  SecurityServiceImpl securityService;
-   private final  RoleRepository roleRepository;
-   private final  UserRepository userRepository;
-   private final  UserValidator userValidator;
+
 
    @Autowired
-   public UserController(UserServiceImpl userService, AddressService addressService, SecurityServiceImpl securityService, RoleRepository roleRepository, UserRepository userRepository, UserValidator userValidator) {
+   public UserController(UserServiceImpl userService, AddressService addressService, SecurityServiceImpl securityService) {
       this.userService = userService;
       this.addressService = addressService;
       this.securityService = securityService;
-      this.roleRepository = roleRepository;
-      this.userRepository = userRepository;
-      this.userValidator = userValidator;
    }
 
    @GetMapping("/registration")
@@ -56,10 +48,10 @@ public class UserController {
    }
 
    @PostMapping("/registration")
-   public String postRegistration(@ModelAttribute("userDto") @Valid UserDto userDto, @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResult) {
+   public String postRegistration(@ModelAttribute("userDto") @Valid UserDto userDto, @NotNull BindingResult bindingResultUser,
+                                  @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress) {
 
-      if (bindingResult.hasErrors()) {
-
+      if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
          return "user/registration";
       }
 
