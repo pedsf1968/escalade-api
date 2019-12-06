@@ -81,23 +81,7 @@ public class TopoController {
         return "topo/topo-update";
     }
 
-    @PostMapping("/topo/new")
-    public String createTopo(@ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
-                             @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
-        if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
-            return "topo/topo-update";
-        }
 
-        Integer addressId = addressService.save(addressDto);
-        topoDto.setAddressId(addressId);
-        topoService.save(topoDto);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-
-        model.addAttribute("topoDtoList", topoDtoList);
-        return "topo/topo-mylist";
-    }
 
 
     @GetMapping("/topo/read/{id}")
@@ -126,7 +110,24 @@ public class TopoController {
 
         return "topo/topo-update";
     }
+    @PostMapping("/topo/update/{id}")
+    public String createTopo(@PathVariable("id") Integer id,
+                             @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
+                             @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
+        if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
+            return "topo/topo-update";
+        }
 
+        Integer addressId = addressService.save(addressDto);
+        topoDto.setAddressId(addressId);
+        topoService.save(topoDto);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
+
+        model.addAttribute("topoDtoList", topoDtoList);
+        return "topo/topo-mylist";
+    }
 
     @GetMapping("/topo/delete/{id}")
     public String deleteTopo(@PathVariable("id") Integer id, Model model) {
