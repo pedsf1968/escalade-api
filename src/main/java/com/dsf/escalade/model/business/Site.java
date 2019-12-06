@@ -2,6 +2,7 @@ package com.dsf.escalade.model.business;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,8 +15,9 @@ public class Site implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", columnDefinition = "INTEGER(10)")
    protected Integer id;
+   @NotNull
+   @NotBlank
    @Column(name = "name", columnDefinition = "VARCHAR(50) NOT NULL")
-   @NotBlank(message = "Spécifiez un nom !")
    protected String name;
    @Column(name = "type", columnDefinition = "VARCHAR(7)  NOT NULL DEFAULT 'TOPO'")
    @Enumerated(EnumType.STRING)
@@ -42,17 +44,6 @@ public class Site implements Serializable {
       this.hasComment = false;
       this.photoLink = null;
       this.mapLink = null;
-   }
-
-
-   public Site(Integer id, @NotBlank(message = "Spécifiez un nom !") String name, SiteType type, String photoLink, String mapLink) {
-      super();
-      this.id = id;
-      this.name = name;
-      this.type = type;
-      this.hasComment = false;
-      this.photoLink = photoLink;
-      this.mapLink = mapLink;
    }
 
    public Integer getId() {

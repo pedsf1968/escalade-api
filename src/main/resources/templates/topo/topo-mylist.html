@@ -9,8 +9,8 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4" th:text="#{label.topoList.title}">Topo's list</H1>
-      <div th:if="${topoDtoList.empty}" th:text="#{label.topoList.noTopo}">No Topo available!</div>
+      <H1 class="display-4" th:text="#{title.topoMyList}">My Topo's list</H1>
+      <div th:if="${topoDtoList.empty}" th:text="#{message.noTopo}">No Topo available!</div>
    </header>
 
    <section class="row">
@@ -26,27 +26,29 @@
             </div>
             <div class="card-footer">
                <p th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">  </p>
-               <label for="alias" th:text="#{label.topoList.alias}">Alias</label>:
+               <label for="alias" th:text="#{label.alias}">Alias</label>:
                <span id="alias" th:text="${topo.aliasManager}"></span>
                <br>
                <span id="status" th:text="${topo.status}"></span>
                <br>
-                  <a class="btn btn-primary" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.topoList.consult}">
-                     Consult
+                  <a class="btn btn-primary" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.view}">
+                     View
                   </a>
-               <br>
-               <a class="btn btn-primary" th:href="@{/topo/update/{id}(id=${topo.id})}" th:text="#{label.topoList.edit}">
+               <a class="btn btn-primary" th:href="@{/topo/update/{id}(id=${topo.id})}" th:text="#{label.edit}">
                   Edit
+               </a>
+               <a class="btn btn-primary" th:href="@{/topo/delete/{id}(id=${topo.id})}" th:text="#{label.delete}">
+                  Delete
                </a>
             </div>
          </div>
       </div>
    </section>
    <section class="row">
-      <div class="col-md-12 float-right">
-         <a class="btn btn-primary" th:href="@{/topo/new}" th:text="#{label.topoList.new}">
-            New
-         </a>
+      <div class="col-md-12">
+         <div class="float-right">
+            <a class="btn btn-primary" th:href="@{/topo/new}" th:text="#{label.new}">New</a>
+         </div>
       </div>
 
    </section>

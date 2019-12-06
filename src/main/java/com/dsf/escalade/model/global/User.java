@@ -66,7 +66,7 @@ public class User implements Serializable {
    @Column(name = "password")
    private String password;
 
-   @Column(name = "is_member")
+   @Column(name = "is_member", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean isMember;
    @Column(name = "address_id")
    private Integer addressId;

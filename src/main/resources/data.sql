@@ -1,6 +1,6 @@
 -- insertion adresses
-INSERT INTO address (id,street1,street2,zip_code,city)
-VALUES (1,'22, rue de la Paix','Appartement N°2','75111','Paris'),(2,'1, rue verte','','68121','Strasbourg');
+INSERT INTO address (street1,zip_code,city)
+VALUES ('22, rue de la Paix','75111','Paris'),('1, rue verte','68121','Strasbourg');
 
 INSERT INTO user (id,  firstname, lastname, phone, email, alias, password, is_member, address_id)
 VALUES (1,'Admin','ADMIN',null,'admin@escalade.org','ADMIN','$2a$10$IRKMI.Gzq83HyHvat5y0feUuxwYl5Eu22Rmr56q1WyVkiqv2vboSO', 1,1),
@@ -21,12 +21,13 @@ VALUES (1,'3','5.3',''),(2,'3+','5.4',''),(3,'4a','5.5',''),(4,'4b','5.6','4b'),
     (27,'9a','5.14d','7c'),(28,'9a+','5.15a','7c');
 
 -- insertion topo
-INSERT INTO site (id, name, type, has_comment, photo_url, map_url)
-VALUES (1,'La falaise', 'TOPO', 0,'ailefroide.jpg',''),(2,'Le Rock', 'TOPO', 0,'annot.jpg',''),
-    (3,'La gorge', 'TOPO', 0,'ablon.jpg',''),(4,'Grand étang','TOPO',0,'grandetangphoto.jpg',''),
-    (5,'Côté est', 'SECTEUR', 0,'autoire.jpg',''),
-
-    (6,'Coude à coude','SECTEUR',0,'grandetangcoudeacoudephoto.png','grandetangcoudeacoudemap.jpg');
+INSERT INTO site (id, name, type, photo_url, map_url)
+VALUES (1,'La falaise', 'TOPO', 'ailefroide.jpg',''),
+    (2,'Le Rock', 'TOPO', 'annot.jpg',''),
+    (3,'La gorge', 'TOPO', 'ablon.jpg',''),
+    (4,'Grand étang','TOPO','grandetangphoto.jpg',''),
+    (5,'Côté est', 'SECTEUR', 'autoire.jpg',''),
+    (6,'Coude à coude','SECTEUR','grandetangcoudeacoudephoto.png','grandetangcoudeacoudemap.jpg');
 
 
 

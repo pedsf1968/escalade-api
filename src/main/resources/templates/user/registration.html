@@ -9,7 +9,7 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4" th:text="#{label.registration.title}">Registration</H1>
+      <H1 class="display-4" th:text="#{title.registration}">Registration</H1>
    </header>
 
    <section>
@@ -17,76 +17,76 @@
 
          <div class="form-row">
             <div class="col-md-4 mb-3">
-               <label for="firstName" th:text="#{label.registration.firstName}">First name</label>
-               <input id="firstName" type="text" th:field="${userDto.firstName}" class="form-control" th:placeholder="#{placeholder.registration.firstName}">
+               <label for="firstName" th:text="#{label.firstName}">First name</label>
+               <input id="firstName" type="text" th:field="${userDto.firstName}" class="form-control" th:placeholder="#{placeholder.firstName}">
                <span th:if="${#fields.hasErrors('userDto.firstName')}" th:errors="${userDto.firstName}">Must have name</span>
             </div>
             <div class="col-md-4 mb-3">
-               <label for="lastName" th:text="#{label.registration.lastName}">Last name</label>
-               <input id="lastName" type="text" th:field="${userDto.lastName}" class="form-control" th:placeholder="#{placeholder.registration.lastName}">
+               <label for="lastName" th:text="#{label.lastName}">Last name</label>
+               <input id="lastName" type="text" th:field="${userDto.lastName}" class="form-control" th:placeholder="#{placeholder.lastName}">
                <div th:each="error : ${#fields.errors('userDto.lastName')}" th:error="${userDto.lastName}" th:text="${error}"></div>
             </div>
             <div class="col-md-4 mb-3">
-               <label for="alias" th:text="#{label.registration.alias}">Alias</label>
-               <input id="alias" type="text" th:field="${userDto.alias}" class="form-control" th:placeholder="#{placeholder.registration.alias}">
+               <label for="alias" th:text="#{label.alias}">Alias</label>
+               <input id="alias" type="text" th:field="${userDto.alias}" class="form-control" th:placeholder="#{placeholder.alias}">
                <div th:each="error : ${#fields.errors('userDto.alias')}" th:error="${userDto.alias}" th:text="${error}"></div>
             </div>
          </div>
 
          <div class="form-row">
             <div class="form-group col-md-4" >
-               <label for="email" th:text="#{label.registration.email}">Email</label>
-               <input id="email" type="email" th:field="${userDto.email}" class="form-control" th:placeholder="#{placeholder.registration.email}">
+               <label for="email" th:text="#{label.email}">Email</label>
+               <input id="email" type="email" th:field="${userDto.email}" class="form-control" th:placeholder="#{placeholder.email}">
                <small id="emailHelp" class="form-text text-muted">We dont reveale your Email address.</small>
                <div th:each="error : ${#fields.errors('userDto.email')}" th:error="${userDto.email}" th:text="${error}"></div>
             </div>
             <div class="form-group col-md-3">
-               <label for="password" th:text="#{label.registration.password}">Password</label>
+               <label for="password" th:text="#{label.password}">Password</label>
                <input id="password" type="password" th:field="${userDto.password}" class="form-control">
                <div th:each="error : ${#fields.errors('userDto.password')}" th:text="${error}"></div>
             </div>
             <div class="form-group col-md-3">
-               <label for="matchingPassword" th:text="#{label.registration.matchingPassword}">Matching password</label>
+               <label for="matchingPassword" th:text="#{label.matchingPassword}">Matching password</label>
                <input id="matchingPassword" type="password" th:field="${userDto.matchingPassword}" class="form-control" >
                <div th:each="error : ${#fields.errors('userDto.matchingPassword')}" th:text="${error}"></div>
             </div>
             <div class="form-group col-md-2">
-               <label for="phone" th:text="#{label.registration.phone}">Phone</label>
-               <input id="phone" type="text" th:field="${userDto.phone}" class="form-control" th:placeholder="#{placeholder.registration.phone}">
+               <label for="phone" th:text="#{label.phone}">Phone</label>
+               <input id="phone" type="text" th:field="${userDto.phone}" class="form-control" th:placeholder="#{placeholder.phone}">
                <div th:each="error : ${#fields.errors('userDto.phone')}" th:text="${error}"></div>
             </div>
          </div>
 
          <div class="form-group">
-            <label th:text="#{label.registration.address}">Address</label>
-            <input type="text" th:field="${addressDto.street1}" class="form-control" id="inputAddress" th:placeholder="#{placeholder.registration.street1}">
+            <label th:text="#{label.address}">Address</label>
+            <input type="text" th:field="${addressDto.street1}" class="form-control" id="inputAddress" th:placeholder="#{placeholder.street1}">
             <p th:each="error : ${#fields.errors('addressDto.street1')}" th:text="${error}"></p>
          </div>
          <div class="form-group">
-            <input type="text" th:field="${addressDto.street2}" class="form-control" th:placeholder="#{placeholder.registration.street2}">
+            <input type="text" th:field="${addressDto.street2}" class="form-control" th:placeholder="#{placeholder.street2}">
             <p th:each="error : ${#fields.errors('addressDto.street2')}" th:text="${error}"></p>
          </div>
          <div class="form-row">
             <div class="form-group col-md-6">
-               <label for="inputCity" th:text="#{label.registration.City}">City</label>
-               <input type="text"th:field="${addressDto.city}" class="form-control" id="inputCity" th:placeholder="#{placeholder.registration.city}">
+               <label for="inputCity" th:text="#{label.city}">City</label>
+               <input type="text"th:field="${addressDto.city}" class="form-control" id="inputCity" th:placeholder="#{placeholder.city}">
                <p th:each="error : ${#fields.errors('addressDto.city')}" th:text="${error}"></p>
             </div>
             <div class="form-group col-md-4">
-               <label for="inputState" th:text="#{label.registration.Country}">Country</label>
-               <input type="text"th:field="${addressDto.country}" class="form-control" id="inputState" th:placeholder="#{placeholder.registration.country}">
+               <label for="inputState" th:text="#{label.country}">Country</label>
+               <input type="text"th:field="${addressDto.country}" class="form-control" id="inputState" th:placeholder="#{placeholder.country}">
                <p th:each="error : ${#fields.errors('addressDto.country')}" th:text="${error}"></p>
             </div>
             <div class="form-group col-md-2">
-               <label for="inputZip" th:text="#{label.registration.zipCode}">Zip code</label>
-               <input type="text" th:field="${addressDto.zipCode}" class="form-control" id="inputZip" th:placeholder="#{placeholder.registration.zipCode}">
+               <label for="inputZip" th:text="#{label.zipCode}">Zip code</label>
+               <input type="text" th:field="${addressDto.zipCode}" class="form-control" id="inputZip" th:placeholder="#{placeholder.zipCode}">
                <p th:each="error : ${#fields.errors('addressDto.zipCode')}" th:text="${error}"></p>
             </div>
          </div>
          <div class="form-row">
             <div class="form-group col-md-12">
                <div class="float-right" >
-                  <button  type="submit" class="btn btn-primary" th:text="#{label.registration.submit}">Submit</button>
+                  <button  type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                </div>
             </div>
          </div>

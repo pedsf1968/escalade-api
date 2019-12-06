@@ -85,13 +85,13 @@
                   <p th:each="error : ${#fields.errors('addressDto.city')}" th:text="${error}"></p>
                </div>
                <div class="form-group col-md-4">
-                  <label for="inputState" th:text="#{label.registration.Country}">Country</label>
-                  <input type="text"th:field="${addressDto.country}" class="form-control" id="inputState" th:placeholder="#{placeholder.registration.country}">
+                  <label for="inputState" th:text="#{label.Country}">Country</label>
+                  <input type="text"th:field="${addressDto.country}" class="form-control" id="inputState" th:placeholder="#{placeholder.country}">
                   <p th:each="error : ${#fields.errors('addressDto.country')}" th:text="${error}"></p>
                </div>
                <div class="form-group col-md-2">
-                  <label for="inputZip" th:text="#{label.registration.zipCode}">Zip code</label>
-                  <input type="text" th:field="${addressDto.zipCode}" class="form-control" id="inputZip" th:placeholder="#{placeholder.registration.zipCode}">
+                  <label for="inputZip" th:text="#{label.zipCode}">Zip code</label>
+                  <input type="text" th:field="${addressDto.zipCode}" class="form-control" id="inputZip" th:placeholder="#{placeholder.zipCode}">
                   <p th:each="error : ${#fields.errors('addressDto.zipCode')}" th:text="${error}"></p>
                </div>
             </div>

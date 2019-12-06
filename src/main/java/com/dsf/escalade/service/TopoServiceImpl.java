@@ -157,4 +157,16 @@ public class TopoServiceImpl implements TopoService{
 
       return topoRepository.save(topo).getId();
    }
+
+   @Override
+   public Integer delete(TopoDto topoDto) {
+      Integer topoId = topoDto.getId();
+
+      if(topoId!=null){
+         topoRepository.delete(topoRepository.getOne(topoId));
+         return topoId;
+      }
+
+      return null;
+   }
 }

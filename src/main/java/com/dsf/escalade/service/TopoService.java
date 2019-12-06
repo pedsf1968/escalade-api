@@ -10,4 +10,5 @@ public interface TopoService {
    List<TopoDto> findByManagerId(Integer id);
    TopoDto getOne(Integer id);
    Integer save(TopoDto topoDto);
+   Integer delete(TopoDto topoDto);
 }

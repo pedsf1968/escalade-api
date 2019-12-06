@@ -124,17 +124,22 @@ public class TopoController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-
         model.addAttribute("topoDtoList", topoDtoList);
         return "topo/topo-mylist";
     }
 
     @GetMapping("/topo/delete/{id}")
     public String deleteTopo(@PathVariable("id") Integer id, Model model) {
-        //TODO
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
+        TopoDto topoDto = topoService.getOne(id);
+
+        // verify that the manager is the Topo manager
+        if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())){
+            topoService.delete(topoDto);
+        }
+
+        List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
+        model.addAttribute("topoDtoList", topoDtoList);
 
         return "topo/topo-mylist";
     }

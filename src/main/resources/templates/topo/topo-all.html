@@ -9,8 +9,8 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4" th:text="#{label.topoList.title}">Topo's list</H1>
-      <div th:if="${topoDtoList.empty}" th:text="#{label.topoList.noTopo}">No Topo available!</div>
+      <H1 class="display-4" th:text="#{title.topoList}">Topo's list</H1>
+      <div th:if="${topoDtoList.empty}" th:text="#{message.noTopo}">No Topo available!</div>
    </header>
 
    <section class="row">
@@ -26,12 +26,12 @@
             </div>
             <div class="card-footer">
                <p th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">  </p>
-               <label for="alias" th:text="#{label.topoList.alias}">Alias</label>:
+               <label for="alias" th:text="#{label.alias}">Alias</label>:
                <span id="alias" th:text="${topo.aliasManager}"></span>
                <br>
                <span id="status" th:text="${topo.status}"></span>
                <br>
-                  <a class="btn btn-primary" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.topoList.consult}">
+                  <a class="btn btn-primary" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.view}">
                      Consult
                   </a>
             </div>
