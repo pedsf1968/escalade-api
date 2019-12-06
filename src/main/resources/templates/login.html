@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-   <title>Spring Security Example </title>
-</head>
+<head th:replace="~{fragments/head :: head}"></head>
 <body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
 
-<div th:if="${param.error}">
-   Invalid username and password.
+   <header class="jumbotron">
+      <H1 th:text="#{label.login.title}">Login</H1>
+   </header>
+
+   <section>
+      <div th:if="${param.error}">
+         Invalid username and password.
+      </div>
+      <div th:if="${param.logout}">
+         You have been logged out.
+      </div>
+
+      <form th:action="@{/login}" method="post">
+         <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" name="email" class="form-control input-lg" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Adresse mail">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+         </div>
+         <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" name="password" class="form-control input-lg" id="exampleInputPassword1" placeholder="Password">
+         </div>
+         <div class="form-row">
+            <div class="form-group col-md-12">
+               <div class="float-right" >
+                  <button type="submit" class="btn btn-primary">Valider</button>
+               </div>
+            </div>
+         </div>
+      </form>
+   </section>
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
-<div th:if="${param.logout}">
-   You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-   <div><label> User Name : <input type="text" name="username"/> </label></div>
-   <div><label> Password: <input type="password" name="password"/> </label></div>
-   <div><input type="submit" value="Log in"/></div>
-</form>
 </body>
 </html>

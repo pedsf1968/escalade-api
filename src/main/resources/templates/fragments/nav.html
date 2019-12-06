@@ -9,27 +9,28 @@
       <div class="collapse navbar-collapse" id="navbarNav">
          <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-               <a class="nav-link" href="/">Home</a>
+               <a class="nav-link" href="/" th:text="#{label.nav.home}">Home</a>
             </li>
             <li class="nav-item active">
-               <a class="nav-link" href="/listtopo">Topo</a>
+               <a class="nav-link" href="/topo/all" th:text="#{label.nav.topoList}">Topos</a>
             </li>
          </ul>
          <ul class="navbar-nav ml-auto">
-            <li>
-               <a class="btn btn-lg active align-right" href="/signin" th:href="@{/login}" sec:authorize="!isAuthenticated()">
-                  <i class="fas fa-sign-in-alt"></i>Se connecter
-               </a>
+            <li sec:authorize="!isAuthenticated()">
+               <i class="fas fa-sign-in-alt" ></i>
+               <a class="btn btn-lg active align-right" th:href="@{/login}"  th:text="#{label.nav.login}">Sign In</a>
             </li>
-            <li>
-               <a class="btn btn-lg active" href="/logout" th:href="@{#}" onclick="$('/logout').submit();" sec:authorize="isAuthenticated()">
-                  <i class="fas fa-sign-out-alt"></i>Se déconnecter
-               </a>
+            <li sec:authorize="isAuthenticated()">
+               <a class="btn btn-lg active align-right" th:href="@{/topo/mylist}"  th:text="#{label.nav.MyTopos}">My Topos</a>
             </li>
-            <li>
-               <a class="btn btn-lg disable" href="//utilisateur/enregistrement" th:href="@{/enregistrement}" onclick="$('#form').submit();" sec:authorize="!isAuthenticated()">
-                  <i class="fas fa-sign-in-alt"></i></i>&nbsp;S'inscrire
-               </a>
+            <li sec:authorize="isAuthenticated()">
+               <i class="fas fa-sign-out-alt"></i>
+               <a class="btn btn-lg active" th:href="@{/logout}"  th:text="#{label.nav.logout}">Logout</a>
+            </li>
+
+            <li sec:authorize="!isAuthenticated()">
+               <i class="fas fa-sign-in-alt"></i>
+               <a class="btn btn-lg disable" th:href="@{/registration}" onclick="$('#form').submit();"  th:text="#{label.nav.registration}">Sign Up</a>
             </li>
          </ul>
       </div>

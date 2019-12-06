@@ -1,30 +1,27 @@
- body { 
-  background-color: #DDD;
-  padding-top: 10px;
-}
-
-[class*="col-"] { 
-  margin-bottom: 20px; 
-}
-
-img { 
-  width: 200px; 
-  box-shadow: 5px 5px 5px black;
-}
-
-header {
-     margin-top : 50px;
-     padding-left: 20px;
-	text-align: center;
-}
-
-section {
-	padding-left: 20px;
+a:hover {
+	color: purple;
 }
 
 aside {
 	text-align: center;
+	padding-left: 20px;
+	margin: 10px;
 	color: black;
+}
+
+
+ body {
+    background-color: #DDD;
+    padding-top: 10px;
+     min-height: 100%;
+}
+
+card {
+    display:flex;
+}
+
+[class*="col-"] {
+    margin-bottom: 20px;
 }
 
 footer {
@@ -33,23 +30,48 @@ footer {
 	color : white;
 }
 
-
 footer a {
 	color : white;
 }
 
+header {
+    margin-top : 50px;
+    padding-left: 20px;
+    text-align: center;
+}
 
-a:hover {
+html{
+  height: 100%;
+}
+
+img {
+    box-shadow: 5px 5px 5px black;
+}
+
+
+nav .navbar-nav li i  {
+    color : white;
+}
+
+nav .navbar-nav li a  {
+    color : white;
+}
+
+nav .navbar-nav li a:hover {
 	color: purple;
 }
+
+section {
+	margin: 10px;
+	margin-bottom: 20px;
+}
+
 
 .center {
 	text-align: center;
 }
 
-.thumbnail {
-	display: inline-grid;
-}
+
 
 @media all and (max-width: 768px) {
 	aside {

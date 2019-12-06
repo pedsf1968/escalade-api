@@ -1,7 +1,7 @@
 package com.dsf.escalade.restcontroller;
 
-import com.dsf.escalade.repository.metier.SiteRepository;
-import com.dsf.escalade.model.metier.Site;
+import com.dsf.escalade.repository.business.SiteRepository;
+import com.dsf.escalade.model.business.Site;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class SiteRestController {
    }
 
    @GetMapping(value = "/site/{id}")
-   public Optional<Site> findById(@PathVariable int id){
+   public Optional<Site> findById(@PathVariable Integer id){
       log.info("id : " + id + siteRepository.findById(1).toString());
       return siteRepository.findById(id);
    }

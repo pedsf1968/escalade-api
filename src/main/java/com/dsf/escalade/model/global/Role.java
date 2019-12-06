@@ -1,31 +1,21 @@
 package com.dsf.escalade.model.global;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role implements Serializable {
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   private Long id;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Integer id;
 
    private String name;
 
    @ManyToMany(mappedBy = "roles")
-   private Collection<Utilisateur> utilisateurs;
-
-   @ManyToMany
-   @JoinTable(
-         name = "roles_privileges",
-         joinColumns = @JoinColumn(
-               name = "role_id",
-               referencedColumnName = "id"),
-         inverseJoinColumns = @JoinColumn(
-               name = "privilege_id",
-               referencedColumnName = "id"))
-   private Collection<Privilege> privileges;
-
+   private Set<User> users;
 
    public Role() {
       super();
@@ -36,13 +26,11 @@ public class Role {
       this.name = name;
    }
 
-   //
-
-   public Long getId() {
+   public Integer getId() {
       return id;
    }
 
-   public void setId(final Long id) {
+   public void setId(final Integer id) {
       this.id = id;
    }
 
@@ -54,52 +42,37 @@ public class Role {
       this.name = name;
    }
 
-   public Collection<Utilisateur> getUsers() {
-      return utilisateurs;
+   public Set<User> getUsers() {
+      return users;
    }
 
-   public void setUsers(final Collection<Utilisateur> users) {
-      this.utilisateurs = users;
+   public void setUsers(Set<User> users) {
+      this.users = users;
    }
 
-   public Collection<Privilege> getPrivileges() {
-      return privileges;
-   }
-
-   public void setPrivileges(final Collection<Privilege> privileges) {
-      this.privileges = privileges;
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Role)) return false;
+      Role role = (Role) o;
+      return getId().equals(role.getId()) &&
+            getName().equals(role.getName()) &&
+            getUsers().equals(role.getUsers());
    }
 
    @Override
    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((name == null) ? 0 : name.hashCode());
-      return result;
-   }
-
-   @Override
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (obj == null) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      final Role role = (Role) obj;
-      if (!name.equals(role.name)) {
-         return false;
-      }
-      return true;
+      return Objects.hash(getId(), getName(), getUsers());
    }
 
    @Override
    public String toString() {
-      final StringBuilder builder = new StringBuilder();
-      builder.append("Role [name=").append(name).append("]").append("[id=").append(id).append("]");
-      return builder.toString();
+      final StringBuilder stringBuilder = new StringBuilder();
+      stringBuilder.append("Role [")
+            .append("id=").append(id)
+            .append("name=").append(name)
+            .append("]");
+
+      return stringBuilder.toString();
    }
 }
