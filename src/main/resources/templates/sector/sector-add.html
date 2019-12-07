@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+      <H1 class="display-4" th:text="#{title.sectorNew}">New Sector</H1>
+   </header>
+
+   <form  class="row" action="#" th:action="@{/sector/add}" method="POST" enctype="utf8">
+
+      <div class="input-group mb-2">
+         <div class="input-group-prepend">
+            <div class="input-group-text" th:text="#{label.topoId}">Topo Id</div>
+         </div>
+         <input type="text" class="form-control" th:field="${sectorDto.topoId}" >
+      </div>
+
+      <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.name}">Name</div>
+            </div>
+            <input type="text" class="form-control" th:field="${sectorDto.name}" th:placeholder="#{placeholder.name}">
+         </div>
+         <span th:if="${#fields.hasErrors('sectorDto.name')}" th:errors="${sectorDto.name}"></span>
+
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
+            </div>
+            <input type="text" class="form-control" th:field="${sectorDto.longitude}" th:placeholder="#{placeholder.longitude}">
+         </div>
+         <span th:if="${#fields.hasErrors('sectorDto.longitude')}" th:errors="${sectorDto.longitude}"></span>
+
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
+            </div>
+            <input type="text" class="form-control" th:field="${sectorDto.latitude}" th:placeholder="#{placeholder.latitude}">
+         </div>
+         <span th:if="${#fields.hasErrors('sectorDto.latitude')}" th:errors="${sectorDto.latitude}"></span>
+
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.photo}">Photo</div>
+            </div>
+            <input type="text" class="form-control" th:field="${sectorDto.photoLink}" th:placeholder="#{placeholder.photo}">
+         </div>
+         <span th:if="${#fields.hasErrors('sectorDto.photoLink')}" th:errors="${sectorDto.photoLink}"></span>
+
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.map}">Map</div>
+            </div>
+            <input type="text" class="form-control" th:field="${sectorDto.mapLink}" th:placeholder="#{placeholder.map}">
+         </div>
+         <span th:if="${#fields.hasErrors('sectorDto.mapLink')}" th:errors="${sectorDto.mapLink}"></span>
+
+         <label for="equipment" th:text="#{label.equipment}">Equipment</label>
+            <textarea id="equipment" class="form-control input-sm" rows="3" th:field="${sectorDto.equipment}" th:placeholder="#{placeholder.equipment}"/>
+         <span th:if="${#fields.hasErrors('sectorDto.equipment')}" th:errors="${sectorDto.equipment}"></span>
+
+      <div class="row">
+         <div class="form-group col-md-12">
+            <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${sectorDto.topoId})}" th:text="#{label.cancel}">Cancel</a>
+               <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+            </div>
+         </div>
+      </div>
+   </form>
+
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
+</body>
+</html>

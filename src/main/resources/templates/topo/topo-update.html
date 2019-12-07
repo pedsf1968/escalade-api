@@ -10,7 +10,7 @@
    </header>
 
    <form  class="row" action="#" th:action="@{/topo/update/{id}(id=${topoDto.id})}" method="POST" enctype="utf8">
-      <aside class="col-md-2">
+      <aside class="col-md-3">
          <div class="card-header">
             <div class="input-group mb-2">
                <div class="input-group-prepend">
@@ -127,6 +127,26 @@
             </div>
          </div>
       </aside>
+
+      <div class="row">
+         <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="sector : ${sectorDtoList}">
+
+            <div class="card">
+               <div class="card-header">
+                  <h5 th:text="${sector.name}"></h5>
+               </div>
+               <div class="card-body center">
+                  <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.photoLink})}" alt="photo"/>
+                  <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.mapLink})}" alt="photo"/>
+
+               </div>
+               <div class="card-footer center form-inline">
+                  <a class="btn btn-primary mb-2" th:href="@{/sector/edit/{id}(id=${sector.id})}" th:text="#{label.edit}">Edit</a>
+               </div>
+            </div>
+         </div>
+      </div>
+
 
       <div class="row">
          <div class="form-group col-md-12">

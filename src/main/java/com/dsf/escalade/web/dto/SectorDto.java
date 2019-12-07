@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-public class SecteurDto {
+public class SectorDto {
    private static final int NAME_MIN = 1;
    private static final int NAME_MAX = 50;
 
@@ -21,9 +21,9 @@ public class SecteurDto {
 
    //Sector attributes
    private Integer topoId;
-   private String equipement;
+   private String equipment;
 
-   public SecteurDto() {
+   public SectorDto() {
       super();
    }
 
@@ -91,19 +91,19 @@ public class SecteurDto {
       this.topoId = topoId;
    }
 
-   public String getEquipement() {
-      return equipement;
+   public String getEquipment() {
+      return equipment;
    }
 
-   public void setEquipement(String equipement) {
-      this.equipement = equipement;
+   public void setEquipment(String equipment) {
+      this.equipment = equipment;
    }
 
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
-      if (!(o instanceof SecteurDto)) return false;
-      SecteurDto that = (SecteurDto) o;
+      if (!(o instanceof SectorDto)) return false;
+      SectorDto that = (SectorDto) o;
       return getId().equals(that.getId()) &&
             getName().equals(that.getName()) &&
             Objects.equals(getLongitude(), that.getLongitude()) &&
@@ -112,17 +112,17 @@ public class SecteurDto {
             Objects.equals(getPhotoLink(), that.getPhotoLink()) &&
             Objects.equals(getMapLink(), that.getMapLink()) &&
             getTopoId().equals(that.getTopoId()) &&
-            Objects.equals(getEquipement(), that.getEquipement());
+            Objects.equals(getEquipment(), that.getEquipment());
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(getId(), getName(), getLongitude(), getLatitude(), getHasComment(), getPhotoLink(), getMapLink(), getTopoId(), getEquipement());
+      return Objects.hash(getId(), getName(), getLongitude(), getLatitude(), getHasComment(), getPhotoLink(), getMapLink(), getTopoId(), getEquipment());
    }
 
    @Override
    public String toString() {
-      return "SecteurDto{" +
+      return "SectorDto{" +
             "id=" + id +
             ", name='" + name + '\'' +
             ", longitude='" + longitude + '\'' +
@@ -131,7 +131,7 @@ public class SecteurDto {
             ", photoLink='" + photoLink + '\'' +
             ", mapLink='" + mapLink + '\'' +
             ", topoId=" + topoId +
-            ", equipement='" + equipement + '\'' +
+            ", equipment='" + equipment + '\'' +
             '}';
    }
 }

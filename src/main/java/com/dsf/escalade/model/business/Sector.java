@@ -12,8 +12,8 @@ import java.util.Objects;
 public class Sector extends Site{
    @Column(name = "topoId", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer topoId;
-   @Column(name = "equipement", columnDefinition = "TEXT")
-   private String equipement;
+   @Column(name = "equipment", columnDefinition = "TEXT")
+   private String equipment;
 
    public Sector() {
       super();
@@ -27,12 +27,12 @@ public class Sector extends Site{
       this.topoId = topoId;
    }
 
-   public String getEquipement() {
-      return equipement;
+   public String getEquipment() {
+      return equipment;
    }
 
-   public void setEquipement(String equipement) {
-      this.equipement = equipement;
+   public void setEquipement(String equipment) {
+      this.equipment = equipment;
    }
 
    @Override
@@ -42,12 +42,12 @@ public class Sector extends Site{
       if (!super.equals(o)) return false;
       Sector sector = (Sector) o;
       return getTopoId().equals(sector.getTopoId()) &&
-            getEquipement().equals(sector.getEquipement());
+            getEquipment().equals(sector.getEquipment());
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(super.hashCode(), getTopoId(), getEquipement());
+      return Objects.hash(super.hashCode(), getTopoId(), getEquipment());
    }
 
    @Override
@@ -57,7 +57,7 @@ public class Sector extends Site{
             ", name='" + name + '\'' +
             ", type=" + type +
             ", topoId=" + topoId +
-            ", equipement='" + equipement + '\'' +
+            ", equipment='" + equipment + '\'' +
             ", hasComment=" + hasComment +
             ", photoLink='" + photoLink + '\'' +
             ", mapLink='" + mapLink + '\'' +

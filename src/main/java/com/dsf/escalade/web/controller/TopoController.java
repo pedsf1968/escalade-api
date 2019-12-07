@@ -3,7 +3,7 @@ package com.dsf.escalade.web.controller;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.service.*;
 import com.dsf.escalade.web.dto.AddressDto;
-import com.dsf.escalade.web.dto.SecteurDto;
+import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -38,17 +38,17 @@ public class TopoController {
     private final UserService userService;
     private final AddressService addressService;
     private final TopoService topoService;
-    private final SecteurService secteurService;
+    private final SectorService sectorService;
     private final CommentService commentService;
     private final  List<String> statusList =  Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
     @Autowired
-    public TopoController(EntityManager entityManager, UserService userService, AddressService addressService, TopoService topoService, SecteurService secteurService, CommentService commentService) {
+    public TopoController(EntityManager entityManager, UserService userService, AddressService addressService, TopoService topoService, SectorService sectorService, CommentService commentService) {
         this.entityManager = entityManager;
         this.userService = userService;
         this.addressService = addressService;
         this.topoService = topoService;
-        this.secteurService = secteurService;
+        this.sectorService = sectorService;
         this.commentService = commentService;
     }
 
@@ -106,10 +106,10 @@ public class TopoController {
     @GetMapping("/topo/read/{id}")
     public String readTopo(@PathVariable("id") Integer id, Model model) {
         TopoDto topoDto = topoService.getOne(id);
-        List<SecteurDto> secteurDtoList = secteurService.findByTopoId(id);
+        List<SectorDto> sectorDtoList = sectorService.findByTopoId(id);
 
         model.addAttribute("topoDto", topoDto);
-        model.addAttribute("secteurDtoList", secteurDtoList);
+        model.addAttribute("sectorDtoList", sectorDtoList);
         model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
         model.addAttribute("commentDtoList", commentService.getBySiteId(id));
 
@@ -119,10 +119,10 @@ public class TopoController {
     @GetMapping("/topo/edit/{id}")
     public String editTopo(@PathVariable("id") Integer id, Model model) {
         TopoDto topoDto = topoService.getOne(id);
-        List<SecteurDto> secteurDtoList = secteurService.findByTopoId(id);
+        List<SectorDto> sectorDtoList = sectorService.findByTopoId(id);
 
         model.addAttribute("topoDto", topoDto);
-        model.addAttribute("secteurDtoList", secteurDtoList);
+        model.addAttribute("sectorDtoList", sectorDtoList);
         model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
         model.addAttribute("statusList", statusList);
 
