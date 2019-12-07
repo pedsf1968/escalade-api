@@ -105,7 +105,6 @@ public class TopoController {
         model.addAttribute("topoDto", topoDto);
         model.addAttribute("secteurDtoList", secteurDtoList);
         model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute("commentDtoList", commentService.getBySiteId(id));
         model.addAttribute("statusList", statusList);
 
         return "topo/topo-update";

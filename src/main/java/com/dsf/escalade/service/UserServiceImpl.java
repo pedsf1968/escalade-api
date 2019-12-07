@@ -34,27 +34,31 @@ public class UserServiceImpl implements UserService {
    }
 
    @Override
-   public Integer save(UserDto userDto) {
-      User user = new User();
+   public UserDto getOne(Integer id) {
+      User user = userRepository.getOne(id);
+      UserDto userDto = new UserDto();
 
-      user.setFirstName(userDto.getFirstName());
-      user.setLastName(userDto.getLastName());
-      user.setAlias(userDto.getAlias());
-      user.setPassword((bCryptPasswordEncoder.encode(userDto.getPassword())));
-      user.setEmail(userDto.getEmail());
-      user.setAdressId(userDto.getAddressId());
+      userDto.setId(user.getId());
+      userDto.setFirstName(user.getFirstName());
+      userDto.setLastName(user.getLastName());
+      userDto.setAlias(user.getAlias());
+      userDto.setEmail(user.getEmail());
+      userDto.setPassword(user.getPassword());
+      userDto.setMatchingPassword(user.getPassword());
+      userDto.setPhone(user.getPhone());
+      userDto.setAddressId(user.getAddressId());
 
-      if( userDto.getRoles()!= null) {
-         Set<Role> roles = new HashSet<>();
+      if( user.getRoles()!= null) {
+         List<String> roles = new ArrayList<>();
 
-         for (String role : userDto.getRoles()) {
-            roles.add(roleRepository.findByName(role));
+         for (Role role : user.getRoles()) {
+            roles.add(role.getName());
          }
 
-         user.setRoles(roles);
+         userDto.setRoles(roles);
       }
 
-      return userRepository.save(user).getId();
+      return userDto;
    }
 
    @Override
@@ -139,6 +143,30 @@ public class UserServiceImpl implements UserService {
       }
 
       return userDto;
+   }
+
+   @Override
+   public Integer save(UserDto userDto) {
+      User user = new User();
+
+      user.setFirstName(userDto.getFirstName());
+      user.setLastName(userDto.getLastName());
+      user.setAlias(userDto.getAlias());
+      user.setPassword((bCryptPasswordEncoder.encode(userDto.getPassword())));
+      user.setEmail(userDto.getEmail());
+      user.setAdressId(userDto.getAddressId());
+
+      if( userDto.getRoles()!= null) {
+         Set<Role> roles = new HashSet<>();
+
+         for (String role : userDto.getRoles()) {
+            roles.add(roleRepository.findByName(role));
+         }
+
+         user.setRoles(roles);
+      }
+
+      return userRepository.save(user).getId();
    }
 
    private boolean emailExists(final String email) {
