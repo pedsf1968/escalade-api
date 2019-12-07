@@ -15,10 +15,10 @@
       <div class="col-lg-3 col-sm-12">
          <div class="row">
             <aside>
-               <label th:text="#{label.topoList.alias}">Alias</label>
+               <label th:text="#{label.alias}">Alias</label>
                <div th:text="${topoDto.aliasManager}"></div>
 
-               <label th:text="#{label.topoList.status}">Status</label>
+               <label th:text="#{label.status}">Status</label>
                <div th:text="${topoDto.status}"></div>
 
 
@@ -33,13 +33,13 @@
                <div class="card">
                   <h5 class="card-header"Coordonnées</h5>
                   <div class="card-title">
-                     <label th:text="#{label.topoList.longitude}">Longitude</label>
+                     <label th:text="#{label.longitude}">Longitude</label>
                   </div>
                   <div class="card-text">
                      <div th:text="${topoDto.longitude}"></div>
                   </div>
                   <div class="card-title">
-                     <label th:text="#{label.topoList.latitude}">latitude</label>
+                     <label th:text="#{label.latitude}">Latitude</label>
                   </div>
                   <div class="card-text">
                      <div th:text="${topoDto.latitude}"> </div>
@@ -49,17 +49,12 @@
 
                <div class="card">
                   <div class="card-header">
-                     <h5 th:text="#{label.topoList.access}">access</h5>
+                     <h5 th:text="#{label.access}">access</h5>
                   </div>
                   <div class="card-text">
                      <p th:text="${topoDto.access}"></p>
                   </div>
                </div>
-
-
-               <a th:href="@{/topo/update/{id}(id=${topoDto.id})}">
-                  <button th:text="#{label.topoList.consult}">Consult</button>
-               </a>
             </aside>
          </div>
       </div>
@@ -78,7 +73,7 @@
 
             <section class="card">
                   <div class="card-header">
-                     <h5 th:text="#{label.topoList.description}">description</h5>
+                     <h5 th:text="#{label.description}">description</h5>
                   </div>
                   <div class="card-text">
                      <p th:text="${topoDto.description}"></p>
@@ -86,10 +81,10 @@
             </section>
             <section  class="card">
                <div class="card-header">
-                  <h5 th:text="#{label.topoList.technic}">technic</h5>
+                  <h5 th:text="#{label.technic}">technic</h5>
                </div>
                <div class="card-text">
-                  <p th:text="${topoDto.technic}"></p>
+                  <p row="3" th:text="${topoDto.technic}"></p>
                </div>
             </section>
          </div>

@@ -19,7 +19,7 @@ public class SecteurDto {
    private String photoLink;
    private String mapLink;
 
-   //Secteur attributes
+   //Sector attributes
    private Integer topoId;
    private String equipement;
 

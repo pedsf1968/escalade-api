@@ -24,22 +24,13 @@
             <div class="card-body center">
                <img  class="img-fluid" th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
             </div>
-            <div class="card-footer">
-               <p th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">  </p>
-               <label for="alias" th:text="#{label.alias}">Alias</label>:
-               <span id="alias" th:text="${topo.aliasManager}"></span>
-               <br>
-               <span id="status" th:text="${topo.status}"></span>
-               <br>
-                  <a class="btn btn-primary" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.view}">
-                     View
-                  </a>
-               <a class="btn btn-primary" th:href="@{/topo/update/{id}(id=${topo.id})}" th:text="#{label.edit}">
-                  Edit
-               </a>
-               <a class="btn btn-primary" th:href="@{/topo/delete/{id}(id=${topo.id})}" th:text="#{label.delete}">
-                  Delete
-               </a>
+            <div class="card-footer center form-inline">
+               <button  th:if="${topo.status} == 'UNVAILABLE'" class="btn btn-danger mb-2" th:text="${topo.status}"></button>
+               <button  th:if="${topo.status} == 'AVAILABLE'" class="btn btn-success mb-2" th:text="${topo.status}"></button>
+               <button  th:if="${topo.status} == 'REQUESTED'" class="btn btn-info mb-2" th:text="${topo.status}"></button>
+               <button  th:if="${topo.status} == 'RESERVED'" class="btn btn-warning mb-2" th:text="${topo.status}"></button>
+               <span class="btn mb-2" th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">Date</span>
+               <a class="btn btn-primary mb-2" th:href="@{/topo/edit/{id}(id=${topo.id})}" th:text="#{label.edit}">Edit</a>
             </div>
          </div>
       </div>

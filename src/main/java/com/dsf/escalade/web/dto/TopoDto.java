@@ -2,6 +2,7 @@ package com.dsf.escalade.web.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -26,17 +27,20 @@ public class TopoDto {
 
    //Topo attributes
    @NotNull
+   @NotBlank
    @Size(min = REGION_MIN, max = REGION_MAX)
    private String region;
    private Integer addressId;
    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
    private Date date;
    @NotNull
+   @NotBlank
    private String description;
    private String technic;
    private String access;
    // Don't use username for the manager
    @NotNull
+   @NotBlank
    private String aliasManager;
    // Don't use username for the climber who reserve
    private String aliasClimber;

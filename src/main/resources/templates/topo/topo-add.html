@@ -1,35 +1,149 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-   <title>Getting Started: Handling Form Submission</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
 <body>
-<h1>Ajout d'un site</h1>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
 
-<form action="#" th:action="@{/addsite}" th:object="${site}" method="post">
+   <header class="jumbotron">
+      <H1 class="display-4" th:text="${topoDto.name!=null} ? ${topoDto.name} : #{title.topoNew}">New Topo</H1>
+   </header>
 
-   <label for="nom">Nom</label>
-   <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
-   <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+   <form  class="row" action="#" th:action="@{/topo/add}" method="POST" enctype="utf8">
+      <aside class="col-md-2">
+         <div class="card-header">
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.manager}">Manager</div>
+               </div>
+               <input  type="text" class="form-control" th:field="${topoDto.aliasManager}" readonly/>
+            </div>
+         </div>
 
-   <label for="type">Type</label>
-   <input type="text" th:field="*{type}" id="type" placeholder="Type">
-   <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.name}">Name</div>
+            </div>
+            <input type="text" class="form-control" th:field="${topoDto.name}" th:placeholder="#{placeholder.name}">
+         </div>
+         <span th:if="${#fields.hasErrors('topoDto.name')}" th:errors="${topoDto.name}"></span>
 
-   <label for="aCommentaire">A un commentaire</label>
-   <input type="text" th:field="*{aCommentaire}" id="aCommentaire">
-   <span th:if="${#fields.hasErrors('aCommentaire')}" th:errors="*{aCommentaire}"></span>
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.region}">Region</div>
+            </div>
+            <input type="text" class="form-control" th:field="${topoDto.region}" th:placeholder="#{placeholder.region}">
+         </div>
+         <span th:if="${#fields.hasErrors('topoDto.region')}" th:errors="${topoDto.region}"></span>
 
-   <label for="lienPhoto">Lien photo</label>
-   <input type="text" th:field="*{lienPhoto}" id="lienPhoto" placeholder="Lien photo">
-   <span th:if="${#fields.hasErrors('lienPhoto')}" th:errors="*{lienPhoto}"></span>
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.date}">Date</div>
+            </div>
+            <input type="text" class="form-control" th:field="${topoDto.date}" th:placeholder="#{placeholder.date}">
+         </div>
 
-   <label for="lienCarte">Lien carte</label>
-   <input type="text" th:field="*{lienCarte}" id="lienCarte" placeholder="Lien carte">
-   <span th:if="${#fields.hasErrors('lienCarte')}" th:errors="*{lienCarte}"></span>
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
+            </div>
+            <input type="text" class="form-control" th:field="${topoDto.longitude}" th:placeholder="#{placeholder.longitude}">
+         </div>
+         <span th:if="${#fields.hasErrors('topoDto.longitude')}" th:errors="${topoDto.longitude}"></span>
 
-   <input type="submit" value="Ajoute site">
-</form>
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
+            </div>
+            <input type="text" class="form-control" th:field="${topoDto.latitude}" th:placeholder="#{placeholder.latitude}">
+         </div>
+         <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
+
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.photo}">Photo</div>
+            </div>
+            <input type="text" class="form-control" th:field="${topoDto.photoLink}" th:placeholder="#{placeholder.photo}">
+         </div>
+         <span th:if="${#fields.hasErrors('topoDto.photoLink')}" th:errors="${topoDto.photoLink}"></span>
+
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.map}">Map</div>
+            </div>
+            <input type="text" class="form-control" th:field="${topoDto.mapLink}" th:placeholder="#{placeholder.map}">
+         </div>
+         <span th:if="${#fields.hasErrors('topoDto.mapLink')}" th:errors="${topoDto.mapLink}"></span>
+
+         <div class="form-inline">
+            <span class="btn mb-2" th:text="#{label.status}">Status</span>
+            <select class="btn mb-2" th:field="${topoDto.status}">
+               <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+            </select>
+            <span class="btn mb-2" th:text="#{label.statusAuto}">Auto</span>
+            <input class="btn mb-2" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
+         </div>
+      </aside>
+
+      <section div class="card col-md-6">
+         <label for="description" th:text="#{label.description}">Description</label>
+         <textarea id="description" class="form-control input-sm" rows="3" th:field="${topoDto.description}" th:placeholder="#{placeholder.description}"/>
+         <span th:if="${#fields.hasErrors('topoDto.description')}" th:errors="${topoDto.description}"></span>
+         <br>
+         <label for="technic" th:text="#{label.technic}">Technic</label>
+         <textarea id="technic" class="form-control input-sm" rows="3" th:field="${topoDto.technic}" th:placeholder="#{placeholder.technic}"/>
+         <span th:if="${#fields.hasErrors('topoDto.technic')}" th:errors="${topoDto.technic}"></span>
+         <br>
+         <label for="access" th:text="#{label.access}">Access</label>
+            <textarea id="access" class="form-control input-sm" rows="3" th:field="${topoDto.access}" th:placeholder="#{placeholder.access}"/>
+         <span th:if="${#fields.hasErrors('topoDto.access')}" th:errors="${topoDto.access}"></span>
+      </section>
+
+      <aside class="col-md-3">
+         <div class="form-group">
+            <label th:text="#{label.address}">Address</label>
+            <input type="text" th:field="${addressDto.street1}" class="form-control" id="inputAddress" th:placeholder="#{placeholder.street1}">
+            <p th:each="error : ${#fields.errors('addressDto.street1')}" th:text="${error}"></p>
+         </div>
+         <div class="form-group">
+            <input type="text" th:field="${addressDto.street2}" class="form-control" th:placeholder="#{placeholder.street2}">
+            <p th:each="error : ${#fields.errors('addressDto.street2')}" th:text="${error}"></p>
+         </div>
+         <div class="form-row">
+            <div class="form-group col-md-6">
+               <label for="inputCity" th:text="#{label.city}">City</label>
+               <input type="text"th:field="${addressDto.city}" class="form-control" id="inputCity" th:placeholder="#{placeholder.city}">
+               <p th:each="error : ${#fields.errors('addressDto.city')}" th:text="${error}"></p>
+            </div>
+            <div class="form-group col-md-4">
+               <label for="inputState" th:text="#{label.country}">Country</label>
+               <input type="text"th:field="${addressDto.country}" class="form-control" id="inputState" th:placeholder="#{placeholder.country}">
+               <p th:each="error : ${#fields.errors('addressDto.country')}" th:text="${error}"></p>
+            </div>
+            <div class="form-group col-md-2">
+               <label for="inputZip" th:text="#{label.zipCode}">Zip code</label>
+               <input type="text" th:field="${addressDto.zipCode}" class="form-control" id="inputZip" th:placeholder="#{placeholder.zipCode}">
+               <p th:each="error : ${#fields.errors('addressDto.zipCode')}" th:text="${error}"></p>
+            </div>
+         </div>
+      </aside>
+
+      <div class="row">
+         <div class="form-group col-md-12">
+            <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/sector/new/{id}(id=${topoDto.id})}" th:text="#{label.newSector}">New sector</a>
+               <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${topoDto.id})}" th:text="#{label.newLane}">New Lane</a>
+               <a class="btn btn-danger" th:href="@{/topo/delete/{id}(id=${topoDto.id})}" th:text="#{label.delete}">Delete</a>
+               <a class="btn btn-primary" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
+
+               <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+            </div>
+         </div>
+      </div>
+   </form>
+
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
 </body>
 </html>

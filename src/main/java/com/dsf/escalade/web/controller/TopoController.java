@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -71,18 +73,35 @@ public class TopoController {
     public String newTopo( Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         TopoDto topoDto = new TopoDto();
-
+        AddressDto addressDto = new AddressDto();
 
         topoDto.setAliasManager(userService.findByEmail(authentication.getName()).getAlias());
+        topoDto.setDate(Date.valueOf(LocalDate.now()));
         model.addAttribute("topoDto", topoDto);
-        model.addAttribute("addressDto", new AddressDto());
+        model.addAttribute("addressDto", addressDto);
         model.addAttribute("statusList", statusList);
 
-        return "topo/topo-update";
+        return "topo/topo-add";
     }
 
+    @PostMapping("/topo/add")
+    public String addTopo(@ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
+                          @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
 
+        if (bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()) {
+            model.addAttribute("statusList", statusList);
+            return "topo/topo-add";
+        }
 
+        Integer addressId = addressService.save(addressDto);
+        topoDto.setAddressId(addressId);
+        topoService.save(topoDto);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
+        model.addAttribute("topoDtoList", topoDtoList);
+        return "topo/topo-mylist";
+    }
 
     @GetMapping("/topo/read/{id}")
     public String readTopo(@PathVariable("id") Integer id, Model model) {
@@ -97,8 +116,8 @@ public class TopoController {
         return "topo/topo-read";
     }
 
-    @GetMapping("/topo/update/{id}")
-    public String updateTopo(@PathVariable("id") Integer id, Model model) {
+    @GetMapping("/topo/edit/{id}")
+    public String editTopo(@PathVariable("id") Integer id, Model model) {
         TopoDto topoDto = topoService.getOne(id);
         List<SecteurDto> secteurDtoList = secteurService.findByTopoId(id);
 
@@ -109,11 +128,12 @@ public class TopoController {
 
         return "topo/topo-update";
     }
+
     @PostMapping("/topo/update/{id}")
-    public String createTopo(@PathVariable("id") Integer id,
-                             @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
+    public String createTopo(@PathVariable("id") Integer id, @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
                              @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
         if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
+            model.addAttribute("statusList", statusList);
             return "topo/topo-update";
         }
 

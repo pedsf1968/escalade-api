@@ -3,6 +3,8 @@ package com.dsf.escalade.model.business;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,6 +19,8 @@ public class Topo extends Site{
    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
    @Column(name = "date", columnDefinition = "DATE DEFAULT NOW()")
    private Date date;
+   @NotNull
+   @NotBlank
    @Column(name = "description", columnDefinition = "TEXT")
    private String description;
    @Column(name = "technic", columnDefinition = "TEXT")

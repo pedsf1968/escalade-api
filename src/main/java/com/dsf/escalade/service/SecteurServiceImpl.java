@@ -1,7 +1,7 @@
 package com.dsf.escalade.service;
 
-import com.dsf.escalade.model.business.Secteur;
-import com.dsf.escalade.repository.business.SecteurRepository;
+import com.dsf.escalade.model.business.Sector;
+import com.dsf.escalade.repository.business.SectorRepository;
 import com.dsf.escalade.web.dto.SecteurDto;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @Service("SecteurService")
 public class SecteurServiceImpl implements SecteurService{
 
-   private final SecteurRepository secteurRepository;
+   private final SectorRepository sectorRepository;
 
-   public SecteurServiceImpl(SecteurRepository secteurRepository) {
-      this.secteurRepository = secteurRepository;
+   public SecteurServiceImpl(SectorRepository sectorRepository) {
+      this.sectorRepository = sectorRepository;
    }
 
    @Override
@@ -22,17 +22,17 @@ public class SecteurServiceImpl implements SecteurService{
       List<SecteurDto> secteurDtoList = new ArrayList<>();
       SecteurDto secteurDto = null;
 
-      for(Secteur secteur: secteurRepository.findAll()){
+      for(Sector sector : sectorRepository.findAll()){
          secteurDto = new SecteurDto();
-         secteurDto.setId(secteur.getId());
-         secteurDto.setTopoId(secteur.getTopoId());
-         secteurDto.setName(secteur.getName());
-         secteurDto.setEquipement(secteur.getEquipement());
-         secteurDto.setHasComment(secteur.getHasComment());
-         secteurDto.setLatitude(secteur.getLatitude());
-         secteurDto.setLongitude(secteur.getLongitude());
-         secteurDto.setPhotoLink(secteur.getPhotoLink());
-         secteurDto.setMapLink(secteur.getMapLink());
+         secteurDto.setId(sector.getId());
+         secteurDto.setTopoId(sector.getTopoId());
+         secteurDto.setName(sector.getName());
+         secteurDto.setEquipement(sector.getEquipement());
+         secteurDto.setHasComment(sector.getHasComment());
+         secteurDto.setLatitude(sector.getLatitude());
+         secteurDto.setLongitude(sector.getLongitude());
+         secteurDto.setPhotoLink(sector.getPhotoLink());
+         secteurDto.setMapLink(sector.getMapLink());
 
          secteurDtoList.add(secteurDto);
       }
@@ -45,17 +45,17 @@ public class SecteurServiceImpl implements SecteurService{
       List<SecteurDto> secteurDtoList = new ArrayList<>();
       SecteurDto secteurDto = null;
 
-      for(Secteur secteur: secteurRepository.findByTopoId(id)){
+      for(Sector sector : sectorRepository.findByTopoId(id)){
          secteurDto = new SecteurDto();
-         secteurDto.setId(secteur.getId());
-         secteurDto.setTopoId(secteur.getTopoId());
-         secteurDto.setName(secteur.getName());
-         secteurDto.setEquipement(secteur.getEquipement());
-         secteurDto.setHasComment(secteur.getHasComment());
-         secteurDto.setLatitude(secteur.getLatitude());
-         secteurDto.setLongitude(secteur.getLongitude());
-         secteurDto.setPhotoLink(secteur.getPhotoLink());
-         secteurDto.setMapLink(secteur.getMapLink());
+         secteurDto.setId(sector.getId());
+         secteurDto.setTopoId(sector.getTopoId());
+         secteurDto.setName(sector.getName());
+         secteurDto.setEquipement(sector.getEquipement());
+         secteurDto.setHasComment(sector.getHasComment());
+         secteurDto.setLatitude(sector.getLatitude());
+         secteurDto.setLongitude(sector.getLongitude());
+         secteurDto.setPhotoLink(sector.getPhotoLink());
+         secteurDto.setMapLink(sector.getMapLink());
 
          secteurDtoList.add(secteurDto);
       }
@@ -66,34 +66,34 @@ public class SecteurServiceImpl implements SecteurService{
    @Override
    public SecteurDto getOne(Integer id) {
       SecteurDto secteurDto = new SecteurDto();
-      Secteur secteur = secteurRepository.getOne(id);
+      Sector sector = sectorRepository.getOne(id);
 
-      secteurDto.setId(secteur.getId());
-      secteurDto.setTopoId(secteur.getTopoId());
-      secteurDto.setName(secteur.getName());
-      secteurDto.setEquipement(secteur.getEquipement());
-      secteurDto.setHasComment(secteur.getHasComment());
-      secteurDto.setLatitude(secteur.getLatitude());
-      secteurDto.setLongitude(secteur.getLongitude());
-      secteurDto.setPhotoLink(secteur.getPhotoLink());
-      secteurDto.setMapLink(secteur.getMapLink());
+      secteurDto.setId(sector.getId());
+      secteurDto.setTopoId(sector.getTopoId());
+      secteurDto.setName(sector.getName());
+      secteurDto.setEquipement(sector.getEquipement());
+      secteurDto.setHasComment(sector.getHasComment());
+      secteurDto.setLatitude(sector.getLatitude());
+      secteurDto.setLongitude(sector.getLongitude());
+      secteurDto.setPhotoLink(sector.getPhotoLink());
+      secteurDto.setMapLink(sector.getMapLink());
       return secteurDto;
    }
 
    @Override
    public Integer save(SecteurDto secteurDto) {
-      Secteur secteur =new Secteur();
+      Sector sector =new Sector();
 
-      secteur.setId(secteurDto.getId());
-      secteur.setTopoId(secteurDto.getTopoId());
-      secteur.setName(secteurDto.getName());
-      secteur.setEquipement(secteurDto.getEquipement());
-      secteur.setHasComment(secteurDto.getHasComment());
-      secteur.setLatitude(secteurDto.getLatitude());
-      secteur.setLongitude(secteurDto.getLongitude());
-      secteur.setPhotoLink(secteurDto.getPhotoLink());
-      secteur.setMapLink(secteurDto.getMapLink());
+      sector.setId(secteurDto.getId());
+      sector.setTopoId(secteurDto.getTopoId());
+      sector.setName(secteurDto.getName());
+      sector.setEquipement(secteurDto.getEquipement());
+      sector.setHasComment(secteurDto.getHasComment());
+      sector.setLatitude(secteurDto.getLatitude());
+      sector.setLongitude(secteurDto.getLongitude());
+      sector.setPhotoLink(secteurDto.getPhotoLink());
+      sector.setMapLink(secteurDto.getMapLink());
 
-      return secteurRepository.save(secteur).getId();
+      return sectorRepository.save(sector).getId();
    }
 }

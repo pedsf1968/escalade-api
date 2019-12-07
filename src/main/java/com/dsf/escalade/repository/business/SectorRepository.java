@@ -1,12 +1,12 @@
 package com.dsf.escalade.repository.business;
 
-import com.dsf.escalade.model.business.Secteur;
+import com.dsf.escalade.model.business.Sector;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SecteurRepository extends JpaRepository <Secteur, Integer>  {
-   List<Secteur> findByTopoId(Integer id);
+public interface SectorRepository extends JpaRepository <Sector, Integer>  {
+   List<Sector> findByTopoId(Integer id);
 }

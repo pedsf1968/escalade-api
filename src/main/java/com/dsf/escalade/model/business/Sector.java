@@ -7,15 +7,15 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name="secteur")
+@Table(name="sector")
 @PrimaryKeyJoinColumn(name = "site_id")
-public class Secteur extends Site{
+public class Sector extends Site{
    @Column(name = "topoId", columnDefinition = "INTEGER(10) NOT NULL")
    private Integer topoId;
    @Column(name = "equipement", columnDefinition = "TEXT")
    private String equipement;
 
-   public Secteur() {
+   public Sector() {
       super();
    }
 
@@ -38,11 +38,11 @@ public class Secteur extends Site{
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
-      if (!(o instanceof Secteur)) return false;
+      if (!(o instanceof Sector)) return false;
       if (!super.equals(o)) return false;
-      Secteur secteur = (Secteur) o;
-      return getTopoId().equals(secteur.getTopoId()) &&
-            getEquipement().equals(secteur.getEquipement());
+      Sector sector = (Sector) o;
+      return getTopoId().equals(sector.getTopoId()) &&
+            getEquipement().equals(sector.getEquipement());
    }
 
    @Override
@@ -52,7 +52,7 @@ public class Secteur extends Site{
 
    @Override
    public String toString() {
-      return "Secteur{" +
+      return "Sector{" +
             "id=" + id +
             ", name='" + name + '\'' +
             ", type=" + type +

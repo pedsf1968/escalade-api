@@ -27,7 +27,7 @@ VALUES (1,'La falaise', 'TOPO', 'ailefroide.jpg',''),
     (3,'La gorge', 'TOPO', 'ablon.jpg',''),
     (4,'Grand étang','TOPO','grandetangphoto.jpg',''),
     (5,'Côté est', 'SECTEUR', 'autoire.jpg',''),
-    (6,'Coude à coude','SECTEUR','grandetangcoudeacoudephoto.png','grandetangcoudeacoudemap.jpg');
+    (6,'Coude à coude','SECTOR','grandetangcoudeacoudephoto.png','grandetangcoudeacoudemap.jpg');
 
 
 
@@ -36,10 +36,12 @@ VALUES (1, 'Corse',1,NOW(),'Lorem ipsum dolor sit amet, consectetur adipiscing e
 'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.',
 'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.',1);
 
-INSERT INTO topo (site_id, region, address_id, date, manager_id)
-VALUES (2, 'corse', 1, NOW(),2),(3, 'alpes', 1, NOW(),3),(4,'alpes', 1, NOW(),2);
+INSERT INTO topo (site_id, region, address_id, date, description,manager_id)
+VALUES (2, 'corse', 1, NOW(),'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',2),
+(3, 'alpes', 1, NOW(),'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',3),
+(4,'alpes', 1, NOW(),'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',2);
 
-INSERT INTO secteur (site_id, topo_id, equipement)
+INSERT INTO sector (site_id, topo_id, equipement)
 VALUES (5, 1,'100m de corde'),(6,4,'Corde de 50m');
 
 INSERT INTO comment (id,site_id,user_id,text)
