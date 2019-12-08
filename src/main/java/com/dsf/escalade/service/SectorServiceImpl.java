@@ -98,4 +98,17 @@ public class SectorServiceImpl implements SectorService {
 
       return sectorRepository.save(sector).getId();
    }
+
+   @Override
+   public Integer delete(SectorDto sectorDto) {
+      Integer sectorId = sectorDto.getId();
+
+      if(sectorId!=null){
+         sectorRepository.delete(sectorRepository.getOne(sectorId));
+         return sectorId;
+      }
+
+      return null;
+   }
+
 }

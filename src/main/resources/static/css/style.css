@@ -52,6 +52,11 @@ img {
     box-shadow: 5px 5px 5px black;
 }
 
+.img-avatar {
+    height: 50px;
+    width: 50px;
+}
+
 
 nav .navbar-nav li i  {
     color : white;

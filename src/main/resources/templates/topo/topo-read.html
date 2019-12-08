@@ -93,7 +93,7 @@
          <div class="row">
             <aside  class="card col-lg-12" th:each="comment : ${commentDtoList}">
                <div class="card-header">
-                  <h5 th:text="${comment.alias}"></h5>
+                  <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${comment.alias})}" alt="avatar"/><h5  th:text="${comment.alias}"></h5>
                </div>
                <div class="card-text">
                   <p th:text="${comment.text}"></p>

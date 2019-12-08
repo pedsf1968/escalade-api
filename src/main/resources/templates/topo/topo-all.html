@@ -25,6 +25,7 @@
                <img  class="img-fluid" th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
             </div>
             <div class="card-footer">
+               <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${topo.aliasManager})}" alt="avatar"/>
                <span class="btn mb-2" th:text="${topo.aliasManager}"></span>
                <button  th:if="${topo.status} == 'UNVAILABLE'" class="btn btn-danger mb-2" th:text="${topo.status}"></button>
                <button  th:if="${topo.status} == 'AVAILABLE'" class="btn btn-success mb-2" th:text="${topo.status}"></button>

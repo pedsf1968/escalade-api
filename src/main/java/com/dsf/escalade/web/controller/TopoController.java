@@ -87,17 +87,19 @@ public class TopoController {
     @PostMapping("/topo/add")
     public String addTopo(@ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
                           @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()) {
             model.addAttribute("statusList", statusList);
             return "topo/topo-add";
         }
 
-        Integer addressId = addressService.save(addressDto);
-        topoDto.setAddressId(addressId);
-        topoService.save(topoDto);
+        // verify that the manager is the Topo manager
+        if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
+            topoDto.setAddressId(addressService.save(addressDto));
+            topoService.save(topoDto);
+        }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
         model.addAttribute("topoDtoList", topoDtoList);
         return "topo/topo-mylist";
@@ -132,18 +134,22 @@ public class TopoController {
     @PostMapping("/topo/update/{id}")
     public String createTopo(@PathVariable("id") Integer id, @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
                              @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
             model.addAttribute("statusList", statusList);
             return "topo/topo-update";
         }
 
-        Integer addressId = addressService.save(addressDto);
-        topoDto.setAddressId(addressId);
-        topoService.save(topoDto);
+        // verify that the manager is the Topo manager
+        if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
+            topoDto.setAddressId(addressService.save(addressDto));
+            topoService.save(topoDto);
+        }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
         model.addAttribute("topoDtoList", topoDtoList);
+
         return "topo/topo-mylist";
     }
 
