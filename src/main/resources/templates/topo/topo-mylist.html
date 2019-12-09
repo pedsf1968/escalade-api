@@ -21,10 +21,10 @@
                <h5 th:text="${topo.name}"></h5>
                <span th:text="${topo.region}"></span>
             </div>
-            <div class="card-body center">
+            <div class="card-body">
                <img  class="img-fluid" th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
             </div>
-            <div class="card-footer center form-inline">
+            <div class="card-footer mx-auto fluid form-inline">
                <button  th:if="${topo.status} == 'UNVAILABLE'" class="btn btn-danger mb-2" th:text="${topo.status}"></button>
                <button  th:if="${topo.status} == 'AVAILABLE'" class="btn btn-success mb-2" th:text="${topo.status}"></button>
                <button  th:if="${topo.status} == 'REQUESTED'" class="btn btn-info mb-2" th:text="${topo.status}"></button>

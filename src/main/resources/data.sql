@@ -42,7 +42,7 @@ VALUES (2, 'corse', 1, NOW(),'Lorem ipsum dolor sit amet, consectetur adipiscing
 (4,'alpes', 1, NOW(),'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',2);
 
 INSERT INTO sector (site_id, topo_id, equipment)
-VALUES (5, 1,'100m de corde'),(6,4,'Corde de 50m');
+VALUES (5, 2,'100m de corde'),(6,2,'Corde de 50m');
 
 INSERT INTO comment (id,site_id,user_id,text)
 VALUES (1,1,2,'C''est super on s''éclate'),(2,1,2,'Bien pour les débutants'),(3,1,3,'Belle vue pendant l''ascension');

@@ -8,7 +8,6 @@
    <header class="jumbotron">
       <H1 class="display-4" th:text="${topoDto.name!=null} ? ${topoDto.name} : #{title.topoNew}">New Topo</H1>
    </header>
-
    <form  class="row" action="#" th:action="@{/topo/update/{id}(id=${topoDto.id})}" method="POST" enctype="utf8">
       <aside class="col-md-3">
          <div class="card-header">
@@ -87,15 +86,15 @@
 
       <section div class="card col-md-6">
          <label for="description" th:text="#{label.description}">Description</label>
-         <textarea id="description" class="form-control input-sm" rows="3" th:field="${topoDto.description}" th:placeholder="#{placeholder.description}"/>
+         <textarea id="description" class="form-control input-sm" rows="3" th:field="${topoDto.description}" th:placeholder="#{placeholder.description}">Description</textarea>
          <span th:if="${#fields.hasErrors('topoDto.description')}" th:errors="${topoDto.description}"></span>
          <br>
          <label for="technic" th:text="#{label.technic}">Technic</label>
-         <textarea id="technic" class="form-control input-sm" rows="3" th:field="${topoDto.technic}" th:placeholder="#{placeholder.technic}"/>
+         <textarea id="technic" class="form-control input-sm" rows="3" th:field="${topoDto.technic}" th:placeholder="#{placeholder.technic}">Technic</textarea>
          <span th:if="${#fields.hasErrors('topoDto.technic')}" th:errors="${topoDto.technic}"></span>
          <br>
          <label for="access" th:text="#{label.access}">Access</label>
-            <textarea id="access" class="form-control input-sm" rows="3" th:field="${topoDto.access}" th:placeholder="#{placeholder.access}"/>
+         <textarea id="access" class="form-control input-sm" rows="3" th:field="${topoDto.access}" th:placeholder="#{placeholder.access}">Access</textarea>
          <span th:if="${#fields.hasErrors('topoDto.access')}" th:errors="${topoDto.access}"></span>
       </section>
 
@@ -128,32 +127,45 @@
          </div>
       </aside>
 
-      <div class="row">
+      <section class="row">
          <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="sector : ${sectorDtoList}">
 
             <div class="card">
                <div class="card-header">
                   <h5 th:text="${sector.name}"></h5>
                </div>
-               <div class="card-body center">
+               <div class="card-body">
                   <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.photoLink})}" alt="photo"/>
                   <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.mapLink})}" alt="photo"/>
-
+                  <label for="equipment" th:text="#{label.equipment}">Equipment</label>
+                  <div id="equipment" th:text="${sector.equipment}">Equipment</div>
+                  <div class="input-group mb-2">
+                     <div class="input-group-prepend">
+                        <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
+                     </div>
+                     <span th:text="${sector.longitude}" >Longitude</span>
+                  </div>
+                  <div class="input-group mb-2">
+                     <div class="input-group-prepend">
+                        <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
+                     </div>
+                     <span th:text="${sector.latitude}">Latitude</span>
+                  </div>
                </div>
-               <div class="card-footer center form-inline">
+               <div class="card-footer form-group">
                   <a class="btn btn-primary mb-2" th:href="@{/sector/edit/{id}(id=${sector.id})}" th:text="#{label.edit}">Edit</a>
+                  <a class="btn btn-primary mb-2" th:href="@{/sector/delete/{id}(id=${sector.id})}" th:text="#{label.delete}">Delete</a>
                </div>
             </div>
          </div>
-      </div>
-
+      </section>
 
       <div class="row">
          <div class="form-group col-md-12">
             <div class="float-right" >
                <a class="btn btn-primary" th:href="@{/sector/new/{id}(id=${topoDto.id})}" th:text="#{label.newSector}">New sector</a>
                <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${topoDto.id})}" th:text="#{label.newLane}">New Lane</a>
-               <a class="btn btn-danger" th:href="@{/topo/delete/{id}(id=${topoDto.id})}" th:text="#{label.delete}">Delete</a>
+               <a class="btn btn-danger" th:href="@{/topo/delete/{id}(id=${topoDto.id})}" th:text="#{label.delete}" >Delete</a>
                <a class="btn btn-primary" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
 
                <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
@@ -162,8 +174,10 @@
       </div>
    </form>
 
-
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
+<SCRIPT type="text/javascript">
+
+</SCRIPT>
 </body>
 </html>
