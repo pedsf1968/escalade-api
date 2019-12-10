@@ -1,14 +1,11 @@
 a:hover {
-	color: purple;
+	color: green;
 }
 
 aside {
 	text-align: center;
-	padding-left: 20px;
-	margin: 10px;
 	color: black;
 }
-
 
  body {
     background-color: #DDD;
@@ -67,11 +64,10 @@ nav .navbar-nav li a  {
 }
 
 nav .navbar-nav li a:hover {
-	color: purple;
+	color: green;
 }
 
 section {
-	margin: 10px;
 	margin-bottom: 20px;
 }
 

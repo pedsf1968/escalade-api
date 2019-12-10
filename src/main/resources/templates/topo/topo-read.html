@@ -11,16 +11,33 @@
 
 <div class="container-fluid">
    <nav th:replace="~{fragments/nav :: nav}"></nav>
+
    <div class="row">
       <div class="col-lg-3 col-sm-12">
          <div class="row">
-            <aside>
-               <label th:text="#{label.alias}">Alias</label>
-               <div th:text="${topoDto.aliasManager}"></div>
-
-               <label th:text="#{label.status}">Status</label>
-               <div th:text="${topoDto.status}"></div>
-
+            <aside class="col-md-12">
+               <table class="table table-striped">
+               <tr>
+                  <td th:text="#{label.alias}">Alias</td>
+                  <td th:text="${topoDto.aliasManager}">Alias</td>
+               </tr>
+               <tr>
+                  <td th:text="#{label.status}">Status</td>
+                  <td th:text="${topoDto.status}">Status</td>
+               </tr>
+                  <tr>
+                     <td th:text="#{label.longitude}">Longitude</td>
+                     <td th:text="${topoDto.longitude}" >Longitude</td>
+                  </tr>
+                  <tr>
+                     <td th:text="#{label.latitude}">Latitude</td>
+                     <td th:text="${topoDto.latitude}" >Latitude</td>
+                  </tr>
+                  <tr>
+                     <td th:text="#{label.hasComment}">Has comment</td>
+                     <td th:text="${topoDto.hasComment}" >Has comment</td>
+                  </tr>
+               </table>
 
                <div class="card" th:if="${addressDto != null}">
                   <h5 class="card-header">Address</h5>
@@ -30,22 +47,6 @@
                   <p class="card-text" th:text="${addressDto.city}"></p>
                   <p class="card-text" th:text="${addressDto.country}"></p>
                </div>
-               <div class="card">
-                  <h5 class="card-header"Coordonnées</h5>
-                  <div class="card-title">
-                     <label th:text="#{label.longitude}">Longitude</label>
-                  </div>
-                  <div class="card-text">
-                     <div th:text="${topoDto.longitude}"></div>
-                  </div>
-                  <div class="card-title">
-                     <label th:text="#{label.latitude}">Latitude</label>
-                  </div>
-                  <div class="card-text">
-                     <div th:text="${topoDto.latitude}"> </div>
-                  </div>
-               </div>
-
 
                <div class="card">
                   <div class="card-header">
@@ -61,8 +62,7 @@
 
       <div class="col-lg-6 col-sm-12">
          <div class="row">
-
-            <section class="card bg-dark text-white">
+            <section class="col-md-12 card bg-dark text-white ">
                <img class="card-img" th:src="@{/images/{image}(image=${topoDto.photoLink})}" alt="photo"/>
                <div class="card-img-overlay">
                   <h5 class="card-header" th:text="${topoDto.name}">Topo's name</h5>
@@ -71,7 +71,7 @@
                </div>
             </section>
 
-            <section class="card">
+            <section class="col-md-12 card">
                   <div class="card-header">
                      <h5 th:text="#{label.description}">description</h5>
                   </div>
@@ -79,7 +79,7 @@
                      <p th:text="${topoDto.description}"></p>
                   </div>
             </section>
-            <section  class="card">
+            <section  class="col-md-12 card">
                <div class="card-header">
                   <h5 th:text="#{label.technic}">technic</h5>
                </div>
@@ -89,11 +89,13 @@
             </section>
          </div>
       </div>
+
       <div class="col-lg-3 col-sm-12">
          <div class="row">
-            <aside  class="card col-lg-12" th:each="comment : ${commentDtoList}">
+            <aside  class="card col-md-12" th:each="comment : ${commentDtoList}">
                <div class="card-header">
-                  <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${comment.alias})}" alt="avatar"/><h5  th:text="${comment.alias}"></h5>
+                  <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${comment.alias})}" alt="avatar"/>
+                  <h5  class="my-auto" th:text="${comment.alias}">Alias</h5>
                </div>
                <div class="card-text">
                   <p th:text="${comment.text}"></p>

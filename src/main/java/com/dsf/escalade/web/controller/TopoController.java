@@ -132,11 +132,14 @@ public class TopoController {
     }
 
     @PostMapping("/topo/update/{id}")
-    public String createTopo(@PathVariable("id") Integer id, @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
+    public String updateTopo(@PathVariable("id") Integer id, @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
                              @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
+            List<SectorDto> sectorDtoList = sectorService.findByTopoId(id);
+            model.addAttribute("sectorDtoList", sectorDtoList);
+            model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
             model.addAttribute("statusList", statusList);
             return "topo/topo-update";
         }

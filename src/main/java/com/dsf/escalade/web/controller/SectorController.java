@@ -89,21 +89,28 @@ public class SectorController {
 
    @PostMapping("/sector/update/{id}")
    public String updateSector(@PathVariable("id") Integer id, @ModelAttribute("sectorTdo") @Valid SectorDto sectorDto, @NonNull BindingResult bindingResult, Model model) {
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      UserDto userDto = userService.findByAlias(topoService.getOne(sectorDto.getTopoId()).getAliasManager());
 
       if(bindingResult.hasErrors()){
          return "sector/sector-update";
       }
 
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      UserDto userDto = userService.findByAlias(topoService.getOne(sectorDto.getTopoId()).getAliasManager());
+      Integer topoId = sectorDto.getTopoId();
+
       if (userDto.getEmail().equals(authentication.getName())){
          sectorService.save(sectorDto);
       }
 
-      List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-      model.addAttribute("topoDtoList", topoDtoList);
+      TopoDto topoDto = topoService.getOne(topoId);
+      List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
 
-      return "topo/topo-mylist";
+      model.addAttribute("topoDto", topoDto);
+      model.addAttribute("sectorDtoList", sectorDtoList);
+      model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
+      model.addAttribute("statusList", statusList);
+
+      return "topo/topo-update";
    }
 
    @GetMapping("/sector/delete/{id}")
@@ -111,14 +118,20 @@ public class SectorController {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       SectorDto sectorDto = sectorService.getOne(id);
       UserDto userDto = userService.findByAlias(topoService.getOne(sectorDto.getTopoId()).getAliasManager());
+      Integer topoId = sectorDto.getTopoId();
 
       if (userDto.getEmail().equals(authentication.getName())){
          sectorService.delete(sectorDto);
       }
 
-      List<TopoDto> topoDtoList = topoService.findByManagerId(userDto.getId());
-      model.addAttribute("topoDtoList", topoDtoList);
+      TopoDto topoDto = topoService.getOne(topoId);
+      List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
 
-      return "topo/topo-mylist";
+      model.addAttribute("topoDto", topoDto);
+      model.addAttribute("sectorDtoList", sectorDtoList);
+      model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
+      model.addAttribute("statusList", statusList);
+
+      return "topo/topo-update";
    }
 }
