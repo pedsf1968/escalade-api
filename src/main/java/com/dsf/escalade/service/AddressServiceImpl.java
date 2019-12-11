@@ -17,6 +17,10 @@ public class AddressServiceImpl implements AddressService {
 
    @Override
    public AddressDto getOne(Integer id) {
+      if(id == null){
+         return null;
+      }
+
       Address address = addressRepository.getOne(id);
       AddressDto addressDto = new AddressDto();
 

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <body>
-   <footer class="navbar navbar-expand-lg navbar-dark bg-dark text-center" th:fragment="footer">
+   <footer class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom" th:fragment="footer">
       <table class="table">
          <tr>
             <td>
-               <em class="fas fa-at" ></em>
+               <a class="fas fa-at" ></a>
                <a href="#" th:text="#{label.footer.joinus}"> Join Us</a>
             </td>
             <td>
@@ -13,7 +13,7 @@
                <a href="?lang=fr" th:text="#{label.footer.French}">Frensh</a>
             </td>
           <td>
-             <em class="fas fa-question" ></em>
+             <a class="fas fa-question" ></a>
              <a href="#" th:text="#{label.footer.help}"> Help</a>
           </td>
          </tr>

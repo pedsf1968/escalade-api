@@ -14,13 +14,14 @@
       </div>
    </header>
 
+   <div class="page col-md-2 mx-auto">
    <section class="row h-100">
-      <div class="col-sm-2 mx-auto my-auto">
-         <div class="card card-block w-15">
+      <div class="my-auto">
+         <div class="card card-block col-md-12">
             <div class="card-header">
                <H1 th:text="#{title.login}">Login</H1>
             </div>
-            <form class="card-body" th:action="@{/login}" method="post">
+            <form class="card-body" th:action="@{/login}" method="POST">
                <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
                   <input type="email" name="email" class="form-control input-lg" id="exampleInputEmail1" aria-describedby="emailHelp" th:placeholder="#{placeholder.email}">
@@ -39,6 +40,7 @@
          </div>
       </div>
    </section>
+   </div>
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
 </body>

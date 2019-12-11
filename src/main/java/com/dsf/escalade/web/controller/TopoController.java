@@ -3,6 +3,7 @@ package com.dsf.escalade.web.controller;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.service.*;
 import com.dsf.escalade.web.dto.AddressDto;
+import com.dsf.escalade.web.dto.CommentDto;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
 import lombok.NonNull;
@@ -114,6 +115,7 @@ public class TopoController {
         model.addAttribute("sectorDtoList", sectorDtoList);
         model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
         model.addAttribute("commentDtoList", commentService.getBySiteId(id));
+        model.addAttribute("commentaire", new String());
 
         return "topo/topo-read";
     }
@@ -171,4 +173,32 @@ public class TopoController {
 
         return "topo/topo-mylist";
     }
+
+    @PostMapping("/topo/comment/{topoId}")
+public String addTopoComment(@PathVariable("topoId") Integer topoId, @ModelAttribute("commentaire") String commentaire, Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        TopoDto topoDto = topoService.getOne(topoId);
+        List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
+
+        //don't save anonymous comment
+        if(!authentication.getName().equals("anonymousUser")) {
+            CommentDto commentDto = new CommentDto();
+            commentDto.setSiteId(topoId);
+            commentDto.setText(commentaire);
+            log.info("User : " + authentication.getName() + " add comment");
+            commentDto.setAlias(userService.findByEmail(authentication.getName()).getAlias());
+            commentService.save(commentDto);
+        }
+
+        model.addAttribute("topoDto", topoDto);
+        model.addAttribute("sectorDtoList", sectorDtoList);
+        model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
+        model.addAttribute("commentDtoList", commentService.getBySiteId(topoId));
+        model.addAttribute("commentaire",new String());
+
+        return "topo/topo-read";
+    }
+
+
 }

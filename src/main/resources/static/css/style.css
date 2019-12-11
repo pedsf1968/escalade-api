@@ -3,14 +3,13 @@ a:hover {
 }
 
 aside {
-	text-align: center;
 	color: black;
 }
 
  body {
     background-color: #DDD;
     padding-top: 10px;
-     min-height: 100%;
+    min-height: 100%;
 }
 
 body,html {
@@ -74,6 +73,10 @@ section {
 
 .center {
 	text-align: center;
+}
+
+.page {
+  height: 800px;
 }
 
 

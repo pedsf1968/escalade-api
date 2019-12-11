@@ -23,9 +23,9 @@ public class TopoDto {
    @NotNull
    @Size(min = NAME_MIN, max = NAME_MAX)
    private String name;
-   @Pattern(regexp = LONGITUDE_REGEXP, message = "Not a valid longitude !")
+   @Pattern(regexp = LONGITUDE_REGEXP, message = "Not a valid longitude (-180,+180) !")
    private String longitude;
-   @Pattern(regexp = LATITUDE_REGEXP, message = "Not a valid latitude !")
+   @Pattern(regexp = LATITUDE_REGEXP, message = "Not a valid latitude (-90,+90) !")
    private String latitude;
    private Boolean hasComment;
    private String photoLink;

@@ -8,17 +8,17 @@ import java.util.Objects;
 public class VoieDto {
    private static final int NAME_MIN = 1;
    private static final int NAME_MAX = 50;
-   private static final String LATITUDE_REGEXP="^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$";
-   private static final String LONGITUDE_REGEXP="^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$";
+   private static final String LATITUDE_REGEXP="^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?)|)$";
+   private static final String LONGITUDE_REGEXP="^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?)|)$";
 
    //Site attributes
    private Integer id;
    @NotNull
    @Size(min = NAME_MIN, max = NAME_MAX)
    private String name;
-   @Pattern(regexp = LONGITUDE_REGEXP, message = "Not a valid longitude !")
+   @Pattern(regexp = LONGITUDE_REGEXP, message = "Not a valid longitude (-180,+180) !")
    private String longitude;
-   @Pattern(regexp = LATITUDE_REGEXP, message = "Not a valid latitude !")
+   @Pattern(regexp = LATITUDE_REGEXP, message = "Not a valid latitude (-90,+90) !")
    private String latitude;
    private Boolean hasComment;
    private String photoLink;
