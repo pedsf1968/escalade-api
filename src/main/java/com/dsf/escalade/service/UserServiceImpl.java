@@ -64,85 +64,99 @@ public class UserServiceImpl implements UserService {
    @Override
    public UserDto findByLastName(String lastName) {
       User user = userRepository.findByLastName(lastName);
-      UserDto userDto = new UserDto();
 
-      userDto.setId(user.getId());
-      userDto.setFirstName(user.getFirstName());
-      userDto.setLastName(user.getLastName());
-      userDto.setAlias(user.getAlias());
-      userDto.setEmail(user.getEmail());
-      userDto.setPassword(user.getPassword());
-      userDto.setMatchingPassword(user.getPassword());
-      userDto.setPhone(user.getPhone());
-      userDto.setAddressId(user.getAddressId());
+      if(user!=null) {
+         UserDto userDto = new UserDto();
 
-      if( user.getRoles()!= null) {
-         List<String> roles = new ArrayList<>();
+         userDto.setId(user.getId());
+         userDto.setFirstName(user.getFirstName());
+         userDto.setLastName(user.getLastName());
+         userDto.setAlias(user.getAlias());
+         userDto.setEmail(user.getEmail());
+         userDto.setPassword(user.getPassword());
+         userDto.setMatchingPassword(user.getPassword());
+         userDto.setPhone(user.getPhone());
+         userDto.setAddressId(user.getAddressId());
 
-         for (Role role : user.getRoles()) {
-            roles.add(role.getName());
+         if (user.getRoles() != null) {
+            List<String> roles = new ArrayList<>();
+
+            for (Role role : user.getRoles()) {
+               roles.add(role.getName());
+            }
+
+            userDto.setRoles(roles);
          }
 
-         userDto.setRoles(roles);
+         return userDto;
       }
 
-      return userDto;
+      return null;
    }
 
    @Override
    public UserDto findByAlias(String alias) {
       User user = userRepository.findByAlias(alias);
-      UserDto userDto = new UserDto();
 
-      userDto.setId(user.getId());
-      userDto.setFirstName(user.getFirstName());
-      userDto.setLastName(user.getLastName());
-      userDto.setAlias(user.getAlias());
-      userDto.setEmail(user.getEmail());
-      userDto.setPassword(user.getPassword());
-      userDto.setMatchingPassword(user.getPassword());
-      userDto.setPhone(user.getPhone());
-      userDto.setAddressId(user.getAddressId());
+      if(user!=null) {
+         UserDto userDto = new UserDto();
 
-      if( user.getRoles()!= null) {
-         List<String> roles = new ArrayList<>();
+         userDto.setId(user.getId());
+         userDto.setFirstName(user.getFirstName());
+         userDto.setLastName(user.getLastName());
+         userDto.setAlias(user.getAlias());
+         userDto.setEmail(user.getEmail());
+         userDto.setPassword(user.getPassword());
+         userDto.setMatchingPassword(user.getPassword());
+         userDto.setPhone(user.getPhone());
+         userDto.setAddressId(user.getAddressId());
 
-         for (Role role : user.getRoles()) {
-            roles.add(role.getName());
+         if (user.getRoles() != null) {
+            List<String> roles = new ArrayList<>();
+
+            for (Role role : user.getRoles()) {
+               roles.add(role.getName());
+            }
+
+            userDto.setRoles(roles);
          }
 
-         userDto.setRoles(roles);
+         return userDto;
       }
-
-      return userDto;
+      return null;
    }
 
    @Override
    public UserDto findByEmail(String email) {
       User user = userRepository.findByEmail(email);
-      UserDto userDto = new UserDto();
 
-      userDto.setId(user.getId());
-      userDto.setFirstName(user.getFirstName());
-      userDto.setLastName(user.getLastName());
-      userDto.setAlias(user.getAlias());
-      userDto.setEmail(user.getEmail());
-      userDto.setPassword(user.getPassword());
-      userDto.setMatchingPassword(user.getPassword());
-      userDto.setPhone(user.getPhone());
-      userDto.setAddressId(user.getAddressId());
+      if(user!=null) {
+         UserDto userDto = new UserDto();
 
-      if( user.getRoles()!= null) {
-         List<String> roles = new ArrayList<>();
+         userDto.setId(user.getId());
+         userDto.setFirstName(user.getFirstName());
+         userDto.setLastName(user.getLastName());
+         userDto.setAlias(user.getAlias());
+         userDto.setEmail(user.getEmail());
+         userDto.setPassword(user.getPassword());
+         userDto.setMatchingPassword(user.getPassword());
+         userDto.setPhone(user.getPhone());
+         userDto.setAddressId(user.getAddressId());
 
-         for (Role role : user.getRoles()) {
-            roles.add(role.getName());
+         if (user.getRoles() != null) {
+            List<String> roles = new ArrayList<>();
+
+            for (Role role : user.getRoles()) {
+               roles.add(role.getName());
+            }
+
+            userDto.setRoles(roles);
          }
 
-         userDto.setRoles(roles);
+         return userDto;
       }
 
-      return userDto;
+      return null;
    }
 
    @Override

@@ -20,6 +20,14 @@ VALUES (1,'3','5.3',''),(2,'3+','5.4',''),(3,'4a','5.5',''),(4,'4b','5.6','4b'),
     (21,'8a','5.13b','7a'),(22,'8a+','5.13c','7a'),(23,'8b','5.13d','7a'),(24,'8b+','5.14a','7b'),(25,'8c','5.14b','7b'),(26,'8c+','5.14c','7c'),
     (27,'9a','5.14d','7c'),(28,'9a+','5.15a','7c');
 
+-- insertion tags
+INSERT INTO tag (id,name)
+VALUES (1,'Officiel Les amis de l’escalade'),
+        (2,'falaise');
+
+INSERT INTO tag_list(topo,tag)
+VALUES (1,1),(1,2),(2,1),(3,2);
+
 -- insertion topo
 INSERT INTO site (id, name, type, photo_url, map_url)
 VALUES (1,'La falaise', 'TOPO', 'ailefroide.jpg',''),

@@ -1,42 +1,41 @@
 package com.dsf.escalade.model.global;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class TagListPK implements Serializable {
-   @Column(name = "topo_id")
-   private Long topo;
-   @Column(name = "tag_id")
-   private Long tag;
+public class TagListId implements Serializable {
+   private Integer topo;
+   private Integer tag;
 
-   public TagListPK() {
-      super();
+   public TagListId() {
    }
 
-   public Long getTopo() {
+   public TagListId(Integer topo, Integer tag) {
+      this.topo = topo;
+      this.tag = tag;
+   }
+
+   public Integer getTopo() {
       return topo;
    }
 
-   public void setTopo(Long topo) {
+   public void setTopo(Integer topo) {
       this.topo = topo;
    }
 
-   public Long getTag() {
+   public Integer getTag() {
       return tag;
    }
 
-   public void setTag(Long tag) {
+   public void setTag(Integer tag) {
       this.tag = tag;
    }
 
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
-      if (!(o instanceof TagListPK)) return false;
-      TagListPK tagListPK = (TagListPK) o;
+      if (!(o instanceof TagListId)) return false;
+      TagListId tagListPK = (TagListId) o;
       return getTopo().equals(tagListPK.getTopo()) &&
             getTag().equals(tagListPK.getTag());
    }

@@ -6,11 +6,22 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4" th:text="${topoDto.name!=null} ? ${topoDto.name} : #{title.topoNew}">New Topo</H1>
+      <div class="row">
+         <div class="col-sm">
+
+         </div>
+         <div class="col-sm">
+            <H1 class="display-4" th:text="${topoDto.name!=null} ? ${topoDto.name} : #{title.topoNew}">New Topo</H1>
+         </div>
+         <div class="col-sm my-auto ">
+            <a class="btn btn-primary float-right" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
+            <button class="btn btn-primary float-right" type="submit" form="topoadd" th:text="#{label.submit}">Submit</button>
+         </div>
+      </div>
    </header>
 
-   <form  class="row" action="#" th:action="@{/topo/add}" method="POST" enctype="utf8">
-      <aside class="col-md-2">
+   <form  id="topoadd" class="row" action="#" th:action="@{/topo/add}" method="POST" enctype="utf8">
+      <aside class="col-md-3">
          <div class="card-header">
             <div class="input-group mb-2">
                <div class="input-group-prepend">
@@ -127,16 +138,6 @@
             </div>
          </div>
       </aside>
-
-      <div class="row">
-         <div class="form-group col-md-12">
-            <div class="float-right" >
-               <a class="btn btn-primary" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
-
-               <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
-            </div>
-         </div>
-      </div>
    </form>
 
 

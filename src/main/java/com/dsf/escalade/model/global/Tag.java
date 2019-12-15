@@ -10,15 +10,15 @@ public class Tag implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Integer id;
-   @Column(name = "nom", columnDefinition = "VARCHAR(20) NOT NULL")
-   private String nom;
+   @Column(name = "name", columnDefinition = "VARCHAR(50) NOT NULL")
+   private String name;
 
    public Tag() {
    }
 
    public Tag(Integer id, String name) {
       this.id = id;
-      this.nom = name;
+      this.name = name;
    }
 
    public Integer getId() {
@@ -29,19 +29,19 @@ public class Tag implements Serializable {
       this.id = id;
    }
 
-   public String getNom() {
-      return nom;
+   public String getName() {
+      return name;
    }
 
-   public void setNom(String name) {
-      this.nom = name;
+   public void setName(String name) {
+      this.name = name;
    }
 
    @Override
    public String toString() {
       return "Tag{" +
             "id=" + id +
-            ", name='" + nom + '\'' +
+            ", name='" + name + '\'' +
             '}';
    }
 }

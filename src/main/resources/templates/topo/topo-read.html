@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head th:replace="~{fragments/head :: head}"></head>
 <body>
@@ -39,7 +39,7 @@
                   </tr>
                </table>
 
-               <div class="card" th:if="${addressDto != null}">
+               <div class="card mt-2 mb-2" th:if="${addressDto != null}">
                   <h5 class="card-header">Address</h5>
                   <p class="center card-text" th:text="${addressDto.street1}"></p>
                   <p class="center card-text" th:text="${addressDto.street2}"></p>
@@ -48,7 +48,7 @@
                   <p class="center card-text" th:text="${addressDto.country}"></p>
                </div>
 
-               <div class="card">
+               <div class="card mt-2 mb-2">
                   <div class="card-header">
                      <h5 th:text="#{label.access}">access</h5>
                   </div>
@@ -63,7 +63,7 @@
       <div class="col-lg-6 col-sm-12">
          <div class="row">
             <section class="col-md-12">
-               <div class="card bg-dark text-white">
+               <div class="card bg-dark text-white mt-2 mb-2">
                   <img class="card-img" th:src="@{/images/{image}(image=${topoDto.photoLink})}" alt="photo"/>
                   <div class="card-img-overlay">
                      <h5 class="card-header" th:text="${topoDto.name}">Topo's name</h5>
@@ -72,7 +72,7 @@
                   </div>
                </div>
 
-               <div class="card">
+               <div class="card mt-2 mb-2">
                   <div class="card-header">
                      <h5 th:text="#{label.description}">description</h5>
                   </div>
@@ -80,7 +80,7 @@
                      <p th:text="${topoDto.description}"></p>
                   </div>
                </div>
-               <div  class="card">
+               <div  class="card mt-2 mb-2">
                   <div class="card-header">
                      <h5 th:text="#{label.technic}">technic</h5>
                   </div>
@@ -94,30 +94,42 @@
 
       <div class="col-lg-3 col-sm-12">
          <div class="row">
-            <aside class="col-md-12">
+            <div class="col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
+               <form action="#" th:action="@{/topo/tag/update/{id}(id=${topoDto.id})}"  method="POST" enctype="utf8">
+                  <div th:each="tag : ${tags}" >
+                     <input type="checkbox" name="taglist" th:value="${tag.id}" th:checked="${tag.activated}">
+                     <label   th:text="${tag.name}">Tag</label>
+                  </div>
+                  <button type="submit" class="btn btn-primary float-right" th:text="#{label.submit}">Submit</button>
+               </form>
+            </div>
+
+            <div class="col-md-12">
                <form  action="#" th:action="@{/topo/comment/{topoId}(topoId=${topoDto.id})}" method="POST" enctype="utf8">
                   <label for="commentaire" th:text="#{label.comment}">Comment</label>
                   <textarea id="commentaire"  name="commentaire" class="form-control input-sm" rows="3" th:placeholder="#{placeholder.comment}"></textarea>
-                  <button type="submit" class="btn btn-primary float-left" th:text="#{label.addComment}">Add comment</button>
+                  <button type="submit" class="btn btn-primary float-right" th:text="#{label.addComment}">Add comment</button>
                </form>
-            </aside>
+            </div>
 
-            <aside  class="col-md-12" >
-               <div class="card" th:each="comment : ${commentDtoList}">
-                  <div class="card-header">
+            <div  class="col-md-12" >
+               <div class="card mt-2 mb-2" th:each="comment : ${commentDtoList}">
+                  <div class="card-header inline-flex">
                      <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${comment.alias})}" alt="avatar"/>
                      <h5  class="center" th:text="${comment.alias}">Alias</h5>
+                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger float-right" th:href="@{/topo/comment/delete/{id}(id=${comment.id})}" th:text="#{label.delete}" >Delete</a>
                   </div>
                   <div class="card-text">
                      <p th:text="${comment.text}"></p>
                   </div>
                </div>
-            </aside>
+            </div>
          </div>
       </div>
    </div>
 
-   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+
 </div>
+<footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </body>
 </html>

@@ -9,4 +9,5 @@ public interface CommentService {
    public Integer save(CommentDto commentDto);
    public List<CommentDto> getBySiteId(Integer id);
    public List<CommentDto> getByUserId(Integer id);
+   Integer delete(CommentDto commentDto);
 }

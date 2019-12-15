@@ -1,10 +1,12 @@
 package com.dsf.escalade.web.dto;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
+@Data
 public class SectorDto {
    private static final int NAME_MIN = 1;
    private static final int NAME_MAX = 50;
@@ -30,113 +32,5 @@ public class SectorDto {
 
    public SectorDto() {
       super();
-   }
-
-   public Integer getId() {
-      return id;
-   }
-
-   public void setId(Integer id) {
-      this.id = id;
-   }
-
-   public String getName() {
-      return name;
-   }
-
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   public String getLongitude() {
-      return longitude;
-   }
-
-   public void setLongitude(String longitude) {
-      this.longitude = longitude;
-   }
-
-   public String getLatitude() {
-      return latitude;
-   }
-
-   public void setLatitude(String latitude) {
-      this.latitude = latitude;
-   }
-
-   public Boolean getHasComment() {
-      return hasComment;
-   }
-
-   public void setHasComment(Boolean hasComment) {
-      this.hasComment = hasComment;
-   }
-
-   public String getPhotoLink() {
-      return photoLink;
-   }
-
-   public void setPhotoLink(String photoLink) {
-      this.photoLink = photoLink;
-   }
-
-   public String getMapLink() {
-      return mapLink;
-   }
-
-   public void setMapLink(String mapLink) {
-      this.mapLink = mapLink;
-   }
-
-   public Integer getTopoId() {
-      return topoId;
-   }
-
-   public void setTopoId(Integer topoId) {
-      this.topoId = topoId;
-   }
-
-   public String getEquipment() {
-      return equipment;
-   }
-
-   public void setEquipment(String equipment) {
-      this.equipment = equipment;
-   }
-
-   @Override
-   public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof SectorDto)) return false;
-      SectorDto that = (SectorDto) o;
-      return getId().equals(that.getId()) &&
-            getName().equals(that.getName()) &&
-            Objects.equals(getLongitude(), that.getLongitude()) &&
-            Objects.equals(getLatitude(), that.getLatitude()) &&
-            getHasComment().equals(that.getHasComment()) &&
-            Objects.equals(getPhotoLink(), that.getPhotoLink()) &&
-            Objects.equals(getMapLink(), that.getMapLink()) &&
-            getTopoId().equals(that.getTopoId()) &&
-            Objects.equals(getEquipment(), that.getEquipment());
-   }
-
-   @Override
-   public int hashCode() {
-      return Objects.hash(getId(), getName(), getLongitude(), getLatitude(), getHasComment(), getPhotoLink(), getMapLink(), getTopoId(), getEquipment());
-   }
-
-   @Override
-   public String toString() {
-      return "SectorDto{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", longitude='" + longitude + '\'' +
-            ", latitude='" + latitude + '\'' +
-            ", hasComment=" + hasComment +
-            ", photoLink='" + photoLink + '\'' +
-            ", mapLink='" + mapLink + '\'' +
-            ", topoId=" + topoId +
-            ", equipment='" + equipment + '\'' +
-            '}';
    }
 }

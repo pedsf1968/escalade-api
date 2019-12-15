@@ -77,4 +77,17 @@ public class CommentServiceImpl implements CommentService {
 
       return commentDtoList;
    }
+
+   @Override
+   public Integer delete(CommentDto commentDto) {
+      Integer commentId = commentDto.getId();
+
+      if( commentId != null) {
+         Comment comment = commentRepository.getOne(commentId);
+         commentRepository.delete(comment);
+         return commentId;
+      }
+
+      return null;
+   }
 }

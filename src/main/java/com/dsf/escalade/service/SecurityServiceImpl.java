@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
+@Service("SecurityService")
 public class SecurityServiceImpl implements SecurityService {
 
    private final AuthenticationManager authenticationManager;

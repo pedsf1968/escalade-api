@@ -1,52 +1,43 @@
 package com.dsf.escalade.model.global;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "tag_list")
+@IdClass(TagListId.class)
 public class TagList implements Serializable {
-   @EmbeddedId
-   @AttributeOverrides({
-         @AttributeOverride(name = "topo", column = @Column(name = "topo_id", nullable = false)),
-         @AttributeOverride(name = "tag", column = @Column(name = "tag_id", nullable = false))
-         })
-   private TagListPK tagListPK;
+   @Id
+   private Integer topo;
+   @Id
+   private Integer tag;
 
    public TagList() {
-      super();
    }
 
-   public TagList(TagListPK tagListPK) {
-      this.tagListPK = tagListPK;
+   public TagList(Integer topo, Integer tag) {
+      this.topo = topo;
+      this.tag = tag;
    }
 
-   public TagListPK getTagListPK() {
-      return tagListPK;
+   public Integer getTopo() {
+      return topo;
    }
 
-   public void setTagListPK(TagListPK tagListPK) {
-      this.tagListPK = tagListPK;
+   public void setTopo(Integer topo) {
+      this.topo = topo;
    }
 
-   @Override
-   public String toString() {
-      return "TagList{" +
-            "tagListPK=" + tagListPK +
-            '}';
+   public Integer getTag() {
+      return tag;
    }
 
-   @Override
-   public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof TagList)) return false;
-      TagList tagList = (TagList) o;
-      return getTagListPK().equals(tagList.getTagListPK());
+   public void setTag(Integer tag) {
+      this.tag = tag;
    }
 
-   @Override
-   public int hashCode() {
-      return Objects.hash(getTagListPK());
-   }
+
 }

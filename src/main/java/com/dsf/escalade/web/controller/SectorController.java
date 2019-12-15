@@ -5,6 +5,7 @@ import com.dsf.escalade.service.AddressService;
 import com.dsf.escalade.service.SectorService;
 import com.dsf.escalade.service.TopoService;
 import com.dsf.escalade.service.UserService;
+import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
 import com.dsf.escalade.web.dto.UserDto;
@@ -51,7 +52,7 @@ public class SectorController {
 
       model.addAttribute("sectorDto", sectorDto);
 
-      return "sector/sector-add";
+      return PathTable.SECTOR_ADD;
    }
 
    @PostMapping("/sector/add")
@@ -62,7 +63,7 @@ public class SectorController {
       UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
 
       if (bindingResultTopo.hasErrors()) {
-         return "sector/sector-add";
+         return PathTable.SECTOR_ADD;
       }
 
       if (userDto.getEmail().equals(authentication.getName())){
@@ -74,7 +75,7 @@ public class SectorController {
       model.addAttribute("addressDto", addressService.getOne(topoDto.getAddressId()));
       model.addAttribute("statusList", statusList);
 
-      return "topo/topo-update";
+      return PathTable.TOPO_UPDATE_R + topoId;
    }
 
 
@@ -84,14 +85,14 @@ public class SectorController {
 
       model.addAttribute("sectorDto", sectorDto);
 
-      return "sector/sector-update";
+      return PathTable.SECTOR_UPDATE;
    }
 
    @PostMapping("/sector/update/{id}")
    public String updateSector(@PathVariable("id") Integer id, @ModelAttribute("sectorTdo") @Valid SectorDto sectorDto, @NonNull BindingResult bindingResult, Model model) {
 
       if(bindingResult.hasErrors()){
-         return "sector/sector-update";
+         return PathTable.SECTOR_UPDATE;
       }
 
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -110,7 +111,7 @@ public class SectorController {
       model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
       model.addAttribute("statusList", statusList);
 
-      return "topo/topo-update";
+      return PathTable.TOPO_UPDATE_R + topoId;
    }
 
    @GetMapping("/sector/delete/{id}")
@@ -132,6 +133,6 @@ public class SectorController {
       model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
       model.addAttribute("statusList", statusList);
 
-      return "topo/topo-update";
+      return PathTable.TOPO_UPDATE_R + topoId;
    }
 }

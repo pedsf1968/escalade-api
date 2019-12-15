@@ -49,9 +49,19 @@ public class UserController {
 
    @PostMapping("/registration")
    public String postRegistration(@ModelAttribute("userDto") @Valid UserDto userDto, @NotNull BindingResult bindingResultUser,
-                                  @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress) {
+                                  @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress, Model model) {
 
       if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
+         return "user/registration";
+      }
+
+      if(userService.findByEmail(userDto.getEmail())!=null){
+         bindingResultUser.rejectValue("email", "5", "Email already exist !");
+         return "user/registration";
+      }
+
+      if(userService.findByAlias(userDto.getAlias())!=null){
+         bindingResultUser.rejectValue("alias", "6", "Alias already exist !");
          return "user/registration";
       }
 
@@ -87,7 +97,7 @@ public class UserController {
          new SecurityContextLogoutHandler().logout(request, response, authentication);
       }
 
-      return "login";
+      return "redirect:/login";
    }
 
    @GetMapping({"/", "/index"})

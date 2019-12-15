@@ -9,17 +9,31 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4" th:text="#{title.topoMyList}">My Topo's list</H1>
-      <div th:if="${topoDtoList.empty}" th:text="#{message.noTopo}">No Topo available!</div>
+         <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+               <H1 class="display-4 center" th:text="#{title.topoMyList}">My Topo's list</H1>
+               <div th:if="${topoDtoList.empty}" th:text="#{message.noTopo}">No Topo available!</div>
+            </div>
+            <div class="col-sm my-auto">
+               <a class="btn btn-primary float-right" th:href="@{/topo/new}" th:text="#{label.new}">New</a>
+            </div>
+         </div>
    </header>
 
    <section class="row">
       <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="topo : ${topoDtoList}">
 
          <div class="card">
-            <div class="card-header">
-               <h5 th:text="${topo.name}"></h5>
-               <span th:text="${topo.region}"></span>
+            <div class="card-header row">
+               <div class="col-sm">
+                  <h5 th:text="${topo.name}"></h5>
+                  <span th:text="${topo.region}"></span>
+               </div>
+               <div class="col-sm">
+                  <span class="badge badge-info mr-2" th:each="tag:${tagsByTopoId.get(topo)}" th:if="${tag.activated}" th:text="${tag.name}">Tag</span>
+               </div>
             </div>
             <div class="card-body">
                <img  class="img-fluid" th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
@@ -35,14 +49,7 @@
          </div>
       </div>
    </section>
-   <section class="row">
-      <div class="col-md-12">
-         <div class="float-right">
-            <a class="btn btn-primary" th:href="@{/topo/new}" th:text="#{label.new}">New</a>
-         </div>
-      </div>
 
-   </section>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
