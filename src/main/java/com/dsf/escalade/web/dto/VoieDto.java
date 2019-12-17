@@ -27,7 +27,7 @@ public class VoieDto {
    private String mapLink;
 
    //Voie attributes
-   private Integer secteurId;
+   private Integer parentId;
    private Boolean isEquipped;
    private Integer heigth;
    private Integer cotationId;

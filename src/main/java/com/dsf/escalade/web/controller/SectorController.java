@@ -1,10 +1,7 @@
 package com.dsf.escalade.web.controller;
 
 import com.dsf.escalade.model.business.StatusType;
-import com.dsf.escalade.service.AddressService;
-import com.dsf.escalade.service.SectorService;
-import com.dsf.escalade.service.TopoService;
-import com.dsf.escalade.service.UserService;
+import com.dsf.escalade.service.*;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
@@ -34,14 +31,16 @@ public class SectorController {
    private final UserService userService;
    private final TopoService topoService;
    private final SectorService sectorService;
+   private final VoieService voieService;
    private final AddressService addressService;
    private final List<String> statusList = Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
    @Autowired
-   public SectorController(UserService userService, TopoService topoService, SectorService sectorService, AddressService addressService) {
+   public SectorController(UserService userService, TopoService topoService, SectorService sectorService, VoieService voieService, AddressService addressService) {
       this.userService = userService;
       this.topoService = topoService;
       this.sectorService = sectorService;
+      this.voieService = voieService;
       this.addressService = addressService;
    }
 
@@ -50,7 +49,7 @@ public class SectorController {
       SectorDto sectorDto = new SectorDto();
       sectorDto.setTopoId(id);
 
-      model.addAttribute("sectorDto", sectorDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
 
       return PathTable.SECTOR_ADD;
    }
@@ -70,10 +69,10 @@ public class SectorController {
          sectorService.save(sectorDto);
       }
 
-      model.addAttribute("topoDto", topoDto);
-      model.addAttribute("sectorDtoList", sectorService.findByTopoId(topoId));
-      model.addAttribute("addressDto", addressService.getOne(topoDto.getAddressId()));
-      model.addAttribute("statusList", statusList);
+      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressService.getOne(topoDto.getAddressId()));
+      model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
 
       return PathTable.TOPO_UPDATE_R + topoId;
    }
@@ -83,7 +82,7 @@ public class SectorController {
    public String editSector(@PathVariable("id") Integer id, Model model) {
       SectorDto sectorDto = sectorService.getOne(id);
 
-      model.addAttribute("sectorDto", sectorDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
 
       return PathTable.SECTOR_UPDATE;
    }
@@ -106,10 +105,10 @@ public class SectorController {
       TopoDto topoDto = topoService.getOne(topoId);
       List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
 
-      model.addAttribute("topoDto", topoDto);
-      model.addAttribute("sectorDtoList", sectorDtoList);
-      model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-      model.addAttribute("statusList", statusList);
+      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+      model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
 
       return PathTable.TOPO_UPDATE_R + topoId;
    }
@@ -128,10 +127,10 @@ public class SectorController {
       TopoDto topoDto = topoService.getOne(topoId);
       List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
 
-      model.addAttribute("topoDto", topoDto);
-      model.addAttribute("sectorDtoList", sectorDtoList);
-      model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-      model.addAttribute("statusList", statusList);
+      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+      model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
 
       return PathTable.TOPO_UPDATE_R + topoId;
    }

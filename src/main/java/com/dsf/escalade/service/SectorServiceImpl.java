@@ -20,7 +20,7 @@ public class SectorServiceImpl implements SectorService {
 
    @Override
    public List<SectorDto> findAll() {
-      List<SectorDto> sectorDtoList = new ArrayList<>();
+      List<SectorDto> sectorDtos = new ArrayList<>();
       SectorDto sectorDto = null;
 
       for(Sector sector : sectorRepository.findAll()){
@@ -35,15 +35,15 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setPhotoLink(sector.getPhotoLink());
          sectorDto.setMapLink(sector.getMapLink());
 
-         sectorDtoList.add(sectorDto);
+         sectorDtos.add(sectorDto);
       }
 
-      return sectorDtoList;
+      return sectorDtos;
    }
 
    @Override
    public List<SectorDto> findByTopoId(Integer id) {
-      List<SectorDto> sectorDtoList = new ArrayList<>();
+      List<SectorDto> sectorDtos = new ArrayList<>();
       SectorDto sectorDto = null;
 
       for(Sector sector : sectorRepository.findByTopoId(id)){
@@ -58,10 +58,10 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setPhotoLink(sector.getPhotoLink());
          sectorDto.setMapLink(sector.getMapLink());
 
-         sectorDtoList.add(sectorDto);
+         sectorDtos.add(sectorDto);
       }
 
-      return sectorDtoList;
+      return sectorDtos;
    }
 
    @Override
