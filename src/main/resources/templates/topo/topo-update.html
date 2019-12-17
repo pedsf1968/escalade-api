@@ -22,7 +22,23 @@
       </div>
    </header>
 
-   <form  id="formupdate" action="#" th:action="@{/topo/update/{id}(id=${topoDto.id})}" method="POST" enctype="utf8">
+   <div class="container-fluid">
+      <ul class="nav nav-tabs">
+         <li class="nav-item">
+            <a class="nav-link active"  th:href="@{'#'+${#strings.replace(topoDto.name,' ','')}}" data-toggle="tab" >
+               <label th:text="${topoDto.name}">Link</label>
+            </a>
+         </li>
+         <li class="nav-item" th:each="sector, barStat : ${sectorDtoList}">
+            <a class="nav-link" th:href="@{'#'+${#strings.replace(sector.name,' ','')}}" data-toggle="tab" >
+               <label th:text="${sector.name}">Link</label>
+            </a>
+         </li>
+      </ul>
+
+      <div class="tab-content">
+         <div class="tab-pane fade col-md-12 show active" th:id="${#strings.replace(topoDto.name,' ','')}" >
+         <form  id="formupdate" action="#" th:action="@{/topo/update/{id}(id=${topoDto.id})}" method="POST" enctype="utf8">
       <div class="row">
          <aside class="col-md-3">
             <div class="card-header">
@@ -118,37 +134,22 @@
          </aside>
        </div>
    </form>
-
-   <div class="container-fluid">
-      <ul class="nav nav-tabs">
-         <li class="nav-item" th:each="sector, barStat : ${sectorDtoList}">
-            <a class="nav-link"  th:classappend="${barStat.first} ? 'active'"  th:href="@{'#'+${#strings.replace(sector.name,' ','')}}" data-toggle="tab" >
-               <label th:text="${sector.name}">Link</label>
-            </a>
-         </li>
-      </ul>
-
-      <div class="tab-content">
-         <div class="tab-pane fade col-md-12" th:classappend="${barStat.first} ? 'show active'" th:id="@{${#strings.replace(sector.name,' ','')}}" th:each="sector,barStat : ${sectorDtoList}"   >
+         </div>
+         <div class="tab-pane fade col-md-12" th:id="@{${#strings.replace(sector.name,' ','')}}" th:each="sector,barStat : ${sectorDtoList}"   >
                   <div class="row">
-                     <div  class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" >
-                        <div>
-                           <div class="card-header">
-                              <h5 th:text="${sector.name}"></h5>
-                           </div>
-                           <div class="card-body">
+                           <div class="card col-md-4">
                               <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.photoLink})}" alt="photo"/>
+                           </div>
+                           <div class="card col-md-4">
                               <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.mapLink})}" alt="photo"/>
-
-                              <div class="card">
-                                 <div class="card-header">
-                                    <h5 th:text="#{label.equipment}">Equipment</h5>
-                                 </div>
-                                 <div class="card-text">
-                                    <p th:text="${sector.equipment}"></p>
-                                 </div>
+                           </div>
+                           <div class="card col-md-4">
+                              <div class="card-header">
+                                 <h5 th:text="#{label.equipment}">Equipment</h5>
                               </div>
-
+                              <div class="card-text">
+                                 <p th:text="${sector.equipment}"></p>
+                              </div>
                               <table class="table table-striped">
                                  <tr>
                                     <td th:text="#{label.longitude}">Longitude</td>
@@ -163,8 +164,6 @@
                                     <td th:text="${sector.hasComment}" >Has comment</td>
                                  </tr>
                               </table>
-
-                           </div>
                            <div class="card-footer form-group">
                               <a class="btn btn-primary mb-2" th:href="@{/sector/edit/{id}(id=${sector.id})}" th:text="#{label.edit}">Edit</a>
                               <a class="btn btn-primary mb-2" th:href="@{/sector/delete/{id}(id=${sector.id})}" th:text="#{label.delete}">Delete</a>
@@ -174,7 +173,7 @@
                   </div>
                </div>
             </div>
-         </div>
+   </div>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </body>
