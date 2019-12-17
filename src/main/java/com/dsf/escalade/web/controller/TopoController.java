@@ -61,8 +61,8 @@ public class TopoController {
             tagsByTopoId.put(topoDto, tagService.findByTopoId(topoDto.getId()) );
         }
 
-        model.addAttribute("topoDtoList", topoDtoList);
-        model.addAttribute("tagsByTopoId", tagsByTopoId);
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_TAGS, tagsByTopoId);
         return PathTable.TOPO_ALL;
     }
 
@@ -76,8 +76,8 @@ public class TopoController {
             tagsByTopoId.put(topoDto, tagService.findByTopoId(topoDto.getId()) );
         }
 
-        model.addAttribute("topoDtoList", topoDtoList);
-        model.addAttribute("tagsByTopoId", tagsByTopoId);
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_TAGS, tagsByTopoId);
         return PathTable.TOPO_MYLIST;
     }
 
@@ -89,9 +89,9 @@ public class TopoController {
 
         topoDto.setAliasManager(userService.findByEmail(authentication.getName()).getAlias());
         topoDto.setDate(Date.valueOf(LocalDate.now()));
-        model.addAttribute("topoDto", topoDto);
-        model.addAttribute("addressDto", addressDto);
-        model.addAttribute("statusList", statusList);
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);
+        model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
 
         return PathTable.TOPO_ADD;
     }
@@ -102,7 +102,7 @@ public class TopoController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()) {
-            model.addAttribute("statusList", statusList);
+            model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
             return PathTable.TOPO_ADD;
         }
 
@@ -113,7 +113,7 @@ public class TopoController {
         }
 
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-        model.addAttribute("topoDtoList", topoDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
         return PathTable.TOPO_MYLIST_R;
     }
 
@@ -121,16 +121,11 @@ public class TopoController {
     public String readTopo(@PathVariable("id") Integer id, Model model) {
         TopoDto topoDto = topoService.getOne(id);
         List<SectorDto> sectorDtoList = sectorService.findByTopoId(id);
-        Map<TopoDto,List<String>> tagsByTopoId = new HashMap<>();
 
-//        tagsByTopoId.put(topoDto, tagService.findByTopoId(id) );
-
-        model.addAttribute("topoDto", topoDto);
-        model.addAttribute("sectorDtoList", sectorDtoList);
-        model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute("commentDtoList", commentService.getBySiteId(id));
-        model.addAttribute("commentaire", new String());
-
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(id));
         model.addAttribute("tags", tagService.findByTopoId(id));
 
         return PathTable.TOPO_READ;
@@ -141,10 +136,10 @@ public class TopoController {
         TopoDto topoDto = topoService.getOne(id);
         List<SectorDto> sectorDtoList = sectorService.findByTopoId(id);
 
-        model.addAttribute("topoDto", topoDto);
-        model.addAttribute("sectorDtoList", sectorDtoList);
-        model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute("statusList", statusList);
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+        model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
 
         return PathTable.TOPO_UPDATE;
     }
@@ -156,9 +151,9 @@ public class TopoController {
 
         if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
             List<SectorDto> sectorDtoList = sectorService.findByTopoId(id);
-            model.addAttribute("sectorDtoList", sectorDtoList);
-            model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-            model.addAttribute("statusList", statusList);
+            model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+            model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+            model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
             return PathTable.TOPO_UPDATE;
         }
 
@@ -169,7 +164,7 @@ public class TopoController {
         }
 
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-        model.addAttribute("topoDtoList", topoDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
 
         return PathTable.TOPO_MYLIST_R;
     }
@@ -185,7 +180,7 @@ public class TopoController {
         }
 
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-        model.addAttribute("topoDtoList", topoDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
 
         return PathTable.TOPO_MYLIST_R;
     }
@@ -207,11 +202,10 @@ public String addTopoComment(@PathVariable("topoId") Integer topoId, @ModelAttri
             commentService.save(commentDto);
         }
 
-        model.addAttribute("topoDto", topoDto);
-        model.addAttribute("sectorDtoList", sectorDtoList);
-        model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute("commentDtoList", commentService.getBySiteId(topoId));
-        model.addAttribute("commentaire",new String());
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(topoId));
         model.addAttribute("tags", tagService.findByTopoId(topoId));
 
         return PathTable.TOPO_READ_R + topoId;
@@ -231,11 +225,10 @@ public String addTopoComment(@PathVariable("topoId") Integer topoId, @ModelAttri
             commentService.delete(commentDto);
         }
 
-        model.addAttribute("topoDto", topoDto);
-        model.addAttribute("sectorDtoList", sectorDtoList);
-        model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute("commentDtoList", commentService.getBySiteId(siteId));
-        model.addAttribute("commentaire",new String());
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(siteId));
         model.addAttribute("tags", tagService.findByTopoId(id));
 
         return PathTable.TOPO_READ_R + siteId;
@@ -252,14 +245,16 @@ public String addTopoComment(@PathVariable("topoId") Integer topoId, @ModelAttri
                 tagDtos.get(tags[i]-1).setActivated(Boolean.TRUE);
             }
         }
+        // verify that the manager is the Topo manager
+        if( authentication.getAuthorities().stream()
+              .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))){
+            tagService.update(id,tagDtos);
+        }
 
-        tagService.update(id,tagDtos);
-
-        model.addAttribute("topoDto", topoDto);
-        model.addAttribute("sectorDtoList", sectorService.findByTopoId(id));
-        model.addAttribute("addressDto",addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute("commentDtoList", commentService.getBySiteId(id));
-        model.addAttribute("commentaire",new String());
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(id));
+        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
+        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(id));
         model.addAttribute("tags", tagDtos);
 
         return PathTable.TOPO_READ_R + id;

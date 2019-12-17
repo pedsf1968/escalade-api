@@ -11,9 +11,7 @@
    <header class="jumbotron">
          <div class="row">
             <div class="col-sm">
-            </div>
-            <div class="col-sm">
-               <H1 class="display-4 center" th:text="#{title.topoMyList}">My Topo's list</H1>
+               <H1 class="display-4 float-left" th:text="#{title.topoMyList}">My Topo's list</H1>
                <div th:if="${topoDtoList.empty}" th:text="#{message.noTopo}">No Topo available!</div>
             </div>
             <div class="col-sm my-auto">
