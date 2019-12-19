@@ -65,6 +65,7 @@
       <div class="row">
          <div class="form-group col-md-12">
             <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${sectorDto.id})}" th:text="#{label.newLane}">New Lane</a>
                <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${sectorDto.topoId})}" th:text="#{label.cancel}">Cancel</a>
                <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
             </div>

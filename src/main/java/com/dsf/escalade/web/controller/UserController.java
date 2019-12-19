@@ -1,8 +1,8 @@
 package com.dsf.escalade.web.controller;
 
-import com.dsf.escalade.service.AddressService;
-import com.dsf.escalade.service.SecurityServiceImpl;
-import com.dsf.escalade.service.UserServiceImpl;
+import com.dsf.escalade.service.global.AddressService;
+import com.dsf.escalade.service.global.SecurityServiceImpl;
+import com.dsf.escalade.service.global.UserServiceImpl;
 import com.dsf.escalade.web.dto.AddressDto;
 import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;

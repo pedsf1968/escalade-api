@@ -1,4 +1,4 @@
-package com.dsf.escalade.service;
+package com.dsf.escalade.service.global;
 
 import com.dsf.escalade.model.global.Role;
 import com.dsf.escalade.model.global.User;

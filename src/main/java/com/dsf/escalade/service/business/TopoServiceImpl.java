@@ -1,10 +1,11 @@
-package com.dsf.escalade.service;
+package com.dsf.escalade.service.business;
 
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.model.business.Topo;
 import com.dsf.escalade.repository.business.TopoRepository;
 import com.dsf.escalade.repository.global.UserRepository;
+import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.TopoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,58 @@ public class TopoServiceImpl implements TopoService{
       TopoDto topoDto;
 
       for(Topo topo:topoRepository.findAll()){
+         topoDto = new TopoDto();
+
+         topoDto.setId(topo.getId());
+         topoDto.setName(topo.getName());
+         topoDto.setAccess(topo.getAccess());
+         topoDto.setLongitude(topo.getLongitude());
+         topoDto.setLatitude(topo.getLatitude());
+         topoDto.setHasComment(topo.getHasComment());
+         topoDto.setPhotoLink(topo.getPhotoLink());
+         topoDto.setMapLink(topo.getMapLink());
+         topoDto.setRegion(topo.getRegion());
+         topoDto.setAddressId(topo.getAddressId());
+         topoDto.setDate(topo.getDate());
+         topoDto.setDescription(topo.getDescription());
+         topoDto.setTechnic(topo.getTechnic());
+         topoDto.setStatus(topo.getStatus().toString());
+         topoDto.setStatusAuto(topo.getStatusAuto());
+
+         if(topo.getManagerId()!=null) {
+            topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
+         }
+         if(topo.getClimberId()!=null) {
+            topoDto.setAliasClimber(userRepository.getOne(topo.getClimberId()).getAlias());
+         }
+
+         topoDtoList.add(topoDto);
+      }
+
+      return topoDtoList;
+   }
+
+   public List<TopoDto> findAllFiltered(String region, String status){
+      List<TopoDto> topoDtoList = new ArrayList<>();
+      List<Topo> topos = new ArrayList<>();
+      TopoDto topoDto;
+
+      if(region.equals(PathTable.STRING_EMPTY)){
+         if(status.equals(PathTable.STRING_EMPTY)){
+            topos = topoRepository.findAll();
+         } else {
+            topos = topoRepository.findAllFiltered(StatusType.valueOf(status));
+         }
+      } else {
+         if(status.equals(PathTable.STRING_EMPTY)){
+            topos = topoRepository.findAllFiltered(region);
+         } else {
+            topos = topoRepository.findAllFiltered(region, StatusType.valueOf(status));
+         }
+      }
+
+
+      for(Topo topo:topos){
          topoDto = new TopoDto();
 
          topoDto.setId(topo.getId());
@@ -99,7 +152,8 @@ public class TopoServiceImpl implements TopoService{
 
    @Override
    public TopoDto getOne(Integer id){
-      Topo topo = topoRepository.getOne(id);
+      Topo topo = new Topo();
+      topo = topoRepository.getOne(id);
       TopoDto topoDto = new TopoDto();
 
       topoDto.setId(topo.getId());
@@ -168,5 +222,10 @@ public class TopoServiceImpl implements TopoService{
       }
 
       return null;
+   }
+
+   @Override
+   public List<String> findAllRegion(){
+      return topoRepository.findAllRegion();
    }
 }

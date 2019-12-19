@@ -1,4 +1,4 @@
-package com.dsf.escalade.service;
+package com.dsf.escalade.service.global;
 
 import com.dsf.escalade.web.dto.AddressDto;
 

@@ -1,7 +1,7 @@
 package com.dsf.escalade.validator;
 
 import com.dsf.escalade.model.global.User;
-import com.dsf.escalade.service.UserService;
+import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

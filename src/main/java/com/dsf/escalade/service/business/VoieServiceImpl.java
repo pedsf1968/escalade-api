@@ -1,5 +1,6 @@
-package com.dsf.escalade.service;
+package com.dsf.escalade.service.business;
 
+import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.Voie;
 import com.dsf.escalade.repository.business.VoieRepository;
 import com.dsf.escalade.web.dto.VoieDto;
@@ -66,6 +67,7 @@ public class VoieServiceImpl implements VoieService {
    public Integer save(VoieDto voieDto) {
       Voie voie = new Voie();
 
+      voie.setType(SiteType.VOIE);
       voie.setId(voieDto.getId());
       voie.setName(voieDto.getName());
       voie.setLatitude(voieDto.getLatitude());

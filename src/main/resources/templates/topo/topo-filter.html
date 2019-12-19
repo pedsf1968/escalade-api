@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<div th:fragment="topofilter" class="form-inline float-right">
+   <form  class="form-inline" action="#" th:action="@{/topo/all}" th:object="${filter}" method="POST" enctype="utf8">
+      <div class="input-group mb-2">
+         <div class="input-group-prepend">
+            <div class="input-group-text" th:text="#{label.region}">Region</div>
+         </div>
+         <select class="form-control" th:field="${filter.region}">
+            <option th:each="region : ${regionList}" th:value="${region}" th:text="${region}"></option>
+         </select>
+      </div>
+      <div class="input-group mb-2">
+         <div class="input-group-prepend">
+            <div class="input-group-text" th:text="#{label.status}">Status</div>
+         </div>
+         <select class="form-control" th:field="${filter.status}">
+            <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+         </select>
+      </div>
+      <button type="submit" class="btn btn-primary float-right mb-2" th:text="#{label.filter}">Filter</button>
+   </form>
+
+</div>
+</body>

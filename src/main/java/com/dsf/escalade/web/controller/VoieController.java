@@ -2,7 +2,9 @@ package com.dsf.escalade.web.controller;
 
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.StatusType;
-import com.dsf.escalade.service.*;
+import com.dsf.escalade.service.business.*;
+import com.dsf.escalade.service.global.AddressService;
+import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
@@ -33,16 +35,18 @@ public class VoieController {
    private final TopoService topoService;
    private final SectorService sectorService;
    private final VoieService voieService;
+   private final CotationService cotationService;
    private final AddressService addressService;
    private final List<String> statusList = Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
 
-   public VoieController(UserService userService, SiteService siteService, TopoService topoService, SectorService sectorService, VoieService voieService, AddressService addressService) {
+   public VoieController(UserService userService, SiteService siteService, TopoService topoService, SectorService sectorService, VoieService voieService, CotationService cotationService, AddressService addressService) {
       this.userService = userService;
       this.siteService = siteService;
       this.topoService = topoService;
       this.sectorService = sectorService;
       this.voieService = voieService;
+      this.cotationService = cotationService;
       this.addressService = addressService;
    }
 
@@ -52,6 +56,7 @@ public class VoieController {
       voieDto.setParentId(parentId);
 
       model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
+      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
       return PathTable.VOIE_ADD;
    }
@@ -85,7 +90,7 @@ public class VoieController {
          // the parent is a Sector
          model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
          model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(parentId));
-         return PathTable.SECTOR_UPDATE_R + parentId;
+         return PathTable.TOPO_UPDATE_R + sectorDto.getTopoId();
 
       } else {
          // the parent is a Topo

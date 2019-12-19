@@ -1,4 +1,4 @@
-package com.dsf.escalade.service;
+package com.dsf.escalade.service.business;
 
 import com.dsf.escalade.model.business.SiteType;
 

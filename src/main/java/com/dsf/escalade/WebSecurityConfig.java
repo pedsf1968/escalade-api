@@ -1,7 +1,7 @@
 package com.dsf.escalade;
 
 
-import com.dsf.escalade.service.UserDetailsServiceImpl;
+import com.dsf.escalade.service.global.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

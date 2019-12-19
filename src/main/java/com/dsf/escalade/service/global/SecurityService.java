@@ -1,4 +1,4 @@
-package com.dsf.escalade.service;
+package com.dsf.escalade.service.global;
 
 public interface SecurityService {
    String findLoggedInUsername();
