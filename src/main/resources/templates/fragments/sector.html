@@ -2,43 +2,42 @@
 <html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
 <div th:fragment="sector">
-   <div>
-      <div class="card-header">
-         <h5 th:text="${sector.name}"></h5>
-      </div>
-      <div class="card-body">
-         <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.photoLink})}" alt="photo"/>
-         <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.mapLink})}" alt="photo"/>
-
-         <div class="card">
+   <div class="tab-pane fade col-md-12" th:id="@{${#strings.replace(sector.name,' ','')}}" th:each="sector,barStat : ${sectorDtoList}"   >
+      <div class="row">
+         <div class="card col-md-4">
+            <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.photoLink})}" alt="photo"/>
+         </div>
+         <div class="card col-md-4">
+            <img  class="img-fluid" th:src="@{/images/{image}(image=${sector.mapLink})}" alt="photo"/>
+         </div>
+         <div class="card col-md-4">
             <div class="card-header">
                <h5 th:text="#{label.equipment}">Equipment</h5>
             </div>
             <div class="card-text">
                <p th:text="${sector.equipment}"></p>
             </div>
+            <table class="table table-striped">
+               <tr>
+                  <td th:text="#{label.longitude}">Longitude</td>
+                  <td th:text="${sector.longitude}" >Longitude</td>
+               </tr>
+               <tr>
+                  <td th:text="#{label.latitude}">Latitude</td>
+                  <td th:text="${sector.latitude}" >Latitude</td>
+               </tr>
+               <tr>
+                  <td th:text="#{label.hasComment}">Has comment</td>
+                  <td th:text="${sector.hasComment}" >Has comment</td>
+               </tr>
+            </table>
+            <div class="card-footer form-group">
+               <a class="btn btn-primary mb-2" th:href="@{/sector/edit/{id}(id=${sector.id})}" th:text="#{label.edit}">Edit</a>
+               <a class="btn btn-primary mb-2" th:href="@{/sector/delete/{id}(id=${sector.id})}" th:text="#{label.delete}">Delete</a>
+            </div>
          </div>
-
-         <table class="table table-striped">
-            <tr>
-               <td th:text="#{label.longitude}">Longitude</td>
-               <td th:text="${sector.longitude}" >Longitude</td>
-            </tr>
-            <tr>
-               <td th:text="#{label.latitude}">Latitude</td>
-               <td th:text="${sector.latitude}" >Latitude</td>
-            </tr>
-            <tr>
-               <td th:text="#{label.hasComment}">Has comment</td>
-               <td th:text="${sector.hasComment}" >Has comment</td>
-            </tr>
-         </table>
-
-      </div>
-      <div class="card-footer form-group">
-         <a class="btn btn-primary mb-2" th:href="@{/sector/edit/{id}(id=${sector.id})}" th:text="#{label.edit}">Edit</a>
-         <a class="btn btn-primary mb-2" th:href="@{/sector/delete/{id}(id=${sector.id})}" th:text="#{label.delete}">Delete</a>
       </div>
    </div>
+</div>
 </div>
 </body>

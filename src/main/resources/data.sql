@@ -1,11 +1,15 @@
 -- insertion adresses
 INSERT INTO address (street1,zip_code,city)
-VALUES ('22, rue de la Paix','75111','Paris'),('1, rue verte','68121','Strasbourg');
+VALUES ('22, rue de la Paix','75111','Paris'),
+        ('1, rue verte','68121','Strasbourg'),
+        ('3, chemin de lEscale','25000','Besançon');
 
 INSERT INTO user (id,  firstname, lastname, phone, email, alias, password, is_member, address_id)
 VALUES (1,'Admin','ADMIN',null,'admin@escalade.org','ADMIN','$2a$10$IRKMI.Gzq83HyHvat5y0feUuxwYl5Eu22Rmr56q1WyVkiqv2vboSO', 1,1),
     (2,'Martin','DUPONT','0324593874','martin.dupont@gmail.com','dupont','$2a$10$TpRLNPP8Q1XJqONRvS4QI.ea2f5.jsB/.U4ZnL3iSyFiGZ6pBPHfe', 0,2),
-    (3,'Paul','TINTIN','0654654874','paul.depres@hotmail.com','tintin','$2a$10$b/DpB2NSMWMokB.ZOP/D4ehRFqXRSx3fKib5BqgWqE8Ox9EaAm6Ty', 0,1);
+    (3,'Paul','TINTIN','0654654874','paul.depres@hotmail.com','tintin','$2a$10$b/DpB2NSMWMokB.ZOP/D4ehRFqXRSx3fKib5BqgWqE8Ox9EaAm6Ty', 0,1),
+    (4,'Emilio','TAILLACQ',null,'eftaillacq@gmail.com','ET','$2a$10$xcMn7o5CGF9Z9btJK9ACLeG/B.GtJeKDcn/W/aHj64BVVpIJ2QMxe', 0,3);
+
 
 -- insertion roles
 INSERT INTO role(id,name)
