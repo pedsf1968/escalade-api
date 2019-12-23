@@ -1,13 +1,15 @@
 package com.dsf.escalade.model.business;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 
 @Entity
+@Data
 @Table(name = "site")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Site implements Serializable {
@@ -35,112 +37,5 @@ public class Site implements Serializable {
 
    public Site() {
       super();
-   }
-
-   public Site(String name, SiteType type) {
-      super();
-      this.name = name;
-      this.type = type;
-      this.hasComment = false;
-      this.photoLink = null;
-      this.mapLink = null;
-   }
-
-   public Integer getId() {
-      return id;
-   }
-
-   public void setId(Integer id) {
-      this.id = id;
-   }
-
-   public String getName() {
-      return name;
-   }
-
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   public SiteType getType() {
-      return type;
-   }
-
-   public void setType(SiteType type) {
-      this.type = type;
-   }
-
-   public String getLongitude() {
-      return longitude;
-   }
-
-   public void setLongitude(String longitude) {
-      this.longitude = longitude;
-   }
-
-   public String getLatitude() {
-      return latitude;
-   }
-
-   public void setLatitude(String latitude) {
-      this.latitude = latitude;
-   }
-
-   public Boolean getHasComment() {
-      return hasComment;
-   }
-
-   public void setHasComment(Boolean hasComment) {
-      this.hasComment = hasComment;
-   }
-
-   public String getPhotoLink() {
-      return photoLink;
-   }
-
-   public void setPhotoLink(String photoLink) {
-      this.photoLink = photoLink;
-   }
-
-   public String getMapLink() {
-      return mapLink;
-   }
-
-   public void setMapLink(String mapLink) {
-      this.mapLink = mapLink;
-   }
-
-   @Override
-   public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof Site)) return false;
-      Site site = (Site) o;
-      return getId() == site.getId() &&
-            getName().equals(site.getName()) &&
-            getType() == site.getType() &&
-            Objects.equals(getLongitude(), site.getLongitude()) &&
-            Objects.equals(getLatitude(), site.getLatitude()) &&
-            getHasComment().equals(site.getHasComment()) &&
-            Objects.equals(getPhotoLink(), site.getPhotoLink()) &&
-            Objects.equals(getMapLink(), site.getMapLink());
-   }
-
-   @Override
-   public int hashCode() {
-      return Objects.hash(getId(), getName(), getType(), getLongitude(), getLatitude(), getHasComment(), getPhotoLink(), getMapLink());
-   }
-
-   @Override
-   public String toString() {
-      return "Site{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", type=" + type +
-            ", longitude='" + longitude + '\'' +
-            ", latitude='" + latitude + '\'' +
-            ", hasComment=" + hasComment +
-            ", photoLink='" + photoLink + '\'' +
-            ", mapLink='" + mapLink + '\'' +
-            '}';
    }
 }

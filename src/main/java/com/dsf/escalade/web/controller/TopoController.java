@@ -14,6 +14,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,16 +27,15 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-@Controller
 @Slf4j
+@Controller
+@RefreshScope
 public class TopoController {
 
     @PersistenceContext
@@ -45,33 +45,26 @@ public class TopoController {
     private final TopoService topoService;
     private final SectorService sectorService;
     private final VoieService voieService;
-    private final CommentService commentService;
     private final TagService tagService;
+    private final CommentService commentService;
     private final  List<String> statusList =  Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
     @Autowired
-    public TopoController(EntityManager entityManager, UserService userService, AddressService addressService, TopoService topoService, SectorService sectorService, VoieService voieService, CommentService commentService, TagService tagService) {
+    public TopoController(EntityManager entityManager, UserService userService, AddressService addressService, TopoService topoService, SectorService sectorService, VoieService voieService, TagService tagService, CommentService commentService) {
         this.entityManager = entityManager;
         this.userService = userService;
         this.addressService = addressService;
         this.topoService = topoService;
         this.sectorService = sectorService;
         this.voieService = voieService;
-        this.commentService = commentService;
         this.tagService = tagService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/topo/all")
     public String listTopo(Model model) {
         List<TopoDto> topoDtoList = topoService.findAll();
         Map<TopoDto,List<TagDto>> tagsByTopoId = new HashMap<>();
-        List<String> statusListDto = new ArrayList<>();
-        List<String> regionListDto = new ArrayList<>();
-
-        statusListDto.add(PathTable.STRING_EMPTY);
-        statusListDto.addAll(statusList);
-        regionListDto.add(PathTable.STRING_EMPTY);
-        regionListDto.addAll(topoService.findAllRegion());
 
         for(TopoDto topoDto: topoDtoList) {
             tagsByTopoId.put(topoDto, tagService.findByTopoId(topoDto.getId()) );
@@ -80,23 +73,19 @@ public class TopoController {
         model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
         model.addAttribute(PathTable.ATTRIBUTE_TAGS, tagsByTopoId);
         model.addAttribute(PathTable.ATTRIBUTE_FILTER, new TopoDto());
-        model.addAttribute(PathTable.ATTRIBUTE_REGION_LIST, regionListDto);
-        model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusListDto);
+        model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
+        model.addAttribute(PathTable.ATTRIBUTE_REGION_LIST, topoService.findAllRegion());
+        model.addAttribute(PathTable.ATTRIBUTE_ALIAS_LIST, topoService.findAllAlias());
 
         return PathTable.TOPO_ALL;
     }
 
     @PostMapping("/topo/all")
     public String listTopoFiltered(@ModelAttribute("filter") TopoDto filter, Model model) {
-        List<TopoDto> topoDtoList = topoService.findAllFiltered(filter.getRegion(), filter.getStatus());
-        Map<TopoDto,List<TagDto>> tagsByTopoId = new HashMap<>();
-        List<String> statusListDto = new ArrayList<>();
-        List<String> regionListDto = new ArrayList<>();
+        List<TopoDto> topoDtoList = topoDtoList = topoService.findAllFiltered(filter);
 
-        statusListDto.add(PathTable.STRING_EMPTY);
-        statusListDto.addAll(statusList);
-        regionListDto.add(PathTable.STRING_EMPTY);
-        regionListDto.addAll(topoService.findAllRegion());
+
+        Map<TopoDto,List<TagDto>> tagsByTopoId = new HashMap<>();
 
         for(TopoDto topoDto: topoDtoList) {
             tagsByTopoId.put(topoDto, tagService.findByTopoId(topoDto.getId()) );
@@ -105,8 +94,9 @@ public class TopoController {
         model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
         model.addAttribute(PathTable.ATTRIBUTE_TAGS, tagsByTopoId);
         model.addAttribute(PathTable.ATTRIBUTE_FILTER, filter);
-        model.addAttribute(PathTable.ATTRIBUTE_REGION_LIST, regionListDto);
-        model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusListDto);
+        model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
+        model.addAttribute(PathTable.ATTRIBUTE_REGION_LIST, topoService.findAllRegion());
+        model.addAttribute(PathTable.ATTRIBUTE_ALIAS_LIST, topoService.findAllAlias());
 
         return PathTable.TOPO_ALL;
     }
@@ -234,7 +224,7 @@ public class TopoController {
     }
 
     @PostMapping("/topo/comment/{topoId}")
-public String addTopoComment(@PathVariable("topoId") Integer topoId, @ModelAttribute("commentaire") String commentaire, Model model) {
+    public String addTopoComment(@PathVariable("topoId") Integer topoId, @ModelAttribute("commentaire") String commentaire, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         TopoDto topoDto = topoService.getOne(topoId);

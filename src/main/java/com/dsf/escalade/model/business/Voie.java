@@ -24,5 +24,4 @@ public class Voie extends Site {
    public Voie() {
       super();
    }
-
 }

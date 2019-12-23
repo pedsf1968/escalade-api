@@ -1,10 +1,12 @@
 package com.dsf.escalade.model.business;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "longueur")
 public class Longueur implements Serializable {
    @Id
@@ -22,85 +24,5 @@ public class Longueur implements Serializable {
    @Column(name = "spits", columnDefinition = "INTEGER(3)")
    private Integer spits;
 
-   protected Longueur() {
-      super();
-   }
-
-      public Integer getId() {
-      return id;
-   }
-
-   public void setId(Integer id) {
-      this.id = id;
-   }
-
-   public String getName() {
-      return name;
-   }
-
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   public Integer getCotationId() {
-      return cotationId;
-   }
-
-   public void setCotationId(Integer cotationId) {
-      this.cotationId = cotationId;
-   }
-
-   public Integer getVoieId() {
-      return voieId;
-   }
-
-   public void setVoieId(Integer voieId) {
-      this.voieId = voieId;
-   }
-
-   public Integer getHeigth() {
-      return heigth;
-   }
-
-   public void setHeigth(Integer heigth) {
-      this.heigth = heigth;
-   }
-
-   public Integer getSpits() {
-      return spits;
-   }
-
-   public void setSpits(Integer spits) {
-      this.spits = spits;
-   }
-
-   @Override
-   public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof Longueur)) return false;
-      Longueur longueur = (Longueur) o;
-      return getId().equals(longueur.getId()) &&
-            getName().equals(longueur.getName()) &&
-            Objects.equals(getCotationId(), longueur.getCotationId()) &&
-            getVoieId().equals(longueur.getVoieId()) &&
-            Objects.equals(getHeigth(), longueur.getHeigth()) &&
-            Objects.equals(getSpits(), longueur.getSpits());
-   }
-
-   @Override
-   public int hashCode() {
-      return Objects.hash(getId(), getName(), getCotationId(), getVoieId(), getHeigth(), getSpits());
-   }
-
-   @Override
-   public String toString() {
-      return "Longueur{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", cotationId=" + cotationId +
-            ", voieId=" + voieId +
-            ", heigth=" + heigth +
-            ", spits=" + spits +
-            '}';
-   }
+   public Longueur() { super();   }
 }

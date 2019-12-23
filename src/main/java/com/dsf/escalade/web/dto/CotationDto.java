@@ -14,6 +14,6 @@ public class CotationDto {
    @NotNull
    private String GBLevel;
 
-   public CotationDto() {
+   public CotationDto() { super();
    }
 }

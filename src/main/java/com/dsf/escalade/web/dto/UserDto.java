@@ -58,17 +58,4 @@ public class UserDto {
     private List<String> roles;
 
     public UserDto() {  super();  }
-
-    public UserDto(@NotNull @Size(min = FIRSTNAME_MIN, max = FIRSTNAME_MAX) String firstName,
-                   @NotNull @Size(min = LASTNAME_MIN, max = LASTNAME_MAX) String lastName,
-                   @NotNull @Size(min = ALIAS_MIN, max = ALIAS_MAX) String alias,
-                   @NotNull @Size(min = PASSWORD_MIN, max = PASSWORD_MAX) String password,
-                   @NotNull @Size(min = EMAIL_MIN, max = EMAIL_MAX) @Pattern(regexp = EMAIL_REGEXP, message = "Not a valid email address !") String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.alias = alias;
-        this.password = password;
-        this.matchingPassword = password;
-        this.email = email;
-    }
 }

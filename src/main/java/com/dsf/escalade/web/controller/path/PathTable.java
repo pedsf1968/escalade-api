@@ -1,8 +1,6 @@
 package com.dsf.escalade.web.controller.path;
 
 public interface PathTable {
-   public final static String STRING_EMPTY = "";
-
    public final static String TOPO_ALL = "topo/topo-all";
    public final static String TOPO_MYLIST = "topo/topo-mylist";
    public final static String TOPO_MYLIST_R = "redirect:/topo/mylist";
@@ -23,6 +21,7 @@ public interface PathTable {
    public final static String LONGUEUR_UPDATE = "longueur/longueur-update";
 
    public final static String ATTRIBUTE_ADDRESS = "addressDto";
+   public final static String ATTRIBUTE_ALIAS_LIST = "aliasList";
    public final static String ATTRIBUTE_COTATION_LIST = "cotationDtoList";
    public final static String ATTRIBUTE_COMMENT_LIST = "commentDtoList";
    public final static String ATTRIBUTE_FILTER = "filter";

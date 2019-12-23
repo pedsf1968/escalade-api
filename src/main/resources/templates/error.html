@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-   <style>
-table td{
-vertical-align:top;
-border:solid 1px #888;
-padding:10px;
-}
-    </style>
-</head>
-<body>
+<head th:replace="~{fragments/head :: head}"></head>
 
 <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
-<h1>Les amis de l'Escalade Page d'Erreur</h1>
 
-<h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
-<p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-<a href="/" th:href="@{/}">Back to Home Page</a>
+<div class="container-fluid">
+<nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+      <h1>Les amis de l'Escalade Page d'Erreur</h1>
+   </header>
+
+   <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
 
 
+
+   <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+   <a href="/" th:href="@{/}">Back to Home Page</a>
+
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</div>
 </body>
 </html>

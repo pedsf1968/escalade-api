@@ -21,7 +21,7 @@ public class SectorServiceImpl implements SectorService {
    @Override
    public List<SectorDto> findAll() {
       List<SectorDto> sectorDtos = new ArrayList<>();
-      SectorDto sectorDto = null;
+      SectorDto sectorDto;
 
       for(Sector sector : sectorRepository.findAll()){
          sectorDto = new SectorDto();
@@ -44,7 +44,7 @@ public class SectorServiceImpl implements SectorService {
    @Override
    public List<SectorDto> findByTopoId(Integer id) {
       List<SectorDto> sectorDtos = new ArrayList<>();
-      SectorDto sectorDto = null;
+      SectorDto sectorDto;
 
       for(Sector sector : sectorRepository.findByTopoId(id)){
          sectorDto = new SectorDto();
@@ -89,7 +89,7 @@ public class SectorServiceImpl implements SectorService {
       sector.setTopoId(sectorDto.getTopoId());
       sector.setName(sectorDto.getName());
       sector.setType(SiteType.SECTOR);
-      sector.setEquipement(sectorDto.getEquipment());
+      sector.setEquipment(sectorDto.getEquipment());
       sector.setHasComment(sectorDto.getHasComment());
       sector.setLatitude(sectorDto.getLatitude());
       sector.setLongitude(sectorDto.getLongitude());

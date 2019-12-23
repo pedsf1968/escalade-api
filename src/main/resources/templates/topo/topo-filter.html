@@ -8,6 +8,7 @@
             <div class="input-group-text" th:text="#{label.region}">Region</div>
          </div>
          <select class="form-control" th:field="${filter.region}">
+            <option th:value="0" th:text="..."></option>
             <option th:each="region : ${regionList}" th:value="${region}" th:text="${region}"></option>
          </select>
       </div>
@@ -16,9 +17,28 @@
             <div class="input-group-text" th:text="#{label.status}">Status</div>
          </div>
          <select class="form-control" th:field="${filter.status}">
+            <option th:value="0" th:text="..."></option>
             <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
          </select>
       </div>
+      <div class="input-group mb-2">
+         <div class="input-group-prepend">
+            <div class="input-group-text" th:text="#{label.alias}">Alias</div>
+         </div>
+         <select class="form-control" th:field="${filter.aliasManager}">
+            <option th:value="0" th:text="..."></option>
+            <option th:each="alias : ${aliasList}" th:value="${alias}" th:text="${alias}"></option>
+         </select>
+      </div>
+
+      <div class="input-group mb-2">
+         <div class="input-group-prepend">
+            <div class="input-group-text" th:text="#{label.date}">Date</div>
+         </div>
+         <input type="date" class="form-control" th:field="${filter.date}" th:placeholder="#{placeholder.date}">
+      </div>
+
+
       <button type="submit" class="btn btn-primary float-right mb-2" th:text="#{label.filter}">Filter</button>
    </form>
 

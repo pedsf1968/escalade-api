@@ -7,9 +7,10 @@ import java.util.List;
 public interface TopoService {
    TopoDto getOne(Integer id);
    List<TopoDto> findAll();
-   List<TopoDto> findAllFiltered(String region, String status);
    List<TopoDto> findByManagerId(Integer id);
    Integer save(TopoDto topoDto);
    Integer delete(TopoDto topoDto);
    List<String> findAllRegion();
+   List<String> findAllAlias();
+   List<TopoDto> findAllFiltered(TopoDto filter);
 }

@@ -34,6 +34,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<springboot-starter-version>2.2.1.RELEASE</springboot-starter-version>
+		<spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
 	</properties>
 
 	<!-- ==================================================================== -->
@@ -42,9 +43,9 @@
 	<profiles>
 		<!-- ===================================================== DEVELOPMENT -->
 		<profile>
-			<id>dev</id>
+			<id>development</id>
 			<properties>
-				<activatedProperties>dev</activatedProperties>
+				<activatedProperties>development</activatedProperties>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -52,12 +53,24 @@
 		</profile>
 		<!-- ====================================================== PRODUCTION -->
 		<profile>
-			<id>prod</id>
+			<id>production</id>
 			<properties>
-				<activatedProperties>prod</activatedProperties>
+				<activatedProperties>production</activatedProperties>
 			</properties>
 		</profile>
 	</profiles>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<!-- ==================================================================== -->
 	<!--                                                         DEPENDENCIES -->
@@ -94,6 +107,19 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		<!-- ============================================= CLOUD STARTER CONFIG -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
 
 		<!-- ===================================================== STARTER WEB -->
