@@ -33,6 +33,8 @@ public class TagServiceImpl implements TagService {
          TagDto tagDto = new TagDto();
          tagDto.setId(tag.getId());
          tagDto.setName(tag.getName());
+
+         return tagDto;
       }
 
       return null;
@@ -71,8 +73,6 @@ public class TagServiceImpl implements TagService {
       Map<Tag,Boolean> tagsStatusByTopoId = new HashMap<>();
       List<TagList> tagLists =  tagListRepository.findByTopoId(id);
 
-      Boolean contain = false;
-
       for(Tag t: tagRepository.findAll()){
          tagsStatusByTopoId.put(t,false);
       }
@@ -93,7 +93,7 @@ public class TagServiceImpl implements TagService {
          tagList.setTopo(topoId);
          tagList.setTag(tagDto.getId());
 
-         if(tagDto.getActivated()){
+         if(Boolean.TRUE.equals(tagDto.getActivated())){
             tagListRepository.save(tagList);
          } else {
             tagListRepository.delete(tagList);
