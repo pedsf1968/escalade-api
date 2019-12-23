@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
       user.setAlias(userDto.getAlias());
       user.setPassword((bCryptPasswordEncoder.encode(userDto.getPassword())));
       user.setEmail(userDto.getEmail());
-      user.setAdressId(userDto.getAddressId());
+      user.setAddressId(userDto.getAddressId());
 
       if( userDto.getRoles()!= null) {
          Set<Role> roles = new HashSet<>();

@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "spit")
+
 public class Spit implements Serializable {
    @EmbeddedId
    @AttributeOverrides({

@@ -8,12 +8,9 @@ import javax.validation.constraints.NotNull;
 public class CotationDto {
    private Integer id;
    @NotNull
-   private String FRLevel;
+   private String levelFR;
    @NotNull
-   private String USLevel;
+   private String levelUS;
    @NotNull
-   private String GBLevel;
-
-   public CotationDto() { super();
-   }
+   private String levelGB;
 }

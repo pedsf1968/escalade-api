@@ -53,8 +53,4 @@ public class TopoDto {
    private String aliasClimber;
    private String status;
    private Boolean statusAuto;
-
-   public TopoDto() {
-      super();
-   }
 }

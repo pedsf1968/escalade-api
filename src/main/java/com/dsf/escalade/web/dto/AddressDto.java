@@ -20,15 +20,11 @@ public class AddressDto  implements Serializable {
    @Size(max = STREET_MAX)
    private String street2;
    @NotNull
-   @Size(min=ZIP_MIN, max = ZIP_MAX)
+   @Size(min = ZIP_MIN, max = ZIP_MAX)
    private String zipCode;
    @NotNull
    @Size(max = CITY_MAX)
    private String city;
    @Size(max = COUNTRY_MAX)
    private String country;
-
-   public AddressDto() {
-      super();
-   }
 }

@@ -15,8 +15,4 @@ public class TagDto {
    @Size(min = TAG_MIN, max = TAG_MAX)
    private String name;
    private Boolean activated;
-
-   public TagDto() {
-      super();
-   }
 }

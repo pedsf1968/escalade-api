@@ -34,8 +34,4 @@ public class Site implements Serializable {
    protected String photoLink;
    @Column(name = "map_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
    protected String mapLink;
-
-   public Site() {
-      super();
-   }
 }

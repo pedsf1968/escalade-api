@@ -56,6 +56,4 @@ public class UserDto {
     private String phone;
     private Integer addressId;
     private List<String> roles;
-
-    public UserDto() {  super();  }
 }

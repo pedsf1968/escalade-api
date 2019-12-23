@@ -13,8 +13,4 @@ public class CommentDto implements Serializable {
    @NotNull
    private String alias;
    private String text;
-
-   public CommentDto() {
-      super();
-   }
 }

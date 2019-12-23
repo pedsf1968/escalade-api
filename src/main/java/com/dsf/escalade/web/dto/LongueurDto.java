@@ -21,7 +21,4 @@ public class LongueurDto {
    @Size(max = HEIGHT_MAX)
    private Integer height;
    private Integer spits;
-
-   public LongueurDto() { super();
-   }
 }

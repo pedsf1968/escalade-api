@@ -23,9 +23,9 @@ public class CotationServiceImpl implements CotationService {
       for(Cotation cotation:cotationRepository.findAll()){
          CotationDto cotationDto = new CotationDto();
          cotationDto.setId(cotation.getId());
-         cotationDto.setFRLevel(cotation.getFRLevel());
-         cotationDto.setGBLevel(cotation.getGBLevel());
-         cotationDto.setUSLevel(cotation.getUSLevel());
+         cotationDto.setLevelFR(cotation.getLevelFR());
+         cotationDto.setLevelGB(cotation.getLevelGB());
+         cotationDto.setLevelUS(cotation.getLevelUS());
          cotationDtos.add(cotationDto);
       }
 

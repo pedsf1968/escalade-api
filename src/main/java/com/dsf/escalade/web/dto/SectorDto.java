@@ -29,8 +29,4 @@ public class SectorDto {
    //Sector attributes
    private Integer topoId;
    private String equipment;
-
-   public SectorDto() {
-      super();
-   }
 }

@@ -31,8 +31,4 @@ public class VoieDto {
    private Boolean isEquipped;
    private Integer heigth;
    private Integer cotationId;
-
-   public VoieDto() {
-      super();
-   }
 }

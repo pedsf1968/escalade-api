@@ -1,8 +1,11 @@
 package com.dsf.escalade.model.global;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name = "tag")
 public class Tag implements Serializable {
@@ -12,36 +15,4 @@ public class Tag implements Serializable {
    private Integer id;
    @Column(name = "name", columnDefinition = "VARCHAR(50) NOT NULL")
    private String name;
-
-   public Tag() {
-   }
-
-   public Tag(Integer id, String name) {
-      this.id = id;
-      this.name = name;
-   }
-
-   public Integer getId() {
-      return id;
-   }
-
-   public void setId(Integer id) {
-      this.id = id;
-   }
-
-   public String getName() {
-      return name;
-   }
-
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   @Override
-   public String toString() {
-      return "Tag{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            '}';
-   }
 }
