@@ -40,6 +40,7 @@ public class TopoController {
 
     @PersistenceContext
     private final EntityManager entityManager;
+
     private final UserService userService;
     private final AddressService addressService;
     private final TopoService topoService;
@@ -154,15 +155,15 @@ public class TopoController {
     }
 
     @GetMapping("/topo/read/{id}")
-    public String readTopo(@PathVariable("id") Integer id, Model model) {
-        TopoDto topoDto = topoService.getOne(id);
-        List<SectorDto> sectorDtoList = sectorService.findByTopoId(id);
+    public String readTopo(@PathVariable("id") Integer topoId, Model model) {
+        TopoDto topoDto = topoService.getOne(topoId);
 
         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+        model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(id));
-        model.addAttribute("tags", tagService.findByTopoId(id));
+        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(topoId));
+        model.addAttribute("tags", tagService.findByTopoId(topoId));
 
         return PathTable.TOPO_READ;
     }
@@ -170,10 +171,9 @@ public class TopoController {
     @GetMapping("/topo/edit/{id}")
     public String editTopo(@PathVariable("id") Integer topoId, Model model) {
         TopoDto topoDto = topoService.getOne(topoId);
-        List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
 
         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
         model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
         model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
@@ -187,8 +187,7 @@ public class TopoController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
-            List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
-            model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+            model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
             model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
             model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
             model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
@@ -275,9 +274,9 @@ public class TopoController {
     }
 
     @PostMapping("/topo/tag/update/{id}")
-    public String addTopoTag(@PathVariable("id") Integer id, @RequestParam(value="taglist", required = false) Integer[] tags, Model model) {
+    public String addTopoTag(@PathVariable("id") Integer topoId, @RequestParam(value="taglist", required = false) Integer[] tags, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        TopoDto topoDto = topoService.getOne(id);
+        TopoDto topoDto = topoService.getOne(topoId);
         List<TagDto> tagDtos = tagService.findAll();
 
         if(tags!=null){
@@ -288,16 +287,17 @@ public class TopoController {
         // verify that the manager is the Topo manager
         if( authentication.getAuthorities().stream()
               .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))){
-            tagService.update(id,tagDtos);
+            tagService.update(topoId,tagDtos);
         }
 
         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(id));
+        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+        model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(id));
+        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(topoId));
         model.addAttribute("tags", tagDtos);
 
-        return PathTable.TOPO_READ_R + id;
+        return PathTable.TOPO_READ_R + topoId;
     }
 
 }

@@ -16,6 +16,7 @@ public interface PathTable {
 
    public final static String VOIE_ADD = "voie/voie-add";
    public final static String VOIE_UPDATE = "voie/voie-update";
+   public final static String VOIE_UPDATE_R = "redirect:/voie/voie-update/";
 
    public final static String LONGUEUR_ADD = "longueur/longueur-add";
    public final static String LONGUEUR_UPDATE = "longueur/longueur-update";

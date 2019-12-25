@@ -73,7 +73,7 @@
             <div class="input-group-text" th:text="#{label.cotation}">Cotation Id</div>
          </div>
          <select class="btn mb-2" th:field="${voieDto.cotationId}">
-            <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.FRLevel}"></option>
+            <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
          </select>
       </div>
 

@@ -39,16 +39,19 @@
             <div class="tab-pane fade col-md-12 show active" th:id="${#strings.replace(topoDto.name,' ','')}" >
                <form  id="formupdate" action="#" th:action="@{/topo/update/{id}(id=${topoDto.id})}" method="POST" enctype="utf8">
                   <div class="row">
-                     <aside class="card col-md-3  mt-2 mb-2">
+                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
                         <div class="card-header">
                            <div class="input-group mb-2">
                               <div class="input-group-prepend">
                                  <div class="input-group-text" th:text="#{label.manager}">Manager</div>
                               </div>
                               <input  type="text" class="form-control" th:field="${topoDto.aliasManager}" readonly/>
+                              <a class="btn btn-primary float-right" th:href="@{/voie/new/{id}(id=${topoDto.id})}" th:text="#{label.newLane}">New Lane</a>
                            </div>
                         </div>
-
+                        <div class="card  mt-2 mb-2">
+                           <div class="card-body" th:replace="~{fragments/address :: address}"></div>
+                        </div>
                         <div class="input-group mb-2">
                            <div class="input-group-prepend">
                               <div class="input-group-text" th:text="#{label.name}">Name</div>
@@ -88,22 +91,6 @@
                         </div>
                         <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
 
-                        <div class="input-group mb-2">
-                           <div class="input-group-prepend">
-                              <div class="input-group-text" th:text="#{label.photo}">Photo</div>
-                           </div>
-                           <input type="text" class="form-control" th:field="${topoDto.photoLink}" th:placeholder="#{placeholder.photo}">
-                        </div>
-                        <span th:if="${#fields.hasErrors('topoDto.photoLink')}" th:errors="${topoDto.photoLink}"></span>
-
-                        <div class="input-group mb-2">
-                           <div class="input-group-prepend">
-                              <div class="input-group-text" th:text="#{label.map}">Map</div>
-                           </div>
-                           <input type="text" class="form-control" th:field="${topoDto.mapLink}" th:placeholder="#{placeholder.map}">
-                        </div>
-                        <span th:if="${#fields.hasErrors('topoDto.mapLink')}" th:errors="${topoDto.mapLink}"></span>
-
                         <div class="form-inline">
                            <span class="btn mb-2" th:text="#{label.status}">Status</span>
                            <select class="btn mb-2" th:field="${topoDto.status}">
@@ -112,30 +99,74 @@
                            <span class="btn mb-2" th:text="#{label.statusAuto}">Auto</span>
                            <input class="btn mb-2" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
                         </div>
-                     </aside>
 
-                     <section class="card col-md-6  mt-2 mb-2">
-                        <label for="description" th:text="#{label.description}">Description</label>
-                        <textarea id="description" class="form-control input-sm" rows="3" th:field="${topoDto.description}" th:placeholder="#{placeholder.description}">Description</textarea>
-                        <span th:if="${#fields.hasErrors('topoDto.description')}" th:errors="${topoDto.description}"></span>
-                        <br>
-                        <label for="technic" th:text="#{label.technic}">Technic</label>
-                        <textarea id="technic" class="form-control input-sm" rows="3" th:field="${topoDto.technic}" th:placeholder="#{placeholder.technic}">Technic</textarea>
-                        <span th:if="${#fields.hasErrors('topoDto.technic')}" th:errors="${topoDto.technic}"></span>
-                        <br>
-                        <label for="access" th:text="#{label.access}">Access</label>
-                        <textarea id="access" class="form-control input-sm" rows="3" th:field="${topoDto.access}" th:placeholder="#{placeholder.access}">Access</textarea>
-                        <span th:if="${#fields.hasErrors('topoDto.access')}" th:errors="${topoDto.access}"></span>
-                     </section>
+                     </div>
 
-                     <aside class="card col-md-3  mt-2 mb-2">
-                        <div class="card-body" th:replace="~{fragments/address :: address}"></div>
-                        <div class="card-footer form-group">
-                           <a class="btn btn-primary float-right" th:href="@{/voie/new/{id}(id=${topoDto.id})}" th:text="#{label.newLane}">New Lane</a>
+                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+                        <div class="card-header">
+                           <h5 th:text="#{label.photo}">Photo</h5>
                         </div>
-                     </aside>
-                   </div>
+                        <div class="card-body" th:if="${topoDto.photoLink!=null}">
+                           <img class="card-img" th:src="@{/images/{image}(image=${topoDto.photoLink})}" alt="photo"/>
+                        </div>
+                        <div class="card-footer">
+                           <input type="file" class="form-control" value="${topoDto.photoLink}" th:field="${topoDto.photoLink}">
+                        </div>
+                     </div>
+
+                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+                        <div class="card-header">
+                           <h5 th:text="#{label.map}">Map</h5>
+                        </div>
+                        <div class="card-body" th:if="${topoDto.mapLink!=null}">
+                           <img class="card-img" th:src="@{/images/{image}(image=${topoDto.mapLink})}" alt="map"/>
+                        </div>
+                        <div class="card-footer">
+                           <input type="file" class="form-control" value="${topoDto.mapLink}" th:field="${topoDto.mapLink}">
+                        </div>
+                     </div>
+
+                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+                        <div class="card-header">
+                           <h5 th:text="#{label.description}">description</h5>
+                        </div>
+                        <div class="card-body">
+                           <textarea class="form-control input-sm" rows="3" th:field="${topoDto.description}" th:placeholder="#{placeholder.description}">Description</textarea>
+                        </div>
+                        <div class="card-footer">
+                           <span th:if="${#fields.hasErrors('topoDto.description')}" th:errors="${topoDto.description}"></span>
+                        </div>
+                     </div>
+
+                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+                        <div class="card-header">
+                           <h5 th:text="#{label.technic}">Technic</h5>
+                        </div>
+                        <div class="card-body">
+                           <textarea class="form-control input-sm" rows="3" th:field="${topoDto.technic}" th:placeholder="#{placeholder.technic}">Technic</textarea>
+                        </div>
+                        <div class="card-footer">
+                           <span th:if="${#fields.hasErrors('topoDto.technic')}" th:errors="${topoDto.technic}"></span>
+                        </div>
+                     </div>
+
+                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+                        <div class="card-header">
+                           <h5 th:text="#{label.access}">Access</h5>
+                        </div>
+                        <div class="card-body">
+                           <textarea class="form-control input-sm" rows="3" th:field="${topoDto.access}" th:placeholder="#{placeholder.access}">Access</textarea>
+                        </div>
+                        <div class="card-footer">
+                           <span th:if="${#fields.hasErrors('topoDto.access')}" th:errors="${topoDto.access}"></span>
+                        </div>
+                     </div>
+                  </div>
                </form>
+
+               <div  th:replace="~{voie/voie-fragment :: voie}"></div>
+
+
             </div>
 
             <div class="tab-pane fade col-md-12" th:id="@{${#strings.replace(sector.name,' ','')}}" th:each="sector,barStat : ${sectorDtoList}">
