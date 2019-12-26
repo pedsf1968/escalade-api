@@ -6,72 +6,95 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4" th:text="${sectorDto.name!=null} ? ${sectorDto.name} : #{title.sectorNew}">New Sector</H1>
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="${voieDto.name!=null} ? ${voieDto.name} : #{title.voieNew}">New Lane</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
+               <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${voieDto.parentId})}" th:text="#{label.cancel}">Cancel</a>
+               <button form="formvoieupdate" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+            </div>
+         </div>
+      </div>
    </header>
 
-   <form  class="row" action="#" th:action="@{/sector/update/{id}(id=${sectorDto.id})}" method="POST" enctype="utf8">
 
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.topoId}">Topo Id</div>
+   <form id="formvoieupdate" class="row" action="#" th:action="@{/voie/update/{id}(id=${voieDto.id})}" method="POST" enctype="utf8">
+
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.parentId}">Parent Id</div>
+            </div>
+            <input type="text" class="form-control" th:field="${voieDto.parentId}" readonly>
          </div>
-         <input type="text" class="form-control" th:field="${sectorDto.topoId}" readonly>
-      </div>
 
-      <div class="input-group mb-2">
+
+         <div class="input-group mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.name}">Name</div>
             </div>
-            <input type="text" class="form-control" th:field="${sectorDto.name}" th:placeholder="#{placeholder.name}">
+            <input type="text" class="form-control" th:field="${voieDto.name}" th:placeholder="#{placeholder.name}">
          </div>
-         <span th:if="${#fields.hasErrors('sectorDto.name')}" th:errors="${sectorDto.name}"></span>
+         <span th:if="${#fields.hasErrors('voieDto.name')}" th:errors="${voieDto.name}"></span>
 
          <div class="input-group mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
             </div>
-            <input type="text" class="form-control" th:field="${sectorDto.longitude}" th:placeholder="#{placeholder.longitude}">
+            <input type="text" class="form-control" th:field="${voieDto.longitude}" th:placeholder="#{placeholder.longitude}">
          </div>
-         <span th:if="${#fields.hasErrors('sectorDto.longitude')}" th:errors="${sectorDto.longitude}"></span>
+         <span th:if="${#fields.hasErrors('voieDto.longitude')}" th:errors="${voieDto.longitude}"></span>
 
          <div class="input-group mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
             </div>
-            <input type="text" class="form-control" th:field="${sectorDto.latitude}" th:placeholder="#{placeholder.latitude}">
+            <input type="text" class="form-control" th:field="${voieDto.latitude}" th:placeholder="#{placeholder.latitude}">
          </div>
-         <span th:if="${#fields.hasErrors('sectorDto.latitude')}" th:errors="${sectorDto.latitude}"></span>
+         <span th:if="${#fields.hasErrors('voieDto.latitude')}" th:errors="${voieDto.latitude}"></span>
 
          <div class="input-group mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.photo}">Photo</div>
             </div>
-            <input type="text" class="form-control" th:field="${sectorDto.photoLink}" th:placeholder="#{placeholder.photo}">
+            <input type="text" class="form-control" th:field="${voieDto.photoLink}" th:placeholder="#{placeholder.photo}">
          </div>
-         <span th:if="${#fields.hasErrors('sectorDto.photoLink')}" th:errors="${sectorDto.photoLink}"></span>
+         <span th:if="${#fields.hasErrors('voieDto.photoLink')}" th:errors="${voieDto.photoLink}"></span>
 
          <div class="input-group mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.map}">Map</div>
             </div>
-            <input type="text" class="form-control" th:field="${sectorDto.mapLink}" th:placeholder="#{placeholder.map}">
+            <input type="text" class="form-control" th:field="${voieDto.mapLink}" th:placeholder="#{voieDto.map}">
          </div>
-         <span th:if="${#fields.hasErrors('sectorDto.mapLink')}" th:errors="${sectorDto.mapLink}"></span>
+         <span th:if="${#fields.hasErrors('voieDto.mapLink')}" th:errors="${voieDto.mapLink}"></span>
 
-         <label for="equipment" th:text="#{label.equipment}">Equipment</label>
-            <textarea id="equipment" class="form-control input-sm" rows="3" th:field="${sectorDto.equipment}" th:placeholder="#{placeholder.equipment}"/>
-         <span th:if="${#fields.hasErrors('sectorDto.equipment')}" th:errors="${sectorDto.equipment}"></span>
-
-      <div class="row">
-         <div class="form-group col-md-12">
-            <div class="float-right" >
-               <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${sectorDto.topoId})}" th:text="#{label.cancel}">Cancel</a>
-               <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.heigth}">Heigth</div>
             </div>
+            <input type="text" class="form-control" th:field="${voieDto.heigth}" th:placeholder="#{placeholder.heigth}">
          </div>
-      </div>
-   </form>
+         <span th:if="${#fields.hasErrors('voieDto.heigth')}" th:errors="${voieDto.heigth}"></span>
 
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+               <div class="input-group-text" th:text="#{label.cotation}">Cotation Id</div>
+            </div>
+            <select class="btn mb-2" th:field="${voieDto.cotationId}">
+               <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+            </select>
+         </div>
+
+         <span class="btn mb-2" th:text="#{label.isEquipped}">Is Equipped</span>
+         <input class="btn mb-2" type="checkbox" name="isEquipped"  th:checked="${voieDto.isEquipped}"/>
+
+         <span class="btn mb-2" th:text="#{label.hasComment}">Has Comment</span>
+         <input class="btn mb-2" type="checkbox" name="hasComment"  th:checked="${voieDto.hasComment}"/>
+
+      </form>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>

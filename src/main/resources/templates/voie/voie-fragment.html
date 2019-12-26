@@ -8,7 +8,7 @@
             <h5 th:text="${voie.name}"></h5>
          </div>
          <div class="card-body">
-            <img  th:if="${voie.photoLink!=null}" class="img-fluid" th:src="@{/images/{image}(image=${voie.photoLink})}" alt="photo"/>
+            <img  th:if="${voie.photoLink!=null}" class="img-fluid" th:src="@{/images/voie/{image}(image=${voie.photoLink})}" alt="photo"/>
             <table class="table table-striped">
                <tr>
                   <td th:text="#{label.heigth}">Heigth</td>

@@ -8,19 +8,18 @@
    <header class="jumbotron">
       <div class="row">
          <div class="col-sm">
-
-         </div>
-         <div class="col-sm">
-            <H1 class="display-4" th:text="${topoDto.name!=null} ? ${topoDto.name} : #{title.topoNew}">New Topo</H1>
+            <H1 class="display-4 float-left" th:text="#{title.topoNew}">New Topo</H1>
          </div>
          <div class="col-sm my-auto ">
-            <a class="btn btn-primary float-right" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
-            <button class="btn btn-primary float-right" type="submit" form="topoadd" th:text="#{label.submit}">Submit</button>
+            <div class="float-right">
+               <a class="btn btn-primary" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
+               <button class="btn btn-primary" type="submit" form="formtopoadd" th:text="#{label.submit}">Submit</button>
+            </div>
          </div>
       </div>
    </header>
 
-   <form  id="topoadd" class="row" action="#" th:action="@{/topo/add}" method="POST" enctype="utf8">
+   <form  id="formtopoadd" class="row" action="#" th:action="@{/topo/add}" method="POST" enctype="utf8">
       <aside class="col-md-3">
          <div class="card-header">
             <div class="input-group mb-2">
@@ -69,22 +68,6 @@
             <input type="text" class="form-control" th:field="${topoDto.latitude}" th:placeholder="#{placeholder.latitude}">
          </div>
          <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.photo}">Photo</div>
-            </div>
-            <input type="text" class="form-control" th:field="${topoDto.photoLink}" th:placeholder="#{placeholder.photo}">
-         </div>
-         <span th:if="${#fields.hasErrors('topoDto.photoLink')}" th:errors="${topoDto.photoLink}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.map}">Map</div>
-            </div>
-            <input type="text" class="form-control" th:field="${topoDto.mapLink}" th:placeholder="#{placeholder.map}">
-         </div>
-         <span th:if="${#fields.hasErrors('topoDto.mapLink')}" th:errors="${topoDto.mapLink}"></span>
 
          <div class="form-inline">
             <span class="btn mb-2" th:text="#{label.status}">Status</span>

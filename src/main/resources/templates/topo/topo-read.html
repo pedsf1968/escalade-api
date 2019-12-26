@@ -25,7 +25,7 @@
       <div class="col-lg-6 col-sm-12">
          <div class="row">
             <div class="card col-md-12 bg-dark text-white mt-2 mb-2">
-               <img class="card-img" th:src="@{/images/{image}(image=${topoDto.photoLink})}" alt="photo"/>
+               <img class="card-img" th:src="@{/images/TOPO/{image}(image=${topoDto.photoLink})}" alt="photo"/>
                <div class="card-img-overlay">
                   <h5 class="card-header" th:text="${topoDto.name}">Topo's name</h5>
                   <p class="card-title" th:text="${topoDto.region}">  </p>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="card col-md-12 bg-dark text-white mt-2 mb-2" th:if="${topoDto.mapLink!=null}">
-               <img class="card-img" th:src="@{/images/{image}(image=${topoDto.mapLink})}" alt="photo"/>
+               <img class="card-img" th:src="@{/images/TOPO/{image}(image=${topoDto.mapLink})}" alt="photo"/>
             </div>
 
             <div class="card col-md-12 mt-2 mb-2">

@@ -102,7 +102,43 @@ public class VoieController {
 
          return PathTable.TOPO_UPDATE_R + parentId;
       }
+   }
 
+   @GetMapping("/voie/read/{id}")
+   public String readVoie(@PathVariable("id") Integer voieId, Model model){
+      VoieDto voieDto = voieService.getOne(voieId);
+
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
+      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+
+      return PathTable.VOIE_READ;
+   }
+
+   @GetMapping("/voie/edit/{id}")
+   public String editVoie(@PathVariable("id") Integer voieId, Model model){
+      VoieDto voieDto = voieService.getOne(voieId);
+
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
+      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+
+      return PathTable.VOIE_UPDATE;
+   }
+
+
+   @PostMapping("/voie/update/{id}")
+   public String updateVoie(@PathVariable("id") Integer voieId,
+                            @ModelAttribute("voieDto") VoieDto voieDto, BindingResult bindingResult,
+                            Model model){
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+      if(bindingResult.hasErrors()){
+
+      }
+
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
+      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+
+      return PathTable.TOPO_UPDATE_R + voieDto.getParentId();
    }
 
 }

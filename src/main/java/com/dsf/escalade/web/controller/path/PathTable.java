@@ -15,6 +15,7 @@ public interface PathTable {
    public final static String SECTOR_UPDATE_R = "redirect:/sector/sector-update/";
 
    public final static String VOIE_ADD = "voie/voie-add";
+   public final static String VOIE_READ = "voie/voie-read";
    public final static String VOIE_UPDATE = "voie/voie-update";
    public final static String VOIE_UPDATE_R = "redirect:/voie/voie-update/";
 

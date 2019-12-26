@@ -34,12 +34,12 @@ VALUES (1,1),(1,2),(2,1),(3,2);
 
 -- insertion topo
 INSERT INTO site (id, name, type, photo_url, map_url)
-VALUES (1,'La falaise', 'TOPO', 'ailefroide.jpg',null),
-    (2,'Le Rock', 'TOPO', 'annot.jpg',null),
-    (3,'La gorge', 'TOPO', 'ablon.jpg',null),
-    (4,'Grand étang','TOPO','grandetangphoto.jpg',null),
-    (5,'Pôle dance', 'SECTOR', 'grandetangpoledancephoto.jpg','grandetangpoledancemap.jpg'),
-    (6,'Coude à coude','SECTOR','grandetangcoudeacoudephoto.png','grandetangcoudeacoudemap.jpg');
+VALUES (1,'La falaise', 'TOPO', 'TOPO1photo.jpg',null),
+    (2,'Le Rock', 'TOPO', 'TOPO2photo.jpg',null),
+    (3,'La gorge', 'TOPO', 'TOPO3photo.jpg',null),
+    (4,'Grand étang','TOPO','TOPO4photo.jpg',null),
+    (5,'Pôle dance', 'SECTOR', 'SECTOR5photo.jpg','SECTOR5map.jpg'),
+    (6,'Coude à coude','SECTOR','SECTOR6photo.png','SECTOR6map.jpg');
 
 
 

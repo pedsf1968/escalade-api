@@ -33,7 +33,7 @@
                </div>
             </div>
             <div class="card-body">
-               <img  class="img-fluid" th:src="@{/images/{image}(image=${topo.photoLink})}" alt="photo"/>
+               <img  class="img-fluid" th:src="@{/images/topo/{image}(image=${topo.photoLink})}" alt="photo"/>
             </div>
             <div class="card-footer mx-auto fluid form-inline">
                <button  th:if="${topo.status} == 'UNVAILABLE'" class="btn btn-danger mb-2" th:text="${topo.status}"></button>

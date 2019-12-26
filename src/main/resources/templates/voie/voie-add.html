@@ -5,12 +5,22 @@
 <div class="container-fluid">
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
+
    <header class="jumbotron">
-      <H1 class="display-4" th:text="#{title.voieNew}">New Voie</H1>
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="#{title.voieNew}">New Voie</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${voieDto.parentId})}" th:text="#{label.cancel}">Cancel</a>
+               <button form="formvoieadd" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+            </div>
+         </div>
+      </div>
    </header>
 
-   <section>
-   <form  class="row" action="#" th:action="@{/voie/add}" method="POST" enctype="utf8">
+   <form id="formvoieadd" class="row" action="#" th:action="@{/voie/add}" method="POST" enctype="utf8">
 
       <div class="input-group mb-2">
          <div class="input-group-prepend">
@@ -56,7 +66,7 @@
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.map}">Map</div>
             </div>
-            <input type="text" class="form-control" th:field="${voieDto.mapLink}" th:placeholder="#{voieDto.map}">
+            <input type="text" class="form-control" th:field="${voieDto.mapLink}" th:placeholder="#{placeholder.map}">
          </div>
          <span th:if="${#fields.hasErrors('voieDto.mapLink')}" th:errors="${voieDto.mapLink}"></span>
 
@@ -83,16 +93,8 @@
       <span class="btn mb-2" th:text="#{label.hasComment}">Has Comment</span>
       <input class="btn mb-2" type="checkbox" name="hasComment"  th:checked="${voieDto.hasComment}"/>
 
-      <div class="row">
-         <div class="form-group col-md-12">
-            <div class="float-right" >
-               <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${voieDto.parentId})}" th:text="#{label.cancel}">Cancel</a>
-               <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
-            </div>
-         </div>
-      </div>
    </form>
-   </section>
+
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
