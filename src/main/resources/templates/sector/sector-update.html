@@ -6,19 +6,31 @@
    <nav th:replace="~{fragments/nav :: nav}"></nav>
 
    <header class="jumbotron">
-      <H1 class="display-4" th:text="${sectorDto.name!=null} ? ${sectorDto.name} : #{title.sectorNew}">New Sector</H1>
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="${sectorDto.name!=null} ? ${sectorDto.name} : #{title.sectorNew}">New Sector</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${sectorDto.id})}" th:text="#{label.newLane}">New Lane</a>
+               <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${sectorDto.topoId})}" th:text="#{label.cancel}">Cancel</a>
+               <button form="formsectorupdate" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+            </div>
+         </div>
+      </div>
    </header>
 
-   <form  class="row" action="#" th:action="@{/sector/update/{id}(id=${sectorDto.id})}" method="POST" enctype="utf8">
 
-      <div class="input-group mb-2">
+   <form id="formsectorupdate" class="row" action="#" th:action="@{/sector/update/{id}(id=${sectorDto.id})}" method="POST" enctype="utf8">
+
+      <div class="input-group mt-2 mb-2">
          <div class="input-group-prepend">
             <div class="input-group-text" th:text="#{label.topoId}">Topo Id</div>
          </div>
          <input type="text" class="form-control" th:field="${sectorDto.topoId}" readonly>
       </div>
 
-      <div class="input-group mb-2">
+      <div class="input-group mt-2 mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.name}">Name</div>
             </div>
@@ -26,7 +38,7 @@
          </div>
          <span th:if="${#fields.hasErrors('sectorDto.name')}" th:errors="${sectorDto.name}"></span>
 
-         <div class="input-group mb-2">
+         <div class="input-group mt-2 mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
             </div>
@@ -34,7 +46,7 @@
          </div>
          <span th:if="${#fields.hasErrors('sectorDto.longitude')}" th:errors="${sectorDto.longitude}"></span>
 
-         <div class="input-group mb-2">
+         <div class="input-group mt-2 mb-2">
             <div class="input-group-prepend">
                <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
             </div>
@@ -42,35 +54,54 @@
          </div>
          <span th:if="${#fields.hasErrors('sectorDto.latitude')}" th:errors="${sectorDto.latitude}"></span>
 
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.photo}">Photo</div>
-            </div>
-            <input type="text" class="form-control" th:field="${sectorDto.photoLink}" th:placeholder="#{placeholder.photo}">
+      <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+         <div class="card-header">
+            <h5 th:text="#{label.photo}">Photo</h5>
          </div>
-         <span th:if="${#fields.hasErrors('sectorDto.photoLink')}" th:errors="${sectorDto.photoLink}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.map}">Map</div>
-            </div>
-            <input type="text" class="form-control" th:field="${sectorDto.mapLink}" th:placeholder="#{placeholder.map}">
+         <div class="card-body" th:if="${topoDto.photoLink!=null}">
+            <img class="card-img" th:src="@{/images/sector/{image}(image=${sectorDto.photoLink})}" alt="photo"/>
          </div>
-         <span th:if="${#fields.hasErrors('sectorDto.mapLink')}" th:errors="${sectorDto.mapLink}"></span>
-
-         <label for="equipment" th:text="#{label.equipment}">Equipment</label>
-            <textarea id="equipment" class="form-control input-sm" rows="3" th:field="${sectorDto.equipment}" th:placeholder="#{placeholder.equipment}"/>
-         <span th:if="${#fields.hasErrors('sectorDto.equipment')}" th:errors="${sectorDto.equipment}"></span>
-
-      <div class="row">
-         <div class="form-group col-md-12">
-            <div class="float-right" >
-               <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${sectorDto.id})}" th:text="#{label.newLane}">New Lane</a>
-               <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${sectorDto.topoId})}" th:text="#{label.cancel}">Cancel</a>
-               <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
-            </div>
+         <div class="card-footer">
+            <form id="formphoto" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
+               <input type="file" name="file"/>
+               <input type="hidden" name="siteType" th:value="SECTOR">
+               <input type="hidden" name="siteId" th:value="${sectorDto.id}">
+               <input type="hidden" name="fileType" th:value="photo">
+               <button form="formphoto" type="submit" class="btn btn-primary" th:text="#{label.upload}">Upload</button>
+            </form>
          </div>
       </div>
+
+      <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+         <div class="card-header">
+            <h5 th:text="#{label.map}">Map</h5>
+         </div>
+         <div class="card-body" th:if="${topoDto.mapLink!=null}">
+            <img class="card-img" th:src="@{/images/sector/{image}(image=${sectorDto.mapLink})}" alt="map"/>
+         </div>
+         <div class="card-footer">
+            <form id="formmap" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
+               <input type="file" name="file"/>
+               <input type="hidden" name="siteType" th:value="TOPO">
+               <input type="hidden" name="siteId" th:value="${sectorDto.id}">
+               <input type="hidden" name="fileType" th:value="map">
+               <button form="formmap" type="submit" class="btn btn-primary" th:text="#{label.upload}">Upload</button>
+            </form>
+         </div>
+      </div>
+
+      <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+         <div class="card-header">
+            <h5 th:text="#{label.equipment}">Equipment</h5>
+         </div>
+         <div class="card-body">
+            <textarea id="equipment" class="form-control input-sm" rows="3" th:field="${sectorDto.equipment}" th:placeholder="#{placeholder.equipment}"/>
+         </div>
+         <div class="card-footer">
+            <span th:if="${#fields.hasErrors('sectorDto.equipment')}" th:errors="${sectorDto.equipment}"></span>
+         </div>
+      </div>
+
    </form>
 
 
