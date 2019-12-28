@@ -10,8 +10,7 @@ import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
 import com.dsf.escalade.web.dto.VoieDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,15 @@ public class FileController {
    private final SectorService sectorService;
    private final VoieService voieService;
 
-   @Autowired
-   private Environment environment;
+
+   @Value("${app.topo.repository}")
+   private String topoRepository;
+   @Value("${app.sector.repository}")
+   private String sectorRepository;
+   @Value("${app.voie.repository}")
+   private String voieRepository;
+   @Value("${app.avatar.repository}")
+   private String avatarRepository;
 
    public FileController(FileService fileService, TopoService topoService, SectorService sectorService, VoieService voieService) {
       this.fileService = fileService;
@@ -50,7 +56,7 @@ public class FileController {
                             Model model) {
 
       if (siteType.equals(SiteType.TOPO.toString())){
-         fileService.uploadFile(file, environment.getProperty("app.upload.topo")+ "/"  + siteType + id + fileType + ".jpg");
+         fileService.uploadFile(file, topoRepository+ siteType + id + fileType + ".jpg");
          TopoDto topoDto = topoService.getOne(id);
          if(fileType.equals("photo")){
             topoDto.setPhotoLink("TOPO"+id+"photo.jpg");
@@ -58,9 +64,10 @@ public class FileController {
             topoDto.setMapLink("TOPO"+id+"map.jpg");
          }
          topoService.save(topoDto);
+         model.addAttribute("topoDto",topoDto);
          return PathTable.TOPO_UPDATE_R + id;
       } else if (siteType.equals(SiteType.SECTOR.toString())){
-         fileService.uploadFile(file, environment.getProperty("app.upload.sector")+ "/" + siteType + id + fileType + ".jpg");
+         fileService.uploadFile(file, sectorRepository + siteType + id + fileType + ".jpg");
          SectorDto sectorDto = sectorService.getOne(id);
          if(fileType.equals("photo")){
             sectorDto.setPhotoLink("SECTOR"+id+"photo.jpg");
@@ -68,9 +75,10 @@ public class FileController {
             sectorDto.setMapLink("SECTOR"+id+"map.jpg");
          }
          sectorService.save(sectorDto);
+         model.addAttribute("sectorDto",sectorDto);
          return PathTable.SECTOR_UPDATE_R + id;
       } else if (siteType.equals(SiteType.VOIE.toString())){
-         fileService.uploadFile(file, environment.getProperty("app.upload.voie")+ "/" +  siteType + id + fileType + ".jpg");
+         fileService.uploadFile(file, voieRepository +  siteType + id + fileType + ".jpg");
          VoieDto voieDto = voieService.getOne(id);
          if(fileType.equals("photo")){
             voieDto.setPhotoLink("VOIE"+id+"photo.jpg");
@@ -78,10 +86,11 @@ public class FileController {
             voieDto.setMapLink("VOIE"+id+"map.jpg");
          }
          voieService.save(voieDto);
-
+         model.addAttribute("voieDto",voieDto);
          return PathTable.VOIE_UPDATE_R + id;
       }  else {
-         fileService.uploadFile(file, environment.getProperty("app.upload.avatar")+ "/" +  id + fileType + ".jpg");
+         //TODO
+         fileService.uploadFile(file, avatarRepository +  id + fileType + ".jpg");
          model.addAttribute("fileName",  id + fileType + ".jpg");
          return "fileUpload";
       }

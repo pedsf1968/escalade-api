@@ -12,12 +12,12 @@ public interface PathTable {
 
    public final static String SECTOR_ADD = "sector/sector-add";
    public final static String SECTOR_UPDATE = "sector/sector-update";
-   public final static String SECTOR_UPDATE_R = "redirect:/sector/sector-update/";
+   public final static String SECTOR_UPDATE_R = "redirect:/sector/edit/";
 
    public final static String VOIE_ADD = "voie/voie-add";
    public final static String VOIE_READ = "voie/voie-read";
    public final static String VOIE_UPDATE = "voie/voie-update";
-   public final static String VOIE_UPDATE_R = "redirect:/voie/voie-update/";
+   public final static String VOIE_UPDATE_R = "redirect:/voie/edit/";
 
    public final static String LONGUEUR_ADD = "longueur/longueur-add";
    public final static String LONGUEUR_UPDATE = "longueur/longueur-update";

@@ -20,81 +20,118 @@
       </div>
    </header>
 
-
    <form id="formvoieupdate" class="row" action="#" th:action="@{/voie/update/{id}(id=${voieDto.id})}" method="POST" enctype="utf8">
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.parentId}">Parent Id</div>
+      <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+         <div class="card-header">
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.name}">Name</div>
+               </div>
+               <input type="text" class="form-control" th:field="${voieDto.name}" th:placeholder="#{placeholder.name}">
             </div>
-            <input type="text" class="form-control" th:field="${voieDto.parentId}" readonly>
+         </div>
+         <div class="card-body">
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.parentId}">Parent Id</div>
+               </div>
+               <input type="text" class="form-control" th:field="${voieDto.parentId}" readonly>
+            </div>
+         </div>
+         <div class="card-footer">
+            <span th:if="${#fields.hasErrors('voieDto.name')}" th:errors="${voieDto.name}"></span>
+         </div>
+      </div>
+
+      <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+         <div class="body">
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
+               </div>
+               <input type="text" class="form-control" th:field="${voieDto.longitude}" th:placeholder="#{placeholder.longitude}">
+            </div>
+            <span th:if="${#fields.hasErrors('voieDto.longitude')}" th:errors="${voieDto.longitude}"></span>
+
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
+               </div>
+               <input type="text" class="form-control" th:field="${voieDto.latitude}" th:placeholder="#{placeholder.latitude}">
+            </div>
+            <span th:if="${#fields.hasErrors('voieDto.latitude')}" th:errors="${voieDto.latitude}"></span>
+         </div>
+      </div>
+      <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+         <div class="body">
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.heigth}">Heigth</div>
+               </div>
+               <input type="text" class="form-control" th:field="${voieDto.heigth}" th:placeholder="#{placeholder.heigth}">
+            </div>
+            <span th:if="${#fields.hasErrors('voieDto.heigth')}" th:errors="${voieDto.heigth}"></span>
+
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.cotation}">Cotation Id</div>
+               </div>
+               <select class="btn mb-2" th:field="${voieDto.cotationId}">
+                  <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+               </select>
+            </div>
+         </div>
+      </div>
+      <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+         <div class="body">
+            <span class="btn mb-2" th:text="#{label.isEquipped}">Is Equipped</span>
+            <input class="btn mb-2" type="checkbox" name="isEquipped"  th:checked="${voieDto.isEquipped}"/>
+
+            <span class="btn mb-2" th:text="#{label.hasComment}">Has Comment</span>
+            <input class="btn mb-2" type="checkbox" name="hasComment"  th:checked="${voieDto.hasComment}"/>
+         </div>
+      </div>
+   </form>
+
+   <div class="col-md-12">
+      <div class="row">
+         <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+            <div class="card-header">
+               <h5 th:text="#{label.photo}">Photo</h5>
+            </div>
+            <div class="card-body" th:if="${voieDto.photoLink!=null}">
+               <img class="card-img" th:src="@{/images/voie/{image}(image=${voieDto.photoLink})}" alt="photo"/>
+            </div>
+            <div class="card-footer">
+               <form id="formphoto" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
+                  <input type="file" name="file"/>
+                  <input type="hidden" name="siteType" th:value="VOIE">
+                  <input type="hidden" name="siteId" th:value="${voieDto.id}">
+                  <input type="hidden" name="fileType" th:value="photo">
+                  <button form="formphoto" type="submit" class="btn btn-primary" th:text="#{label.upload}">Upload</button>
+               </form>
+            </div>
          </div>
 
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.name}">Name</div>
+         <div class="card col-lg-4 col-md-6 mt-2 mb-2">
+            <div class="card-header">
+               <h5 th:text="#{label.map}">Map</h5>
             </div>
-            <input type="text" class="form-control" th:field="${voieDto.name}" th:placeholder="#{placeholder.name}">
-         </div>
-         <span th:if="${#fields.hasErrors('voieDto.name')}" th:errors="${voieDto.name}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
+            <div class="card-body" th:if="${voieDto.mapLink!=null}">
+               <img class="card-img" th:src="@{/images/voie/{image}(image=${voieDto.mapLink})}" alt="map"/>
             </div>
-            <input type="text" class="form-control" th:field="${voieDto.longitude}" th:placeholder="#{placeholder.longitude}">
-         </div>
-         <span th:if="${#fields.hasErrors('voieDto.longitude')}" th:errors="${voieDto.longitude}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
+            <div class="card-footer">
+               <form id="formmap" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
+                  <input type="file" name="file"/>
+                  <input type="hidden" name="siteType" th:value="VOIE">
+                  <input type="hidden" name="siteId" th:value="${voieDto.id}">
+                  <input type="hidden" name="fileType" th:value="map">
+                  <button form="formmap" type="submit" class="btn btn-primary" th:text="#{label.upload}">Upload</button>
+               </form>
             </div>
-            <input type="text" class="form-control" th:field="${voieDto.latitude}" th:placeholder="#{placeholder.latitude}">
          </div>
-         <span th:if="${#fields.hasErrors('voieDto.latitude')}" th:errors="${voieDto.latitude}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.photo}">Photo</div>
-            </div>
-            <input type="text" class="form-control" th:field="${voieDto.photoLink}" th:placeholder="#{placeholder.photo}">
-         </div>
-         <span th:if="${#fields.hasErrors('voieDto.photoLink')}" th:errors="${voieDto.photoLink}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.map}">Map</div>
-            </div>
-            <input type="text" class="form-control" th:field="${voieDto.mapLink}" th:placeholder="#{voieDto.map}">
-         </div>
-         <span th:if="${#fields.hasErrors('voieDto.mapLink')}" th:errors="${voieDto.mapLink}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.heigth}">Heigth</div>
-            </div>
-            <input type="text" class="form-control" th:field="${voieDto.heigth}" th:placeholder="#{placeholder.heigth}">
-         </div>
-         <span th:if="${#fields.hasErrors('voieDto.heigth')}" th:errors="${voieDto.heigth}"></span>
-
-         <div class="input-group mb-2">
-            <div class="input-group-prepend">
-               <div class="input-group-text" th:text="#{label.cotation}">Cotation Id</div>
-            </div>
-            <select class="btn mb-2" th:field="${voieDto.cotationId}">
-               <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
-            </select>
-         </div>
-
-         <span class="btn mb-2" th:text="#{label.isEquipped}">Is Equipped</span>
-         <input class="btn mb-2" type="checkbox" name="isEquipped"  th:checked="${voieDto.isEquipped}"/>
-
-         <span class="btn mb-2" th:text="#{label.hasComment}">Has Comment</span>
-         <input class="btn mb-2" type="checkbox" name="hasComment"  th:checked="${voieDto.hasComment}"/>
-
-      </form>
+      </div>
+   </div>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
