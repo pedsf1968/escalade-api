@@ -3,6 +3,7 @@ package com.dsf.escalade.web.controller;
 import com.dsf.escalade.service.global.AddressService;
 import com.dsf.escalade.service.global.SecurityServiceImpl;
 import com.dsf.escalade.service.global.UserServiceImpl;
+import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.AddressDto;
 import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,7 @@ public class UserController {
       model.addAttribute("userDto", new UserDto());
       model.addAttribute("addressDto", new AddressDto());
 
-      return "user/registration";
+      return PathTable.USER_REGISTRATION;
    }
 
    @PostMapping("/registration")
@@ -52,17 +53,17 @@ public class UserController {
                                   @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress, Model model) {
 
       if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
-         return "user/registration";
+         return PathTable.USER_REGISTRATION;
       }
 
       if(userService.findByEmail(userDto.getEmail())!=null){
          bindingResultUser.rejectValue("email", "5", "Email already exist !");
-         return "user/registration";
+         return PathTable.USER_REGISTRATION;
       }
 
       if(userService.findByAlias(userDto.getAlias())!=null){
          bindingResultUser.rejectValue("alias", "6", "Alias already exist !");
-         return "user/registration";
+         return PathTable.USER_REGISTRATION;
       }
 
       Integer addressId = addressService.save(addressDto);

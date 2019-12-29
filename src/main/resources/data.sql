@@ -33,13 +33,13 @@ INSERT INTO tag_list(topo,tag)
 VALUES (1,1),(1,2),(2,1),(3,2);
 
 -- insertion topo
-INSERT INTO site (id, name, type, photo_url, map_url)
-VALUES (1,'La falaise', 'TOPO', 'TOPO1photo.jpg',null),
-    (2,'Le Rock', 'TOPO', 'TOPO2photo.jpg',null),
-    (3,'La gorge', 'TOPO', 'TOPO3photo.jpg',null),
-    (4,'Grand étang','TOPO','TOPO4photo.jpg',null),
-    (5,'Pôle dance', 'SECTOR', 'SECTOR5photo.jpg','SECTOR5map.jpg'),
-    (6,'Coude à coude','SECTOR','SECTOR6photo.png','SECTOR6map.jpg');
+INSERT INTO site (id, name, type, photo_url, map_url, nb_comment)
+VALUES (1,'La falaise', 'TOPO', 'TOPO1photo.jpg',null, 3),
+    (2,'Le Rock', 'TOPO', 'TOPO2photo.jpg','TOPO2map.jpg',0),
+    (3,'La gorge', 'TOPO', 'TOPO3photo.jpg','TOPO3map.jpg',0),
+    (4,'Grand étang','TOPO','TOPO4photo.jpg','TOPO4map.jpg',0),
+    (5,'Pôle dance', 'SECTOR', 'SECTOR5photo.jpg','SECTOR5map.jpg',0),
+    (6,'Coude à coude','SECTOR','SECTOR6photo.png','SECTOR6map.jpg',0);
 
 
 
@@ -57,5 +57,7 @@ INSERT INTO sector (site_id, topo_id, equipment)
 VALUES (5, 2,'100m de corde'),(6,2,'Corde de 50m');
 
 INSERT INTO comment (id,site_id,user_id,text)
-VALUES (1,1,2,'C''est super on s''éclate'),(2,1,2,'Bien pour les débutants'),(3,1,3,'Belle vue pendant l''ascension');
+VALUES (1,1,2,'C''est super on s''éclate'),(2,1,2,'Bien pour les débutants'),(3,1,3,'Belle vue pendant l''ascension'),
+       (4,2,2,'C''est super on s''éclate'),(5,2,2,'Bien pour les débutants'),(6,3,3,'Belle vue pendant l''ascension'),
+       (7,5,2,'C''est super on s''éclate'),(8,6,2,'Bien pour les débutants'),(9,6,3,'Belle vue pendant l''ascension');
 

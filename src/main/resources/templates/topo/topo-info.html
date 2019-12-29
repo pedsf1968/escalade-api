@@ -1,28 +1,29 @@
 <!DOCTYPE HTML>
 <html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
-<div th:fragment="topoinfo">
-   <table class="table table-striped">
-      <tr>
-         <td th:text="#{label.alias}">Alias</td>
-         <td th:text="${topoDto.aliasManager}">Alias</td>
-      </tr>
-      <tr>
-         <td th:text="#{label.status}">Status</td>
-         <td th:text="${topoDto.status}">Status</td>
-      </tr>
-      <tr>
-         <td th:text="#{label.longitude}">Longitude</td>
-         <td th:text="${topoDto.longitude}" >Longitude</td>
-      </tr>
-      <tr>
-         <td th:text="#{label.latitude}">Latitude</td>
-         <td th:text="${topoDto.latitude}" >Latitude</td>
-      </tr>
-      <tr>
-         <td th:text="#{label.hasComment}">Has comment</td>
-         <td th:text="${topoDto.hasComment}" >Has comment</td>
-      </tr>
-   </table>
-</div>
+   <div class="card mt-2 mb-2" th:fragment="topoinfo">
+      <div class="card-header">
+         <h5 th:text="#{label.information}">Information</h5>
+      </div>
+      <div class="card-body">
+         <table class="table table-striped">
+            <tr>
+               <td th:text="#{label.alias}">Alias</td>
+               <td th:text="${topoDto.aliasManager}">Alias</td>
+            </tr>
+            <tr>
+               <td th:text="#{label.status}">Status</td>
+               <td th:text="${topoDto.status}">Status</td>
+            </tr>
+            <tr>
+               <td th:text="#{label.longitude}">Longitude</td>
+               <td th:text="${topoDto.longitude}" >Longitude</td>
+            </tr>
+            <tr>
+               <td th:text="#{label.latitude}">Latitude</td>
+               <td th:text="${topoDto.latitude}" >Latitude</td>
+            </tr>
+         </table>
+      </div>
+   </div>
 </body>

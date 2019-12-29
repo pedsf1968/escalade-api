@@ -5,6 +5,7 @@ import com.dsf.escalade.service.business.SectorService;
 import com.dsf.escalade.service.business.TopoService;
 import com.dsf.escalade.service.business.VoieService;
 import com.dsf.escalade.service.global.FileService;
+import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileController {
    private final FileService fileService;
+   private final UserService userService;
    private final TopoService topoService;
    private final SectorService sectorService;
    private final VoieService voieService;
@@ -36,8 +38,9 @@ public class FileController {
    @Value("${app.avatar.repository}")
    private String avatarRepository;
 
-   public FileController(FileService fileService, TopoService topoService, SectorService sectorService, VoieService voieService) {
+   public FileController(FileService fileService, UserService userService, TopoService topoService, SectorService sectorService, VoieService voieService) {
       this.fileService = fileService;
+      this.userService = userService;
       this.topoService = topoService;
       this.sectorService = sectorService;
       this.voieService = voieService;
@@ -89,10 +92,10 @@ public class FileController {
          model.addAttribute("voieDto",voieDto);
          return PathTable.VOIE_UPDATE_R + id;
       }  else {
-         //TODO
-         fileService.uploadFile(file, avatarRepository +  id + fileType + ".jpg");
-         model.addAttribute("fileName",  id + fileType + ".jpg");
-         return "fileUpload";
+         String fileName = userService.getOne(id).getAlias() + ".jpg";
+         fileService.uploadFile(file, avatarRepository + fileName);
+         model.addAttribute("fileName",  fileName);
+         return PathTable.USER_UPDATE_R;
       }
 
    }

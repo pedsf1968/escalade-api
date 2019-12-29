@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+   <div th:fragment="sectorinfo">
+      <div class="row">
+         <div class="col-lg-8">
+            <div class="row">
+               <div class="col-md-6 col-sm-12">
+                  <div class="card mt-2 mb-2">
+                     <div class="card-header">
+                        <h5 th:text="#{label.information}">Information</h5>
+                     </div>
+                     <div class="card-body">
+                        <table class="table table-striped">
+                           <tr>
+                              <td th:text="#{label.longitude}">Longitude</td>
+                              <td th:text="${sectorDto.longitude}" >Longitude</td>
+                           </tr>
+                           <tr>
+                              <td th:text="#{label.latitude}">Latitude</td>
+                              <td th:text="${sectorDto.latitude}" >Latitude</td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6 col-sm-12">
+                  <div class="card mt-2 mb-2">
+                     <div class="card-header">
+                        <h5 th:text="#{label.equipment}">Equipment</h5>
+                     </div>
+                     <div class="card-body">
+                        <p th:text="${sectorDto.equipment}"></p>
+                     </div>
+                  </div>
+               </div>
+
+               <div class=" col-md-6 col-sm-12">
+                  <div class="card mt-2 mb-2">
+                     <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.photoLink})}" alt="photo"/>
+                  </div>
+               </div>
+               <div class="col-md-6 col-sm-12">
+                  <div class="card mt-2 mb-2">
+                     <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.mapLink})}" alt="photo"/>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="row">
+               <div class="col-lg-12" sec:authorize="isAuthenticated()">
+                  <div class="card mt-2 mb-2">
+                     <div class="card-header">
+                        <h5 th:text="#{label.comment}">Comment</h5>
+                     </div>
+                     <form id="formcomment" class="card-body" action="#" th:action="@{/sector/comment/{sectorId}(sectorId=${sectorDto.id})}" method="POST" enctype="utf8">
+                        <textarea id="commentaire"  name="commentaire" class="form-control input-sm" rows="3" th:placeholder="#{placeholder.comment}"></textarea>
+                     </form>
+                     <div class="card-footer">
+                        <button form="formcomment" type="submit" class="btn btn-primary float-right" th:text="#{label.addComment}">Add comment</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-12">
+                  <div class="card mt-2 mb-2" th:each="comment : ${commentDtoList}">
+                     <div class="card-header inline-flex">
+                        <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${comment.alias})}" alt="avatar"/>
+                        <h5  class="center" th:text="${comment.alias}">Alias</h5>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger float-right" th:href="@{/sector/comment/delete/{commentId}(commentId=${comment.id})}" th:text="#{label.delete}" >Delete</a>
+                     </div>
+                     <div class="card-text">
+                        <p th:text="${comment.text}"></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</body>

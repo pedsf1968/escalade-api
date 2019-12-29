@@ -5,6 +5,7 @@ import com.dsf.escalade.service.business.SectorService;
 import com.dsf.escalade.service.business.TopoService;
 import com.dsf.escalade.service.business.VoieService;
 import com.dsf.escalade.service.global.AddressService;
+import com.dsf.escalade.service.global.CommentService;
 import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
@@ -36,15 +37,17 @@ public class SectorController {
    private final TopoService topoService;
    private final SectorService sectorService;
    private final VoieService voieService;
+   private final CommentService commentService;
    private final AddressService addressService;
    private final List<String> statusList = Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
    @Autowired
-   public SectorController(UserService userService, TopoService topoService, SectorService sectorService, VoieService voieService, AddressService addressService) {
+   public SectorController(UserService userService, TopoService topoService, SectorService sectorService, VoieService voieService, CommentService commentService, AddressService addressService) {
       this.userService = userService;
       this.topoService = topoService;
       this.sectorService = sectorService;
       this.voieService = voieService;
+      this.commentService = commentService;
       this.addressService = addressService;
    }
 
@@ -80,6 +83,24 @@ public class SectorController {
 
       return PathTable.TOPO_UPDATE_R + topoId;
    }
+
+   @GetMapping("/sector/read/{sectorId}")
+   public String readSector(@PathVariable("sectorId") Integer sectorId, Model model) {
+      // we fetch the sector
+      SectorDto sectorDto = sectorService.getOne(sectorId);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
+
+      // we fetch the topo parent and siblings for tab informations
+      Integer topoId = sectorDto.getTopoId();
+      TopoDto topoDto = topoService.getOne(topoId);
+
+      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+      model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(sectorId));
+
+      return PathTable.SECTOR_READ;
+   }
+
 
 
    @GetMapping("/sector/edit/{id}")

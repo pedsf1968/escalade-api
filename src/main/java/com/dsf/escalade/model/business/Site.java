@@ -28,8 +28,8 @@ public class Site implements Serializable {
    private String longitude;
    @Column(name = "latitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String latitude;
-   @Column(name = "has_comment", columnDefinition = "BOOLEAN DEFAULT FALSE")
-   protected Boolean hasComment;
+   @Column(name = "nb_comment", columnDefinition = "INTEGER(3) DEFAULT 0")
+   protected Integer nbComment;
    @Column(name = "photo_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
    protected String photoLink;
    @Column(name = "map_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")

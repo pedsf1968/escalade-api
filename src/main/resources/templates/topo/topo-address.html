@@ -1,12 +1,16 @@
 <!DOCTYPE HTML>
 <html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
-<div th:fragment="topoaddress" class="card mt-2 mb-2" th:if="${addressDto != null}">
-      <h5 class="card-header">Address</h5>
-      <p class="center card-text" th:text="${addressDto.street1}"></p>
-      <p class="center card-text" th:text="${addressDto.street2}"></p>
-      <p class="center card-text" th:text="${addressDto.zipCode}"></p>
-      <p class="center card-text" th:text="${addressDto.city}"></p>
-      <p class="center card-text" th:text="${addressDto.country}"></p>
-</div>
+   <div class="card mt-2 mb-2" th:fragment="topoaddress" th:if="${addressDto != null}">
+      <div class="card-header">
+         <h5 th:text="#{label.address}">Address</h5>
+      </div>
+      <div class="card-body">
+         <p class="center card-text" th:text="${addressDto.street1}"></p>
+         <p class="center card-text" th:text="${addressDto.street2}"></p>
+         <p class="center card-text" th:text="${addressDto.zipCode}"></p>
+         <p class="center card-text" th:text="${addressDto.city}"></p>
+         <p class="center card-text" th:text="${addressDto.country}"></p>
+      </div>
+   </div>
 </body>

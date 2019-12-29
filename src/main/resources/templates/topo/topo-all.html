@@ -21,8 +21,7 @@
    </header>
 
    <section class="row">
-      <div class="card-deck col-lg-4 col-sm-6 col-xs-12" th:each="topo : ${topoDtoList}">
-
+      <div class="card-deck col-lg-4 col-sm-6 col-xs-12 mx-auto" th:each="topo : ${topoDtoList}">
          <div class="card">
             <div class="card-header row">
                <div class="col-sm">
@@ -43,10 +42,9 @@
                <button  th:if="${topo.status} == 'AVAILABLE'" class="btn btn-success mb-2" th:text="${topo.status}"></button>
                <button  th:if="${topo.status} == 'REQUESTED'" class="btn btn-info mb-2" th:text="${topo.status}"></button>
                <button  th:if="${topo.status} == 'RESERVED'" class="btn btn-warning mb-2" th:text="${topo.status}"></button>
-               <span class="btn mb-2" th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">Date</span>
+               <span class="center btn mb-2" th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">Date</span>
                <a class="btn btn-primary mb-2 float-right" th:href="@{/topo/read/{id}(id=${topo.id})}" th:text="#{label.view}">View</a>
             </div>
-
          </div>
       </div>
 

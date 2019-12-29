@@ -22,7 +22,7 @@ public class SectorDto {
    private String longitude;
    @Pattern(regexp = LATITUDE_REGEXP, message = "Not a valid latitude (-90,+90) !")
    private String latitude;
-   private Boolean hasComment;
+   private Integer nbComment;
    private String photoLink;
    private String mapLink;
 

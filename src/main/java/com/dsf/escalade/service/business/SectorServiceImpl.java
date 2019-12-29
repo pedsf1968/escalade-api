@@ -29,7 +29,7 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setTopoId(sector.getTopoId());
          sectorDto.setName(sector.getName());
          sectorDto.setEquipment(sector.getEquipment());
-         sectorDto.setHasComment(sector.getHasComment());
+         sectorDto.setNbComment(sector.getNbComment());
          sectorDto.setLatitude(sector.getLatitude());
          sectorDto.setLongitude(sector.getLongitude());
          sectorDto.setPhotoLink(sector.getPhotoLink());
@@ -52,7 +52,7 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setTopoId(sector.getTopoId());
          sectorDto.setName(sector.getName());
          sectorDto.setEquipment(sector.getEquipment());
-         sectorDto.setHasComment(sector.getHasComment());
+         sectorDto.setNbComment(sector.getNbComment());
          sectorDto.setLatitude(sector.getLatitude());
          sectorDto.setLongitude(sector.getLongitude());
          sectorDto.setPhotoLink(sector.getPhotoLink());
@@ -73,7 +73,7 @@ public class SectorServiceImpl implements SectorService {
       sectorDto.setTopoId(sector.getTopoId());
       sectorDto.setName(sector.getName());
       sectorDto.setEquipment(sector.getEquipment());
-      sectorDto.setHasComment(sector.getHasComment());
+      sectorDto.setNbComment(sector.getNbComment());
       sectorDto.setLatitude(sector.getLatitude());
       sectorDto.setLongitude(sector.getLongitude());
       sectorDto.setPhotoLink(sector.getPhotoLink());
@@ -90,7 +90,7 @@ public class SectorServiceImpl implements SectorService {
       sector.setName(sectorDto.getName());
       sector.setType(SiteType.SECTOR);
       sector.setEquipment(sectorDto.getEquipment());
-      sector.setHasComment(sectorDto.getHasComment());
+      sector.setNbComment(sectorDto.getNbComment());
       sector.setLatitude(sectorDto.getLatitude());
       sector.setLongitude(sectorDto.getLongitude());
       sector.setPhotoLink(sectorDto.getPhotoLink());

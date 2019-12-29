@@ -11,6 +11,8 @@ public interface PathTable {
    public final static String TOPO_UPDATE_R = "redirect:/topo/edit/";
 
    public final static String SECTOR_ADD = "sector/sector-add";
+   public final static String SECTOR_READ = "sector/sector-read";
+   public final static String SECTOR_READ_R = "redirect:/sector/read/";
    public final static String SECTOR_UPDATE = "sector/sector-update";
    public final static String SECTOR_UPDATE_R = "redirect:/sector/edit/";
 
@@ -21,6 +23,10 @@ public interface PathTable {
 
    public final static String LONGUEUR_ADD = "longueur/longueur-add";
    public final static String LONGUEUR_UPDATE = "longueur/longueur-update";
+
+   public final static String USER_REGISTRATION = "user/registration";
+   public final static String USER_UPDATE = "user/user-update";
+   public final static String USER_UPDATE_R = "redirect:/user/edit/";
 
    public final static String ATTRIBUTE_ADDRESS = "addressDto";
    public final static String ATTRIBUTE_ALIAS_LIST = "aliasList";

@@ -29,7 +29,7 @@ public class VoieServiceImpl implements VoieService {
       voieDto.setParentId(voie.getParentId());
       voieDto.setPhotoLink(voie.getPhotoLink());
       voieDto.setMapLink(voie.getMapLink());
-      voieDto.setHasComment(voie.getHasComment());
+      voieDto.setNbComment(voie.getNbComment());
       voieDto.setCotationId(voie.getCotationId());
       voieDto.setHeigth(voie.getHeigth());
       voieDto.setIsEquipped(voie.getIsEquipped());
@@ -52,7 +52,7 @@ public class VoieServiceImpl implements VoieService {
          voieDto.setParentId(voie.getParentId());
          voieDto.setPhotoLink(voie.getPhotoLink());
          voieDto.setMapLink(voie.getMapLink());
-         voieDto.setHasComment(voie.getHasComment());
+         voieDto.setNbComment(voie.getNbComment());
          voieDto.setCotationId(voie.getCotationId());
          voieDto.setHeigth(voie.getHeigth());
          voieDto.setIsEquipped(voie.getIsEquipped());
@@ -75,7 +75,7 @@ public class VoieServiceImpl implements VoieService {
       voie.setParentId(voieDto.getParentId());
       voie.setPhotoLink(voieDto.getPhotoLink());
       voie.setMapLink(voieDto.getMapLink());
-      voie.setHasComment(voieDto.getHasComment());
+      voie.setNbComment(voieDto.getNbComment());
       voie.setCotationId(voieDto.getCotationId());
       voie.setHeigth(voieDto.getHeigth());
       voie.setIsEquipped(voieDto.getIsEquipped());
