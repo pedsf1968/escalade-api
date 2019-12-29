@@ -1,4 +1,4 @@
-package com.dsf.escalade.web.controller;
+package com.dsf.escalade.web.controller.global;
 
 
 import org.apache.commons.io.IOUtils;

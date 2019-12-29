@@ -1,4 +1,4 @@
-package com.dsf.escalade.web.controller;
+package com.dsf.escalade.web.controller.global;
 
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.service.business.SectorService;

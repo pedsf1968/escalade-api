@@ -1,4 +1,4 @@
-package com.dsf.escalade.web.controller;
+package com.dsf.escalade.web.controller.business;
 
 import com.dsf.escalade.repository.business.LongueurRepository;
 import com.dsf.escalade.model.business.Longueur;

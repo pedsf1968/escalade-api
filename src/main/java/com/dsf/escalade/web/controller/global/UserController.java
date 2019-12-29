@@ -1,4 +1,4 @@
-package com.dsf.escalade.web.controller;
+package com.dsf.escalade.web.controller.global;
 
 import com.dsf.escalade.service.global.AddressService;
 import com.dsf.escalade.service.global.SecurityServiceImpl;

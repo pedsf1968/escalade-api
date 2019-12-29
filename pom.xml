@@ -129,6 +129,13 @@
 			<version>${springboot-starter-version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>${springboot-starter-version}</version>
+		</dependency>
+
 		<!-- ====================================================== H2DATABASE -->
 		<dependency>
 			<groupId>com.h2database</groupId>
