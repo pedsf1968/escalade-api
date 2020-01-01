@@ -19,44 +19,65 @@
       </div>
    </header>
 
-      <form id="formsectoradd" class="row" action="#" th:action="@{/sector/add}" method="POST" enctype="utf8">
+   <form id="formsectoradd" class="row" action="#" th:action="@{/sector/add}" method="POST" enctype="utf8">
+      <div class="col-md-4 mx-auto">
+         <div class="card mt-2 mb-2">
+            <div class="card-header row">
+               <div class="col-sm">
+                  <h5 th:text="#{label.information}">Information</h5>
+               </div>
+               <div class="col-sm">
+                  <div class="input-group mb-2">
+                     <div class="input-group-prepend">
+                        <div class="input-group-text" th:text="#{label.topoId}">Topo Id</div>
+                     </div>
+                     <input type="text" class="form-control" th:field="${sectorDto.topoId}" readonly>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body">
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.name}">Name</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="${sectorDto.name}" th:placeholder="#{placeholder.name}">
+               </div>
+               <span th:if="${#fields.hasErrors('sectorDto.name')}" th:errors="${sectorDto.name}"></span>
 
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.topoId}">Topo Id</div>
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="${sectorDto.longitude}" th:placeholder="#{placeholder.longitude}">
+               </div>
+               <span th:if="${#fields.hasErrors('sectorDto.longitude')}" th:errors="${sectorDto.longitude}"></span>
+
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="${sectorDto.latitude}" th:placeholder="#{placeholder.latitude}">
+               </div>
+               <span th:if="${#fields.hasErrors('sectorDto.latitude')}" th:errors="${sectorDto.latitude}"></span>
+            </div>
          </div>
-         <input type="text" class="form-control" th:field="${sectorDto.topoId}" readonly>
       </div>
-
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.name}">Name</div>
+      <div class="col-md-6 mx-auto">
+         <div class="card mt-2 mb-2">
+            <div class="card-header">
+               <h5 for="equipment" th:text="#{label.equipment}">Equipment</h5>
+            </div>
+            <div class="card-body">
+               <textarea id="equipment" class="form-control input-sm" rows="3" th:field="${sectorDto.equipment}" th:placeholder="#{placeholder.equipment}"></textarea>
+            </div>
+            <div class="card-footer">
+               <span th:if="${#fields.hasErrors('sectorDto.equipment')}" th:errors="${sectorDto.equipment}"></span>
+            </div>
          </div>
-         <input type="text" class="form-control" th:field="${sectorDto.name}" th:placeholder="#{placeholder.name}">
       </div>
-      <span th:if="${#fields.hasErrors('sectorDto.name')}" th:errors="${sectorDto.name}"></span>
-
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
-         </div>
-         <input type="text" class="form-control" th:field="${sectorDto.longitude}" th:placeholder="#{placeholder.longitude}">
-      </div>
-      <span th:if="${#fields.hasErrors('sectorDto.longitude')}" th:errors="${sectorDto.longitude}"></span>
-
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
-         </div>
-         <input type="text" class="form-control" th:field="${sectorDto.latitude}" th:placeholder="#{placeholder.latitude}">
-      </div>
-      <span th:if="${#fields.hasErrors('sectorDto.latitude')}" th:errors="${sectorDto.latitude}"></span>
-
-
-      <label for="equipment" th:text="#{label.equipment}">Equipment</label>
-         <textarea id="equipment" class="form-control input-sm" rows="3" th:field="${sectorDto.equipment}" th:placeholder="#{placeholder.equipment}"/>
-      <span th:if="${#fields.hasErrors('sectorDto.equipment')}" th:errors="${sectorDto.equipment}"></span>
    </form>
+
+   <div  th:replace="~{voie/voie-fragment :: voie}"></div>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>

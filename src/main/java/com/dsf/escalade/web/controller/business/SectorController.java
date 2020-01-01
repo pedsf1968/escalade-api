@@ -73,7 +73,7 @@ public class SectorController {
       }
 
       if (userDto.getEmail().equals(authentication.getName())){
-         sectorService.save(sectorDto);
+         return PathTable.SECTOR_UPDATE_R + sectorService.save(sectorDto);
       }
 
       model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
@@ -88,34 +88,50 @@ public class SectorController {
    public String readSector(@PathVariable("sectorId") Integer sectorId, Model model) {
       // we fetch the sector
       SectorDto sectorDto = sectorService.getOne(sectorId);
+
+      // we fetch the topo parent and siblings for tab informations
+      Integer topoId = sectorDto.getTopoId();
+      TopoDto topoDto = topoService.getOne(topoId);
+
+
+      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
       model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
+      model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(sectorId));
+
+      return PathTable.SECTOR_READ;
+   }
+
+   @GetMapping("/sector/edit/{sectorId}")
+   public String editSector(@PathVariable("sectorId") Integer sectorId, Model model) {
+      SectorDto sectorDto = sectorService.getOne(sectorId);
 
       // we fetch the topo parent and siblings for tab informations
       Integer topoId = sectorDto.getTopoId();
       TopoDto topoDto = topoService.getOne(topoId);
 
       model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
-      model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(sectorId));
-
-      return PathTable.SECTOR_READ;
-   }
-
-
-
-   @GetMapping("/sector/edit/{id}")
-   public String editSector(@PathVariable("id") Integer id, Model model) {
-      SectorDto sectorDto = sectorService.getOne(id);
-
       model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
+      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
+      //model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(sectorId));
 
       return PathTable.SECTOR_UPDATE;
    }
 
-   @PostMapping("/sector/update/{id}")
-   public String updateSector(@PathVariable("id") Integer id, @ModelAttribute("sectorTdo") @Valid SectorDto sectorDto, @NonNull BindingResult bindingResult, Model model) {
+   @PostMapping("/sector/update/{sectorId}")
+   public String updateSector(@PathVariable("sectorId") Integer sectorId, @ModelAttribute("sectorTdo") @Valid SectorDto sectorDto, @NonNull BindingResult bindingResult, Model model) {
 
       if(bindingResult.hasErrors()){
+         // we fetch the topo parent and siblings for tab informations
+         Integer topoId = sectorDto.getTopoId();
+         TopoDto topoDto = topoService.getOne(topoId);
+
+         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+         model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+         model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
+        // model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(sectorId));
          return PathTable.SECTOR_UPDATE;
       }
 
@@ -132,16 +148,17 @@ public class SectorController {
 
       model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
       model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
       model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
       model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
 
       return PathTable.TOPO_UPDATE_R + topoId;
    }
 
-   @GetMapping("/sector/delete/{id}")
-   public String deleteSector(@PathVariable("id") Integer id, Model model){
+   @GetMapping("/sector/delete/{sectorId}")
+   public String deleteSector(@PathVariable("sectorId") Integer sectorId, Model model){
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      SectorDto sectorDto = sectorService.getOne(id);
+      SectorDto sectorDto = sectorService.getOne(sectorId);
       UserDto userDto = userService.findByAlias(topoService.getOne(sectorDto.getTopoId()).getAliasManager());
       Integer topoId = sectorDto.getTopoId();
 

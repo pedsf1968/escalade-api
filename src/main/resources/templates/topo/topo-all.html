@@ -39,7 +39,9 @@
                <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${topo.aliasManager})}" alt="avatar"/>
                <span class="btn mb-2" th:text="${topo.aliasManager}"></span>
                <button  th:if="${topo.status} == 'UNVAILABLE'" class="btn btn-danger mb-2" th:text="${topo.status}"></button>
-               <button  th:if="${topo.status} == 'AVAILABLE'" class="btn btn-success mb-2" th:text="${topo.status}"></button>
+
+               <a class="btn btn-primary mb-2" th:href="@{/topo/book/{id}(id=${topo.id})}" th:if="${topo.status} == 'AVAILABLE'"  th:text="#{label.book}"></a>
+
                <button  th:if="${topo.status} == 'REQUESTED'" class="btn btn-info mb-2" th:text="${topo.status}"></button>
                <button  th:if="${topo.status} == 'RESERVED'" class="btn btn-warning mb-2" th:text="${topo.status}"></button>
                <span class="center btn mb-2" th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">Date</span>

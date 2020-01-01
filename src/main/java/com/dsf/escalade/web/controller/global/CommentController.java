@@ -69,7 +69,12 @@ public class CommentController {
             commentDto.setAlias(userService.findByEmail(authentication.getName()).getAlias());
             commentService.save(commentDto);
             //incrementation of topo comment number
-            topoDto.setNbComment(topoDto.getNbComment()+1);
+            if(topoDto.getNbComment()!=null) {
+                topoDto.setNbComment(topoDto.getNbComment() + 1);
+            } else {
+                topoDto.setNbComment(1);
+            }
+
             topoService.save(topoDto);
         }
 
@@ -129,7 +134,12 @@ public class CommentController {
             commentDto.setAlias(userService.findByEmail(authentication.getName()).getAlias());
             commentService.save(commentDto);
             //incrementation of topo comment number
-            topoDto.setNbComment(topoDto.getNbComment()+1);
+            //incrementation of topo comment number
+            if(topoDto.getNbComment()!=null) {
+                topoDto.setNbComment(topoDto.getNbComment() + 1);
+            } else {
+                topoDto.setNbComment(1);
+            }
             topoService.save(topoDto);
         }
 

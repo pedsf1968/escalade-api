@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<div th:fragment="voie" class="row" th:if="${voieDtoList!=null}">
+   <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="voie : ${voieDtoList}">
+      <div class="card">
+         <div class="card-header row">
+            <h5 th:text="${voie.name}"></h5>
+         </div>
+         <div class="card-body">
+            <img  th:if="${voie.photoLink!=null}" class="img-fluid" th:src="@{/images/voie/{image}(image=${voie.photoLink})}" alt="photo"/>
+            <table class="table table-striped">
+               <tr>
+                  <td th:text="#{label.heigth}">Heigth</td>
+                  <td th:text="${voie.heigth}" >Heigth</td>
+               </tr>
+               <tr>
+                  <td th:text="#{label.cotation}">Cotation</td>
+                  <td th:text="${voie.cotationId}" >Cotation</td>
+               </tr>
+            </table>
+         </div>
+         <div class="card-footer">
+            <a class="btn btn-primary float-right" th:href="@{/voie/read/{id}(id=${voie.id})}" th:text="#{label.view}">View</a>
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+</html>

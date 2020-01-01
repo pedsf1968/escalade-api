@@ -80,27 +80,18 @@ public class VoieController {
          topoDto = topoService.getOne(sectorDto.getTopoId());
       }
 
+      //get the manager of the topo
       UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
 
       if (userDto.getEmail().equals(authentication.getName())){
-         voieService.save(voieDto);
+         return PathTable.VOIE_UPDATE_R + voieService.save(voieDto);
       }
 
-      if( sectorDto!=null){
-         // the parent is a Sector
-         model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
-         model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(parentId));
-         return PathTable.TOPO_UPDATE_R + sectorDto.getTopoId();
-
+      //return to parents
+      if(sectorDto!=null) {
+         return PathTable.SECTOR_UPDATE_R + sectorDto.getId();
       } else {
-         // the parent is a Topo
-         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-         model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(parentId));
-         model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(parentId));
-         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressService.getOne(topoDto.getAddressId()));
-         model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
-
-         return PathTable.TOPO_UPDATE_R + parentId;
+         return PathTable.TOPO_UPDATE_R + topoDto.getId();
       }
    }
 
@@ -126,19 +117,35 @@ public class VoieController {
 
 
    @PostMapping("/voie/update/{id}")
-   public String updateVoie(@PathVariable("id") Integer voieId,
-                            @ModelAttribute("voieDto") VoieDto voieDto, BindingResult bindingResult,
-                            Model model){
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-      if(bindingResult.hasErrors()){
-
+   public String updateVoie(@ModelAttribute("voieDto") @Valid VoieDto voieDto, @NotNull BindingResult bindingResultTopo, Model model) {
+      if (bindingResultTopo.hasErrors()) {
+         return PathTable.VOIE_ADD;
       }
 
-      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
-      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      Integer parentId = voieDto.getParentId();
+      TopoDto topoDto = null;
+      SectorDto sectorDto = null;
 
-      return PathTable.TOPO_UPDATE_R + voieDto.getParentId();
+      if(siteService.getType(parentId).equals(SiteType.TOPO)){
+         topoDto = topoService.getOne(parentId);
+      } else {
+         sectorDto = sectorService.getOne(parentId);
+         topoDto = topoService.getOne(sectorDto.getTopoId());
+      }
+
+      UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
+
+      if (userDto.getEmail().equals(authentication.getName())){
+         voieService.save(voieDto);
+      }
+
+      //return to parents
+      if(sectorDto!=null) {
+         return PathTable.SECTOR_UPDATE_R + sectorDto.getId();
+      } else {
+         return PathTable.TOPO_UPDATE_R + topoDto.getId();
+      }
    }
 
 }

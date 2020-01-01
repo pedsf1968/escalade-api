@@ -2,6 +2,7 @@ package com.dsf.escalade.web.controller.path;
 
 public interface PathTable {
    public final static String TOPO_ALL = "topo/topo-all";
+   public final static String TOPO_ALL_R = "redirect:/topo/all";
    public final static String TOPO_MYLIST = "topo/topo-mylist";
    public final static String TOPO_MYLIST_R = "redirect:/topo/mylist";
    public final static String TOPO_ADD = "topo/topo-add";
@@ -18,6 +19,7 @@ public interface PathTable {
 
    public final static String VOIE_ADD = "voie/voie-add";
    public final static String VOIE_READ = "voie/voie-read";
+   public final static String VOIE_READ_R = "redirect:/voie/read";
    public final static String VOIE_UPDATE = "voie/voie-update";
    public final static String VOIE_UPDATE_R = "redirect:/voie/edit/";
 

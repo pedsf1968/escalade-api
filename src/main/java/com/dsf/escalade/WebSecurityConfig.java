@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    protected void configure(HttpSecurity http) throws Exception {
       http
          .authorizeRequests()
-            .antMatchers("/**","/resources/**", "/login", "/registration", "/index","/h2-console/**","/images/**","/feedback")
+            .antMatchers("/**","/resources/**", "/login", "/registration", "/index","/h2-console/**","/images/**","/feedback/**")
             .permitAll()
             .anyRequest()
             .authenticated()
@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
          .csrf()
-         .ignoringAntMatchers("/h2-console/**","/uploadFile")//don't apply CSRF protection to /h2-console
+         .ignoringAntMatchers("/h2-console/**","/uploadFile","/feedback")//don't apply CSRF protection to /h2-console
             .and()
          .headers()
             .frameOptions()

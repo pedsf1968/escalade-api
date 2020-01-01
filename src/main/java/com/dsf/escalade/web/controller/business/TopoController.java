@@ -145,12 +145,13 @@ public class TopoController {
         // verify that the manager is the Topo manager
         if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
             topoDto.setAddressId(addressService.save(addressDto));
-            topoService.save(topoDto);
+            // save and go to update to add images
+            return PathTable.TOPO_UPDATE_R + topoService.save(topoDto);
         }
 
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
         model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
-        return PathTable.TOPO_MYLIST_R;
+        return PathTable.TOPO_MYLIST;
     }
 
     @GetMapping("/topo/read/{id}")

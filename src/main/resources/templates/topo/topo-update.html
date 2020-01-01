@@ -13,6 +13,7 @@
             <div class="col-sm my-auto">
                <div class="float-right" >
                   <a class="btn btn-primary" th:href="@{/sector/new/{id}(id=${topoDto.id})}" th:text="#{label.newSector}">New sector</a>
+                  <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${topoDto.id})}" th:text="#{label.newLane}">New Lane</a>
                   <a class="btn btn-danger" th:href="@{/topo/delete/{id}(id=${topoDto.id})}" th:text="#{label.delete}" >Delete</a>
                   <a class="btn btn-primary" th:href="@{/topo/mylist}" th:text="#{label.cancel}">Cancel</a>
                   <button form="formupdate" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
@@ -21,235 +22,185 @@
          </div>
       </header>
 
-         <div class="container-fluid">
-            <ul class="nav nav-tabs">
-               <li class="nav-item">
-                  <a class="nav-link active"  th:href="@{'#'+${#strings.replace(topoDto.name,' ','')}}" data-toggle="tab" >
-                     <label th:text="${topoDto.name}">Link</label>
-                  </a>
-               </li>
-               <li class="nav-item" th:each="sector, barStat : ${sectorDtoList}">
-                  <a class="nav-link" th:href="@{'#'+${#strings.replace(sector.name,' ','')}}" data-toggle="tab" >
-                     <label th:text="${sector.name}">Link</label>
-                  </a>
-               </li>
-            </ul>
+      <ul class="nav nav-tabs">
+         <li class="nav-item">
+            <a class="nav-link actove"  th:href="@{/topo/edit/{id}(id=${topoDto.id})}" >
+              <label th:text="${topoDto.name}">Link</label>
+            </a>
+         </li>
+         <li class="nav-item" th:each="sector, barStat : ${sectorDtoList}">
+            <a class="nav-link" th:href="@{/sector/edit/{id}(id=${sector.id})}" >
+               <label th:text="${sector.name}">Link</label>
+            </a>
+         </li>
+      </ul>
 
-         <div class="tab-content">
-            <div class="tab-pane fade col-md-12 show active" th:id="${#strings.replace(topoDto.name,' ','')}" >
-               <form  id="formupdate" action="#" th:action="@{/topo/update/{id}(id=${topoDto.id})}" method="POST" enctype="utf8">
-                  <div class="row">
-                     <div class="col-lg-4 col-md-6">
-                        <div class="card mt-2 mb-2">
-                           <div class="card-header">
-                              <div class="input-group mb-2">
-                                 <div class="input-group-prepend">
-                                    <div class="input-group-text" th:text="#{label.manager}">Manager</div>
-                                 </div>
-                                 <input  type="text" class="form-control" th:field="${topoDto.aliasManager}" readonly/>
-                                 <a class="btn btn-primary float-right" th:href="@{/voie/new/{id}(id=${topoDto.id})}" th:text="#{label.newLane}">New Lane</a>
-                              </div>
-                           </div>
-                           <div class="card-body">
-                              <div class="input-group mb-2">
-                                 <div class="input-group-prepend">
-                                    <div class="input-group-text" th:text="#{label.name}">Name</div>
-                                 </div>
-                                 <input type="text" class="form-control" th:field="${topoDto.name}" th:placeholder="#{placeholder.name}">
-                              </div>
-                              <span th:if="${#fields.hasErrors('topoDto.name')}" th:errors="${topoDto.name}"></span>
-
-                              <div class="input-group mb-2">
-                                 <div class="input-group-prepend">
-                                    <div class="input-group-text" th:text="#{label.region}">Region</div>
-                                 </div>
-                                 <input type="text" class="form-control" th:field="${topoDto.region}" th:placeholder="#{placeholder.region}">
-                              </div>
-                              <span th:if="${#fields.hasErrors('topoDto.region')}" th:errors="${topoDto.region}"></span>
-                           </div>
+      <form  id="formupdate" action="#" th:action="@{/topo/update/{id}(id=${topoDto.id})}" method="POST" enctype="utf8">
+         <div class="row">
+            <div class="col-lg-4 col-md-6">
+               <div class="card mt-2 mb-2">
+                  <div class="card-header">
+                     <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                           <div class="input-group-text" th:text="#{label.manager}">Manager</div>
                         </div>
-                     </div>
-
-                     <div class="col-lg-4 col-md-6">
-                        <div class="card mt-2 mb-2">
-                           <div class="card-body" th:replace="~{fragments/address :: address}"></div>
-                        </div>
-                     </div>
-
-                     <div class="col-lg-4 col-md-6">
-                        <div class="card mt-2 mb-2">
-                           <div class="input-group">
-                              <div class="input-group-prepend">
-                                 <div class="input-group-text" th:text="#{label.date}">Date</div>
-                              </div>
-                              <input type="date" class="form-control" th:field="${topoDto.date}" th:placeholder="#{placeholder.date}">
-                           </div>
-                           <div class="input-group">
-                              <div class="input-group-prepend">
-                                 <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
-                              </div>
-                              <input type="text" class="form-control" th:field="${topoDto.longitude}" th:placeholder="#{placeholder.longitude}">
-                           </div>
-                           <span th:if="${#fields.hasErrors('topoDto.longitude')}" th:errors="${topoDto.longitude}"></span>
-
-                           <div class="input-group">
-                              <div class="input-group-prepend">
-                                 <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
-                              </div>
-                              <input type="text" class="form-control" th:field="${topoDto.latitude}" th:placeholder="#{placeholder.latitude}">
-                           </div>
-                           <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
-
-                           <div class="form-inline">
-                              <span class="btn mb-2" th:text="#{label.status}">Status</span>
-                              <select class="btn mb-2" th:field="${topoDto.status}">
-                                 <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
-                              </select>
-                              <span class="btn mb-2" th:text="#{label.statusAuto}">Auto</span>
-                              <input class="btn mb-2" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="col-lg-4 col-md-6">
-                        <div class="card mt-2 mb-2">
-                           <div class="card-header">
-                              <h5 th:text="#{label.description}">description</h5>
-                           </div>
-                           <div class="card-body">
-                              <textarea class="form-control input-sm" rows="3" th:field="${topoDto.description}" th:placeholder="#{placeholder.description}">Description</textarea>
-                           </div>
-                           <div class="card-footer">
-                              <span th:if="${#fields.hasErrors('topoDto.description')}" th:errors="${topoDto.description}"></span>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="col-lg-4 col-md-6">
-                        <div class="card mt-2 mb-2">
-                           <div class="card-header">
-                              <h5 th:text="#{label.technic}">Technic</h5>
-                           </div>
-                           <div class="card-body">
-                              <textarea class="form-control input-sm" rows="3" th:field="${topoDto.technic}" th:placeholder="#{placeholder.technic}">Technic</textarea>
-                           </div>
-                           <div class="card-footer">
-                              <span th:if="${#fields.hasErrors('topoDto.technic')}" th:errors="${topoDto.technic}"></span>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="col-lg-4 col-md-6">
-                        <div class="card mt-2 mb-2">
-                           <div class="card-header">
-                              <h5 th:text="#{label.access}">Access</h5>
-                           </div>
-                           <div class="card-body">
-                              <textarea class="form-control input-sm" rows="3" th:field="${topoDto.access}" th:placeholder="#{placeholder.access}">Access</textarea>
-                           </div>
-                           <div class="card-footer">
-                              <span th:if="${#fields.hasErrors('topoDto.access')}" th:errors="${topoDto.access}"></span>
-                           </div>
-                        </div>
+                        <input  type="text" class="form-control" th:field="${topoDto.aliasManager}" readonly/>
+                        <input type="hidden"  th:field="${topoDto.photoLink}">
+                        <input type="hidden"  th:field="${topoDto.mapLink}">
                      </div>
                   </div>
-               </form>
-
-               <div class="col-md-12">
-                  <div class="row">
-                     <div class="col-lg-4 col-md-6  mx-auto">
-                        <div class="card mt-2 mb-2">
-                           <div class="card-header">
-                              <h5 th:text="#{label.photo}">Photo</h5>
-                           </div>
-                           <div class="card-body" th:if="${topoDto.photoLink!=null}">
-                              <img class="card-img" th:src="@{/images/topo/{image}(image=${topoDto.photoLink})}" alt="photo"/>
-                           </div>
-                           <div class="card-footer">
-                              <form id="formphoto" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
-                                 <input type="file" name="file"/>
-                                 <input type="hidden" name="siteType" th:value="TOPO">
-                                 <input type="hidden" name="siteId" th:value="${topoDto.id}">
-                                 <input type="hidden" name="fileType" th:value="photo">
-                                 <button form="formphoto" type="submit" class="btn btn-primary float-right" th:text="#{label.upload}">Upload</button>
-                              </form>
-                           </div>
+                  <div class="card-body">
+                     <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                           <div class="input-group-text" th:text="#{label.name}">Name</div>
                         </div>
+                        <input type="text" class="form-control" th:field="${topoDto.name}" th:placeholder="#{placeholder.name}">
                      </div>
+                     <span th:if="${#fields.hasErrors('topoDto.name')}" th:errors="${topoDto.name}"></span>
 
-
-                     <div class="col-lg-4 col-md-6  mx-auto">
-                        <div class="card mt-2 mb-2">
-                           <div class="card-header">
-                              <h5 th:text="#{label.map}">Map</h5>
-                           </div>
-                           <div class="card-body" th:if="${topoDto.mapLink!=null}">
-                              <img class="card-img" th:src="@{/images/topo/{image}(image=${topoDto.mapLink})}" alt="map"/>
-                           </div>
-                           <div class="card-footer">
-                              <form id="formmap" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
-                                 <input type="file" name="file"/>
-                                 <input type="hidden" name="siteType" th:value="TOPO">
-                                 <input type="hidden" name="siteId" th:value="${topoDto.id}">
-                                 <input type="hidden" name="fileType" th:value="map">
-                                 <button form="formmap" type="submit" class="btn btn-primary float-right" th:text="#{label.upload}">Upload</button>
-                              </form>
-                           </div>
+                     <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                           <div class="input-group-text" th:text="#{label.region}">Region</div>
                         </div>
+                        <input type="text" class="form-control" th:field="${topoDto.region}" th:placeholder="#{placeholder.region}">
+                     </div>
+                     <span th:if="${#fields.hasErrors('topoDto.region')}" th:errors="${topoDto.region}"></span>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                  <div th:replace="~{fragments/address :: address}"></div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+               <div class="card mt-2 mb-2">
+                  <div class="card-body">
+                     <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                           <div class="input-group-text" th:text="#{label.date}">Date</div>
+                        </div>
+                        <input type="date" class="form-control" th:field="${topoDto.date}" th:placeholder="#{placeholder.date}">
+                     </div>
+                     <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                           <div class="input-group-text" th:text="#{label.longitude}">Longitude</div>
+                        </div>
+                        <input type="text" class="form-control" th:field="${topoDto.longitude}" th:placeholder="#{placeholder.longitude}">
+                     </div>
+                     <span th:if="${#fields.hasErrors('topoDto.longitude')}" th:errors="${topoDto.longitude}"></span>
+
+                     <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                           <div class="input-group-text" th:text="#{label.latitude}">Latitude</div>
+                        </div>
+                        <input type="text" class="form-control" th:field="${topoDto.latitude}" th:placeholder="#{placeholder.latitude}">
+                     </div>
+                     <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
+
+                     <div class="form-inline">
+                        <span class="btn mb-2" th:text="#{label.status}">Status</span>
+                        <select class="btn mb-2" th:field="${topoDto.status}">
+                           <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+                        </select>
+                        <span class="btn mb-2" th:text="#{label.statusAuto}">Auto</span>
+                        <input class="btn mb-2" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
                      </div>
                   </div>
                </div>
-
-               <div  th:replace="~{voie/voie-fragment :: voie}"></div>
-
             </div>
 
-            <div class="tab-pane fade col-md-12" th:id="@{${#strings.replace(sector.name,' ','')}}" th:each="sector,barStat : ${sectorDtoList}">
-               <div class="row">
-                     <div class="card mx-auto col-lg-4 col-md-6 mt-2 mb-2">
-                        <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sector.photoLink})}" alt="photo"/>
-                     </div>
-                     <div class="card mx-auto col-lg-4 col-md-6 mt-2 mb-2">
-                        <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sector.mapLink})}" alt="map"/>
-                     </div>
-                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
-                        <div class="card-header">
-                           <h5 th:text="#{label.equipment}">Equipment</h5>
-                        </div>
-                        <div class="card-text">
-                           <p th:text="${sector.equipment}"></p>
-                        </div>
-                     </div>
+            <div class="col-lg-4 col-md-6">
+               <div class="card mt-2 mb-2">
+                  <div class="card-header">
+                     <h5 th:text="#{label.description}">description</h5>
+                  </div>
+                  <div class="card-body">
+                     <textarea class="form-control input-sm" rows="3" th:field="${topoDto.description}" th:placeholder="#{placeholder.description}">Description</textarea>
+                  </div>
+                  <div class="card-footer">
+                     <span th:if="${#fields.hasErrors('topoDto.description')}" th:errors="${topoDto.description}"></span>
+                  </div>
+               </div>
+            </div>
 
-                     <div class="card col-lg-4 col-md-6 mt-2 mb-2">
-                        <div class="card-header">
-                           <h5 th:text="#{label.information}">Information</h5>
-                        </div>
-                        <div class="card-body">
-                           <table class="table table-striped">
-                              <tr>
-                                 <td th:text="#{label.longitude}">Longitude</td>
-                                 <td th:text="${sector.longitude}" >Longitude</td>
-                              </tr>
-                              <tr>
-                                 <td th:text="#{label.latitude}">Latitude</td>
-                                 <td th:text="${sector.latitude}" >Latitude</td>
-                              </tr>
-                           </table>
-                        </div>
-                        <div class="card-footer form-group">
-                           <div class="float-right">
-                              <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${sector.id})}" th:text="#{label.newLane}">New Lane</a>
-                              <a class="btn btn-primary" th:href="@{/sector/edit/{id}(id=${sector.id})}" th:text="#{label.edit}">Edit</a>
-                              <a class="btn btn-primary" th:href="@{/sector/delete/{id}(id=${sector.id})}" th:text="#{label.delete}">Delete</a>
-                           </div>
-                        </div>
-                     </div>
+            <div class="col-lg-4 col-md-6">
+               <div class="card mt-2 mb-2">
+                  <div class="card-header">
+                     <h5 th:text="#{label.technic}">Technic</h5>
+                  </div>
+                  <div class="card-body">
+                     <textarea class="form-control input-sm" rows="3" th:field="${topoDto.technic}" th:placeholder="#{placeholder.technic}">Technic</textarea>
+                  </div>
+                  <div class="card-footer">
+                     <span th:if="${#fields.hasErrors('topoDto.technic')}" th:errors="${topoDto.technic}"></span>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+               <div class="card mt-2 mb-2">
+                  <div class="card-header">
+                     <h5 th:text="#{label.access}">Access</h5>
+                  </div>
+                  <div class="card-body">
+                     <textarea class="form-control input-sm" rows="3" th:field="${topoDto.access}" th:placeholder="#{placeholder.access}">Access</textarea>
+                  </div>
+                  <div class="card-footer">
+                     <span th:if="${#fields.hasErrors('topoDto.access')}" th:errors="${topoDto.access}"></span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+
+      <div class="col-md-12">
+         <div class="row">
+            <div class="col-lg-4 col-md-6  mx-auto" >
+               <div class="card mt-2 mb-2">
+                  <div class="card-header">
+                     <h5 th:text="#{label.photo}">Photo</h5>
+                  </div>
+                  <div class="card-body" th:if="${topoDto.photoLink!=null}">
+                     <img class="card-img" th:src="@{/images/topo/{image}(image=${topoDto.photoLink})}" alt="photo"/>
+                  </div>
+                  <div class="card-footer">
+                     <form id="formphoto" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
+                        <input type="file" name="file"/>
+                        <input type="hidden" name="siteType" th:value="TOPO">
+                        <input type="hidden" name="siteId" th:value="${topoDto.id}">
+                        <input type="hidden" name="fileType" th:value="photo">
+                        <button form="formphoto" type="submit" class="btn btn-primary float-right" th:text="#{label.upload}">Upload</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6  mx-auto">
+               <div class="card mt-2 mb-2">
+                  <div class="card-header">
+                     <h5 th:text="#{label.map}">Map</h5>
+                  </div>
+                  <div class="card-body" th:if="${topoDto.mapLink!=null}">
+                     <img class="card-img" th:src="@{/images/topo/{image}(image=${topoDto.mapLink})}" alt="map"/>
+                  </div>
+                  <div class="card-footer">
+                     <form id="formmap" action="#"  th:action="@{/uploadFile(${_csrf.parameterName}=${_csrf.token})}" enctype="multipart/form-data" method="POST">
+                        <input type="file" name="file"/>
+                        <input type="hidden" name="siteType" th:value="TOPO">
+                        <input type="hidden" name="siteId" th:value="${topoDto.id}">
+                        <input type="hidden" name="fileType" th:value="map">
+                        <button form="formmap" type="submit" class="btn btn-primary float-right" th:text="#{label.upload}">Upload</button>
+                     </form>
                   </div>
                </div>
             </div>
          </div>
       </div>
+
+      <div th:replace="~{voie/voie-mylist :: voie}"></div>
+
    </div>
 
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
