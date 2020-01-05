@@ -40,6 +40,8 @@ public class MailController {
       mailSender.setPort(emailConfiguration.getPort());
       mailSender.setUsername(emailConfiguration.getUsername());
       mailSender.setPassword(emailConfiguration.getPassword());
+
+      mailMessage.setTo("admin@escalade.com");
    }
 
    @PostMapping("/feedback")
@@ -63,10 +65,7 @@ public class MailController {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
       // Create message
-      SimpleMailMessage mailMessage = new SimpleMailMessage();
       mailMessage.setFrom(authentication.getName());
-      mailMessage.setTo("dsf@escalade.com");
-
 
       if(topoDto.getStatus().equals(StatusType.AVAILABLE.toString())) {
          if(topoDto.getStatusAuto()){

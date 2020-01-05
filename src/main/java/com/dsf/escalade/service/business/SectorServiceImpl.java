@@ -3,6 +3,7 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.Sector;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.repository.business.SectorRepository;
+import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.web.dto.SectorDto;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,11 @@ import java.util.List;
 public class SectorServiceImpl implements SectorService {
 
    private final SectorRepository sectorRepository;
+   private final UserRepository userRepository;
 
-   public SectorServiceImpl(SectorRepository sectorRepository) {
+   public SectorServiceImpl(SectorRepository sectorRepository, UserRepository userRepository) {
       this.sectorRepository = sectorRepository;
+      this.userRepository = userRepository;
    }
 
    @Override
@@ -34,6 +37,10 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setLongitude(sector.getLongitude());
          sectorDto.setPhotoLink(sector.getPhotoLink());
          sectorDto.setMapLink(sector.getMapLink());
+
+         if (sector.getManagerId() != null) {
+            sectorDto.setAliasManager(userRepository.getOne(sector.getManagerId()).getAlias());
+         }
 
          sectorDtos.add(sectorDto);
       }
@@ -58,6 +65,10 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setPhotoLink(sector.getPhotoLink());
          sectorDto.setMapLink(sector.getMapLink());
 
+         if (sector.getManagerId() != null) {
+            sectorDto.setAliasManager(userRepository.getOne(sector.getManagerId()).getAlias());
+         }
+
          sectorDtos.add(sectorDto);
       }
 
@@ -78,6 +89,11 @@ public class SectorServiceImpl implements SectorService {
       sectorDto.setLongitude(sector.getLongitude());
       sectorDto.setPhotoLink(sector.getPhotoLink());
       sectorDto.setMapLink(sector.getMapLink());
+
+      if (sector.getManagerId() != null) {
+         sectorDto.setAliasManager(userRepository.getOne(sector.getManagerId()).getAlias());
+      }
+
       return sectorDto;
    }
 
@@ -95,6 +111,10 @@ public class SectorServiceImpl implements SectorService {
       sector.setLongitude(sectorDto.getLongitude());
       sector.setPhotoLink(sectorDto.getPhotoLink());
       sector.setMapLink(sectorDto.getMapLink());
+
+      if (sectorDto.getAliasManager() != null) {
+         sector.setManagerId(userRepository.findByAlias(sectorDto.getAliasManager()).getId());
+      }
 
       return sectorRepository.save(sector).getId();
    }

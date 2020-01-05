@@ -21,8 +21,6 @@ public class Longueur implements Serializable {
    private Integer voieId;
    @Column(name = "heigth", columnDefinition = "INTEGER(4)")
    private Integer heigth;
-   @Column(name = "spits", columnDefinition = "INTEGER(3)")
-   private Integer spits;
 
    public Longueur() { super();   }
 }

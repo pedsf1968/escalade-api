@@ -2,7 +2,7 @@ package com.dsf.escalade.web.controller.path;
 
 public interface PathTable {
    public final static String TOPO_ALL = "topo/topo-all";
-   public final static String TOPO_ALL_R = "redirect:/topo/all";
+   public final static String TOPO_ALL_R = "redirect:/topo/all/";
    public final static String TOPO_MYLIST = "topo/topo-mylist";
    public final static String TOPO_MYLIST_R = "redirect:/topo/mylist";
    public final static String TOPO_ADD = "topo/topo-add";
@@ -19,12 +19,15 @@ public interface PathTable {
 
    public final static String VOIE_ADD = "voie/voie-add";
    public final static String VOIE_READ = "voie/voie-read";
-   public final static String VOIE_READ_R = "redirect:/voie/read";
+   public final static String VOIE_READ_R = "redirect:/voie/read/";
    public final static String VOIE_UPDATE = "voie/voie-update";
    public final static String VOIE_UPDATE_R = "redirect:/voie/edit/";
 
    public final static String LONGUEUR_ADD = "longueur/longueur-add";
+   public final static String LONGUEUR_READ = "longueur/longueur-read";
+   public final static String LONGUEUR_READ_R = "redirect:/longueur/read/";
    public final static String LONGUEUR_UPDATE = "longueur/longueur-update";
+   public final static String LONGUEUR_UPDATE_R = "redirect:/longueur/edit/";
 
    public final static String USER_REGISTRATION = "user/registration";
    public final static String USER_UPDATE = "user/user-update";
@@ -40,6 +43,8 @@ public interface PathTable {
    public final static String ATTRIBUTE_REGION_LIST = "regionList";
    public final static String ATTRIBUTE_SECTOR = "sectorDto";
    public final static String ATTRIBUTE_SECTOR_LIST = "sectorDtoList";
+   public final static String ATTRIBUTE_SPIT = "spitDto";
+   public final static String ATTRIBUTE_SPIT_LIST = "spitDtoList";
    public final static String ATTRIBUTE_STATUS_LIST = "statusList";
    public final static String ATTRIBUTE_TAGS = "tagsByTopoId";
    public final static String ATTRIBUTE_TOPO = "topoDto";

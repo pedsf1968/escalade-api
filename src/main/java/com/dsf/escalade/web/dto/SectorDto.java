@@ -2,6 +2,7 @@ package com.dsf.escalade.web.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -18,6 +19,10 @@ public class SectorDto {
    @NotNull
    @Size(min = NAME_MIN, max = NAME_MAX)
    private String name;
+   // Don't use username for the manager
+   @NotNull
+   @NotBlank
+   private String aliasManager;
    @Pattern(regexp = LONGITUDE_REGEXP, message = "Not a valid longitude (-180,+180) !")
    private String longitude;
    @Pattern(regexp = LATITUDE_REGEXP, message = "Not a valid latitude (-90,+90) !")

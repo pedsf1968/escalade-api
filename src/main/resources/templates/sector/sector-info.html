@@ -13,6 +13,10 @@
                      <div class="card-body">
                         <table class="table table-striped">
                            <tr>
+                              <td th:text="#{label.alias}">Alias</td>
+                              <td th:text="${sectorDto.aliasManager}">Alias</td>
+                           </tr>
+                           <tr>
                               <td th:text="#{label.longitude}">Longitude</td>
                               <td th:text="${sectorDto.longitude}" >Longitude</td>
                            </tr>

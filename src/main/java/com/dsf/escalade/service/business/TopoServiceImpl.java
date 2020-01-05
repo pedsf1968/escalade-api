@@ -56,6 +56,9 @@ List<Topo> topos = topoRepository.findAll();
          topoDto.setTechnic(topo.getTechnic());
          topoDto.setStatus(topo.getStatus().toString());
          topoDto.setStatusAuto(topo.getStatusAuto());
+         topoDto.setCotationMin(topo.getCotationMin());
+         topoDto.setCotationMax(topo.getCotationMax());
+         topoDto.setNbLane(topo.getNbLane());
 
          if (topo.getManagerId() != null) {
             topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
@@ -93,6 +96,10 @@ List<Topo> topos = topoRepository.findAll();
          topoDto.setTechnic(topo.getTechnic());
          topoDto.setStatus(topo.getStatus().toString());
          topoDto.setStatusAuto(topo.getStatusAuto());
+         topoDto.setCotationMin(topo.getCotationMin());
+         topoDto.setCotationMax(topo.getCotationMax());
+         topoDto.setNbLane(topo.getNbLane());
+
 
          if (topo.getManagerId() != null) {
             topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
@@ -128,6 +135,10 @@ List<Topo> topos = topoRepository.findAll();
       topoDto.setTechnic(topo.getTechnic());
       topoDto.setStatus(topo.getStatus().toString());
       topoDto.setStatusAuto(topo.getStatusAuto());
+      topoDto.setCotationMin(topo.getCotationMin());
+      topoDto.setCotationMax(topo.getCotationMax());
+      topoDto.setNbLane(topo.getNbLane());
+
 
       if (topo.getManagerId() != null) {
          topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
@@ -159,6 +170,10 @@ List<Topo> topos = topoRepository.findAll();
       topo.setAccess(topoDto.getAccess());
       topo.setStatus(StatusType.valueOf(topoDto.getStatus()));
       topo.setStatusAuto(topoDto.getStatusAuto());
+      topo.setCotationMin(topoDto.getCotationMin());
+      topo.setCotationMax(topoDto.getCotationMax());
+      topo.setNbLane(topoDto.getNbLane());
+
 
       if (topoDto.getAliasManager() != null) {
          topo.setManagerId(userRepository.findByAlias(topoDto.getAliasManager()).getId());
@@ -253,6 +268,10 @@ List<Topo> topos = topoRepository.findAll();
          topoDto.setTechnic(topo.getTechnic());
          topoDto.setStatus(topo.getStatus().toString());
          topoDto.setStatusAuto(topo.getStatusAuto());
+         topoDto.setCotationMin(topo.getCotationMin());
+         topoDto.setCotationMax(topo.getCotationMax());
+         topoDto.setNbLane(topo.getNbLane());
+
 
          if (topo.getManagerId() != null) {
             topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
@@ -267,5 +286,48 @@ List<Topo> topos = topoRepository.findAll();
       return topoDtos;
    }
 
+   public void updateCotationRange(Integer topoId, Integer cotationId){
+      Topo topo = topoRepository.getOne(topoId);
+      Integer cotationMin = topo.getCotationMin();
+      Integer cotationMax = topo.getCotationMax();
+
+      if(cotationMin.equals(null) || cotationMin>cotationId){
+         topo.setCotationMin(cotationId);
+      }
+
+      if(cotationMax.equals(null) || cotationMax<cotationId){
+         topo.setCotationMax(cotationId);
+      }
+
+      topoRepository.save(topo);
+   }
+
+   public Integer increaseLaneCounter(Integer topoId){
+      Topo topo = topoRepository.getOne(topoId);
+      Integer nbLane = topo.getNbLane();
+
+      if (nbLane.equals(null)){
+         nbLane = 1;
+      }
+
+      topo.setNbLane(++nbLane);
+      topoRepository.save(topo);
+
+      return nbLane;
+   }
+
+   public Integer decreaseLaneCounter(Integer topoId){
+      Topo topo = topoRepository.getOne(topoId);
+      Integer nbLane = topo.getNbLane();
+
+      if (nbLane.equals(null)){
+         nbLane = 1;
+      }
+
+      topo.setNbLane(--nbLane);
+      topoRepository.save(topo);
+
+      return nbLane;
+   }
 
 }

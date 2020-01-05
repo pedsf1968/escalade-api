@@ -3,7 +3,7 @@ package com.dsf.escalade.web.controller.business;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.service.business.*;
-import com.dsf.escalade.service.global.AddressService;
+import com.dsf.escalade.service.global.CommentService;
 import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
@@ -35,24 +35,44 @@ public class VoieController {
    private final TopoService topoService;
    private final SectorService sectorService;
    private final VoieService voieService;
+   private final LongueurService longueurService;
    private final CotationService cotationService;
-   private final AddressService addressService;
+      private final CommentService commentService;
    private final List<String> statusList = Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
 
-   public VoieController(UserService userService, SiteService siteService, TopoService topoService, SectorService sectorService, VoieService voieService, CotationService cotationService, AddressService addressService) {
+   public VoieController(UserService userService, SiteService siteService, TopoService topoService, SectorService sectorService, VoieService voieService, LongueurService longueurService, CotationService cotationService, CommentService commentService) {
       this.userService = userService;
       this.siteService = siteService;
       this.topoService = topoService;
       this.sectorService = sectorService;
       this.voieService = voieService;
+      this.longueurService = longueurService;
       this.cotationService = cotationService;
-      this.addressService = addressService;
+      this.commentService = commentService;
    }
 
-   @GetMapping("/voie/new/{id}")
-   public String newVoie(@PathVariable("id") Integer parentId, Model model) {
+   @GetMapping("/voie/new/{parentId}")
+   public String newVoie(@PathVariable("parentId") Integer parentId, Model model) {
+
       VoieDto voieDto = new VoieDto();
+
+
+      if (siteService.getType(parentId).equals(SiteType.TOPO)){
+         // Parent is a Topo
+         TopoDto topoDto = topoService.getOne(parentId);
+         voieDto.setAliasManager(topoDto.getAliasManager());
+         voieDto.setLatitude(topoDto.getLatitude());
+         voieDto.setLongitude(topoDto.getLongitude());
+      } else {
+         // Parent is a sector
+         SectorDto sectorDto = sectorService.getOne(parentId);
+         voieDto.setAliasManager(sectorDto.getAliasManager());
+         voieDto.setLatitude(sectorDto.getLatitude());
+         voieDto.setLongitude(sectorDto.getLongitude());
+      }
+
+
       voieDto.setParentId(parentId);
 
       model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
@@ -84,42 +104,44 @@ public class VoieController {
       UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
 
       if (userDto.getEmail().equals(authentication.getName())){
+         topoService.increaseLaneCounter(topoDto.getId());
          return PathTable.VOIE_UPDATE_R + voieService.save(voieDto);
       }
 
-      //return to parents
+      //else return to parents
       if(sectorDto!=null) {
-         return PathTable.SECTOR_UPDATE_R + sectorDto.getId();
+         return PathTable.SECTOR_UPDATE_R + parentId;
       } else {
-         return PathTable.TOPO_UPDATE_R + topoDto.getId();
+         return PathTable.TOPO_UPDATE_R + parentId;
       }
    }
 
-   @GetMapping("/voie/read/{id}")
-   public String readVoie(@PathVariable("id") Integer voieId, Model model){
-      VoieDto voieDto = voieService.getOne(voieId);
+   @GetMapping("/voie/read/{voieId}")
+   public String readVoie(@PathVariable("voieId") Integer voieId, Model model){
 
-      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieService.getOne(voieId));
+      model.addAttribute(PathTable.ATTRIBUTE_LONGUEUR_LIST,longueurService.findByVoieId(voieId));
       model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+      model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(voieId));
 
       return PathTable.VOIE_READ;
    }
 
-   @GetMapping("/voie/edit/{id}")
-   public String editVoie(@PathVariable("id") Integer voieId, Model model){
-      VoieDto voieDto = voieService.getOne(voieId);
+   @GetMapping("/voie/edit/{voieId}")
+   public String editVoie(@PathVariable("voieId") Integer voieId, Model model){
 
-      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieService.getOne(voieId));
+      model.addAttribute(PathTable.ATTRIBUTE_LONGUEUR_LIST,longueurService.findByVoieId(voieId));
       model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
       return PathTable.VOIE_UPDATE;
    }
 
 
-   @PostMapping("/voie/update/{id}")
-   public String updateVoie(@ModelAttribute("voieDto") @Valid VoieDto voieDto, @NotNull BindingResult bindingResultTopo, Model model) {
+   @PostMapping("/voie/update/{voieId}")
+   public String updateVoie(@PathVariable("voieId") Integer voieId,@ModelAttribute("voieDto") @Valid VoieDto voieDto, @NotNull BindingResult bindingResultTopo, Model model) {
       if (bindingResultTopo.hasErrors()) {
-         return PathTable.VOIE_ADD;
+         return PathTable.VOIE_UPDATE;
       }
 
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -138,6 +160,37 @@ public class VoieController {
 
       if (userDto.getEmail().equals(authentication.getName())){
          voieService.save(voieDto);
+      }
+
+      //return to parents
+      if(sectorDto!=null) {
+         return PathTable.SECTOR_UPDATE_R + parentId;
+      } else {
+         return PathTable.TOPO_UPDATE_R + parentId;
+      }
+   }
+
+   @GetMapping("/voie/delete/{voieId}")
+   public String deleteVoie(@PathVariable("voieId") Integer voieId, Model model) {
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      VoieDto  voieDto = voieService.getOne(voieId);
+      Integer parentId = voieDto.getParentId();
+      TopoDto topoDto = null;
+      SectorDto sectorDto = null;
+
+      if(siteService.getType(parentId).equals(SiteType.TOPO)){
+         topoDto = topoService.getOne(parentId);
+      } else {
+         sectorDto = sectorService.getOne(parentId);
+         topoDto = topoService.getOne(sectorDto.getTopoId());
+      }
+
+      UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
+
+      // verify that the manager is the Topo manager
+      if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())){
+         voieService.delete(voieDto);
+         topoService.decreaseLaneCounter(topoDto.getId());
       }
 
       //return to parents

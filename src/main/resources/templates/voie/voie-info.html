@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+   <div class="card mt-2 mb-2" th:fragment="voieinfo">
+      <div class="card-header">
+         <h5 th:text="#{label.information}">Information</h5>
+      </div>
+      <div class="card-body">
+         <table class="table table-striped">
+            <tr>
+               <td th:text="#{label.alias}">Alias</td>
+               <td th:text="${voieDto.aliasManager}">Alias</td>
+            </tr>
+            <tr>
+               <td th:text="#{label.longitude}">Longitude</td>
+               <td th:text="${voieDto.longitude}" >Longitude</td>
+            </tr>
+            <tr>
+               <td th:text="#{label.latitude}">Latitude</td>
+               <td th:text="${voieDto.latitude}" >Latitude</td>
+            </tr>
+            <tr>
+               <td th:text="#{label.heigth}">Heigth</td>
+               <td th:text="${voieDto.heigth}" >Heigth</td>
+            </tr>
+            <tr>
+               <td th:text="#{label.cotation}">Cotation</td>
+               <td th:text="${cotationDtoList[voieDto.cotationId-1].levelFR}" >Cotation</td>
+            </tr>
+         </table>
+      </div>
+   </div>
+</body>

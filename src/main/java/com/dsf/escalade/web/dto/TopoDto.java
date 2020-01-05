@@ -24,6 +24,10 @@ public class TopoDto {
    @NotNull
    @Size(min = NAME_MIN, max = NAME_MAX)
    private String name;
+   // Don't use username for the manager
+   @NotNull
+   @NotBlank
+   private String aliasManager;
    @Pattern(regexp = LONGITUDE_REGEXP, message = "Not a valid longitude (-180,+180) !")
    private String longitude;
    @Pattern(regexp = LATITUDE_REGEXP, message = "Not a valid latitude (-90,+90) !")
@@ -45,12 +49,11 @@ public class TopoDto {
    private String description;
    private String technic;
    private String access;
-   // Don't use username for the manager
-   @NotNull
-   @NotBlank
-   private String aliasManager;
    // Don't use username for the climber who reserve
    private String aliasClimber;
    private String status;
    private Boolean statusAuto;
+   private Integer cotationMin;
+   private Integer cotationMax;
+   protected Integer nbLane;
 }

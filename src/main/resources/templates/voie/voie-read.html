@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="${voieDto.name}">Lane</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <div class="float-right" >
+               <!--a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${voieDto.parentId})}" th:text="#{label.cancel}">Cancel</a-->
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <section>
+      <ul class="nav nav-tabs">
+         <li class="nav-item">
+            <a class="nav-link active"  th:href="@{'#'+${#strings.replace(voieDto.name,' ','')}}" >
+               <label th:text="${voieDto.name}">Link</label>
+            </a>
+         </li>
+         <li class="nav-item" th:each="longueur : ${longueurDtoList}">
+            <a class="nav-link" th:href="@{/longueur/read/{id}(id=${longueur.id})}" >
+               <label th:text="${longueur.name}">Link</label>
+            </a>
+         </li>
+      </ul>
+   </section>
+
+   <section class="row endpage">
+      <div class="col-lg-4 col-sm-12">
+         <div class="row">
+            <div class="col-md-12">
+               <div  th:replace="~{voie/voie-info :: voieinfo}"></div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-4 col-sm-12">
+         <div class="row">
+            <div class="col-md-12" th:if="${voieDto.photoLink!=null}">
+               <div class="card mt-2 mb-2 bg-dark text-white">
+                  <img class="card-img" th:src="@{/images/voie/{image}(image=${voieDto.photoLink})}" alt="photo"/>
+               </div>
+            </div>
+
+            <div class="col-md-12" th:if="${voieDto.mapLink!=null}">
+               <div class="card mt-2 mb-2 bg-dark text-white">
+                  <img class="card-img" th:src="@{/images/voie/{image}(image=${voieDto.mapLink})}" alt="map"/>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-4 col-sm-12">
+         <div class="row">
+            <div class="col-md-12" sec:authorize="isAuthenticated()">
+               <div class="card mt-2 mb-2">
+                  <div class="card-header inline-flex">
+                     <div class="col-sm">
+                        <h5 class="float-left" th:text="#{label.comment}">Comment</h5>
+                     </div>
+                     <div class="col-sm">
+                        <button form="formaddcomment" type="submit" class="btn btn-primary float-right" th:text="#{label.submit}">Submit</button>
+                     </div>
+                  </div>
+                  <form id="formaddcomment" class="card-body" action="#" th:action="@{/voie/comment/{voieId}(voieId=${voieDto.id})}" method="POST" enctype="utf8">
+                     <textarea id="commentaire"  name="commentaire" class="form-control input-sm" rows="3" th:placeholder="#{placeholder.comment}"></textarea>
+                  </form>
+               </div>
+            </div>
+
+            <div  class="col-md-12" >
+               <div class="card mt-2 mb-2" th:each="comment : ${commentDtoList}">
+                  <div class="card-header inline-flex">
+                     <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${comment.alias})}" alt="avatar"/>
+                     <h5  class="center" th:text="${comment.alias}">Alias</h5>
+                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger float-right" th:href="@{/voie/comment/delete/{id}(id=${comment.id})}" th:text="#{label.delete}" >Delete</a>
+                  </div>
+                  <div class="card-text">
+                     <p th:text="${comment.text}"></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         </div>
+   </section>
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
+</body>
+</html>
