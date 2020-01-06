@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Controller
 @Slf4j
+@Controller
 public class SectorController {
    private final UserService userService;
    private final TopoService topoService;
@@ -79,14 +79,15 @@ public class SectorController {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       Integer topoId = sectorDto.getTopoId();
       TopoDto topoDto = topoService.getOne(topoId);
-      UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
+
+      UserDto userDto = userService.findByAlias(sectorDto.getAliasManager());
 
 
       if (userDto.getEmail().equals(authentication.getName())){
          return PathTable.SECTOR_UPDATE_R + sectorService.save(sectorDto);
       }
 
-      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+     model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
       model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
       model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressService.getOne(topoDto.getAddressId()));
       model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
