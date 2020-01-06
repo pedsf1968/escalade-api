@@ -14,13 +14,13 @@
          <div class="col-sm my-auto">
             <div class="float-right" >
                <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${voieDto.parentId})}" th:text="#{label.cancel}">Cancel</a>
-               <button form="formvoieadd" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+               <button form="formaddvoie" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
             </div>
          </div>
       </div>
    </header>
 
-   <form id="formvoieadd" class="row" action="#" th:action="@{/voie/add}" method="POST" enctype="utf8">
+   <form id="formaddvoie" class="row" action="#" th:action="@{/voie/add}" method="POST" enctype="utf8">
       <div class="col-lg-6 mx-auto">
          <div class="card mt-2 mb-2">
             <div class="card-body">

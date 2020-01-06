@@ -1,56 +1,96 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-   <title>Hello World!</title>
-   <link rel="stylesheet"
-         type="text/css"
-         th:href="@{/resources/style.css}"></link>
-</head>
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
 <body>
-<h1 th:inline="text">Ajout d'utilisateur</h1>
-<form action="#" th:action="@{/adduser}" th:object="${utilisateur}" method="post">
-   <label for="civilite">Civilité</label>
-   <input type="text" th:field="** {civilite}" id="civilite" placeholder="Civilité">
-   <span th:if="${#fields.hasErrors('civilite')}" th:errors="** {civilite}"></span>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
 
-   <label for="nom">Nom</label>
-   <input type="text" th:field="** {nom}" id="nom" placeholder="Nom">
-   <span th:if="${#fields.hasErrors('nom')}" th:errors="** {nom}"></span>
+   <header class="jumbotron">
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="#{title.userNew}">New User</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/}" th:text="#{label.cancel}">Cancel</a>
+               <button form="formadduser" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+            </div>
+         </div>
+      </div>
+   </header>
 
-   <label for="prenom">Prénom</label>
-   <input type="text" th:field="** {prenom}" id="prenom" placeholder="Prénom">
-   <span th:if="${#fields.hasErrors('prenom')}" th:errors="** {prenom}"></span>
+   <form id="formadduser" action="#" th:action="@{/adduser}" th:object="${utilisateur}" method="post">
+      <div class="col-lg-6 mx-auto">
+         <div class="card mt-2 mb-2">
+            <div class="card-body">
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.civility}">Civility</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="** {civilite}" th:placeholder="#{placeholder.civility}">
+                  <span th:if="${#fields.hasErrors('civilite')}" th:errors="** {civilite}"></span>
+               </div>
 
-   <label for="pseudo">Pseudo</label>
-   <input type="text" th:field="** {pseudo}" id="pseudo" placeholder="Pseudo">
-   <span th:if="${#fields.hasErrors('pseudo')}" th:errors="** {pseudo}"></span>
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.name}">Name</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="${userDto.name}" th:placeholder="#{placeholder.name}">
+               </div>
+            </div>
+            <div class="card-footer">
+               <span th:if="${#fields.hasErrors('nom')}" th:errors="** {nom}"></span>
+            </div>
 
-   <label for="telephone">Telephone</label>
-   <input type="text" th:field="** {telephone}" id="telephone" placeholder="Telephone">
-   <span th:if="${#fields.hasErrors('telephone')}" th:errors="** {telephone}"></span>
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                  <div class="input-group-text" th:text="#{label.name}">Name</div>
+               </div>
+               <input type="text" class="form-control" th:field="${userDto.name}" th:placeholder="#{placeholder.name}">
+            </div>
+         </div>
+         <div class="card-footer">
+            <span th:if="${#fields.hasErrors('nom')}" th:errors="** {nom}"></span>
+         </div>
 
-   <label for="mail">Mail</label>
-   <input type="text" th:field="** {mail}" id="mail" placeholder="Mail">
-   <span th:if="${#fields.hasErrors('mail')}" th:errors="** {mail}"></span>
+      </div>
 
-   <label for="login">Login</label>
-   <input type="login" th:field="** {login}" id="login" placeholder="Login">
-   <span th:if="${#fields.hasErrors('login')}" th:errors="** {login}"></span>
 
-   <label for="mot_de_passe">Mot de passe</label>
-   <input type="text" th:field="** {mot_de_passe}" id="mot_de_passe" placeholder="Mot de passe">
-   <span th:if="${#fields.hasErrors('mot_de_passe')}" th:errors="** {mot_de_passe}"></span>
 
-   <label for="est_membre">Est membre</label>
-   <input type="boolean" th:field="** {nom}" id="est_membre" placeholder="Est membre">
-   <span th:if="${#fields.hasErrors('est_membre')}" th:errors="** {est_membre}"></span>
+      <label for="prenom">Prénom</label>
+      <input type="text" th:field="** {prenom}" id="prenom" placeholder="Prénom">
+      <span th:if="${#fields.hasErrors('prenom')}" th:errors="** {prenom}"></span>
 
-   <label for="adresse_id">Adresse</label>
-   <input type="text" th:field="** {adresse_id}" id="adresse_id" placeholder="Adresse">
-   <span th:if="${#fields.hasErrors('adresse_id')}" th:errors="** {adresse_id}"></span>
+      <label for="pseudo">Pseudo</label>
+      <input type="text" th:field="** {pseudo}" id="pseudo" placeholder="Pseudo">
+      <span th:if="${#fields.hasErrors('pseudo')}" th:errors="** {pseudo}"></span>
 
-   <input type="submit" value="Add User">
-</form>
+      <label for="telephone">Telephone</label>
+      <input type="text" th:field="** {telephone}" id="telephone" placeholder="Telephone">
+      <span th:if="${#fields.hasErrors('telephone')}" th:errors="** {telephone}"></span>
+
+      <label for="mail">Mail</label>
+      <input type="text" th:field="** {mail}" id="mail" placeholder="Mail">
+      <span th:if="${#fields.hasErrors('mail')}" th:errors="** {mail}"></span>
+
+      <label for="login">Login</label>
+      <input type="login" th:field="** {login}" id="login" placeholder="Login">
+      <span th:if="${#fields.hasErrors('login')}" th:errors="** {login}"></span>
+
+      <label for="mot_de_passe">Mot de passe</label>
+      <input type="text" th:field="** {mot_de_passe}" id="mot_de_passe" placeholder="Mot de passe">
+      <span th:if="${#fields.hasErrors('mot_de_passe')}" th:errors="** {mot_de_passe}"></span>
+
+      <label for="est_membre">Est membre</label>
+      <input type="boolean" th:field="** {nom}" id="est_membre" placeholder="Est membre">
+      <span th:if="${#fields.hasErrors('est_membre')}" th:errors="** {est_membre}"></span>
+
+      <label for="adresse_id">Adresse</label>
+      <input type="text" th:field="** {adresse_id}" id="adresse_id" placeholder="Adresse">
+      <span th:if="${#fields.hasErrors('adresse_id')}" th:errors="** {adresse_id}"></span>
+
+
+   </form>
+</div>
 </body>
 </html>
