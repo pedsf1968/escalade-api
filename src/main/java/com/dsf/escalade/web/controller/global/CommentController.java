@@ -12,6 +12,7 @@ import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.CommentDto;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
+import com.dsf.escalade.web.dto.VoieDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -69,7 +70,12 @@ public class CommentController {
             commentDto.setAlias(userService.findByEmail(authentication.getName()).getAlias());
             commentService.save(commentDto);
             //incrementation of topo comment number
-            topoDto.setNbComment(topoDto.getNbComment()+1);
+            if(topoDto.getNbComment()!=null) {
+                topoDto.setNbComment(topoDto.getNbComment() + 1);
+            } else {
+                topoDto.setNbComment(1);
+            }
+
             topoService.save(topoDto);
         }
 
@@ -129,7 +135,12 @@ public class CommentController {
             commentDto.setAlias(userService.findByEmail(authentication.getName()).getAlias());
             commentService.save(commentDto);
             //incrementation of topo comment number
-            topoDto.setNbComment(topoDto.getNbComment()+1);
+            //incrementation of topo comment number
+            if(topoDto.getNbComment()!=null) {
+                topoDto.setNbComment(topoDto.getNbComment() + 1);
+            } else {
+                topoDto.setNbComment(1);
+            }
             topoService.save(topoDto);
         }
 
@@ -169,5 +180,40 @@ public class CommentController {
 
         return PathTable.SECTOR_READ_R + sectorId;
     }
+
+    @PostMapping("/voie/comment/{voieId}")
+    public String addVoieComment(@PathVariable("voieId") Integer voieId, @ModelAttribute("commentaire") String commentaire, Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        VoieDto voieDto = voieService.getOne(voieId);
+
+        //don't save anonymous comment
+        if(!authentication.getName().equals("anonymousUser") && !commentaire.equals("")) {
+            CommentDto commentDto = new CommentDto();
+            commentDto.setSiteId(voieId);
+            commentDto.setText(commentaire);
+            log.info("User : " + authentication.getName() + " add comment");
+            commentDto.setAlias(userService.findByEmail(authentication.getName()).getAlias());
+            commentService.save(commentDto);
+        }
+
+        return PathTable.VOIE_READ_R + voieId;
+    }
+
+    @GetMapping("/voie/comment/delete/{commentId}")
+    public String deleteVoieComment(@PathVariable("commentId") Integer commentId, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CommentDto commentDto = commentService.getOne(commentId);
+        Integer voieId = commentDto.getSiteId();
+
+        // verify that the manager is the Topo manager
+        if( authentication.getAuthorities().stream()
+              .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))){
+            commentService.delete(commentDto);
+        }
+
+        return PathTable.VOIE_READ_R + voieId;
+    }
+
 
 }

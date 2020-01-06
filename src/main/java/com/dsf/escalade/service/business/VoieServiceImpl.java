@@ -3,6 +3,7 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.Voie;
 import com.dsf.escalade.repository.business.VoieRepository;
+import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.web.dto.VoieDto;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,11 @@ import java.util.List;
 @Service("VoieService")
 public class VoieServiceImpl implements VoieService {
    private final VoieRepository voieRepository;
+   private final UserRepository userRepository;
 
-   public VoieServiceImpl(VoieRepository voieRepository) {
+   public VoieServiceImpl(VoieRepository voieRepository, UserRepository userRepository) {
       this.voieRepository = voieRepository;
+      this.userRepository = userRepository;
    }
 
    @Override
@@ -33,6 +36,10 @@ public class VoieServiceImpl implements VoieService {
       voieDto.setCotationId(voie.getCotationId());
       voieDto.setHeigth(voie.getHeigth());
       voieDto.setIsEquipped(voie.getIsEquipped());
+
+      if (voie.getManagerId() != null) {
+         voieDto.setAliasManager(userRepository.getOne(voie.getManagerId()).getAlias());
+      }
 
       return voieDto;
    }
@@ -57,6 +64,10 @@ public class VoieServiceImpl implements VoieService {
          voieDto.setHeigth(voie.getHeigth());
          voieDto.setIsEquipped(voie.getIsEquipped());
 
+         if (voie.getManagerId() != null) {
+            voieDto.setAliasManager(userRepository.getOne(voie.getManagerId()).getAlias());
+         }
+
          voieDtos.add(voieDto);
       }
 
@@ -79,6 +90,10 @@ public class VoieServiceImpl implements VoieService {
       voie.setCotationId(voieDto.getCotationId());
       voie.setHeigth(voieDto.getHeigth());
       voie.setIsEquipped(voieDto.getIsEquipped());
+
+      if (voieDto.getAliasManager() != null) {
+         voie.setManagerId(userRepository.findByAlias(voieDto.getAliasManager()).getId());
+      }
 
       return voieRepository.save(voie).getId();
    }

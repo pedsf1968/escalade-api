@@ -6,7 +6,7 @@
          <div class="row">
             <div class="col-sm">
                <a class="fas fa-at" ></a>
-               <a href="#" th:text="#{label.footer.joinus}"> Join Us</a>
+               <a th:href="'mailto:'+ ${@environment.getProperty('admin.mail')}" th:text="#{label.footer.joinus}"> Join Us</a>
             </div>
             <div class="col-sm">
                <a href="?lang=ko" th:text="#{label.footer.Korean}">Korean</a> |

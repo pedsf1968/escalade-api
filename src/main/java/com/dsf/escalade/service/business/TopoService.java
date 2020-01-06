@@ -13,4 +13,7 @@ public interface TopoService {
    List<String> findAllRegion();
    List<String> findAllAlias();
    List<TopoDto> findAllFiltered(TopoDto filter);
+   void updateCotationRange(Integer topoId, Integer cotationId);
+   Integer increaseLaneCounter(Integer topoId);
+   Integer decreaseLaneCounter(Integer topoId);
 }

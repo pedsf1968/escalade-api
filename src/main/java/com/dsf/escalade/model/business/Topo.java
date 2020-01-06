@@ -28,8 +28,6 @@ public class Topo extends Site{
    private String technic;
    @Column(name = "access", columnDefinition = "TEXT")
    private String access;
-   @Column(name = "manager_id", columnDefinition = "INTEGER(10) NOT NULL")
-   private Integer managerId;
    @Column(name = "climber_id", columnDefinition = "INTEGER(10)")
    private Integer climberId;
    @Enumerated(EnumType.STRING)
@@ -37,4 +35,11 @@ public class Topo extends Site{
    private StatusType status;
    @Column(name = "status_auto", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean statusAuto;
+   @Column(name = "cotation_min", columnDefinition = "VARCHAR(2)")
+   private Integer cotationMin;
+   @Column(name = "cotation_max", columnDefinition = "VARCHAR(2)")
+   private Integer cotationMax;
+   @Column(name = "nb_lane", columnDefinition = "INTEGER(3) DEFAULT 0")
+   protected Integer nbLane;
+
 }

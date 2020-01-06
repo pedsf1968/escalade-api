@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="${longueurDto.name}">Length</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <div class="float-right" >
+               <!--a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${voieDto.parentId})}" th:text="#{label.cancel}">Cancel</a-->
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <section>
+      <ul class="nav nav-tabs">
+         <li class="nav-item">
+            <a class="nav-link"  th:href="@{'#'+${#strings.replace(voieDto.name,' ','')}}" >
+               <label th:text="${voieDto.name}">Link</label>
+            </a>
+         </li>
+         <li class="nav-item" th:each="longueur : ${longueurDtoList}">
+            <a th:href="@{/longueur/read/{id}(id=${longueur.id})}" th:class="${longueur.id == longueurDto.id} ? 'nav-link active':'nav-link'" >
+               <label th:text="${longueur.name}">Link</label>
+            </a>
+         </li>
+      </ul>
+   </section>
+
+
+   <section class="row endpage">
+      <div class="col-lg-4 col-sm-12">
+         <div class="row">
+            <div class="col-md-12">
+               <div  th:replace="~{longueur/longueur-info :: longueurinfo}"></div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
+</body>
+</html>

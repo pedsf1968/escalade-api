@@ -1,10 +1,7 @@
 package com.dsf.escalade.web.controller.business;
 
 import com.dsf.escalade.model.business.StatusType;
-import com.dsf.escalade.service.business.SectorService;
-import com.dsf.escalade.service.business.TagService;
-import com.dsf.escalade.service.business.TopoService;
-import com.dsf.escalade.service.business.VoieService;
+import com.dsf.escalade.service.business.*;
 import com.dsf.escalade.service.global.AddressService;
 import com.dsf.escalade.service.global.CommentService;
 import com.dsf.escalade.service.global.UserService;
@@ -48,10 +45,11 @@ public class TopoController {
     private final VoieService voieService;
     private final TagService tagService;
     private final CommentService commentService;
+    private final CotationService cotationService;
     private final  List<String> statusList =  Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
     @Autowired
-    public TopoController( UserService userService, AddressService addressService, TopoService topoService, SectorService sectorService, VoieService voieService, TagService tagService, CommentService commentService) {
+    public TopoController(UserService userService, AddressService addressService, TopoService topoService, SectorService sectorService, VoieService voieService, TagService tagService, CommentService commentService, CotationService cotationService) {
         this.userService = userService;
         this.addressService = addressService;
         this.topoService = topoService;
@@ -59,6 +57,7 @@ public class TopoController {
         this.voieService = voieService;
         this.tagService = tagService;
         this.commentService = commentService;
+        this.cotationService = cotationService;
     }
 
     @GetMapping("/topo/all")
@@ -145,12 +144,13 @@ public class TopoController {
         // verify that the manager is the Topo manager
         if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
             topoDto.setAddressId(addressService.save(addressDto));
-            topoService.save(topoDto);
+            // save and go to update to add images
+            return PathTable.TOPO_UPDATE_R + topoService.save(topoDto);
         }
 
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
         model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
-        return PathTable.TOPO_MYLIST_R;
+        return PathTable.TOPO_MYLIST;
     }
 
     @GetMapping("/topo/read/{id}")
@@ -162,6 +162,7 @@ public class TopoController {
         model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
         model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(topoId));
+        model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
         model.addAttribute("tags", tagService.findByTopoId(topoId));
 
         return PathTable.TOPO_READ;
@@ -176,6 +177,7 @@ public class TopoController {
         model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
         model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
+        model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
         return PathTable.TOPO_UPDATE;
     }
@@ -190,6 +192,7 @@ public class TopoController {
             model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
             model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
             model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
+            model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
             return PathTable.TOPO_UPDATE;
         }
 

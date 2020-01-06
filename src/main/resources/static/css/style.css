@@ -35,14 +35,13 @@ footer {
 	padding-top: 20px;
 	color : white;
 }
-
-
-.container-fluid {
+.endpage {
     margin-bottom: 100px;
 }
 
 footer a {
 	color : white;
+    margin-top:10px;
 }
 
 header {

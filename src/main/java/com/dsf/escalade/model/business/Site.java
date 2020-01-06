@@ -24,6 +24,8 @@ public class Site implements Serializable {
    @Column(name = "type", columnDefinition = "VARCHAR(7)  NOT NULL DEFAULT 'TOPO'")
    @Enumerated(EnumType.STRING)
    protected SiteType type;
+   @Column(name = "manager_id", columnDefinition = "INTEGER(10) NOT NULL")
+   private Integer managerId;
    @Column(name = "longitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String longitude;
    @Column(name = "latitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")

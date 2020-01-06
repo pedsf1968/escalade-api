@@ -33,31 +33,51 @@ INSERT INTO tag_list(topo,tag)
 VALUES (1,1),(1,2),(2,1),(3,2);
 
 -- insertion topo
-INSERT INTO site (id, name, type, photo_url, map_url, nb_comment)
-VALUES (1,'La falaise', 'TOPO', 'TOPO1photo.jpg',null, 3),
-    (2,'Le Rock', 'TOPO', 'TOPO2photo.jpg','TOPO2map.jpg',0),
-    (3,'La gorge', 'TOPO', 'TOPO3photo.jpg','TOPO3map.jpg',0),
-    (4,'Grand étang','TOPO','TOPO4photo.jpg','TOPO4map.jpg',0),
-    (5,'Pôle dance', 'SECTOR', 'SECTOR5photo.jpg','SECTOR5map.jpg',0),
-    (6,'Coude à coude','SECTOR','SECTOR6photo.png','SECTOR6map.jpg',0);
+INSERT INTO site (id, name, type, manager_id, photo_url, map_url, nb_comment, latitude, longitude)
+VALUES (1,'La falaise', 'TOPO', 2,'TOPO1photo.jpg',null, 3,42.123,122.4564),
+    (2,'Le Rock', 'TOPO', 2,'TOPO2photo.jpg','TOPO2map.jpg',2,55.123,12.6454),
+    (3,'La gorge', 'TOPO', 2,'TOPO3photo.jpg','TOPO3map.jpg',1,62.123,22.5664),
+    (4,'Grand étang','TOPO',2,'TOPO4photo.jpg','TOPO4map.jpg',0,82.123,11.454),
+    (5,'Pôle dance', 'SECTOR', 2,'SECTOR5photo.jpg','SECTOR5map.jpg',1,55.123,12.6454),
+    (6,'Coude à coude','SECTOR',2,'SECTOR6photo.jpg','SECTOR6map.jpg',2,55.123,12.6454),
+    (7,'La terrasse','VOIE',2,'VOIE7photo.jpg','VOIE7map.jpg',0,55.123,12.6454),
+    (8,'La grotte','VOIE',2,'VOIE8photo.jpg','VOIE8map.jpg',0,55.123,12.6454);
 
 
 
-INSERT INTO topo (site_id, region, address_id, date, description, technic, access, manager_id)
+INSERT INTO topo (site_id, region, address_id, date, description, technic, access)
 VALUES (1, 'Corse',1,'2019-06-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',
 'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.',
-'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.',1);
+'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.');
 
-INSERT INTO topo (site_id, region, address_id, date, description,manager_id)
-VALUES (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',2),
-        (3, 'Alpes', 1, '2019-11-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',3),
-        (4,'Alpes', 1, '2019-12-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',2);
+INSERT INTO topo (site_id, region, address_id, date, description,status,status_auto,nb_lane,cotation_min,cotation_max)
+VALUES (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,0,null,null),
+        (3, 'Alpes', 1, '2019-11-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','UNVAILABLE',false,2,5,15),
+        (4,'Alpes', 1, '2019-12-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',false,0,null,null);
 
 INSERT INTO sector (site_id, topo_id, equipment)
 VALUES (5, 2,'100m de corde'),(6,2,'Corde de 50m');
 
+INSERT INTO voie (site_id, parent_id, cotation_id, heigth, is_equipped)
+VALUES (7,2,1,452,true),(8,6,15,122,false);
+
+INSERT INTO longueur (id,voie_id,name,cotation_id,heigth)
+VALUES (1,7,'La corde',5,122),
+        (2,7,'La ficelle',7,22),
+        (3,7,'La cassoulet',9,82),
+        (4,8,'La coucourde',5,75);
+
+INSERT INTO spit(topo_id,number,voie_id,longueur_id,cotation_id,comment,is_relay)
+VALUES (2,1,7,1,3,'',false),(2,2,7,1,7,'',false),(2,3,7,1,8,'passez à droite',true),(2,4,7,1,10,'',false),(2,5,7,1,3,'',false),
+    (2,6,7,1,3,'',false),(2,7,7,1,7,'roche fragile',false),(2,8,7,1,8,'',true),(2,9,7,1,10,'',false),(2,10,7,1,3,'',false),
+    (2,11,7,2,3,'',false),(2,12,7,2,7,'',false),(2,13,7,2,8,'',true),(2,14,7,2,10,'',false),(2,15,7,2,3,'',false),
+    (2,16,7,3,3,'',false),(2,17,7,3,7,'',false),(2,18,7,3,8,'',true),(2,19,7,3,10,'',false),(2,20,7,3,3,'',false),
+    (2,21,8,4,3,'',false),(2,22,8,4,7,'',false),(2,23,8,4,8,'beau paysage devant',true),(2,24,8,4,10,'',false),(2,25,8,4,3,'',false),
+    (2,26,8,4,3,'',false),(2,27,8,4,7,'passez à gauche',false),(2,28,8,4,8,'',true),(2,29,8,4,10,'',false),(2,30,8,4,3,'',false);
+
 INSERT INTO comment (id,site_id,user_id,text)
 VALUES (1,1,2,'C''est super on s''éclate'),(2,1,2,'Bien pour les débutants'),(3,1,3,'Belle vue pendant l''ascension'),
        (4,2,2,'C''est super on s''éclate'),(5,2,2,'Bien pour les débutants'),(6,3,3,'Belle vue pendant l''ascension'),
-       (7,5,2,'C''est super on s''éclate'),(8,6,2,'Bien pour les débutants'),(9,6,3,'Belle vue pendant l''ascension');
+       (7,5,2,'C''est super on s''éclate'),(8,6,2,'Bien pour les débutants'),(9,6,3,'Belle vue pendant l''ascension'),
+       (10,7,2,'C''est super on s''éclate'),(11,8,2,'Bien pour les débutants'),(12,8,3,'Belle vue pendant l''ascension');
 

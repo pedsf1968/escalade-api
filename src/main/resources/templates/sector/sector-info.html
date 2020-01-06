@@ -13,6 +13,10 @@
                      <div class="card-body">
                         <table class="table table-striped">
                            <tr>
+                              <td th:text="#{label.alias}">Alias</td>
+                              <td th:text="${sectorDto.aliasManager}">Alias</td>
+                           </tr>
+                           <tr>
                               <td th:text="#{label.longitude}">Longitude</td>
                               <td th:text="${sectorDto.longitude}" >Longitude</td>
                            </tr>
@@ -24,7 +28,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-6 col-sm-12">
+               <div class="col-md-6 col-sm-12" th:if="${sectorDto.equipment!=null}">
                   <div class="card mt-2 mb-2">
                      <div class="card-header">
                         <h5 th:text="#{label.equipment}">Equipment</h5>
@@ -35,31 +39,34 @@
                   </div>
                </div>
 
-               <div class=" col-md-6 col-sm-12">
+               <div class=" col-md-6 col-sm-12" th:if="${sectorDto.photoLink!=null}">
                   <div class="card mt-2 mb-2">
                      <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.photoLink})}" alt="photo"/>
                   </div>
                </div>
-               <div class="col-md-6 col-sm-12">
+               <div class="col-md-6 col-sm-12" th:if="${sectorDto.mapLink!=null}">
                   <div class="card mt-2 mb-2">
-                     <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.mapLink})}" alt="photo"/>
+                     <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.mapLink})}" alt="map"/>
                   </div>
                </div>
             </div>
          </div>
+
          <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="row">
-               <div class="col-lg-12" sec:authorize="isAuthenticated()">
+               <div class="col-md-12" sec:authorize="isAuthenticated()">
                   <div class="card mt-2 mb-2">
-                     <div class="card-header">
-                        <h5 th:text="#{label.comment}">Comment</h5>
+                     <div class="card-header inline-flex">
+                        <div class="col-sm">
+                           <h5 class="float-left" th:text="#{label.comment}">Comment</h5>
+                        </div>
+                        <div class="col-sm">
+                           <button form="formaddcomment" type="submit" class="btn btn-primary float-right" th:text="#{label.submit}">Submit</button>
+                        </div>
                      </div>
-                     <form id="formcomment" class="card-body" action="#" th:action="@{/sector/comment/{sectorId}(sectorId=${sectorDto.id})}" method="POST" enctype="utf8">
+                     <form id="formaddcomment" class="card-body" action="#" th:action="@{/sector/comment/{sectorId}(sectorId=${sectorDto.id})}" method="POST" enctype="utf8">
                         <textarea id="commentaire"  name="commentaire" class="form-control input-sm" rows="3" th:placeholder="#{placeholder.comment}"></textarea>
                      </form>
-                     <div class="card-footer">
-                        <button form="formcomment" type="submit" class="btn btn-primary float-right" th:text="#{label.addComment}">Add comment</button>
-                     </div>
                   </div>
                </div>
                <div class="col-lg-12">

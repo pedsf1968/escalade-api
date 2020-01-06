@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+
+   <header class="jumbotron">
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="#{title.lengthNew}">New Length</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/voie/edit/{id}(id=${longueurDto.parentId})}" th:text="#{label.cancel}">Cancel</a>
+               <button form="formlongueuradd" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <form id="formlongueuradd" class="row" action="#" th:action="@{/longueur/add}" method="POST" enctype="utf8">
+      <div class="col-lg-6 mx-auto">
+         <div class="card mt-2 mb-2">
+            <div class="card-body">
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.parentId}">Parent Id</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="${longueurDto.voieId}" readonly>
+               </div>
+
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.name}">Name</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="${longueurDto.name}" th:placeholder="#{placeholder.name}">
+               </div>
+            </div>
+            <div class="card-footer">
+               <span th:if="${#fields.hasErrors('longueurDto.name')}" th:errors="${longueurDto.name}"></span>
+            </div>
+         </div>
+
+         <div class="card mt-2 mb-2">
+            <div class="card-body">
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.heigth}">Heigth</div>
+                  </div>
+                  <input type="text" class="form-control" th:field="${longueurDto.heigth}" th:placeholder="#{placeholder.heigth}">
+               </div>
+               <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                     <div class="input-group-text" th:text="#{label.cotation}">Cotation Id</div>
+                  </div>
+                  <select class="btn mb-2" th:field="${longueurDto.cotationId}">
+                     <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+                  </select>
+               </div>
+
+            </div>
+            <div class="card-footer">
+               <span th:if="${#fields.hasErrors('longueurDto.heigth')}" th:errors="${longueurDto.heigth}"></span>
+            </div>
+         </div>
+      </div>
+   </form>
+
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
+</body>
+</html>

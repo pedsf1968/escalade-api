@@ -1,56 +1,85 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-   <title>Hello World!</title>
-   <link rel="stylesheet"
-         type="text/css"
-         th:href="@{/resources/style.css}"></link>
-</head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
 <body>
-<h1 th:inline="text">Ajout d'utilisateur</h1>
-<form action="#" th:action="@{/adduser}" th:object="${utilisateur}" method="post">
-   <label for="civilite">Civilité</label>
-   <input type="text" th:field="** {civilite}" id="civilite" placeholder="Civilité">
-   <span th:if="${#fields.hasErrors('civilite')}" th:errors="** {civilite}"></span>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
 
-   <label for="nom">Nom</label>
-   <input type="text" th:field="** {nom}" id="nom" placeholder="Nom">
-   <span th:if="${#fields.hasErrors('nom')}" th:errors="** {nom}"></span>
+   <header class="jumbotron">
+      <div class="row">
+         <div class="col-sm">
+            <H1 class="display-4 float-left" th:text="#{title.registration}">Registration</H1>
+         </div>
+         <div class="col-sm my-auto">
+            <button form="registration" type="submit" class="btn btn-primary float-right" th:text="#{label.submit}">Submit</button>
+         </div>
+      </div>
+   </header>
 
-   <label for="prenom">Prénom</label>
-   <input type="text" th:field="** {prenom}" id="prenom" placeholder="Prénom">
-   <span th:if="${#fields.hasErrors('prenom')}" th:errors="** {prenom}"></span>
+      <form class="col-md-6 mx-auto" id="registration" action="#" th:action="@{/registration}"  method="POST" enctype="utf8">
 
-   <label for="pseudo">Pseudo</label>
-   <input type="text" th:field="** {pseudo}" id="pseudo" placeholder="Pseudo">
-   <span th:if="${#fields.hasErrors('pseudo')}" th:errors="** {pseudo}"></span>
+         <div class="card mt-2 mb-2">
+            <div class="card-header">
+               <h5 th:text="#{label.information}">Information</h5>
+            </div>
+            <div class="card-body row">
+               <div class="col-md-4 mb-3">
+                  <label for="firstName" th:text="#{label.firstName}">First name</label>
+                  <input id="firstName" type="text" th:field="${userDto.firstName}" class="form-control" th:placeholder="#{placeholder.firstName}">
+                  <span th:if="${#fields.hasErrors('userDto.firstName')}" th:errors="${userDto.firstName}">Must have name</span>
+               </div>
+               <div class="col-md-4 mb-3">
+                  <label for="lastName" th:text="#{label.lastName}">Last name</label>
+                  <input id="lastName" type="text" th:field="${userDto.lastName}" class="form-control" th:placeholder="#{placeholder.lastName}">
+                  <div th:each="error : ${#fields.errors('userDto.lastName')}" th:error="${userDto.lastName}" th:text="${error}"></div>
+               </div>
+               <div class="col-md-4 mb-3">
+                  <label for="alias" th:text="#{label.alias}">Alias</label>
+                  <input id="alias" type="text" th:field="${userDto.alias}" class="form-control" th:placeholder="#{placeholder.alias}">
+                  <div th:each="error : ${#fields.errors('userDto.alias')}" th:error="${userDto.alias}" th:text="${error}"></div>
+               </div>
+            </div>
+         </div>
 
-   <label for="telephone">Telephone</label>
-   <input type="text" th:field="** {telephone}" id="telephone" placeholder="Telephone">
-   <span th:if="${#fields.hasErrors('telephone')}" th:errors="** {telephone}"></span>
+         <div class="card mt-2 mb-2">
+            <div class="card-header">
+               <h5 th:text="#{label.login.title}">Information</h5>
+            </div>
+            <div class="card-body row">
+               <div class="form-group col-md-4" >
+                  <label for="email" th:text="#{label.email}">Email</label>
+                  <input id="email" type="email" th:field="${userDto.email}" class="form-control" th:placeholder="#{placeholder.email}">
+                  <small id="emailHelp" class="form-text text-muted">We dont reveale your Email address.</small>
+                  <div th:each="error : ${#fields.errors('userDto.email')}" th:error="${userDto.email}" th:text="${error}"></div>
+               </div>
+               <div class="form-group col-md-3">
+                  <label for="password" th:text="#{label.password}">Password</label>
+                  <input id="password" type="password" th:field="${userDto.password}" class="form-control">
+                  <div th:each="error : ${#fields.errors('userDto.password')}" th:text="${error}"></div>
+               </div>
+               <div class="form-group col-md-3">
+                  <label for="matchingPassword" th:text="#{label.matchingPassword}">Matching password</label>
+                  <input id="matchingPassword" type="password" th:field="${userDto.matchingPassword}" class="form-control" >
+                  <div th:each="error : ${#fields.errors('userDto.matchingPassword')}" th:text="${error}"></div>
+               </div>
+               <div class="form-group col-md-2">
+                  <label for="phone" th:text="#{label.phone}">Phone</label>
+                  <input id="phone" type="text" th:field="${userDto.phone}" class="form-control" th:placeholder="#{placeholder.phone}">
+                  <div th:each="error : ${#fields.errors('userDto.phone')}" th:text="${error}"></div>
+               </div>
+            </div>
+         </div>
 
-   <label for="mail">Mail</label>
-   <input type="text" th:field="** {mail}" id="mail" placeholder="Mail">
-   <span th:if="${#fields.hasErrors('mail')}" th:errors="** {mail}"></span>
+         <div th:replace="~{fragments/address :: address}"></div>
 
-   <label for="login">Login</label>
-   <input type="login" th:field="** {login}" id="login" placeholder="Login">
-   <span th:if="${#fields.hasErrors('login')}" th:errors="** {login}"></span>
+      </form>
 
-   <label for="mot_de_passe">Mot de passe</label>
-   <input type="text" th:field="** {mot_de_passe}" id="mot_de_passe" placeholder="Mot de passe">
-   <span th:if="${#fields.hasErrors('mot_de_passe')}" th:errors="** {mot_de_passe}"></span>
 
-   <label for="est_membre">Est membre</label>
-   <input type="boolean" th:field="** {nom}" id="est_membre" placeholder="Est membre">
-   <span th:if="${#fields.hasErrors('est_membre')}" th:errors="** {est_membre}"></span>
 
-   <label for="adresse_id">Adresse</label>
-   <input type="text" th:field="** {adresse_id}" id="adresse_id" placeholder="Adresse">
-   <span th:if="${#fields.hasErrors('adresse_id')}" th:errors="** {adresse_id}"></span>
-
-   <input type="submit" value="Add User">
-</form>
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
 </body>
 </html>

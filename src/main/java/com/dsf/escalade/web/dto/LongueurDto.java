@@ -19,6 +19,5 @@ public class LongueurDto {
    private Integer cotationId;
 
    @Size(max = HEIGHT_MAX)
-   private Integer height;
-   private Integer spits;
+   private Integer heigth;
 }
