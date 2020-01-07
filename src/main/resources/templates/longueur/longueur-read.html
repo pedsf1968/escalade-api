@@ -21,7 +21,7 @@
    <section>
       <ul class="nav nav-tabs">
          <li class="nav-item">
-            <a class="nav-link"  th:href="@{'#'+${#strings.replace(voieDto.name,' ','')}}" >
+            <a class="nav-link"  th:href="@{/voie/read/{id}(id=${longueurDto.voieId})}" >
                <label th:text="${voieDto.name}">Link</label>
             </a>
          </li>
@@ -40,6 +40,30 @@
             <div class="col-md-12">
                <div  th:replace="~{longueur/longueur-info :: longueurinfo}"></div>
             </div>
+         </div>
+      </div>
+      <div class="col-lg-8 col-sm-12" th:if="${spitDtoList!=null}">
+         <div class="card mt-2 mb-2">
+            <table class="table">
+               <thead class="card-header">
+                  <tr>
+                     <th scope="col" th:text="#{label.spitNumber}">Block number</th>
+                     <th scope="col" th:text="#{label.cotation}">Cotation</th>
+                     <th scope="col" th:text="#{label.relay}">Is relay</th>
+                     <th scope="col" th:text="#{label.comment}">Comment</th>
+                  </tr>
+               </thead>
+               <tbody class="card-body">
+                  <tr th:each="spit : ${spitDtoList}">
+                     <td th:text="${spit.number}">Number</td>
+                     <td th:text="${cotationDtoList[spit.cotationId-1].levelFR}">Cotation</td>
+                     <td>
+                        <img th:src="@{/images/true.jpg}" width="20px" height="20px" alt="photo" th:if="${spit.isRelay}"/>
+                     </td>
+                     <td th:text="${spit.comment}">Comment</td>
+                  </tr>
+               </tbody>
+            </table>
          </div>
       </div>
    </section>

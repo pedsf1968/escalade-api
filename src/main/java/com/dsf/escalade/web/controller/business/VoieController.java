@@ -1,7 +1,6 @@
 package com.dsf.escalade.web.controller.business;
 
 import com.dsf.escalade.model.business.SiteType;
-import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.service.business.*;
 import com.dsf.escalade.service.global.CommentService;
 import com.dsf.escalade.service.global.UserService;
@@ -23,9 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @Slf4j
@@ -37,8 +33,8 @@ public class VoieController {
    private final VoieService voieService;
    private final LongueurService longueurService;
    private final CotationService cotationService;
-      private final CommentService commentService;
-   private final List<String> statusList = Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
+   private final CommentService commentService;
+
 
 
    public VoieController(UserService userService, SiteService siteService, TopoService topoService, SectorService sectorService, VoieService voieService, LongueurService longueurService, CotationService cotationService, CommentService commentService) {
@@ -56,6 +52,8 @@ public class VoieController {
    public String newVoie(@PathVariable("parentId") Integer parentId, Model model) {
 
       VoieDto voieDto = new VoieDto();
+      voieDto.setParentId(parentId);
+
 
 
       if (siteService.getType(parentId).equals(SiteType.TOPO)){
@@ -73,7 +71,6 @@ public class VoieController {
       }
 
 
-      voieDto.setParentId(parentId);
 
       model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
       model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
@@ -89,7 +86,7 @@ public class VoieController {
 
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       Integer parentId = voieDto.getParentId();
-      TopoDto topoDto = null;
+      TopoDto topoDto;
       SectorDto sectorDto = null;
 
 
@@ -175,7 +172,7 @@ public class VoieController {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       VoieDto  voieDto = voieService.getOne(voieId);
       Integer parentId = voieDto.getParentId();
-      TopoDto topoDto = null;
+      TopoDto topoDto;
       SectorDto sectorDto = null;
 
       if(siteService.getType(parentId).equals(SiteType.TOPO)){
@@ -184,8 +181,6 @@ public class VoieController {
          sectorDto = sectorService.getOne(parentId);
          topoDto = topoService.getOne(sectorDto.getTopoId());
       }
-
-      UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
 
       // verify that the manager is the Topo manager
       if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())){
