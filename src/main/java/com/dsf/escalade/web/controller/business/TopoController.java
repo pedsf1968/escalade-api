@@ -121,6 +121,7 @@ public class TopoController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         TopoDto topoDto = new TopoDto();
         AddressDto addressDto = new AddressDto();
+        topoDto.setNbLane(0);
 
         topoDto.setAliasManager(userService.findByEmail(authentication.getName()).getAlias());
         topoDto.setDate(Date.valueOf(LocalDate.now()));
@@ -150,6 +151,7 @@ public class TopoController {
 
         List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
         model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
+
         return PathTable.TOPO_MYLIST;
     }
 

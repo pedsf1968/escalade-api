@@ -4,6 +4,7 @@ import com.dsf.escalade.model.business.Spit;
 import com.dsf.escalade.model.business.SpitPK;
 import com.dsf.escalade.repository.business.SpitRepository;
 import com.dsf.escalade.web.dto.SpitDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 public class SpitServiceImpl implements SpitService {
    private final SpitRepository spitRepository;
 
+   @Autowired
    public SpitServiceImpl(SpitRepository spitRepository) {
       this.spitRepository = spitRepository;
    }

@@ -12,7 +12,7 @@ public class TagDto {
 
    private Integer id;
    @NotNull
-   @Size(min = TAG_MIN, max = TAG_MAX)
+   @Size(min = TAG_MIN, max = TAG_MAX, message = "Length should be between : "+ TAG_MIN + " AND " + TAG_MAX + " !")
    private String name;
    private Boolean activated;
 }

@@ -22,7 +22,7 @@ public class TopoDto {
    //Site attributes
    private Integer id;
    @NotNull
-   @Size(min = NAME_MIN, max = NAME_MAX)
+   @Size(min = NAME_MIN, max = NAME_MAX, message = "Length should be between : "+ NAME_MIN + " AND " + NAME_MAX + " !")
    private String name;
    // Don't use username for the manager
    @NotNull
@@ -39,7 +39,7 @@ public class TopoDto {
    //Topo attributes
    @NotNull
    @NotBlank
-   @Size(min = REGION_MIN, max = REGION_MAX)
+   @Size(min = REGION_MIN, max = REGION_MAX, message = "Length should be between : "+ REGION_MIN + " AND " + REGION_MAX + " !")
    private String region;
    private Integer addressId;
    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

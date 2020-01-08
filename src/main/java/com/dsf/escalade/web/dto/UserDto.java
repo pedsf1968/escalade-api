@@ -27,27 +27,27 @@ public class UserDto {
     private Integer id;
 
     @NotNull
-    @Size(min = FIRSTNAME_MIN, max = FIRSTNAME_MAX)
+    @Size(min = FIRSTNAME_MIN, max = FIRSTNAME_MAX, message = "Length should be between : "+ FIRSTNAME_MIN + " AND " + FIRSTNAME_MAX + " !")
     private String firstName;
 
     @NotNull
-    @Size(min = LASTNAME_MIN, max = LASTNAME_MAX)
+    @Size(min = LASTNAME_MIN, max = LASTNAME_MAX, message = "Length should be between : "+ LASTNAME_MIN + " AND " + LASTNAME_MAX + " !")
     private String lastName;
 
     @NotNull
-    @Size(min = ALIAS_MIN, max = ALIAS_MAX)
+    @Size(min = ALIAS_MIN, max = ALIAS_MAX, message = "Length should be between : "+ ALIAS_MIN + " AND " + ALIAS_MAX + " !")
     private String alias;
 
     @NotNull
-    @Size(min = PASSWORD_MIN, max = PASSWORD_MAX)
+    @Size(min = PASSWORD_MIN, max = PASSWORD_MAX, message = "Length should be between : "+ PASSWORD_MIN + " AND " + PASSWORD_MAX + " !")
     private String password;
 
     @NotNull
-    @Size(min = PASSWORD_MIN, max = PASSWORD_MAX)
+    @Size(min = PASSWORD_MIN, max = PASSWORD_MAX, message = "Length should be between : "+ PASSWORD_MIN + " AND " + PASSWORD_MAX + " !")
     private String matchingPassword;
 
     @NotNull
-    @Size(min = EMAIL_MIN, max = EMAIL_MAX)
+    @Size(min = EMAIL_MIN, max = EMAIL_MAX, message = "Length should be between : "+ EMAIL_MIN + " AND " + EMAIL_MAX + " !")
     @Pattern(regexp = EMAIL_REGEXP, message = "Not a valid email address !")
     private String email;
 

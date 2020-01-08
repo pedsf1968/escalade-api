@@ -3,7 +3,7 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.Voie;
 import com.dsf.escalade.repository.business.VoieRepository;
-import com.dsf.escalade.repository.global.UserRepository;
+import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.dto.VoieDto;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,18 @@ import java.util.List;
 
 @Service("VoieService")
 public class VoieServiceImpl implements VoieService {
+   private final SiteService siteService;
+   private final TopoService topoService;
    private final VoieRepository voieRepository;
-   private final UserRepository userRepository;
+   private final UserService userService;
 
-   public VoieServiceImpl(VoieRepository voieRepository, UserRepository userRepository) {
+   public VoieServiceImpl(SiteService siteService, TopoService topoService, VoieRepository voieRepository, UserService userService) {
+      this.siteService = siteService;
+      this.topoService = topoService;
       this.voieRepository = voieRepository;
-      this.userRepository = userRepository;
+      this.userService = userService;
    }
+
 
    @Override
    public VoieDto getOne(Integer id) {
@@ -38,7 +43,7 @@ public class VoieServiceImpl implements VoieService {
       voieDto.setIsEquipped(voie.getIsEquipped());
 
       if (voie.getManagerId() != null) {
-         voieDto.setAliasManager(userRepository.getOne(voie.getManagerId()).getAlias());
+         voieDto.setAliasManager(userService.getOne(voie.getManagerId()).getAlias());
       }
 
       return voieDto;
@@ -65,7 +70,7 @@ public class VoieServiceImpl implements VoieService {
          voieDto.setIsEquipped(voie.getIsEquipped());
 
          if (voie.getManagerId() != null) {
-            voieDto.setAliasManager(userRepository.getOne(voie.getManagerId()).getAlias());
+            voieDto.setAliasManager(userService.getOne(voie.getManagerId()).getAlias());
          }
 
          voieDtos.add(voieDto);
@@ -77,6 +82,11 @@ public class VoieServiceImpl implements VoieService {
    @Override
    public Integer save(VoieDto voieDto) {
       Voie voie = new Voie();
+
+      // if new Lane we increase Topo lane counter
+      if(voieDto.getId() == null){
+         topoService.increaseLaneCounter(siteService.getTopoId(voieDto.getParentId()));
+      }
 
       voie.setType(SiteType.VOIE);
       voie.setId(voieDto.getId());
@@ -92,7 +102,7 @@ public class VoieServiceImpl implements VoieService {
       voie.setIsEquipped(voieDto.getIsEquipped());
 
       if (voieDto.getAliasManager() != null) {
-         voie.setManagerId(userRepository.findByAlias(voieDto.getAliasManager()).getId());
+         voie.setManagerId(userService.findByAlias(voieDto.getAliasManager()).getId());
       }
 
       return voieRepository.save(voie).getId();
@@ -104,6 +114,7 @@ public class VoieServiceImpl implements VoieService {
 
       if(voieId!=null){
          voieRepository.delete(voieRepository.getOne(voieId));
+         topoService.decreaseLaneCounter(siteService.getTopoId(voieDto.getParentId()));
          return voieId;
       }
 

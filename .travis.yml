@@ -13,8 +13,6 @@ before_install:
 
 jobs:
   include:
-    - stage: Test
-      script: ./mvnw clean test
     - stage: Install
       script: ./mvnw clean install
 

@@ -17,7 +17,7 @@ public class SectorDto {
    //Site attributes
    private Integer id;
    @NotNull
-   @Size(min = NAME_MIN, max = NAME_MAX)
+   @Size(min = NAME_MIN, max = NAME_MAX, message = "Length should be between : "+ NAME_MIN + " AND " + NAME_MAX + " !")
    private String name;
    // Don't use username for the manager
    @NotNull

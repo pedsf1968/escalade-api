@@ -3,6 +3,7 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.Longueur;
 import com.dsf.escalade.repository.business.LongueurRepository;
 import com.dsf.escalade.web.dto.LongueurDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 public class LongueurServiceImpl implements LongueurService {
    private final LongueurRepository longueurRepository;
 
+   @Autowired
    public LongueurServiceImpl(LongueurRepository longueurRepository) {
       this.longueurRepository = longueurRepository;
    }

@@ -9,7 +9,7 @@
    <header class="jumbotron">
       <div class="row">
          <div class="col-sm">
-            <H1 class="display-4 float-left" th:text="#{title.lengthNew}">New Length</H1>
+            <H1 class="display-4 float-left" th:text="${longueurDto.name}">Length</H1>
          </div>
          <div class="col-sm my-auto">
             <div class="float-right" >
@@ -42,7 +42,8 @@
                <span th:if="${#fields.hasErrors('longueurDto.name')}" th:errors="${longueurDto.name}"></span>
             </div>
          </div>
-
+      </div>
+      <div class="col-lg-6 mx-auto">
          <div class="card mt-2 mb-2">
             <div class="card-body">
                <div class="input-group mb-2">
@@ -59,16 +60,47 @@
                      <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
                   </select>
                </div>
-
             </div>
             <div class="card-footer">
                <span th:if="${#fields.hasErrors('longueurDto.heigth')}" th:errors="${longueurDto.heigth}"></span>
             </div>
          </div>
       </div>
+
+      <section class="row endpage">
+         <div class="col-lg-8 col-sm-12" th:if="${spitDtoList!=null}">
+            <div class="card mt-2 mb-2">
+               <table class="table">
+                  <thead class="card-header">
+                  <tr>
+                     <th scope="col" th:text="#{label.spitNumber}">Block number</th>
+                     <th scope="col" th:text="#{label.cotation}">Cotation</th>
+                     <th scope="col" th:text="#{label.relay}">Is relay</th>
+                     <th scope="col" th:text="#{label.comment}">Comment</th>
+                  </tr>
+                  </thead>
+                  <tbody class="card-body">
+                  <tr th:each="spit : ${spitDtoList}">
+                     <td th:text="${spit.number}">Number</td>
+                     <td>
+                        <!--select class="btn mb-2" th:field="${spit.cotationId}">
+                           <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+                        </select-->
+                     </td>
+                     <td>
+                        <input class="btn mb-2" type="checkbox" name="isRelay"  th:checked="${spit.isRelay}"/>
+                     </td>
+                     <td>
+                        <input type="text" class="form-control" th:field="${spit.comment}" th:placeholder="#{placeholder.comment}">
+                     </td>
+                  </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </section>
+
    </form>
-
-
    <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
 </div>
 </body>

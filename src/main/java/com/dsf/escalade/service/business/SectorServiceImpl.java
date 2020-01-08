@@ -3,8 +3,9 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.Sector;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.repository.business.SectorRepository;
-import com.dsf.escalade.repository.global.UserRepository;
+import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.dto.SectorDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,12 +15,14 @@ import java.util.List;
 public class SectorServiceImpl implements SectorService {
 
    private final SectorRepository sectorRepository;
-   private final UserRepository userRepository;
+   private final UserService userService;
 
-   public SectorServiceImpl(SectorRepository sectorRepository, UserRepository userRepository) {
+   @Autowired
+   public SectorServiceImpl(SectorRepository sectorRepository, UserService userService) {
       this.sectorRepository = sectorRepository;
-      this.userRepository = userRepository;
+      this.userService = userService;
    }
+
 
    @Override
    public List<SectorDto> findAll() {
@@ -39,7 +42,7 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setMapLink(sector.getMapLink());
 
          if (sector.getManagerId() != null) {
-            sectorDto.setAliasManager(userRepository.getOne(sector.getManagerId()).getAlias());
+            sectorDto.setAliasManager(userService.getOne(sector.getManagerId()).getAlias());
          }
 
          sectorDtos.add(sectorDto);
@@ -66,7 +69,7 @@ public class SectorServiceImpl implements SectorService {
          sectorDto.setMapLink(sector.getMapLink());
 
          if (sector.getManagerId() != null) {
-            sectorDto.setAliasManager(userRepository.getOne(sector.getManagerId()).getAlias());
+            sectorDto.setAliasManager(userService.getOne(sector.getManagerId()).getAlias());
          }
 
          sectorDtos.add(sectorDto);
@@ -91,7 +94,7 @@ public class SectorServiceImpl implements SectorService {
       sectorDto.setMapLink(sector.getMapLink());
 
       if (sector.getManagerId() != null) {
-         sectorDto.setAliasManager(userRepository.getOne(sector.getManagerId()).getAlias());
+         sectorDto.setAliasManager(userService.getOne(sector.getManagerId()).getAlias());
       }
 
       return sectorDto;
@@ -113,7 +116,7 @@ public class SectorServiceImpl implements SectorService {
       sector.setMapLink(sectorDto.getMapLink());
 
       if (sectorDto.getAliasManager() != null) {
-         sector.setManagerId(userRepository.findByAlias(sectorDto.getAliasManager()).getId());
+         sector.setManagerId(userService.findByAlias(sectorDto.getAliasManager()).getId());
       }
 
       return sectorRepository.save(sector).getId();
@@ -130,5 +133,4 @@ public class SectorServiceImpl implements SectorService {
 
       return null;
    }
-
 }

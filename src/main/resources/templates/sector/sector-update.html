@@ -8,7 +8,7 @@
    <header class="jumbotron">
       <div class="row">
          <div class="col-sm">
-            <H1 class="display-4 float-left" th:text="${sectorDto.name!=null} ? ${sectorDto.name} : #{title.sectorNew}">New Sector</H1>
+            <H1 class="display-4 float-left" th:text="${sectorDto.name}">Sector</H1>
          </div>
          <div class="col-sm my-auto">
             <div class="float-right" >
@@ -49,6 +49,7 @@
                      </div>
                      <input type="text" class="form-control" th:field="${sectorDto.topoId}" readonly>
                      <input type="hidden"  th:field="${sectorDto.id}">
+                     <input type="hidden"  th:field="${sectorDto.aliasManager}">
                      <input type="hidden"  th:field="${sectorDto.photoLink}">
                      <input type="hidden"  th:field="${sectorDto.mapLink}">
                   </div>
