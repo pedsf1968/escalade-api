@@ -244,6 +244,18 @@ List<Topo> topos = topoRepository.findAll();
                predicates.add(cb.greaterThan(root.get("date"), Date.valueOf(simpleDateFormat.format(filter.getDate()))));
             }
 
+            //filter by cotation maximum
+            if ((filter.getCotationMax() != null) && ! filter.getCotationMax().equals("0")) {
+               log.info("\nFilter cotation max : " + filter.getCotationMax());
+               predicates.add(cb.lessThan(root.get("cotationMax"), filter.getCotationMax()));
+            }
+
+            //filter by lane min
+            if ((filter.getNbLane() != null) && ! filter.getNbLane().equals("0")) {
+               log.info("\nFilter lane min : " + filter.getNbLane());
+               predicates.add(cb.greaterThanOrEqualTo(root.get("nbLane"), filter.getNbLane()));
+            }
+
             return cb.and(predicates.toArray(new Predicate[0]));
          }
       });

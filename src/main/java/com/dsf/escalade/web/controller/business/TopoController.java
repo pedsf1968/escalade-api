@@ -75,6 +75,7 @@ public class TopoController {
         model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
         model.addAttribute(PathTable.ATTRIBUTE_REGION_LIST, topoService.findAllRegion());
         model.addAttribute(PathTable.ATTRIBUTE_ALIAS_LIST, topoService.findAllAlias());
+        model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
         return PathTable.TOPO_ALL;
     }
@@ -96,6 +97,7 @@ public class TopoController {
         model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
         model.addAttribute(PathTable.ATTRIBUTE_REGION_LIST, topoService.findAllRegion());
         model.addAttribute(PathTable.ATTRIBUTE_ALIAS_LIST, topoService.findAllAlias());
+        model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
         return PathTable.TOPO_ALL;
     }

@@ -58,7 +58,7 @@
                      <td th:text="${spit.number}">Number</td>
                      <td th:text="${cotationDtoList[spit.cotationId-1].levelFR}">Cotation</td>
                      <td>
-                        <img th:src="@{/images/true.jpg}" width="20px" height="20px" alt="photo" th:if="${spit.isRelay}"/>
+                        <span  th:if="${spit.isRelay}" >&#10004</span>
                      </td>
                      <td th:text="${spit.comment}">Comment</td>
                   </tr>

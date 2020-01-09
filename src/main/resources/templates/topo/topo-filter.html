@@ -3,43 +3,70 @@
 <body>
 <div th:fragment="topofilter" class="form-inline float-right">
    <form  class="form-inline" action="#" th:action="@{/topo/all}" th:object="${filter}" method="POST" enctype="utf8">
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.region}">Region</div>
-         </div>
-         <select class="form-control" th:field="${filter.region}">
-            <option th:value="0" th:text="..."></option>
-            <option th:each="region : ${regionList}" th:value="${region}" th:text="${region}"></option>
-         </select>
-      </div>
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.status}">Status</div>
-         </div>
-         <select class="form-control" th:field="${filter.status}">
-            <option th:value="0" th:text="..."></option>
-            <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
-         </select>
-      </div>
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.alias}">Alias</div>
-         </div>
-         <select class="form-control" th:field="${filter.aliasManager}">
-            <option th:value="0" th:text="..."></option>
-            <option th:each="alias : ${aliasList}" th:value="${alias}" th:text="${alias}"></option>
-         </select>
+      <div class="row">
+         <table>
+            <thead>
+            <tr>
+               <th scope="col" th:text="#{label.region}">Region</th>
+               <th scope="col" th:text="#{label.status}">Status</th>
+               <th scope="col" th:text="#{label.alias}">Alias</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <td>
+                  <select class="form-control" th:field="${filter.region}">
+                     <option th:value="0" th:text="..."></option>
+                     <option th:each="region : ${regionList}" th:value="${region}" th:text="${region}"></option>
+                  </select>
+               </td>
+               <td>
+                  <select class="form-control" th:field="${filter.status}">
+                     <option th:value="0" th:text="..."></option>
+                     <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+                  </select>
+               </td>
+               <td>
+                  <select class="form-control" th:field="${filter.aliasManager}">
+                     <option th:value="0" th:text="..."></option>
+                     <option th:each="alias : ${aliasList}" th:value="${alias}" th:text="${alias}"></option>
+                  </select>
+               </td>
+            </tr>
+            </tbody>
+         </table>
+
+         <table class="col-md-12">
+            <thead>
+            <tr>
+               <th scope="col" th:text="#{label.date}">Date</th>
+               <th scope="col" th:text="#{label.cotation}">Cotation</th>
+               <th scope="col" th:text="#{label.lane}">Lane</th>
+               <th scope="col" ></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <td>
+                  <input type="date" class="form-control" th:field="${filter.date}" th:placeholder="#{placeholder.date}">
+               </td>
+               <td>
+                  <select class="form-control" th:field="${filter.cotationMax}">
+                     <option th:value="0" th:text="..."></option>
+                     <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+                  </select>
+               </td>
+               <td>
+                  <input type="text" class="form-control" th:field="${filter.nbLane}" th:placeholder="#{placeholder.lane}">
+               </td>
+               <td>
+                  <button type="submit" class="btn btn-primary float-right mb-2" th:text="#{label.filter}">Filter</button>
+               </td>
+            </tr>
+            </tbody>
+         </table>
       </div>
 
-      <div class="input-group mb-2">
-         <div class="input-group-prepend">
-            <div class="input-group-text" th:text="#{label.date}">Date</div>
-         </div>
-         <input type="date" class="form-control" th:field="${filter.date}" th:placeholder="#{placeholder.date}">
-      </div>
-
-
-      <button type="submit" class="btn btn-primary float-right mb-2" th:text="#{label.filter}">Filter</button>
    </form>
 
 </div>
