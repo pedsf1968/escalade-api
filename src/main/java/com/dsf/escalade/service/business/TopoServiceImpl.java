@@ -4,10 +4,9 @@ import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.model.business.Topo;
 import com.dsf.escalade.repository.business.TopoRepository;
-import com.dsf.escalade.repository.global.UserRepository;
+import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.dto.TopoDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +23,13 @@ import java.util.List;
 @Service("TopoService")
 public class TopoServiceImpl implements TopoService {
    private final TopoRepository topoRepository;
-   private final UserRepository userRepository;
+   private final UserService userService;
 
-   @Autowired
-   public TopoServiceImpl(TopoRepository topoRepository, UserRepository userRepository) {
+   public TopoServiceImpl(TopoRepository topoRepository, UserService userService) {
       this.topoRepository = topoRepository;
-      this.userRepository = userRepository;
+      this.userService = userService;
    }
+
 
    @Override
    public List<TopoDto> findAll() {
@@ -61,10 +60,10 @@ List<Topo> topos = topoRepository.findAll();
          topoDto.setNbLane(topo.getNbLane());
 
          if (topo.getManagerId() != null) {
-            topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
+            topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
          }
          if (topo.getClimberId() != null) {
-            topoDto.setAliasClimber(userRepository.getOne(topo.getClimberId()).getAlias());
+            topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
          }
 
          topoDtoList.add(topoDto);
@@ -102,10 +101,10 @@ List<Topo> topos = topoRepository.findAll();
 
 
          if (topo.getManagerId() != null) {
-            topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
+            topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
          }
          if (topo.getClimberId() != null) {
-            topoDto.setAliasClimber(userRepository.getOne(topo.getClimberId()).getAlias());
+            topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
          }
 
          topoDtoList.add(topoDto);
@@ -141,10 +140,10 @@ List<Topo> topos = topoRepository.findAll();
 
 
       if (topo.getManagerId() != null) {
-         topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
+         topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
       }
       if (topo.getClimberId() != null) {
-         topoDto.setAliasClimber(userRepository.getOne(topo.getClimberId()).getAlias());
+         topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
       }
 
       return topoDto;
@@ -176,10 +175,10 @@ List<Topo> topos = topoRepository.findAll();
 
 
       if (topoDto.getAliasManager() != null) {
-         topo.setManagerId(userRepository.findByAlias(topoDto.getAliasManager()).getId());
+         topo.setManagerId(userService.findByAlias(topoDto.getAliasManager()).getId());
       }
       if (topoDto.getAliasClimber() != null) {
-         topo.setClimberId(userRepository.findByAlias(topoDto.getAliasClimber()).getId());
+         topo.setClimberId(userService.findByAlias(topoDto.getAliasClimber()).getId());
       }
 
       return topoRepository.save(topo).getId();
@@ -230,7 +229,7 @@ List<Topo> topos = topoRepository.findAll();
             //filter by manager
             if ((filter.getAliasManager() != null) && ! filter.getAliasManager().equals("0")) {
                log.info("\nFilter alias manager : " + filter.getAliasManager());
-               predicates.add(cb.equal(root.get("managerId"), userRepository.findByAlias(filter.getAliasManager()).getId()) );
+               predicates.add(cb.equal(root.get("managerId"), userService.findByAlias(filter.getAliasManager()).getId()) );
             }
 
             //filter by status
@@ -274,10 +273,10 @@ List<Topo> topos = topoRepository.findAll();
 
 
          if (topo.getManagerId() != null) {
-            topoDto.setAliasManager(userRepository.getOne(topo.getManagerId()).getAlias());
+            topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
          }
          if (topo.getClimberId() != null) {
-            topoDto.setAliasClimber(userRepository.getOne(topo.getClimberId()).getAlias());
+            topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
          }
 
          topoDtos.add(topoDto);
@@ -306,7 +305,7 @@ List<Topo> topos = topoRepository.findAll();
       Topo topo = topoRepository.getOne(topoId);
       Integer nbLane = topo.getNbLane();
 
-      if (nbLane.equals(null)){
+      if (nbLane == null){
          nbLane = 1;
       }
 
@@ -320,7 +319,7 @@ List<Topo> topos = topoRepository.findAll();
       Topo topo = topoRepository.getOne(topoId);
       Integer nbLane = topo.getNbLane();
 
-      if (nbLane.equals(null)){
+      if (nbLane == null){
          nbLane = 1;
       }
 

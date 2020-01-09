@@ -41,7 +41,9 @@ VALUES (1,'La falaise', 'TOPO', 2,'TOPO1photo.jpg',null, 3,42.123,122.4564),
     (5,'Pôle dance', 'SECTOR', 2,'SECTOR5photo.jpg','SECTOR5map.jpg',1,55.123,12.6454),
     (6,'Coude à coude','SECTOR',2,'SECTOR6photo.jpg','SECTOR6map.jpg',2,55.123,12.6454),
     (7,'La terrasse','VOIE',2,'VOIE7photo.jpg','VOIE7map.jpg',0,55.123,12.6454),
-    (8,'La grotte','VOIE',2,'VOIE8photo.jpg','VOIE8map.jpg',0,55.123,12.6454);
+    (8,'La grotte','VOIE',2,'VOIE8photo.jpg','VOIE8map.jpg',0,55.123,12.6454),
+    (9,'La Roche de Haute pierre','TOPO',3,'TOPO9photo.jpg',null,0,25.123,15.654),
+    (10,'La grotte','SECTOR',3,'SECTOR10photo.jpg',null,0,25.123,15.654);
 
 
 
@@ -51,12 +53,15 @@ VALUES (1, 'Corse',1,'2019-06-11','Lorem ipsum dolor sit amet, consectetur adipi
 'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.');
 
 INSERT INTO topo (site_id, region, address_id, date, description,status,status_auto,nb_lane,cotation_min,cotation_max)
-VALUES (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,0,null,null),
-        (3, 'Alpes', 1, '2019-11-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','UNVAILABLE',false,2,5,15),
-        (4,'Alpes', 1, '2019-12-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',false,0,null,null);
+VALUES (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,2,4,15),
+        (3, 'Alpes', 1, '2019-11-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','UNVAILABLE',false,0,5,15),
+        (4,'Alpes', 1, '2019-12-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',false,0,3,11),
+        (9,'Franche-Comté', 3, '2020-01-01','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,0,3,11);
 
 INSERT INTO sector (site_id, topo_id, equipment)
-VALUES (5, 2,'100m de corde'),(6,2,'Corde de 50m');
+VALUES (5, 2,'100m de corde'),
+        (6,2,'Corde de 50m'),
+        (10,9,'Corde de 50m');
 
 INSERT INTO voie (site_id, parent_id, cotation_id, heigth, is_equipped)
 VALUES (7,2,1,452,true),(8,6,15,122,false);

@@ -123,7 +123,7 @@ public class LongueurController {
       return PathTable.VOIE_UPDATE_R + voieId;
    }
 
-   @GetMapping("/longueur/delete/{sectorId}")
+   @GetMapping("/longueur/delete/{longueurId}")
    public String deleteSector(@PathVariable("longueurId") Integer longueurId, Model model){
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       LongueurDto longueurDto = longueurService.getOne(longueurId);
@@ -134,7 +134,6 @@ public class LongueurController {
 
       if (userDto.getEmail().equals(authentication.getName())){
          longueurService.delete(longueurDto);
-
       }
 
       return PathTable.VOIE_UPDATE_R + voieId;

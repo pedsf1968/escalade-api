@@ -3,6 +3,7 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.Cotation;
 import com.dsf.escalade.repository.business.CotationRepository;
 import com.dsf.escalade.web.dto.CotationDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 public class CotationServiceImpl implements CotationService {
    private final CotationRepository cotationRepository;
 
+   @Autowired
    public CotationServiceImpl(CotationRepository cotationRepository) {
       this.cotationRepository = cotationRepository;
    }

@@ -87,11 +87,6 @@ public class SectorController {
          return PathTable.SECTOR_UPDATE_R + sectorService.save(sectorDto);
       }
 
-     model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
-      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressService.getOne(topoDto.getAddressId()));
-      model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
-
       return PathTable.TOPO_UPDATE_R + topoId;
    }
 
@@ -155,17 +150,6 @@ public class SectorController {
          sectorService.save(sectorDto);
       }
 
-      TopoDto topoDto = topoService.getOne(topoId);
-      List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
-
-      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
-      model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
-      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
-      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-      model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
-
-
       return PathTable.TOPO_UPDATE_R + topoId;
    }
 
@@ -184,16 +168,6 @@ public class SectorController {
             voieService.delete(voieDto);
          }
       }
-
-      TopoDto topoDto = topoService.getOne(topoId);
-      List<SectorDto> sectorDtoList = sectorService.findByTopoId(topoId);
-
-      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
-      model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
-      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
-      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-      model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
 
       return PathTable.TOPO_UPDATE_R + topoId;
    }

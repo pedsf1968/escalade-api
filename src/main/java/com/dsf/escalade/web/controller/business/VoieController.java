@@ -70,8 +70,6 @@ public class VoieController {
          voieDto.setLongitude(sectorDto.getLongitude());
       }
 
-
-
       model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
       model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 

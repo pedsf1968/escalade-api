@@ -9,15 +9,12 @@ import javax.validation.constraints.Size;
 public class LongueurDto {
    private static final int NAME_MIN = 1;
    private static final int NAME_MAX = 50;
-   private static final int HEIGHT_MAX = 50;
 
    private Integer id;
    @NotNull
-   @Size(min = NAME_MIN, max = NAME_MAX)
+   @Size(min = NAME_MIN, max = NAME_MAX, message = "Length should be between : "+ NAME_MIN + " AND " + NAME_MAX + " !")
    private String name;
    private Integer voieId;
    private Integer cotationId;
-
-   @Size(max = HEIGHT_MAX)
    private Integer heigth;
 }

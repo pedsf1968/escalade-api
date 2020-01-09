@@ -4,4 +4,5 @@ import com.dsf.escalade.model.business.SiteType;
 
 public interface SiteService {
    SiteType getType(Integer id);
+   Integer getTopoId(Integer parentId);
 }
