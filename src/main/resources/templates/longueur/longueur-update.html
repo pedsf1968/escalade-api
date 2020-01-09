@@ -13,6 +13,8 @@
          </div>
          <div class="col-sm my-auto">
             <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/spit/new/{id}(id=${longueurDto.id})}" th:text="#{label.newSpit}">New Spit</a>
+               <a class="btn btn-danger" th:href="@{/voie/delete/{id}(id=${longueurDto.id})}" th:text="#{label.delete}" >Delete</a>
                <a class="btn btn-primary" th:href="@{/voie/edit/{id}(id=${longueurDto.voieId})}" th:text="#{label.cancel}">Cancel</a>
                <button form="formlongueuradd" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
             </div>
@@ -91,7 +93,7 @@
                         <input class="btn mb-2" type="checkbox" name="isRelay"  th:checked="${spit.isRelay}"/>
                      </td>
                      <td>
-                        <input type="text" class="form-control" th:field="${spit.comment}" th:placeholder="#{placeholder.comment}">
+                        <input type="text" th:field="${spit.comment}" th:placeholder="#{placeholder.comment}">
                      </td>
                   </tr>
                   </tbody>

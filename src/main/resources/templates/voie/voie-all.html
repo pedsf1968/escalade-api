@@ -5,7 +5,7 @@
    <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="voie : ${voieDtoList}">
       <div class="card">
          <div class="card-header row">
-            <h5 th:text="${#messages.msg('label.lane')}">Name</h5>
+            <h5 th:text="${#messages.msg('label.lane')} + ' : ' + ${voie.name}">Name</h5>
          </div>
          <div class="card-body">
             <img  th:if="${voie.photoLink!=null}" class="img-fluid" th:src="@{/images/voie/{image}(image=${voie.photoLink})}" alt="photo"/>
