@@ -4,6 +4,7 @@ import com.dsf.escalade.EmailConfiguration;
 import com.dsf.escalade.Feedback;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.service.business.TopoService;
+import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.TopoDto;
 import lombok.extern.slf4j.Slf4j;
@@ -28,20 +29,20 @@ public class MailController {
 
    private final EmailConfiguration emailConfiguration;
    private final TopoService topoService;
+   private final UserService userService;
    private  JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
    private SimpleMailMessage mailMessage = new SimpleMailMessage();
 
    @Autowired
-   public MailController(EmailConfiguration emailConfiguration, TopoService topoService) {
+   public MailController(EmailConfiguration emailConfiguration, TopoService topoService, UserService userService) {
       this.emailConfiguration = emailConfiguration;
       this.topoService = topoService;
+      this.userService = userService;
 
       mailSender.setHost(emailConfiguration.getHost());
       mailSender.setPort(emailConfiguration.getPort());
       mailSender.setUsername(emailConfiguration.getUsername());
       mailSender.setPassword(emailConfiguration.getPassword());
-
-      mailMessage.setTo("admin@escalade.com");
    }
 
    @PostMapping("/feedback")
@@ -64,13 +65,13 @@ public class MailController {
       TopoDto topoDto = topoService.getOne(topoId);
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-      // Create message
+      // Create message get
       mailMessage.setFrom(authentication.getName());
+      mailMessage.setTo(userService.findByAlias(topoDto.getAliasManager()).getEmail());
 
       if(topoDto.getStatus().equals(StatusType.AVAILABLE.toString())) {
          if(topoDto.getStatusAuto()){
             topoDto.setStatus(StatusType.RESERVED.toString());
-            topoService.save(topoDto);
             mailMessage.setSubject("Réservation de topo");
             mailMessage.setText("Réservation du topo : " + topoId);
          } else {
@@ -79,6 +80,7 @@ public class MailController {
             mailMessage.setText("Demande de réservation du topo : " + topoId );
          }
          // Send message
+         topoService.save(topoDto);
          mailSender.send(mailMessage);
       }
 

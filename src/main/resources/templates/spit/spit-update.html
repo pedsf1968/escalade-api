@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+   <div class="col-lg-8 col-sm-12 mx-auto"  th:fragment="spitlist">
+      <form class="row" action="#" th:action="@{/spit/update}" method="POST" enctype="utf8">
+         <div class="card mt-2 mb-2">
+            <table class="table">
+               <thead class="card-header">
+               <tr>
+                  <th scope="col" th:text="#{label.spitNumber}">Block number</th>
+                  <th scope="col" th:text="#{label.cotation}">Cotation</th>
+                  <th scope="col" th:text="#{label.relay}">Is relay</th>
+                  <th scope="col" th:text="#{label.comment}">Comment</th>
+               </tr>
+               </thead>
+               <tbody class="card-body">
+               <tr th:each="spit : ${spitDtoList}">
+                  <td th:text="${spit.number}">Number</td>
+                  <td>
+                     <select class="form-control" id="${spit.cotationId}" name="${spit.cotationId}">
+                        <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==spit.cotationId}"></option>
+                     </select>
+                  </td>
+                  <td>
+                     <input class="btn mb-2" type="checkbox" name="isRelay"  th:checked="${spit.isRelay}"/>
+                  </td>
+                  <td>
+                     <input class="form-control" type="text" th:value="${spit.comment}"/>
+                  </td>
+               </tr>
+               </tbody>
+            </table>
+         </div>
+      </form>
+   </div>
+</body>

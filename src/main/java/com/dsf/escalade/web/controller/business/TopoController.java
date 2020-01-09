@@ -206,9 +206,6 @@ public class TopoController {
             topoService.save(topoDto);
         }
 
-        List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
-
         return PathTable.TOPO_MYLIST_R;
     }
 
@@ -221,9 +218,6 @@ public class TopoController {
         if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())){
             topoService.delete(topoDto);
         }
-
-        List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
 
         return PathTable.TOPO_MYLIST_R;
     }

@@ -8,7 +8,7 @@
    <header class="jumbotron">
       <div class="row">
          <div class="col-sm">
-            <H1 class="display-4 float-left" th:text="${voieDto.name}" >Voie</H1>
+            <H1 class="display-4 float-left" th:text="${#messages.msg('label.lane')} + ' : ' +${voieDto.name}" >Voie</H1>
          </div>
          <div class="col-sm my-auto">
             <div class="float-right" >

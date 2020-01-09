@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+   <div class="col-lg-8 col-sm-12 mx-auto"  th:fragment="spitlist">
+      <div class="card mt-2 mb-2">
+         <table class="table">
+            <thead class="card-header">
+            <tr>
+               <th scope="col" th:text="#{label.spitNumber}">Block number</th>
+               <th scope="col" th:text="#{label.cotation}">Cotation</th>
+               <th scope="col" th:text="#{label.relay}">Is relay</th>
+               <th scope="col" th:text="#{label.comment}">Comment</th>
+            </tr>
+            </thead>
+            <tbody class="card-body">
+            <tr th:each="spit : ${spitDtoList}">
+               <td th:text="${spit.number}">Number</td>
+               <td th:text="${cotationDtoList[spit.cotationId-1].levelFR}">Cotation</td>
+               <td>
+                  <span  th:if="${spit.isRelay}" >&#10004</span>
+               </td>
+               <td th:text="${spit.comment}">Comment</td>
+            </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</body>
