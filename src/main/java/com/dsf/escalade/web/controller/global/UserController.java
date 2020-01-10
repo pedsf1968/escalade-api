@@ -106,4 +106,73 @@ public class UserController {
       return "index";
    }
 
+   @GetMapping("/user/new")
+   public String newUser(Model model) {
+      model.addAttribute("userDto", new UserDto());
+      model.addAttribute("addressDto", new AddressDto());
+
+      return PathTable.USER_ADD;
+   }
+
+   @PostMapping("/user/add")
+   public String addUser(@ModelAttribute("userDto") @Valid UserDto userDto, @NotNull BindingResult bindingResultUser,
+                                  @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress, Model model) {
+
+      if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
+         return PathTable.USER_ADD;
+      }
+
+      if(userService.findByEmail(userDto.getEmail())!=null){
+         bindingResultUser.rejectValue("email", "5", "Email already exist !");
+         return PathTable.USER_ADD;
+      }
+
+      if(userService.findByAlias(userDto.getAlias())!=null){
+         bindingResultUser.rejectValue("alias", "6", "Alias already exist !");
+         return PathTable.USER_ADD;
+      }
+
+      Integer addressId = addressService.save(addressDto);
+      userDto.setAddressId(addressId);
+
+      userDto.setRoles(Lists.newArrayList("ROLE_USER"));
+
+      userService.save(userDto);
+
+      //Le login se fait par l'email
+      securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
+
+      return "redirect:/";
+   }
+
+   @PostMapping("/user/update/{userId}")
+   public String updateUser(@ModelAttribute("userDto") @Valid UserDto userDto, @NotNull BindingResult bindingResultUser,
+                         @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress, Model model) {
+
+      if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
+         return PathTable.USER_UPDATE;
+      }
+
+      if(userService.findByEmail(userDto.getEmail())!=null){
+         bindingResultUser.rejectValue("email", "5", "Email already exist !");
+         return PathTable.USER_UPDATE;
+      }
+
+      if(userService.findByAlias(userDto.getAlias())!=null){
+         bindingResultUser.rejectValue("alias", "6", "Alias already exist !");
+         return PathTable.USER_UPDATE;
+      }
+
+      Integer addressId = addressService.save(addressDto);
+      userDto.setAddressId(addressId);
+
+      userDto.setRoles(Lists.newArrayList("ROLE_USER"));
+
+      userService.save(userDto);
+
+      //Le login se fait par l'email
+      securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
+
+      return "redirect:/";
+   }
 }

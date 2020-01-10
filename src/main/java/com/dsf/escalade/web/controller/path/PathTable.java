@@ -30,8 +30,13 @@ public interface PathTable {
    public final static String LONGUEUR_UPDATE_R = "redirect:/longueur/edit/";
 
    public final static String USER_REGISTRATION = "user/registration";
+
+   public final static String USER_ADD = "user/user-add";
+   public final static String USER_READ = "user/user-read";
+   public final static String USER_READ_R = "redirect:/user/read/";
    public final static String USER_UPDATE = "user/user-update";
    public final static String USER_UPDATE_R = "redirect:/user/edit/";
+
 
    public final static String ATTRIBUTE_ADDRESS = "addressDto";
    public final static String ATTRIBUTE_ALIAS_LIST = "aliasList";

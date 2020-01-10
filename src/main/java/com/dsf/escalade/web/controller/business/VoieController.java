@@ -54,8 +54,6 @@ public class VoieController {
       VoieDto voieDto = new VoieDto();
       voieDto.setParentId(parentId);
 
-
-
       if (siteService.getType(parentId).equals(SiteType.TOPO)){
          // Parent is a Topo
          TopoDto topoDto = topoService.getOne(parentId);
