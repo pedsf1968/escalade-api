@@ -131,24 +131,24 @@ public class UserController {
 
    @GetMapping("/user/edit/{userId}")
    public String editOtherUser( @PathVariable("userId") Integer userId, Model model){
-      // get the authentified user and his address
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      UserDto userDto;
 
-      if (userId!=null){
-         userDto = userService.getOne(userId);
-      } else {
-         userDto = userService.findByEmail(authentication.getName());
+      // get the authentified user and his address
+      UserDto userDto = userService.getOne(userId);
+      UserDto operator = userService.findByEmail(authentication.getName());
+
+      if (userDto.equals(operator) || operator.getRoles().contains("ROLE_ADMIN")){
+         AddressDto addressDto = addressService.getOne(userDto.getAddressId());
+         log.info("/user/edit user : " + userDto);
+         log.info("/user/edit address : " + addressDto);
+
+         model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
+         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);
+
+         return PathTable.USER_UPDATE;
       }
 
-      AddressDto addressDto = addressService.getOne(userDto.getAddressId());
-      log.info("/user/edit user : " + userDto);
-      log.info("/user/edit address : " + addressDto);
-
-      model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
-      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);
-
-      return PathTable.USER_UPDATE;
+      return "redirect:/";
    }
 
    @PostMapping("/user/update/{userId}")
