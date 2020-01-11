@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
       userDto.setMatchingPassword(user.getPassword());
       userDto.setPhone(user.getPhone());
       userDto.setAddressId(user.getAddressId());
+      userDto.setPhotoLink(user.getPhotoLink());
 
       if( user.getRoles()!= null) {
          List<String> roles = new ArrayList<>();
@@ -77,6 +78,7 @@ public class UserServiceImpl implements UserService {
          userDto.setMatchingPassword(user.getPassword());
          userDto.setPhone(user.getPhone());
          userDto.setAddressId(user.getAddressId());
+         userDto.setPhotoLink(user.getPhotoLink());
 
          if (user.getRoles() != null) {
             List<String> roles = new ArrayList<>();
@@ -110,6 +112,7 @@ public class UserServiceImpl implements UserService {
          userDto.setMatchingPassword(user.getPassword());
          userDto.setPhone(user.getPhone());
          userDto.setAddressId(user.getAddressId());
+         userDto.setPhotoLink(user.getPhotoLink());
 
          if (user.getRoles() != null) {
             List<String> roles = new ArrayList<>();
@@ -142,6 +145,7 @@ public class UserServiceImpl implements UserService {
          userDto.setMatchingPassword(user.getPassword());
          userDto.setPhone(user.getPhone());
          userDto.setAddressId(user.getAddressId());
+         userDto.setPhotoLink(user.getPhotoLink());
 
          if (user.getRoles() != null) {
             List<String> roles = new ArrayList<>();
@@ -163,12 +167,15 @@ public class UserServiceImpl implements UserService {
    public Integer save(UserDto userDto) {
       User user = new User();
 
+      user.setId(userDto.getId());
       user.setFirstName(userDto.getFirstName());
       user.setLastName(userDto.getLastName());
       user.setAlias(userDto.getAlias());
       user.setPassword((bCryptPasswordEncoder.encode(userDto.getPassword())));
       user.setEmail(userDto.getEmail());
+      user.setPhone(userDto.getPhone());
       user.setAddressId(userDto.getAddressId());
+      user.setPhotoLink(userDto.getPhotoLink());
 
       if( userDto.getRoles()!= null) {
          Set<Role> roles = new HashSet<>();

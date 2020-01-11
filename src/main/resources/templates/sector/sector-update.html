@@ -36,6 +36,10 @@
    </section>
 
    <form id="formsectorupdate" class="row" action="#" th:action="@{/sector/update/{id}(id=${sectorDto.id})}" method="POST" enctype="utf8">
+      <input type="hidden"  th:field="${sectorDto.id}">
+      <input type="hidden"  th:field="${sectorDto.aliasManager}">
+      <input type="hidden"  th:field="${sectorDto.photoLink}">
+      <input type="hidden"  th:field="${sectorDto.mapLink}">
       <div class="col-md-4 mx-auto">
          <div class="card mt-2 mb-2">
             <div class="card-header row">
@@ -48,10 +52,6 @@
                         <div class="input-group-text" th:text="#{label.topoId}">Topo Id</div>
                      </div>
                      <input type="text" class="form-control" th:field="${sectorDto.topoId}" readonly>
-                     <input type="hidden"  th:field="${sectorDto.id}">
-                     <input type="hidden"  th:field="${sectorDto.aliasManager}">
-                     <input type="hidden"  th:field="${sectorDto.photoLink}">
-                     <input type="hidden"  th:field="${sectorDto.mapLink}">
                   </div>
                </div>
             </div>

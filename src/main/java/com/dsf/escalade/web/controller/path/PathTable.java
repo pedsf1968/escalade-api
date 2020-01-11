@@ -54,6 +54,7 @@ public interface PathTable {
    public final static String ATTRIBUTE_TAGS = "tagsByTopoId";
    public final static String ATTRIBUTE_TOPO = "topoDto";
    public final static String ATTRIBUTE_TOPO_LIST = "topoDtoList";
+   public final static String ATTRIBUTE_USER = "userDto";
    public final static String ATTRIBUTE_VOIE = "voieDto";
    public final static String ATTRIBUTE_VOIE_LIST = "voieDtoList";
 

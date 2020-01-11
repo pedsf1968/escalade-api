@@ -9,6 +9,7 @@ import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
+import com.dsf.escalade.web.dto.UserDto;
 import com.dsf.escalade.web.dto.VoieDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,9 +68,10 @@ public class FileController {
             topoDto.setMapLink("TOPO"+id+"map.jpg");
          }
          topoService.save(topoDto);
-         model.addAttribute("topoDto",topoDto);
+         model.addAttribute(PathTable.ATTRIBUTE_TOPO,topoDto);
          return PathTable.TOPO_UPDATE_R + id;
       } else if (siteType.equals(SiteType.SECTOR.toString())){
+         // Sector
          fileService.uploadFile(file, sectorRepository + siteType + id + fileType + ".jpg");
          SectorDto sectorDto = sectorService.getOne(id);
          if(fileType.equals("photo")){
@@ -78,9 +80,10 @@ public class FileController {
             sectorDto.setMapLink("SECTOR"+id+"map.jpg");
          }
          sectorService.save(sectorDto);
-         model.addAttribute("sectorDto",sectorDto);
+         model.addAttribute(PathTable.ATTRIBUTE_SECTOR,sectorDto);
          return PathTable.SECTOR_UPDATE_R + id;
       } else if (siteType.equals(SiteType.VOIE.toString())){
+         // Lane
          fileService.uploadFile(file, voieRepository +  siteType + id + fileType + ".jpg");
          VoieDto voieDto = voieService.getOne(id);
          if(fileType.equals("photo")){
@@ -89,13 +92,16 @@ public class FileController {
             voieDto.setMapLink("VOIE"+id+"map.jpg");
          }
          voieService.save(voieDto);
-         model.addAttribute("voieDto",voieDto);
+         model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
          return PathTable.VOIE_UPDATE_R + id;
       }  else {
-         String fileName = userService.getOne(id).getAlias() + ".jpg";
+         UserDto userDto = userService.getOne(id);
+         String fileName = userDto.getAlias() + ".png";
          fileService.uploadFile(file, avatarRepository + fileName);
-         model.addAttribute("fileName",  fileName);
-         return PathTable.USER_UPDATE_R;
+         userDto.setPhotoLink(fileName);
+         userService.save(userDto);
+         model.addAttribute(PathTable.ATTRIBUTE_USER,  userDto);
+         return PathTable.USER_UPDATE_R + id;
       }
 
    }

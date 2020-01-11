@@ -127,6 +127,7 @@ public class TopoController {
 
         topoDto.setAliasManager(userService.findByEmail(authentication.getName()).getAlias());
         topoDto.setDate(Date.valueOf(LocalDate.now()));
+        log.info("/topo/new topo : ", topoDto);
         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);
         model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
@@ -137,7 +138,6 @@ public class TopoController {
     @PostMapping("/topo/add")
     public String addTopo(@ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
                           @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()) {
             model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
@@ -145,20 +145,18 @@ public class TopoController {
         }
 
         // verify that the manager is the Topo manager
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
             topoDto.setAddressId(addressService.save(addressDto));
             // save and go to update to add images
             return PathTable.TOPO_UPDATE_R + topoService.save(topoDto);
         }
 
-        List<TopoDto> topoDtoList = topoService.findByManagerId(userService.findByEmail(authentication.getName()).getId());
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
-
-        return PathTable.TOPO_MYLIST;
+        return PathTable.TOPO_MYLIST_R;
     }
 
-    @GetMapping("/topo/read/{id}")
-    public String readTopo(@PathVariable("id") Integer topoId, Model model) {
+    @GetMapping("/topo/read/{topoId}")
+    public String readTopo(@PathVariable("topoId") Integer topoId, Model model) {
         TopoDto topoDto = topoService.getOne(topoId);
 
         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
@@ -172,8 +170,8 @@ public class TopoController {
         return PathTable.TOPO_READ;
     }
 
-    @GetMapping("/topo/edit/{id}")
-    public String editTopo(@PathVariable("id") Integer topoId, Model model) {
+    @GetMapping("/topo/edit/{topoId}")
+    public String editTopo(@PathVariable("topoId") Integer topoId, Model model) {
         TopoDto topoDto = topoService.getOne(topoId);
 
         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
@@ -186,11 +184,10 @@ public class TopoController {
         return PathTable.TOPO_UPDATE;
     }
 
-    @PostMapping("/topo/update/{id}")
-    public String updateTopo(@PathVariable("id") Integer topoId, @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
+    @PostMapping("/topo/update/{topoId}")
+    public String updateTopo(@PathVariable("topoId") Integer topoId,
+                             @ModelAttribute("topoDto") @Valid TopoDto topoDto, @NotNull  BindingResult bindingResultTopo,
                              @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NonNull BindingResult bindingResultAddress, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if(bindingResultTopo.hasErrors() || bindingResultAddress.hasErrors()){
             model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
             model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
@@ -201,6 +198,7 @@ public class TopoController {
         }
 
         // verify that the manager is the Topo manager
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
             topoDto.setAddressId(addressService.save(addressDto));
             topoService.save(topoDto);

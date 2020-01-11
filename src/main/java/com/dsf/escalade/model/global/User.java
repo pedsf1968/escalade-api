@@ -73,6 +73,9 @@ public class User implements Serializable {
    @ManyToMany
    private Set<Role> roles;
 
+   @Column(name = "photo_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
+   private String photoLink;
+
    public User() {
    }
 
@@ -156,4 +159,11 @@ public class User implements Serializable {
       this.roles = roles;
    }
 
+   public String getPhotoLink() {
+      return photoLink;
+   }
+
+   public void setPhotoLink(String photoLink) {
+      this.photoLink = photoLink;
+   }
 }

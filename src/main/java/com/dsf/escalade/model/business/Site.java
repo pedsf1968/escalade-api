@@ -31,9 +31,9 @@ public class Site implements Serializable {
    @Column(name = "latitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String latitude;
    @Column(name = "nb_comment", columnDefinition = "INTEGER(3) DEFAULT 0")
-   protected Integer nbComment;
+   private Integer nbComment;
    @Column(name = "photo_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
-   protected String photoLink;
+   private String photoLink;
    @Column(name = "map_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
-   protected String mapLink;
+   private String mapLink;
 }

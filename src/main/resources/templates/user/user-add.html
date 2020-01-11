@@ -14,16 +14,17 @@
             <H1 class="display-4 float-left" th:text="#{title.registration}">Registration</H1>
          </div>
          <div class="col-sm my-auto">
-            <button form="registration" type="submit" class="btn btn-primary float-right" th:text="#{label.submit}">Submit</button>
+            <button form="formadduser" type="submit" class="btn btn-primary float-right" th:text="#{label.submit}">Submit</button>
          </div>
       </div>
    </header>
 
-      <form class="col-md-6 mx-auto" id="registration" action="#" th:action="@{/registration}"  method="POST" enctype="utf8">
+      <form class="col-md-6 mx-auto endpage" id="formadduser" action="#" th:action="@{/user/add}"  method="POST" enctype="utf8">
 
          <div class="card mt-2 mb-2">
             <div class="card-header">
                <h5 th:text="#{label.information}">Information</h5>
+               <input type="hidden" th:field="${userDto.photoLink}">
             </div>
             <div class="card-body row">
                <div class="col-md-4 mb-3">

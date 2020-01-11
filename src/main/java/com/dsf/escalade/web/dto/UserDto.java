@@ -56,4 +56,5 @@ public class UserDto {
     private String phone;
     private Integer addressId;
     private List<String> roles;
+    private String photoLink;
 }

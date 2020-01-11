@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,45 +39,6 @@ public class UserController {
       this.userService = userService;
       this.addressService = addressService;
       this.securityService = securityService;
-   }
-
-   @GetMapping("/registration")
-   public String getRegistration(Model model) {
-      model.addAttribute("userDto", new UserDto());
-      model.addAttribute("addressDto", new AddressDto());
-
-      return PathTable.USER_REGISTRATION;
-   }
-
-   @PostMapping("/registration")
-   public String postRegistration(@ModelAttribute("userDto") @Valid UserDto userDto, @NotNull BindingResult bindingResultUser,
-                                  @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress, Model model) {
-
-      if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
-         return PathTable.USER_REGISTRATION;
-      }
-
-      if(userService.findByEmail(userDto.getEmail())!=null){
-         bindingResultUser.rejectValue("email", "5", "Email already exist !");
-         return PathTable.USER_REGISTRATION;
-      }
-
-      if(userService.findByAlias(userDto.getAlias())!=null){
-         bindingResultUser.rejectValue("alias", "6", "Alias already exist !");
-         return PathTable.USER_REGISTRATION;
-      }
-
-      Integer addressId = addressService.save(addressDto);
-      userDto.setAddressId(addressId);
-
-      userDto.setRoles(Lists.newArrayList("ROLE_USER"));
-
-      userService.save(userDto);
-
-      //Le login se fait par l'email
-      securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
-
-      return "redirect:/";
    }
 
    @GetMapping("/login")
@@ -108,9 +70,12 @@ public class UserController {
 
    @GetMapping("/user/new")
    public String newUser(Model model) {
-      model.addAttribute("userDto", new UserDto());
-      model.addAttribute("addressDto", new AddressDto());
+      UserDto userDto = new UserDto();
+      userDto.setPhotoLink("avatar.png");
+      model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
+      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, new AddressDto());
 
+      log.info("/user/new user : " + userDto);
       return PathTable.USER_ADD;
    }
 
@@ -132,40 +97,90 @@ public class UserController {
          return PathTable.USER_ADD;
       }
 
-      Integer addressId = addressService.save(addressDto);
-      userDto.setAddressId(addressId);
+      if(!userDto.getPassword().equals(userDto.getMatchingPassword())){
+         bindingResultUser.rejectValue("matchingPassword", "7", "Bad matching password !");
+         return PathTable.USER_ADD;
+      }
 
+      // save the address and git id for the user
+      userDto.setAddressId(addressService.save(addressDto));
+      // set default role
       userDto.setRoles(Lists.newArrayList("ROLE_USER"));
 
-      userService.save(userDto);
+      log.info("/user/add user : " + userDto);
+      log.info("/user/add address : " + addressDto);
+      return PathTable.USER_UPDATE_R + userService.save(userDto);
+   }
 
-      //Le login se fait par l'email
-      securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
+   @GetMapping("/user/edit")
+   public String editUser( Model model){
+      // get the authentified user and his address
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      UserDto userDto = userService.findByEmail(authentication.getName());
 
-      return "redirect:/";
+      AddressDto addressDto = addressService.getOne(userDto.getAddressId());
+      log.info("/user/edit user : " + userDto);
+      log.info("/user/edit address : " + addressDto);
+
+      model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
+      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);
+
+      return PathTable.USER_UPDATE;
+   }
+
+
+   @GetMapping("/user/edit/{userId}")
+   public String editOtherUser( @PathVariable("userId") Integer userId, Model model){
+      // get the authentified user and his address
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      UserDto userDto;
+
+      if (userId!=null){
+         userDto = userService.getOne(userId);
+      } else {
+         userDto = userService.findByEmail(authentication.getName());
+      }
+
+      AddressDto addressDto = addressService.getOne(userDto.getAddressId());
+      log.info("/user/edit user : " + userDto);
+      log.info("/user/edit address : " + addressDto);
+
+      model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
+      model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);
+
+      return PathTable.USER_UPDATE;
    }
 
    @PostMapping("/user/update/{userId}")
-   public String updateUser(@ModelAttribute("userDto") @Valid UserDto userDto, @NotNull BindingResult bindingResultUser,
-                         @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress, Model model) {
+   public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("userDto") @Valid UserDto userDto, @NotNull BindingResult bindingResultUser,
+                            @ModelAttribute("addressDto") @Valid AddressDto addressDto, @NotNull BindingResult bindingResultAddress, Model model) {
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
       if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
          return PathTable.USER_UPDATE;
       }
 
-      if(userService.findByEmail(userDto.getEmail())!=null){
-         bindingResultUser.rejectValue("email", "5", "Email already exist !");
-         return PathTable.USER_UPDATE;
+      // test if the email is valid
+      UserDto otherUser = userService.findByEmail(userDto.getEmail());
+      if(otherUser!=null){
+         if (otherUser.getId()!=userDto.getId()){
+            bindingResultUser.rejectValue("email", "5", "Email already exist !");
+            return PathTable.USER_UPDATE;
+         }
       }
 
-      if(userService.findByAlias(userDto.getAlias())!=null){
-         bindingResultUser.rejectValue("alias", "6", "Alias already exist !");
-         return PathTable.USER_UPDATE;
+
+      // test if the alias is valid
+      otherUser = userService.findByAlias(userDto.getAlias());
+      if(otherUser!=null){
+         if (otherUser.getId()!=userDto.getId()) {
+            bindingResultUser.rejectValue("alias", "6", "Alias already exist !");
+            return PathTable.USER_UPDATE;
+         }
       }
 
       Integer addressId = addressService.save(addressDto);
       userDto.setAddressId(addressId);
-
       userDto.setRoles(Lists.newArrayList("ROLE_USER"));
 
       userService.save(userDto);

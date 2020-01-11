@@ -11,7 +11,6 @@ import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.TopoDto;
-import com.dsf.escalade.web.dto.UserDto;
 import com.dsf.escalade.web.dto.VoieDto;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +64,7 @@ public class SectorController {
       sectorDto.setLatitude(topoDto.getLatitude());
       sectorDto.setLongitude(topoDto.getLongitude());
       sectorDto.setAliasManager(topoDto.getAliasManager());
+      log.info("/sector/new sector : " + sectorDto);
       model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
 
       return PathTable.SECTOR_ADD;
@@ -76,18 +76,13 @@ public class SectorController {
          return PathTable.SECTOR_ADD;
       }
 
+      // verify that the manager is the Topo manager
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      Integer topoId = sectorDto.getTopoId();
-      TopoDto topoDto = topoService.getOne(topoId);
-
-      UserDto userDto = userService.findByAlias(sectorDto.getAliasManager());
-
-
-      if (userDto.getEmail().equals(authentication.getName())){
+      if(userService.findByAlias(sectorDto.getAliasManager()).getEmail().equals(authentication.getName())) {
          return PathTable.SECTOR_UPDATE_R + sectorService.save(sectorDto);
       }
 
-      return PathTable.TOPO_UPDATE_R + topoId;
+      return PathTable.TOPO_UPDATE_R + sectorDto.getTopoId();
    }
 
    @GetMapping("/sector/read/{sectorId}")
@@ -128,7 +123,8 @@ public class SectorController {
    }
 
    @PostMapping("/sector/update/{sectorId}")
-   public String updateSector(@PathVariable("sectorId") Integer sectorId, @ModelAttribute("sectorTdo") @Valid SectorDto sectorDto, @NonNull BindingResult bindingResult, Model model) {
+   public String updateSector(@PathVariable("sectorId") Integer sectorId,
+                              @ModelAttribute("sectorTdo") @Valid SectorDto sectorDto, @NonNull BindingResult bindingResult, Model model) {
 
       if(bindingResult.hasErrors()){
          // we fetch the topo parent and siblings for tab informations
@@ -142,25 +138,23 @@ public class SectorController {
          return PathTable.SECTOR_UPDATE;
       }
 
+      // verify that the manager is the Topo manager
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      UserDto userDto = userService.findByAlias(topoService.getOne(sectorDto.getTopoId()).getAliasManager());
-      Integer topoId = sectorDto.getTopoId();
-
-      if (userDto.getEmail().equals(authentication.getName())){
+      if(userService.findByAlias(sectorDto.getAliasManager()).getEmail().equals(authentication.getName())) {
          sectorService.save(sectorDto);
       }
 
-      return PathTable.TOPO_UPDATE_R + topoId;
+      return PathTable.TOPO_UPDATE_R + sectorDto.getTopoId();
    }
 
    @GetMapping("/sector/delete/{sectorId}")
    public String deleteSector(@PathVariable("sectorId") Integer sectorId, Model model){
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       SectorDto sectorDto = sectorService.getOne(sectorId);
-      UserDto userDto = userService.findByAlias(topoService.getOne(sectorDto.getTopoId()).getAliasManager());
       Integer topoId = sectorDto.getTopoId();
 
-      if (userDto.getEmail().equals(authentication.getName())){
+      // verify that the manager is the Topo manager
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      if(userService.findByAlias(sectorDto.getAliasManager()).getEmail().equals(authentication.getName())) {
          sectorService.delete(sectorDto);
 
          // we delete all Lanes of the Sector

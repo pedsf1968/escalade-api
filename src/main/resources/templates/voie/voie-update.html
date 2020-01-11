@@ -8,7 +8,7 @@
    <header class="jumbotron">
       <div class="row">
          <div class="col-sm">
-            <H1 class="display-4 float-left" th:text="${#messages.msg('label.lane')} + ' : ' +${voieDto.name}" >Voie</H1>
+            <H1 class="display-4 float-left" th:text="${#messages.msg('label.lane')} + ' : ' + ${voieDto.name}" >Voie</H1>
          </div>
          <div class="col-sm my-auto">
             <div class="float-right" >
@@ -38,6 +38,10 @@
 
    <section>
       <form id="formupdatevoie" class="col-md-12" action="#" th:action="@{/voie/update/{id}(id=${voieDto.id})}" method="POST" enctype="utf8">
+         <input type="hidden" class="form-control" th:field="${voieDto.id}">
+         <input type="hidden" class="form-control" th:field="${voieDto.aliasManager}">
+         <input type="hidden" class="form-control" th:field="${voieDto.photoLink}">
+         <input type="hidden" class="form-control" th:field="${voieDto.mapLink}">
          <div class="row">
             <div class="col-lg-4 col-md-6">
                <div class="card mt-2 mb-2">
@@ -55,10 +59,6 @@
                            <div class="input-group-text" th:text="#{label.parentId}">Parent Id</div>
                         </div>
                         <input type="text" class="form-control" th:field="${voieDto.parentId}" readonly>
-                        <input type="hidden" class="form-control" th:field="${voieDto.id}">
-                        <input type="hidden" class="form-control" th:field="${voieDto.aliasManager}">
-                        <input type="hidden" class="form-control" th:field="${voieDto.photoLink}">
-                        <input type="hidden" class="form-control" th:field="${voieDto.mapLink}">
                      </div>
                   </div>
                   <div class="card-footer">

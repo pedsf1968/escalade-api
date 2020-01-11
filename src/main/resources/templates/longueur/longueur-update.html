@@ -37,6 +37,7 @@
    </section>
 
    <form id="formlongueuradd" class="row" action="#" th:action="@{/longueur/add}" method="POST" enctype="utf8">
+      <input type="hidden"  th:field="${longueurDto.id}">
       <div class="col-lg-6 mx-auto">
          <div class="card mt-2 mb-2">
             <div class="card-body">
@@ -45,7 +46,6 @@
                      <div class="input-group-text" th:text="#{label.parentId}">Parent Id</div>
                   </div>
                   <input type="text" class="form-control" th:field="${longueurDto.voieId}" readonly>
-                  <input type="hidden"  th:field="${longueurDto.id}">
                </div>
 
                <div class="input-group mb-2">

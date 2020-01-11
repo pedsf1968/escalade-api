@@ -29,22 +29,36 @@ public class AddressServiceImpl implements AddressService {
       addressDto.setStreet2(address.getStreet2());
       addressDto.setZipCode(address.getZipCode());
       addressDto.setCity(address.getCity());
-      addressDto.setCity(address.getCountry());
+      addressDto.setCountry(address.getCountry());
 
       return addressDto;
    }
 
    @Override
    public Integer save(AddressDto addressDto) {
-      Address address = new Address();
 
-      address.setId(addressDto.getId());
-      address.setStreet1(addressDto.getStreet1());
-      address.setStreet2(addressDto.getStreet2());
-      address.setZipCode(addressDto.getZipCode());
-      address.setCity(addressDto.getCity());
-      address.setCountry(addressDto.getCountry());
+      // Does the address exist?
+      Integer addressId = addressRepository.getId(
+            addressDto.getStreet1(),
+            addressDto.getStreet2(),
+            addressDto.getCity(),
+            addressDto.getCountry(),
+            addressDto.getZipCode());
 
-      return addressRepository.save(address).getId();
+      if( addressId == null) {
+         // address doesn't exist create a new one
+         Address address = new Address();
+
+         address.setId(addressDto.getId());
+         address.setStreet1(addressDto.getStreet1());
+         address.setStreet2(addressDto.getStreet2());
+         address.setZipCode(addressDto.getZipCode());
+         address.setCity(addressDto.getCity());
+         address.setCountry(addressDto.getCountry());
+
+         addressId = addressRepository.save(address).getId();
+      }
+
+      return addressId;
    }
 }

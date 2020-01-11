@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface SpitRepository extends JpaRepository <Spit, Integer> {
    List<Spit> findByLongueurId(Integer longueurId);
+
 }

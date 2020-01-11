@@ -54,6 +54,9 @@ public class ResourcesController {
    @GetMapping("/images/avatar/{imageName}")
    public @ResponseBody byte[] getAvatarImages(@PathVariable("imageName") String imageName) throws IOException {
       InputStream in = new FileInputStream(avatarRepository + imageName);
+      if ( in == null){
+         in = new FileInputStream(avatarRepository + "avatar.png");
+      }
       return IOUtils.toByteArray(in);
    }
 
