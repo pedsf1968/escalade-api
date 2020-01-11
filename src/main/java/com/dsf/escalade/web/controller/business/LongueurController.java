@@ -73,6 +73,8 @@ public class LongueurController {
       Integer voieId = longueurDto.getVoieId();
       VoieDto voieDto = voieService.getOne(voieId);
 
+      log.info("\n\nINFO :"  + spitService.getLastSpitNumber(2));
+
       model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
       model.addAttribute(PathTable.ATTRIBUTE_LONGUEUR, longueurDto);
       model.addAttribute(PathTable.ATTRIBUTE_SPIT_LIST, spitService.findByLongueurId(longueurId));

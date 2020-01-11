@@ -11,4 +11,7 @@ import java.util.List;
 public interface SpitRepository extends JpaRepository <Spit, Integer> {
    List<Spit> findByLongueurId(Integer longueurId);
 
+   Spit findFirstBySpitPKTopoIdOrderBySpitPKNumberDesc(Integer topoId);
+
+   Spit findBySpitPKTopoIdAndSpitPKNumber(Integer spitPKTopoId, Integer spitPKNumber);
 }

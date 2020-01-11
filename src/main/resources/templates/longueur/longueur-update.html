@@ -13,7 +13,7 @@
          </div>
          <div class="col-sm my-auto">
             <div class="float-right" >
-               <a class="btn btn-primary" th:href="@{/spit/new/{id}(id=${longueurDto.id})}" th:text="#{label.newSpit}">New Spit</a>
+               <a class="btn btn-primary" th:href="@{/spit/add/{id}(id=${longueurDto.id})}" th:text="#{label.newSpit}">New Spit</a>
                <a class="btn btn-danger" th:href="@{/voie/delete/{id}(id=${longueurDto.id})}" th:text="#{label.delete}" >Delete</a>
                <a class="btn btn-primary" th:href="@{/voie/edit/{id}(id=${longueurDto.voieId})}" th:text="#{label.cancel}">Cancel</a>
                <button form="formlongueuradd" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
@@ -21,6 +21,7 @@
          </div>
       </div>
    </header>
+
    <section>
       <ul class="nav nav-tabs">
          <li class="nav-item">

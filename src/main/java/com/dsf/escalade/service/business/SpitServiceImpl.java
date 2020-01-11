@@ -20,22 +20,6 @@ public class SpitServiceImpl implements SpitService {
    }
 
    @Override
-   public SpitDto getOne(SpitPK spitPK) {
-      SpitDto spitDto = new SpitDto();
-      Spit spit = spitRepository.getOne(spitPK.hashCode());
-
-      spitDto.setTopoId(spit.getSpitPK().getTopoId());
-      spitDto.setVoieId(spit.getVoieId());
-      spitDto.setLongueurId(spit.getLongueurId());
-      spitDto.setNumber(spit.getSpitPK().getNumber());
-      spitDto.setCotationId(spit.getCotationId());
-      spitDto.setComment(spit.getComment());
-      spitDto.setIsRelay(spit.getIsRelay());
-
-      return spitDto;
-   }
-
-   @Override
    public List<SpitDto> findByLongueurId(Integer longueurId) {
       List<SpitDto> spitDtos = new ArrayList<>();
       SpitDto spitDto;
@@ -93,4 +77,27 @@ public class SpitServiceImpl implements SpitService {
 
       spitRepository.delete(spit);
    }
+
+   @Override
+   public Integer getLastSpitNumber(Integer topoId){
+
+      return spitRepository.findFirstBySpitPKTopoIdOrderBySpitPKNumberDesc(topoId).getSpitPK().getNumber();
+   }
+
+   @Override
+   public SpitDto getOne(Integer topoId, Integer number){
+      SpitDto spitDto = new SpitDto();
+      Spit spit = spitRepository.findBySpitPKTopoIdAndSpitPKNumber(topoId,number);
+
+      spitDto.setTopoId(spit.getSpitPK().getTopoId());
+      spitDto.setVoieId(spit.getVoieId());
+      spitDto.setLongueurId(spit.getLongueurId());
+      spitDto.setNumber(spit.getSpitPK().getNumber());
+      spitDto.setCotationId(spit.getCotationId());
+      spitDto.setComment(spit.getComment());
+      spitDto.setIsRelay(spit.getIsRelay());
+
+      return spitDto;
+   }
+
 }

@@ -2,7 +2,6 @@
 <html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
    <div class="col-lg-8 col-sm-12 mx-auto"  th:fragment="spitlist">
-      <form class="row" action="#" th:action="@{/spit/update}" method="POST" enctype="utf8">
          <div class="card mt-2 mb-2">
             <table class="table">
                <thead class="card-header">
@@ -11,10 +10,14 @@
                   <th scope="col" th:text="#{label.cotation}">Cotation</th>
                   <th scope="col" th:text="#{label.relay}">Is relay</th>
                   <th scope="col" th:text="#{label.comment}">Comment</th>
+                  <th>
+                     <button form="formspitupdate" type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+                  </th>
                </tr>
                </thead>
                <tbody class="card-body">
-               <tr th:each="spit : ${spitDtoList}">
+               <tr th:each="spit : ${spitDtoList}" th:object="${spit}">
+                  <form id="formspitupdate" class="row"  th:action="@{/spit/update}" method="POST" enctype="utf8">
                   <td th:text="${spit.number}">Number</td>
                   <td>
                      <select class="form-control" id="${spit.cotationId}" name="${spit.cotationId}">
@@ -27,10 +30,14 @@
                   <td>
                      <input class="form-control" type="text" th:value="${spit.comment}"/>
                   </td>
+                  <td>
+                     <a class="btn btn-primary" th:href="@{'/spit/delete/' + ${longueurDto.id} + '/' + ${spit.number}}" th:text="#{label.delete}">Delete</a>
+                  </td>
+                  </form>
                </tr>
                </tbody>
             </table>
          </div>
-      </form>
+
    </div>
 </body>
