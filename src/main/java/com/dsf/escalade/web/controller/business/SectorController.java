@@ -1,11 +1,9 @@
 package com.dsf.escalade.web.controller.business;
 
-import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.service.business.CotationService;
 import com.dsf.escalade.service.business.SectorService;
 import com.dsf.escalade.service.business.TopoService;
 import com.dsf.escalade.service.business.VoieService;
-import com.dsf.escalade.service.global.AddressService;
 import com.dsf.escalade.service.global.CommentService;
 import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
@@ -15,9 +13,6 @@ import com.dsf.escalade.web.dto.VoieDto;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,9 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Controller
@@ -40,34 +32,36 @@ public class SectorController {
    private final VoieService voieService;
    private final CotationService cotationService;
    private final CommentService commentService;
-   private final AddressService addressService;
-   private final List<String> statusList = Stream.of(StatusType.values()).map(Enum::name).collect(Collectors.toList());
 
-   @Autowired
-   public SectorController(UserService userService, TopoService topoService, SectorService sectorService, VoieService voieService, CotationService cotationService, CommentService commentService, AddressService addressService) {
+   public SectorController(UserService userService, TopoService topoService, SectorService sectorService, VoieService voieService, CotationService cotationService, CommentService commentService) {
       this.userService = userService;
       this.topoService = topoService;
       this.sectorService = sectorService;
       this.voieService = voieService;
       this.cotationService = cotationService;
       this.commentService = commentService;
-      this.addressService = addressService;
    }
+
 
    @GetMapping("/sector/new/{topoId}")
    public String newSector(@PathVariable("topoId") Integer topoId, Model model) {
       TopoDto topoDto = topoService.getOne(topoId);
-      SectorDto sectorDto = new SectorDto();
 
-      sectorDto.setTopoId(topoId);
-      // set default latitude and longitude parent's latitude et longitude
-      sectorDto.setLatitude(topoDto.getLatitude());
-      sectorDto.setLongitude(topoDto.getLongitude());
-      sectorDto.setAliasManager(topoDto.getAliasManager());
-      log.info("/sector/new sector : " + sectorDto);
-      model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
+      if(Boolean.TRUE.equals(topoService.hasRight(topoDto))) {
+         SectorDto sectorDto = new SectorDto();
 
-      return PathTable.SECTOR_ADD;
+         sectorDto.setTopoId(topoId);
+         // set default latitude and longitude parent's latitude et longitude
+         sectorDto.setLatitude(topoDto.getLatitude());
+         sectorDto.setLongitude(topoDto.getLongitude());
+         sectorDto.setAliasManager(topoDto.getAliasManager());
+         log.info("/sector/new sector : " + sectorDto);
+         model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
+
+         return PathTable.SECTOR_ADD;
+      }
+
+      return  PathTable.TOPO_ALL_R;
    }
 
    @PostMapping("/sector/add")
@@ -75,14 +69,11 @@ public class SectorController {
       if (bindingResultTopo.hasErrors()) {
          return PathTable.SECTOR_ADD;
       }
-
-      // verify that the manager is the Topo manager
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      if(userService.findByAlias(sectorDto.getAliasManager()).getEmail().equals(authentication.getName())) {
+      if(Boolean.TRUE.equals(sectorService.hasRight(sectorDto))) {
          return PathTable.SECTOR_UPDATE_R + sectorService.save(sectorDto);
       }
 
-      return PathTable.TOPO_UPDATE_R + sectorDto.getTopoId();
+      return PathTable.TOPO_READ_R + sectorDto.getTopoId();
    }
 
    @GetMapping("/sector/read/{sectorId}")
@@ -109,17 +100,22 @@ public class SectorController {
    public String editSector(@PathVariable("sectorId") Integer sectorId, Model model) {
       SectorDto sectorDto = sectorService.getOne(sectorId);
 
-      // we fetch the topo parent and siblings for tab informations
-      Integer topoId = sectorDto.getTopoId();
-      TopoDto topoDto = topoService.getOne(topoId);
+      // verify that the manager is the Topo manager
+      if(Boolean.TRUE.equals(sectorService.hasRight(sectorDto))) {
+         // we fetch the topo parent and siblings for tab informations
+         Integer topoId = sectorDto.getTopoId();
+         TopoDto topoDto = topoService.getOne(topoId);
 
-      model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-      model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
-      model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
-      model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
-      model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+         model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+         model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
+         model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+         model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(sectorId));
+         model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
-      return PathTable.SECTOR_UPDATE;
+         return PathTable.SECTOR_UPDATE;
+      }
+
+      return PathTable.SECTOR_READ_R + sectorId;
    }
 
    @PostMapping("/sector/update/{sectorId}")
@@ -139,12 +135,12 @@ public class SectorController {
       }
 
       // verify that the manager is the Topo manager
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      if(userService.findByAlias(sectorDto.getAliasManager()).getEmail().equals(authentication.getName())) {
+      if(Boolean.TRUE.equals(sectorService.hasRight(sectorDto))) {
          sectorService.save(sectorDto);
+         return PathTable.TOPO_UPDATE_R + sectorDto.getTopoId();
       }
 
-      return PathTable.TOPO_UPDATE_R + sectorDto.getTopoId();
+      return PathTable.SECTOR_READ_R + sectorId;
    }
 
    @GetMapping("/sector/delete/{sectorId}")
@@ -153,16 +149,16 @@ public class SectorController {
       Integer topoId = sectorDto.getTopoId();
 
       // verify that the manager is the Topo manager
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      if(userService.findByAlias(sectorDto.getAliasManager()).getEmail().equals(authentication.getName())) {
+      if(Boolean.TRUE.equals(sectorService.hasRight(sectorDto))) {
          sectorService.delete(sectorDto);
 
          // we delete all Lanes of the Sector
          for(VoieDto voieDto : voieService.findByParentId(sectorId)){
             voieService.delete(voieDto);
          }
+         return PathTable.TOPO_UPDATE_R + topoId;
       }
 
-      return PathTable.TOPO_UPDATE_R + topoId;
+      return PathTable.SECTOR_READ_R + sectorId;
    }
 }

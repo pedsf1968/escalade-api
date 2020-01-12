@@ -7,6 +7,7 @@ import com.dsf.escalade.service.business.VoieService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.LongueurDto;
 import com.dsf.escalade.web.dto.SpitDto;
+import com.dsf.escalade.web.dto.SpitDtoList;
 import com.dsf.escalade.web.dto.VoieDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -53,11 +52,10 @@ public class SpitController {
    }
 
    @PostMapping("/spit/update")
-   public String updateSpit(@ModelAttribute("LongueurId") Integer longueurId, @ModelAttribute("SpitDtoList") List<SpitDto> spitDtoList, Model model){
+   public String updateSpit(@ModelAttribute("LongueurId") Integer longueurId, @ModelAttribute("SpitDtoList") SpitDtoList spitDtoList, Model model){
 
-      for(SpitDto spitDto : spitDtoList){
-         spitService.save(spitDto);
-      }
+
+      spitService.saveAll(spitDtoList);
 
       return PathTable.LONGUEUR_UPDATE_R + longueurId;
    }

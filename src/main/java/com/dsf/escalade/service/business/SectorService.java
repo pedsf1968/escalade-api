@@ -10,4 +10,5 @@ public interface SectorService {
    List<SectorDto> findByTopoId(Integer id);
    Integer save(SectorDto sectorDto);
    Integer delete(SectorDto sectorDto);
+   Boolean hasRight(SectorDto sectorDto);
 }

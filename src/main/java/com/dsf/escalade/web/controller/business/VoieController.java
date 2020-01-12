@@ -11,8 +11,6 @@ import com.dsf.escalade.web.dto.UserDto;
 import com.dsf.escalade.web.dto.VoieDto;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,6 +52,7 @@ public class VoieController {
       VoieDto voieDto = new VoieDto();
       voieDto.setParentId(parentId);
 
+
       if (siteService.getType(parentId).equals(SiteType.TOPO)){
          // Parent is a Topo
          TopoDto topoDto = topoService.getOne(parentId);
@@ -80,7 +79,9 @@ public class VoieController {
          return PathTable.VOIE_ADD;
       }
 
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      if(Boolean.FALSE.equals(voieService.hasRight(voieDto))){
+         return PathTable.VOIE_READ_R + voieDto.getId();
+      }
       Integer parentId = voieDto.getParentId();
       TopoDto topoDto;
       SectorDto sectorDto = null;
@@ -96,17 +97,8 @@ public class VoieController {
       //get the manager of the topo
       UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
 
-      if (userDto.getEmail().equals(authentication.getName())){
-         topoService.increaseLaneCounter(topoDto.getId());
-         return PathTable.VOIE_UPDATE_R + voieService.save(voieDto);
-      }
-
-      //else return to parents
-      if(sectorDto!=null) {
-         return PathTable.SECTOR_UPDATE_R + parentId;
-      } else {
-         return PathTable.TOPO_UPDATE_R + parentId;
-      }
+      topoService.increaseLaneCounter(topoDto.getId());
+      return PathTable.VOIE_UPDATE_R + voieService.save(voieDto);
    }
 
    @GetMapping("/voie/read/{voieId}")
@@ -122,8 +114,12 @@ public class VoieController {
 
    @GetMapping("/voie/edit/{voieId}")
    public String editVoie(@PathVariable("voieId") Integer voieId, Model model){
+      VoieDto voieDto = voieService.getOne(voieId);
+      if(Boolean.FALSE.equals(voieService.hasRight(voieDto))){
+         return PathTable.VOIE_READ_R + voieId;
+      }
 
-      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieService.getOne(voieId));
+      model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
       model.addAttribute(PathTable.ATTRIBUTE_LONGUEUR_LIST,longueurService.findByVoieId(voieId));
       model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
@@ -137,7 +133,10 @@ public class VoieController {
          return PathTable.VOIE_UPDATE;
       }
 
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      if(Boolean.FALSE.equals(voieService.hasRight(voieDto))){
+         return PathTable.VOIE_READ_R + voieId;
+      }
+
       Integer parentId = voieDto.getParentId();
       TopoDto topoDto = null;
       SectorDto sectorDto = null;
@@ -149,11 +148,8 @@ public class VoieController {
          topoDto = topoService.getOne(sectorDto.getTopoId());
       }
 
-      UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
+       voieService.save(voieDto);
 
-      if (userDto.getEmail().equals(authentication.getName())){
-         voieService.save(voieDto);
-      }
 
       //return to parents
       if(sectorDto!=null) {
@@ -165,8 +161,13 @@ public class VoieController {
 
    @GetMapping("/voie/delete/{voieId}")
    public String deleteVoie(@PathVariable("voieId") Integer voieId, Model model) {
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
       VoieDto  voieDto = voieService.getOne(voieId);
+      // verify the manager
+      if(Boolean.FALSE.equals(voieService.hasRight(voieDto))){
+         return PathTable.VOIE_READ_R + voieId;
+      }
+
       Integer parentId = voieDto.getParentId();
       TopoDto topoDto;
       SectorDto sectorDto = null;
@@ -178,11 +179,8 @@ public class VoieController {
          topoDto = topoService.getOne(sectorDto.getTopoId());
       }
 
-      // verify that the manager is the Topo manager
-      if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())){
-         voieService.delete(voieDto);
-         topoService.decreaseLaneCounter(topoDto.getId());
-      }
+      voieService.delete(voieDto);
+      topoService.decreaseLaneCounter(topoDto.getId());
 
       //return to parents
       if(sectorDto!=null) {

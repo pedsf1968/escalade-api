@@ -145,14 +145,13 @@ public class TopoController {
         }
 
         // verify that the manager is the Topo manager
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
+        if(Boolean.TRUE.equals(topoService.hasRight(topoDto))){
             topoDto.setAddressId(addressService.save(addressDto));
             // save and go to update to add images
             return PathTable.TOPO_UPDATE_R + topoService.save(topoDto);
         }
 
-        return PathTable.TOPO_MYLIST_R;
+        return PathTable.TOPO_ALL_R;
     }
 
     @GetMapping("/topo/read/{topoId}")
@@ -174,14 +173,18 @@ public class TopoController {
     public String editTopo(@PathVariable("topoId") Integer topoId, Model model) {
         TopoDto topoDto = topoService.getOne(topoId);
 
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
-        model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+        if(Boolean.TRUE.equals(topoService.hasRight(topoDto))){
+            model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
+            model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
+            model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
+            model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressService.getOne(topoDto.getAddressId()));
+            model.addAttribute(PathTable.ATTRIBUTE_STATUS_LIST, statusList);
+            model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
 
-        return PathTable.TOPO_UPDATE;
+            return PathTable.TOPO_UPDATE;
+        }
+
+        return PathTable.TOPO_READ_R + topoId;
     }
 
     @PostMapping("/topo/update/{topoId}")
@@ -198,26 +201,26 @@ public class TopoController {
         }
 
         // verify that the manager is the Topo manager
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())) {
+        if(Boolean.TRUE.equals(topoService.hasRight(topoDto))){
             topoDto.setAddressId(addressService.save(addressDto));
             topoService.save(topoDto);
+            return PathTable.TOPO_MYLIST_R;
         }
 
-        return PathTable.TOPO_MYLIST_R;
+        return PathTable.TOPO_READ_R + topoId;
     }
 
-    @GetMapping("/topo/delete/{id}")
-    public String deleteTopo(@PathVariable("id") Integer id, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        TopoDto topoDto = topoService.getOne(id);
+    @GetMapping("/topo/delete/{topoId}")
+    public String deleteTopo(@PathVariable("topoId") Integer topoId, Model model) {
+        TopoDto topoDto = topoService.getOne(topoId);
 
         // verify that the manager is the Topo manager
-        if(userService.findByAlias(topoDto.getAliasManager()).getEmail().equals(authentication.getName())){
+        if(Boolean.TRUE.equals(topoService.hasRight(topoDto))){
             topoService.delete(topoDto);
+            return PathTable.TOPO_MYLIST_R;
         }
 
-        return PathTable.TOPO_MYLIST_R;
+        return PathTable.TOPO_READ_R + topoId;
     }
 
 }

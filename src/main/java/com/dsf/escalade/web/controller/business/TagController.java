@@ -9,7 +9,6 @@ import com.dsf.escalade.service.global.AddressService;
 import com.dsf.escalade.service.global.CommentService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.TagDto;
-import com.dsf.escalade.web.dto.TopoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -51,7 +50,6 @@ public class TagController {
     @PostMapping("/topo/tag/update/{id}")
     public String addTopoTag(@PathVariable("id") Integer topoId, @RequestParam(value="taglist", required = false) Integer[] tags, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        TopoDto topoDto = topoService.getOne(topoId);
         List<TagDto> tagDtos = tagService.findAll();
 
         if(tags!=null){
@@ -64,13 +62,6 @@ public class TagController {
               .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))){
             tagService.update(topoId,tagDtos);
         }
-
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(topoId));
-        model.addAttribute("tags", tagDtos);
 
         return PathTable.TOPO_READ_R + topoId;
     }

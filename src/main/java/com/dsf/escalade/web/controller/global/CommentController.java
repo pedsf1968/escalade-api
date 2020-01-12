@@ -79,13 +79,6 @@ public class CommentController {
             topoService.save(topoDto);
         }
 
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
-        model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(topoId));
-        model.addAttribute("tags", tagService.findByTopoId(topoId));
-
         return PathTable.TOPO_READ_R + topoId;
     }
 
@@ -107,13 +100,6 @@ public class CommentController {
                 topoService.save(topoDto);
             }
         }
-
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorDtoList);
-        model.addAttribute(PathTable.ATTRIBUTE_VOIE_LIST, voieService.findByParentId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_ADDRESS,addressService.getOne(topoDto.getAddressId()));
-        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(siteId));
-        model.addAttribute("tags", tagService.findByTopoId(topoId));
 
         return PathTable.TOPO_READ_R + siteId;
     }
@@ -144,11 +130,6 @@ public class CommentController {
             topoService.save(topoDto);
         }
 
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(sectorId));
-
         return PathTable.SECTOR_READ_R + sectorId;
     }
 
@@ -172,11 +153,6 @@ public class CommentController {
                 topoService.save(topoDto);
             }
         }
-
-        model.addAttribute(PathTable.ATTRIBUTE_TOPO, topoDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR, sectorDto);
-        model.addAttribute(PathTable.ATTRIBUTE_SECTOR_LIST, sectorService.findByTopoId(topoId));
-        model.addAttribute(PathTable.ATTRIBUTE_COMMENT_LIST, commentService.getBySiteId(sectorId));
 
         return PathTable.SECTOR_READ_R + sectorId;
     }

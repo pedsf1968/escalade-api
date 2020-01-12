@@ -5,7 +5,10 @@ import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.repository.business.SectorRepository;
 import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.dto.SectorDto;
+import com.dsf.escalade.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -132,5 +135,18 @@ public class SectorServiceImpl implements SectorService {
       }
 
       return null;
+   }
+
+   @Override
+   public Boolean hasRight(SectorDto sectorDto){
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+      UserDto userDto = userService.findByAlias(sectorDto.getAliasManager());
+
+      if (userDto.getEmail().equals(authentication.getName())) {
+         return Boolean.TRUE;
+      }
+
+      return Boolean.FALSE;
    }
 }

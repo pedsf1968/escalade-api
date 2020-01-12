@@ -6,8 +6,11 @@ import com.dsf.escalade.model.business.Topo;
 import com.dsf.escalade.repository.business.TopoRepository;
 import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.dto.TopoDto;
+import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -341,4 +344,16 @@ List<Topo> topos = topoRepository.findAll();
       return nbLane;
    }
 
+   @Override
+   public Boolean hasRight(TopoDto topoDto){
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+      UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
+
+      if (userDto.getEmail().equals(authentication.getName())) {
+         return Boolean.TRUE;
+      }
+
+      return Boolean.FALSE;
+   }
 }

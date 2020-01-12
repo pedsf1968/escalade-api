@@ -3,7 +3,7 @@
 <body>
    <div class="card mt-2 mb-2" th:fragment="voieinfo">
       <div class="card-header">
-         <h5 th:text="#{label.information}">Information</h5>
+         <h5 th:text="${#messages.msg('label.lane')} + ' : ' + #{label.information}">Information</h5>
       </div>
       <div class="card-body">
          <table class="table table-striped">

@@ -16,4 +16,5 @@ public interface TopoService {
    void updateCotationRange(Integer topoId, Integer cotationId);
    Integer increaseLaneCounter(Integer topoId);
    Integer decreaseLaneCounter(Integer topoId);
+   Boolean hasRight(TopoDto topoDto);
 }

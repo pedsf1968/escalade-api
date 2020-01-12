@@ -3,7 +3,7 @@
 <body>
    <section class="row endpage" th:fragment="voie" th:if="${voieDtoList!=null}">
       <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="voie : ${voieDtoList}">
-         <div class="card">
+         <div class="card mt-2 mb-2">
             <div class="card-header row">
                <h5 th:text="${#messages.msg('label.lane')} + ' : ' + ${voie.name}"></h5>
             </div>

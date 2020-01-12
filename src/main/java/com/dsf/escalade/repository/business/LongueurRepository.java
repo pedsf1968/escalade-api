@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LongueurRepository extends JpaRepository<Longueur,Integer> {
    List<Longueur> findByVoieId(Integer id);
+   Longueur getOne(Integer longueurId);
 }

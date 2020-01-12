@@ -4,11 +4,9 @@ import com.dsf.escalade.model.business.Spit;
 import com.dsf.escalade.model.business.SpitPK;
 import com.dsf.escalade.repository.business.SpitRepository;
 import com.dsf.escalade.web.dto.SpitDto;
+import com.dsf.escalade.web.dto.SpitDtoList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("SpitService")
 public class SpitServiceImpl implements SpitService {
@@ -20,8 +18,8 @@ public class SpitServiceImpl implements SpitService {
    }
 
    @Override
-   public List<SpitDto> findByLongueurId(Integer longueurId) {
-      List<SpitDto> spitDtos = new ArrayList<>();
+   public SpitDtoList findByLongueurId(Integer longueurId) {
+      SpitDtoList spitDtoList = new SpitDtoList();
       SpitDto spitDto;
 
       for(Spit spit : spitRepository.findByLongueurId(longueurId)){
@@ -35,10 +33,10 @@ public class SpitServiceImpl implements SpitService {
          spitDto.setComment(spit.getComment());
          spitDto.setIsRelay(spit.getIsRelay());
 
-         spitDtos.add(spitDto);
+         spitDtoList.addSpitDto(spitDto);
       }
 
-      return spitDtos;
+      return spitDtoList;
    }
 
    @Override
@@ -57,6 +55,13 @@ public class SpitServiceImpl implements SpitService {
       spit.setIsRelay(spitDto.getIsRelay());
 
       spitRepository.save(spit);
+   }
+
+   @Override
+   public void saveAll(SpitDtoList spitDtoList) {
+      for(SpitDto spitDto : spitDtoList.getSpitDtos()){
+         save(spitDto);
+      }
    }
 
    @Override

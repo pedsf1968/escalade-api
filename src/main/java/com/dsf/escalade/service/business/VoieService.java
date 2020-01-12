@@ -9,4 +9,5 @@ public interface VoieService {
    List<VoieDto> findByParentId(Integer id);
    Integer save(VoieDto voieDto);
    Integer delete(VoieDto voieDto);
+   Boolean hasRight(VoieDto voieDto);
 }
