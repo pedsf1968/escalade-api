@@ -9,6 +9,7 @@ import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.TopoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,9 @@ import javax.xml.bind.ValidationException;
 @Controller
 public class MailController {
 
+   @Autowired
+   private Environment environment;
+
    private final EmailConfiguration emailConfiguration;
    private final TopoService topoService;
    private final UserService userService;
@@ -41,8 +45,6 @@ public class MailController {
 
       mailSender.setHost(emailConfiguration.getHost());
       mailSender.setPort(emailConfiguration.getPort());
-      mailSender.setUsername(emailConfiguration.getUsername());
-      mailSender.setPassword(emailConfiguration.getPassword());
    }
 
    @PostMapping("/feedback")
@@ -50,6 +52,9 @@ public class MailController {
       if (bindingResult.hasErrors()){
          throw new ValidationException("Feedback is not valid");
       }
+
+      mailSender.setUsername(environment.getProperty("spring.mail.username"));
+      mailSender.setPassword(environment.getProperty("spring.mail.password"));
 
       // Create message
       mailMessage.setFrom(feedback.getEmail());
@@ -65,12 +70,15 @@ public class MailController {
       TopoDto topoDto = topoService.getOne(topoId);
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+      mailSender.setUsername(environment.getProperty("spring.mail.username"));
+      mailSender.setPassword(environment.getProperty("spring.mail.password"));
+
       // Create message get
       mailMessage.setFrom(authentication.getName());
       mailMessage.setTo(userService.findByAlias(topoDto.getAliasManager()).getEmail());
 
       if(topoDto.getStatus().equals(StatusType.AVAILABLE.toString())) {
-         if(topoDto.getStatusAuto()){
+         if(Boolean.TRUE.equals(topoDto.getStatusAuto())){
             topoDto.setStatus(StatusType.RESERVED.toString());
             mailMessage.setSubject("Réservation de topo");
             mailMessage.setText("Réservation du topo : " + topoId);
