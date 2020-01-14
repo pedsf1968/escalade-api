@@ -105,4 +105,28 @@ public class SpitServiceImpl implements SpitService {
       return spitDto;
    }
 
+   @Override
+   public Integer getLongueurCotationAverage(Integer topoId, Integer laneId, Integer lengthId) {
+      return spitRepository.getLongueurCotationAverage(topoId,laneId, lengthId);
+   }
+
+   @Override
+   public Integer getVoieCotationAverage(Integer topoId, Integer laneId) {
+      return spitRepository.getVoieCotationAverage(topoId, laneId);
+   }
+
+   @Override
+   public Integer getTopoCotationAverage(Integer topoId) {
+      return spitRepository.getTopoCotationAverage(topoId);
+   }
+
+   @Override
+   public Integer getCotationIdMaxBySpitPKTopoId(Integer topoId) {
+      return spitRepository.getCotationIdMaxBySpitPKTopoId(topoId);
+   }
+
+   @Override
+   public Integer getCotationIdMinBySpitPKTopoId(Integer topoId) {
+      return spitRepository.getCotationIdMinBySpitPKTopoId(topoId);
+   }
 }

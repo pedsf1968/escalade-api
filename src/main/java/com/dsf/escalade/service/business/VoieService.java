@@ -10,4 +10,5 @@ public interface VoieService {
    Integer save(VoieDto voieDto);
    Integer delete(VoieDto voieDto);
    Boolean hasRight(VoieDto voieDto);
+   void updateCotation(VoieDto voieDto);
 }

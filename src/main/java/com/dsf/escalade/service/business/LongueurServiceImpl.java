@@ -3,7 +3,7 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.Longueur;
 import com.dsf.escalade.repository.business.LongueurRepository;
 import com.dsf.escalade.web.dto.LongueurDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dsf.escalade.web.dto.VoieDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,12 +11,18 @@ import java.util.List;
 
 @Service("LongueurService")
 public class LongueurServiceImpl implements LongueurService {
+   private final SiteService siteService;
+   private final VoieService voieService;
    private final LongueurRepository longueurRepository;
+   private final SpitService spitService;
 
-   @Autowired
-   public LongueurServiceImpl(LongueurRepository longueurRepository) {
+   public LongueurServiceImpl(SiteService siteService, VoieService voieService, LongueurRepository longueurRepository, SpitService spitService) {
+      this.siteService = siteService;
+      this.voieService = voieService;
       this.longueurRepository = longueurRepository;
+      this.spitService = spitService;
    }
+
 
    @Override
    public LongueurDto getOne(Integer id) {
@@ -74,5 +80,17 @@ public class LongueurServiceImpl implements LongueurService {
       }
 
       return null;
+   }
+
+   @Override
+   public void updateCotation(LongueurDto longueurDto){
+      Integer cotationId;
+      VoieDto voieDto = voieService.getOne(longueurDto.getVoieId());
+      Integer topoId = siteService.getTopoId(voieDto.getParentId());
+
+      cotationId = spitService.getLongueurCotationAverage(topoId, voieDto.getId(), longueurDto.getId());
+      longueurDto.setCotationId(cotationId);
+      save(longueurDto);
+      voieService.updateCotation(voieDto);
    }
 }

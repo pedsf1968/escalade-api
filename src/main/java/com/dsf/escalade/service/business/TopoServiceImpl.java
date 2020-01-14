@@ -26,10 +26,12 @@ import java.util.List;
 @Service("TopoService")
 public class TopoServiceImpl implements TopoService {
    private final TopoRepository topoRepository;
+   private final SpitService spitService;
    private final UserService userService;
 
-   public TopoServiceImpl(TopoRepository topoRepository, UserService userService) {
+   public TopoServiceImpl(TopoRepository topoRepository, SpitService spitService, UserService userService) {
       this.topoRepository = topoRepository;
+      this.spitService = spitService;
       this.userService = userService;
    }
 
@@ -300,18 +302,11 @@ List<Topo> topos = topoRepository.findAll();
       return topoDtos;
    }
 
-   public void updateCotationRange(Integer topoId, Integer cotationId){
-      Topo topo = topoRepository.getOne(topoId);
-      Integer cotationMin = topo.getCotationMin();
-      Integer cotationMax = topo.getCotationMax();
+   public void updateCotationRange(Integer topoId){
+         Topo topo = topoRepository.getOne(topoId);
 
-      if(cotationMin.equals(null) || cotationMin>cotationId){
-         topo.setCotationMin(cotationId);
-      }
-
-      if(cotationMax.equals(null) || cotationMax<cotationId){
-         topo.setCotationMax(cotationId);
-      }
+         topo.setCotationMin(spitService.getCotationIdMinBySpitPKTopoId(topoId));
+         topo.setCotationMax(spitService.getCotationIdMaxBySpitPKTopoId(topoId));
 
       topoRepository.save(topo);
    }
@@ -356,4 +351,5 @@ List<Topo> topos = topoRepository.findAll();
 
       return Boolean.FALSE;
    }
+
 }

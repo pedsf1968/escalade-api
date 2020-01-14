@@ -9,4 +9,5 @@ public interface LongueurService {
    List<LongueurDto> findByVoieId(Integer id);
    Integer save(LongueurDto longueurDto);
    Integer delete(LongueurDto longueurDto);
+   void updateCotation(LongueurDto longueurDto);
 }

@@ -18,12 +18,14 @@ public class VoieServiceImpl implements VoieService {
    private final SiteService siteService;
    private final TopoService topoService;
    private final VoieRepository voieRepository;
+   private final SpitService spitService;
    private final UserService userService;
 
-   public VoieServiceImpl(SiteService siteService, TopoService topoService, VoieRepository voieRepository, UserService userService) {
+   public VoieServiceImpl(SiteService siteService, TopoService topoService, VoieRepository voieRepository, SpitService spitService, UserService userService) {
       this.siteService = siteService;
       this.topoService = topoService;
       this.voieRepository = voieRepository;
+      this.spitService = spitService;
       this.userService = userService;
    }
 
@@ -135,5 +137,18 @@ public class VoieServiceImpl implements VoieService {
       }
 
       return Boolean.FALSE;
+   }
+
+   @Override
+   public void updateCotation(VoieDto voieDto){
+      Integer cotationId;
+
+      Integer topoId = siteService.getTopoId(voieDto.getParentId());
+
+      cotationId = spitService.getVoieCotationAverage(topoId, voieDto.getId());
+      voieDto.setCotationId(cotationId);
+
+      save(voieDto);
+      topoService.updateCotationRange(topoId);
    }
 }

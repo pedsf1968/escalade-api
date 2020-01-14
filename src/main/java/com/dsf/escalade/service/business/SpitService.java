@@ -10,4 +10,9 @@ public interface SpitService {
    void delete(SpitDto spitDto);
    Integer getLastSpitNumber(Integer topoId);
    SpitDto getOne(Integer topoId, Integer number);
+   Integer getLongueurCotationAverage(Integer topoId, Integer laneId, Integer lengthId);
+   Integer getVoieCotationAverage(Integer topoId, Integer laneId);
+   Integer getTopoCotationAverage(Integer topoId);
+   Integer getCotationIdMaxBySpitPKTopoId(Integer topoId);
+   Integer getCotationIdMinBySpitPKTopoId(Integer topoId);
 }

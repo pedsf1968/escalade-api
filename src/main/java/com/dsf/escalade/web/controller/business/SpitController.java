@@ -70,7 +70,10 @@ public class SpitController {
       VoieDto voieDto = voieService.getOne(longueurDto.getVoieId());
 
       if(Boolean.TRUE.equals(voieService.hasRight(voieDto))) {
+         // save all spits of the length
          spitService.saveAll(spitDtoList);
+         // update the cotation of the length
+         longueurService.updateCotation(longueurDto);
          return PathTable.LONGUEUR_UPDATE_R + longueurId;
       }
 
