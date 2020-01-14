@@ -41,15 +41,15 @@
       <input type="hidden"  th:field="${longueurDto.id}">
       <div class="col-lg-6 mx-auto">
          <div class="card mt-2 mb-2">
-            <div class="card-body">
-               <div class="input-group mb-2">
+            <div class="card-body row">
+               <div class="input-group mb-2 col-md-4">
                   <div class="input-group-prepend">
                      <div class="input-group-text" th:text="#{label.parentId}">Parent Id</div>
                   </div>
                   <input type="text" class="form-control" th:field="${longueurDto.voieId}" readonly>
                </div>
 
-               <div class="input-group mb-2">
+               <div class="input-group mb-2 col-md-8">
                   <div class="input-group-prepend">
                      <div class="input-group-text" th:text="#{label.name}">Name</div>
                   </div>
@@ -63,18 +63,18 @@
       </div>
       <div class="col-lg-6 mx-auto">
          <div class="card mt-2 mb-2">
-            <div class="card-body">
-               <div class="input-group mb-2">
+            <div class="card-body row">
+               <div class="input-group mb-2 col-md-6">
                   <div class="input-group-prepend">
                      <div class="input-group-text" th:text="#{label.heigth}">Heigth</div>
                   </div>
                   <input type="text" class="form-control" th:field="${longueurDto.heigth}" th:placeholder="#{placeholder.heigth}">
                </div>
-               <div class="input-group mb-2">
+               <div class="input-group mb-2 col-md-6">
                   <div class="input-group-prepend">
                      <div class="input-group-text" th:text="#{label.cotation}">Cotation Id</div>
                   </div>
-                  <select class="btn mb-2" th:field="${longueurDto.cotationId}">
+                  <select class="form-control" th:field="${longueurDto.cotationId}">
                      <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
                   </select>
                </div>
@@ -86,7 +86,7 @@
       </div>
    </form>
 
-   <section class="endpage mx-auto">
+   <section class="endpage">
       <div th:replace="~{spit/spit-update :: spitlist}" th:if="${spitDtoList!=null}"></div>
    </section>
 

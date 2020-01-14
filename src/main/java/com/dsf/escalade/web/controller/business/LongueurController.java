@@ -4,16 +4,13 @@ import com.dsf.escalade.service.business.CotationService;
 import com.dsf.escalade.service.business.LongueurService;
 import com.dsf.escalade.service.business.SpitService;
 import com.dsf.escalade.service.business.VoieService;
-import com.dsf.escalade.service.global.UserService;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.LongueurDto;
-import com.dsf.escalade.web.dto.UserDto;
 import com.dsf.escalade.web.dto.VoieDto;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,26 +29,23 @@ public class LongueurController {
    private final LongueurService longueurService;
    private final SpitService spitService;
    private final CotationService cotationService;
-   private final UserService userService;
 
-   public LongueurController(VoieService voieService, LongueurService longueurService, SpitService spitService, CotationService cotationService, UserService userService) {
+   public LongueurController(VoieService voieService, LongueurService longueurService, SpitService spitService, CotationService cotationService) {
       this.voieService = voieService;
       this.longueurService = longueurService;
       this.spitService = spitService;
       this.cotationService = cotationService;
-      this.userService = userService;
    }
 
 
    @GetMapping("/longueur/new/{voieId}")
    public String newLongueur(@PathVariable("voieId") Integer voieId, Model model) {
-      authentication = SecurityContextHolder.getContext().getAuthentication();
       LongueurDto longueurDto = new LongueurDto();
       longueurDto.setVoieId(voieId);
       VoieDto voieDto = voieService.getOne(voieId);
-      UserDto userDto = userService.findByAlias(voieDto.getAliasManager());
 
-      if (userDto.getEmail().equals(authentication.getName())) {
+
+      if (Boolean.TRUE.equals(voieService.hasRight(voieDto))){
          model.addAttribute(PathTable.ATTRIBUTE_LONGUEUR, longueurDto);
          model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
          return PathTable.LONGUEUR_ADD;
@@ -66,13 +60,11 @@ public class LongueurController {
          return PathTable.LONGUEUR_ADD;
       }
 
-      authentication = SecurityContextHolder.getContext().getAuthentication();
       Integer voieId = longueurDto.getVoieId();
       VoieDto voieDto = voieService.getOne(voieId);
-      Integer parentId = voieDto.getParentId();
-      UserDto userDto = userService.findByAlias(voieDto.getAliasManager());
 
-      if (userDto.getEmail().equals(authentication.getName())) {
+
+      if (Boolean.TRUE.equals(voieService.hasRight(voieDto))){
          return PathTable.LONGUEUR_UPDATE_R + longueurService.save(longueurDto);
       }
 
@@ -98,13 +90,11 @@ public class LongueurController {
 
    @GetMapping("/longueur/edit/{longueurId}")
    public String editLane(@PathVariable("longueurId") Integer longueurId, Model model) {
-      authentication = SecurityContextHolder.getContext().getAuthentication();
       LongueurDto longueurDto = longueurService.getOne(longueurId);
       Integer voieId = longueurDto.getVoieId();
       VoieDto voieDto = voieService.getOne(voieId);
-      UserDto userDto = userService.findByAlias(voieDto.getAliasManager());
 
-      if (userDto.getEmail().equals(authentication.getName())){
+      if (Boolean.TRUE.equals(voieService.hasRight(voieDto))){
          model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
          model.addAttribute(PathTable.ATTRIBUTE_LONGUEUR, longueurDto);
          model.addAttribute(PathTable.ATTRIBUTE_SPIT_LIST, spitService.findByLongueurId(longueurId));
@@ -119,10 +109,8 @@ public class LongueurController {
 
    @PostMapping("/longueur/update/{longueurId}")
    public String updateSector(@PathVariable("longueurId") Integer longueurId, @ModelAttribute("longueurDto") @Valid LongueurDto longueurDto, @NonNull BindingResult bindingResult, Model model) {
-      authentication = SecurityContextHolder.getContext().getAuthentication();
       Integer voieId = longueurDto.getVoieId();
       VoieDto voieDto = voieService.getOne(voieId);
-      UserDto userDto = userService.findByAlias(voieDto.getAliasManager());
 
       if(bindingResult.hasErrors()){
          model.addAttribute(PathTable.ATTRIBUTE_VOIE, voieDto);
@@ -134,7 +122,7 @@ public class LongueurController {
          return PathTable.LONGUEUR_UPDATE;
       }
 
-      if (userDto.getEmail().equals(authentication.getName())){
+      if (Boolean.TRUE.equals(voieService.hasRight(voieDto))){
          longueurService.save(longueurDto);
          return PathTable.VOIE_UPDATE_R + voieId;
       }
@@ -144,13 +132,11 @@ public class LongueurController {
 
    @GetMapping("/longueur/delete/{longueurId}")
    public String deleteSector(@PathVariable("longueurId") Integer longueurId, Model model){
-      authentication = SecurityContextHolder.getContext().getAuthentication();
       LongueurDto longueurDto = longueurService.getOne(longueurId);
       Integer voieId = longueurDto.getVoieId();
       VoieDto voieDto = voieService.getOne(voieId);
-      UserDto userDto = userService.findByAlias(voieDto.getAliasManager());
 
-      if (userDto.getEmail().equals(authentication.getName())){
+      if (Boolean.TRUE.equals(voieService.hasRight(voieDto))){
          longueurService.delete(longueurDto);
          return PathTable.VOIE_UPDATE_R + voieId;
       }
