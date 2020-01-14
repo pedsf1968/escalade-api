@@ -27,9 +27,24 @@ public class ResourcesController {
    private String avatarRepository;
 
 
-   @GetMapping("/images/{imageName}")
-   public @ResponseBody byte[] getImage(@PathVariable("imageName") String imageName) throws IOException {
-      InputStream in = new FileInputStream(imagesRepository+imageName);
+   @GetMapping("/images/{type}/{imageName}")
+   public @ResponseBody byte[] getImage(@PathVariable("type") String type, @PathVariable("imageName") String imageName) throws IOException {
+      InputStream in;
+
+      if (type.equals("topo")){
+         in = new FileInputStream(topoRepository + imageName);
+      } else if (type.equals("sector")){
+         in = new FileInputStream(sectorRepository + imageName);
+      } else if (type.equals("voie")){
+         in = new FileInputStream(voieRepository + imageName);
+      } else if (type.equals("avatar")){
+         in = new FileInputStream(avatarRepository + imageName);
+      } else {
+         in = new FileInputStream(imagesRepository + imageName);
+         if ( in == null){
+            in = new FileInputStream(avatarRepository + "avatar.png");
+         }
+      }
       return IOUtils.toByteArray(in);
    }
 
