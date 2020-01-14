@@ -33,8 +33,8 @@
                      <input class="form-control" type="text" th:field="*{spitDtos[__${itemStat.index}__].longueurId}"/>
                   </td>
                   <td>
-                     <select class="form-control" id="${spit.cotationId}" name="${spit.cotationId}" th:field="*{spitDtos[__${itemStat.index}__].cotationId}">
-                        <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==spit.cotationId}"></option>
+                     <select class="form-control" id="${spit.cotationId}" name="${spit.cotationId}" th:field="*{spitDtos[__${itemStat.index}__].cotationId}" >
+                        <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${*{spitDtos[__${itemStat.index}__].cotationId}==${cotation.id}"></option>
                      </select>
                   </td>
                   <td>
