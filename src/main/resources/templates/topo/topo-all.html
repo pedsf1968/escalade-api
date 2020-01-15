@@ -30,6 +30,9 @@
                </div>
                <div class="col-sm">
                   <span class="badge badge-info mr-2" th:each="tag:${tagsByTopoId.get(topo)}" th:if="${tag.activated}" th:text="${tag.name}">Tag</span>
+                  <span class="badge badge-success" th:if="${topo.nbLane!=0}" th:text="${#messages.msg('label.lane')} + ' : ' + ${topo.nbLane}">  </span>
+                  <span class="badge badge-success" th:if="${topo.cotationMin!=null && topo.cotationMax!=null}"
+                        th:text="${#messages.msg('label.cotation')} + ' : ' + ${cotationDtoList[topo.cotationMin-1].levelFR} + ' : ' + ${cotationDtoList[topo.cotationMax-1].levelFR}">  </span>
                </div>
             </div>
             <div class="card-body center">

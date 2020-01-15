@@ -56,7 +56,7 @@ public class TopoDto {
    private Boolean statusAuto;
    private Integer cotationMin;
    private Integer cotationMax;
-   protected Integer nbLane;
+   private Integer nbLane;
 
    public TopoDto() {
       this.status = StatusType.UNVAILABLE.toString();
