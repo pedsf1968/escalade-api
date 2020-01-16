@@ -1,8 +1,8 @@
 FROM openjdk:8-jdk-alpine
 
-COPY ./target/escalade-0.0.1-SNAPSHOT.jar /usr/app/escalade.jar
-
-WORKDIR /usr/app
+COPY ./target/escalade-0.0.1-SNAPSHOT.jar /srv/escalade.jar
+VOLUME /srv
+WORKDIR /srv
 
 RUN sh -c 'touch escalade.jar'
 
