@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface TopoRepository extends JpaRepository <Topo,Integer>, JpaSpecificationExecutor {
+   Topo getOne(Integer topoId);
 
    List<Topo> findByManagerId(Integer id);
 

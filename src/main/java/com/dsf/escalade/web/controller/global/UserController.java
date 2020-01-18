@@ -53,6 +53,12 @@ public class UserController {
       return "login";
    }
 
+   @PostMapping("/login")
+   public String postLogin(Model model){
+
+      return "redirect:/";
+   }
+
    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

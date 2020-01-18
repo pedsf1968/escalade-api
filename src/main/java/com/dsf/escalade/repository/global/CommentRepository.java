@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository <Comment, Integer> {
-   List<Comment> getBySiteId(Integer id);
-   List<Comment> getByUserId(Integer id);
+   Comment getOne(Integer CommentId);
+   List<Comment> getBySiteId(Integer siteId);
+   List<Comment> getByUserId(Integer userId);
 }

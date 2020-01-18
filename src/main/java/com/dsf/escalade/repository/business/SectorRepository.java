@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface SectorRepository extends JpaRepository <Sector, Integer>  {
-   List<Sector> findByTopoId(Integer TopoId);
+   Sector getOne(Integer sectorId);
+   List<Sector> findByTopoId(Integer topoId);
 }

@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface VoieRepository extends JpaRepository <Voie, Integer> {
+   Voie getOne(Integer voieId);
    List<Voie> findByParentId(Integer parentId);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Integer> {
+   Site getOne(Integer siteId);
 
    @Query("SELECT type FROM Site s WHERE s.id = ?1")
    SiteType getType(Integer id);

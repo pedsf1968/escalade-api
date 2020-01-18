@@ -5,15 +5,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * class for user informations
  */
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements Serializable {
+
    static final int FIRSTNAME_MIN = 1;
    static final int FIRSTNAME_MAX = 20;
    static final int LASTNAME_MIN = 1;
@@ -71,7 +72,11 @@ public class User implements Serializable {
    @Column(name = "address_id")
    private Integer addressId;
 
-   @ManyToMany
+   @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+   @JoinTable(name="users_roles",
+         joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
+         inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
+   )
    private Set<Role> roles;
 
    @Column(name = "photo_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
@@ -152,20 +157,37 @@ public class User implements Serializable {
       this.addressId = addressId;
    }
 
-   public Set<Role> getRoles() {
-      return roles;
-   }
 
    public String getPhotoLink() {
       return photoLink;
+   }
+
+
+   public void setPhotoLink(String photoLink) {
+      this.photoLink = photoLink;
+   }
+
+   public Set<Role> getRoles() {
+      return roles;
    }
 
    public void setRoles(Set<Role> roles) {
       this.roles = roles;
    }
 
-   public void setPhotoLink(String photoLink) {
-      this.photoLink = photoLink;
+   public void addRole(Role role) {
+      if(this.roles==null){
+         this.roles = new HashSet<>();
+      }
+      this.roles.add(role);
+      role.getUsers().add(this);
+   }
+
+   public void removeRole(Role role){
+      if(this.roles!=null){
+         this.roles.remove(role);
+         role.getUsers().remove(this);
+      }
    }
 
    @Override
@@ -186,8 +208,6 @@ public class User implements Serializable {
             getPhotoLink().equals(user.getPhotoLink());
    }
 
-   @Override
-   public int hashCode() {
-      return Objects.hash(getId(), getFirstName(), getLastName(), getPhone(), getEmail(), getAlias(), getPassword(), isMember, getAddressId(), getRoles(), getPhotoLink());
-   }
+
+
 }

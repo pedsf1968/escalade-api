@@ -6,10 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Integer> {
+   Role getOne(Integer roleId);
+
    Role findByName(String name);
-
-   @Override
-   void delete(Role role);
-
-
 }

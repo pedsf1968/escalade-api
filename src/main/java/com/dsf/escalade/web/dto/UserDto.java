@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -57,4 +58,16 @@ public class UserDto {
     private Integer addressId;
     private List<String> roles;
     private String photoLink;
+
+    public void addRole(String role){
+        if(this.roles==null){
+            this.roles = new ArrayList<>();
+        }
+
+        this.roles.add(role);
+    }
+
+    public void removeRole(String role){
+        this.roles.remove(role);
+    }
 }

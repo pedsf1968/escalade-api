@@ -4,7 +4,7 @@ VALUES ('22, rue de la Paix','75111','Paris'),
         ('1, rue verte','68121','Strasbourg'),
         ('3, chemin de l’Escale','25000','Besançon');
 
-INSERT INTO user (id,  firstname, lastname, phone, email, alias, password, is_member, address_id, photo_url)
+INSERT INTO users (id,  firstname, lastname, phone, email, alias, password, is_member, address_id, photo_url)
 VALUES (1,'Admin','ADMIN',null,'admin@escalade.org','ADMIN','$2a$10$IRKMI.Gzq83HyHvat5y0feUuxwYl5Eu22Rmr56q1WyVkiqv2vboSO', TRUE,1, 'ADMIN.png'),
     (2,'Martin','DUPONT','0324593874','martin.dupont@gmail.com','dupont','$2a$10$TpRLNPP8Q1XJqONRvS4QI.ea2f5.jsB/.U4ZnL3iSyFiGZ6pBPHfe', FALSE,2, 'dupont.png'),
     (3,'Paul','TINTIN','0654654874','paul.depres@hotmail.com','tintin','$2a$10$b/DpB2NSMWMokB.ZOP/D4ehRFqXRSx3fKib5BqgWqE8Ox9EaAm6Ty', FALSE,1, 'tintin.png'),
@@ -13,9 +13,9 @@ VALUES (1,'Admin','ADMIN',null,'admin@escalade.org','ADMIN','$2a$10$IRKMI.Gzq83H
 
 -- insertion roles
 INSERT INTO role(id,name)
-VALUES (1,'ROLE_ADMIN'),(2,'ROLE_USER');
+VALUES (1,'ROLE_GUEST'),(2,'ROLE_USER'),(3,'ROLE_STAFF'),(4,'ROLE_ADMIN');
 
-INSERT INTO user_roles VALUES (1,1),(2,2),(3,2);
+INSERT INTO users_roles (user_id,role_id) VALUES (1,3),(1,4),(2,2),(3,2);
 
 INSERT INTO cotation (id,FR,US,GB)
 VALUES (1,'3','5.3',''),(2,'3+','5.4',''),(3,'4a','5.5',''),(4,'4b','5.6','4b'),(5,'4c','5.7','4c'),
@@ -55,7 +55,7 @@ VALUES (1, 'Corse',1,'2019-06-11','Lorem ipsum dolor sit amet, consectetur adipi
 'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.');
 
 INSERT INTO topo (site_id, region, address_id, date, description,status,status_auto,nb_lane,cotation_min,cotation_max)
-VALUES (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,2,4,15),
+VALUES (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,2,3,10),
         (3, 'Alpes', 1, '2019-11-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','UNVAILABLE',false,0,5,15),
         (4,'Alpes', 1, '2019-12-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',false,0,3,11),
         (9,'Franche-Comté', 3, '2020-01-01','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,0,3,11);
@@ -75,8 +75,8 @@ VALUES (1,7,'La corde',5,122),
         (4,8,'La coucourde',5,75);
 
 INSERT INTO spit(topo_id,number,voie_id,longueur_id,cotation_id,comment,is_relay)
-VALUES (2,1,7,1,3,'',false),(2,2,7,1,7,'',false),(2,3,7,1,8,'passez à droite',true),(2,4,7,1,10,'',false),(2,5,7,1,3,'',false),
-    (2,6,7,1,3,'',false),(2,7,7,1,7,'roche fragile',false),(2,8,7,1,8,'',true),(2,9,7,1,10,'',false),(2,10,7,1,3,'',false),
+VALUES (2,1,7,1,3,'', false),(2,2,7,1,7,'',false),(2,3,7,1,8,'passez à droite',true),(2,4,7,1,10,'',false),(2,5,7,1,3,'',false),
+    (2,6,7,1,3,'', false),(2,7,7,1,7,'roche fragile',false),(2,8,7,1,8,'',true),(2,9,7,1,10,'',false),(2,10,7,1,3,'',false),
     (2,11,7,2,3,'',false),(2,12,7,2,7,'',false),(2,13,7,2,8,'',true),(2,14,7,2,10,'',false),(2,15,7,2,3,'',false),
     (2,16,7,3,3,'',false),(2,17,7,3,7,'',false),(2,18,7,3,8,'',true),(2,19,7,3,10,'',false),(2,20,7,3,3,'',false),
     (2,21,8,4,3,'',false),(2,22,8,4,7,'',false),(2,23,8,4,8,'beau paysage devant',true),(2,24,8,4,10,'',false),(2,25,8,4,3,'',false),

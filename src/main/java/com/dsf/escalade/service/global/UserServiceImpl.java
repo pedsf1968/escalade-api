@@ -80,14 +80,8 @@ public class UserServiceImpl implements UserService {
          userDto.setAddressId(user.getAddressId());
          userDto.setPhotoLink(user.getPhotoLink());
 
-         if (user.getRoles() != null) {
-            List<String> roles = new ArrayList<>();
-
-            for (Role role : user.getRoles()) {
-               roles.add(role.getName());
-            }
-
-            userDto.setRoles(roles);
+         for (Role role : user.getRoles()) {
+            userDto.addRole(role.getName());
          }
 
          return userDto;
@@ -114,14 +108,8 @@ public class UserServiceImpl implements UserService {
          userDto.setAddressId(user.getAddressId());
          userDto.setPhotoLink(user.getPhotoLink());
 
-         if (user.getRoles() != null) {
-            List<String> roles = new ArrayList<>();
-
-            for (Role role : user.getRoles()) {
-               roles.add(role.getName());
-            }
-
-            userDto.setRoles(roles);
+         for (Role role : user.getRoles()) {
+            userDto.addRole(role.getName());
          }
 
          return userDto;
@@ -147,14 +135,8 @@ public class UserServiceImpl implements UserService {
          userDto.setAddressId(user.getAddressId());
          userDto.setPhotoLink(user.getPhotoLink());
 
-         if (user.getRoles() != null) {
-            List<String> roles = new ArrayList<>();
-
-            for (Role role : user.getRoles()) {
-               roles.add(role.getName());
-            }
-
-            userDto.setRoles(roles);
+         for (Role role : user.getRoles()) {
+            userDto.addRole(role.getName());
          }
 
          return userDto;
