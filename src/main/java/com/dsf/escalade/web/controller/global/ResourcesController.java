@@ -48,32 +48,4 @@ public class ResourcesController {
       return IOUtils.toByteArray(in);
    }
 
-   @GetMapping("/images/topo/{imageName}")
-   public @ResponseBody byte[] getTopoImages(@PathVariable("imageName") String imageName) throws IOException {
-      InputStream in = new FileInputStream(topoRepository + imageName);
-      return IOUtils.toByteArray(in);
-   }
-
-   @GetMapping("/images/sector/{imageName}")
-   public @ResponseBody byte[] getSectorImages(@PathVariable("imageName") String imageName) throws IOException {
-      InputStream in = new FileInputStream(sectorRepository + imageName);
-      return IOUtils.toByteArray(in);
-   }
-
-   @GetMapping("/images/voie/{imageName}")
-   public @ResponseBody byte[] getVoieImages(@PathVariable("imageName") String imageName) throws IOException {
-      InputStream in = new FileInputStream(voieRepository + imageName);
-      return IOUtils.toByteArray(in);
-   }
-
-   @GetMapping("/images/avatar/{imageName}")
-   public @ResponseBody byte[] getAvatarImages(@PathVariable("imageName") String imageName) throws IOException {
-      InputStream in = new FileInputStream(avatarRepository + imageName);
-      if ( in == null){
-         in = new FileInputStream(avatarRepository + "avatar.png");
-      }
-      return IOUtils.toByteArray(in);
-   }
-
-
 }

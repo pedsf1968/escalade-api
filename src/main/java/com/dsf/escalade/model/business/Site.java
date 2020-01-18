@@ -8,14 +8,14 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
-@Entity
 @Data
+@Entity
 @Table(name = "site")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Site implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id", columnDefinition = "INTEGER(10)")
+   @Column(name = "id")
    protected Integer id;
    @NotNull
    @NotBlank
@@ -24,13 +24,13 @@ public class Site implements Serializable {
    @Column(name = "type", columnDefinition = "VARCHAR(7)  NOT NULL DEFAULT 'TOPO'")
    @Enumerated(EnumType.STRING)
    protected SiteType type;
-   @Column(name = "manager_id", columnDefinition = "INTEGER(10) NOT NULL")
+   @Column(name = "manager_id")
    private Integer managerId;
    @Column(name = "longitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String longitude;
    @Column(name = "latitude", columnDefinition = "VARCHAR(10) DEFAULT NULL")
    private String latitude;
-   @Column(name = "nb_comment", columnDefinition = "INTEGER(3) DEFAULT 0")
+   @Column(name = "nb_comment")
    private Integer nbComment;
    @Column(name = "photo_url", columnDefinition = "VARCHAR(255) DEFAULT NULL")
    private String photoLink;

@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -155,15 +156,38 @@ public class User implements Serializable {
       return roles;
    }
 
-   public void setRoles(Set<Role> roles) {
-      this.roles = roles;
-   }
-
    public String getPhotoLink() {
       return photoLink;
    }
 
+   public void setRoles(Set<Role> roles) {
+      this.roles = roles;
+   }
+
    public void setPhotoLink(String photoLink) {
       this.photoLink = photoLink;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof User)) return false;
+      User user = (User) o;
+      return getId().equals(user.getId()) &&
+            getFirstName().equals(user.getFirstName()) &&
+            getLastName().equals(user.getLastName()) &&
+            getPhone().equals(user.getPhone()) &&
+            getEmail().equals(user.getEmail()) &&
+            getAlias().equals(user.getAlias()) &&
+            getPassword().equals(user.getPassword()) &&
+            isMember.equals(user.isMember) &&
+            getAddressId().equals(user.getAddressId()) &&
+            getRoles().equals(user.getRoles()) &&
+            getPhotoLink().equals(user.getPhotoLink());
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getId(), getFirstName(), getLastName(), getPhone(), getEmail(), getAlias(), getPassword(), isMember, getAddressId(), getRoles(), getPhotoLink());
    }
 }

@@ -7,16 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-@Entity
 @Data
+@Entity
 @Table(name = "voie")
 @PrimaryKeyJoinColumn(name = "site_id")
 public class Voie extends Site {
-   @Column(name = "parent_id", columnDefinition = "INTEGER(10) NOT NULL")
+   @Column(name = "parent_id")
    private Integer parentId;
    @Column(name = "is_equipped", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean isEquipped;
-   @Column(name = "heigth", columnDefinition = "INTEGER(3)")
+   @Column(name = "heigth")
    private Integer heigth;
    @Column(name = "cotation_id", columnDefinition = "VARCHAR(2)")
    private Integer cotationId;

@@ -4,13 +4,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity
+
 @Data
+@Entity
 @Table(name = "cotation")
 public class Cotation {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id", columnDefinition = "INTEGER(2)")
+   @Column(name = "id")
    private Integer id;
    @Column(name = "FR", columnDefinition = "VARCHAR(3) NOT NULL")
    private String levelFR;

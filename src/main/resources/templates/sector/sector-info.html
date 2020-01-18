@@ -39,14 +39,24 @@
                   </div>
                </div>
 
-               <div class=" col-md-6 col-sm-12" th:if="${sectorDto.photoLink!=null}">
+               <div class="col-md-6 mx-auto" th:if="${sectorDto.photoLink!=null}" >
                   <div class="card mt-2 mb-2">
-                     <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.photoLink})}" alt="photo"/>
+                     <div class="card-header">
+                        <h5 th:text="#{label.photo}">Photo</h5>
+                     </div>
+                     <div class="card-body" >
+                        <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.photoLink})}" alt="photo"/>
+                     </div>
                   </div>
                </div>
-               <div class="col-md-6 col-sm-12" th:if="${sectorDto.mapLink!=null}">
+               <div class="col-md-6 mx-auto" th:if="${sectorDto.mapLink!=null}">
                   <div class="card mt-2 mb-2">
-                     <img  class="img-fluid" th:src="@{/images/sector/{image}(image=${sectorDto.mapLink})}" alt="map"/>
+                     <div class="card-header">
+                        <h5 th:text="#{label.map}">Map</h5>
+                     </div>
+                     <div class="img-fluid" >
+                        <img  class="card-img" th:src="@{/images/sector/{image}(image=${sectorDto.mapLink})}" alt="map"/>
+                     </div>
                   </div>
                </div>
             </div>

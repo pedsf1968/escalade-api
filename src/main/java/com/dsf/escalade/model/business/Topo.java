@@ -8,14 +8,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Entity
 @Data
+@Entity
 @Table(name = "topo")
 @PrimaryKeyJoinColumn(name = "site_id")
 public class Topo extends Site{
    @Column(name = "region", columnDefinition = "VARCHAR(50)")
    private String region;
-   @Column(name = "address_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "address_id")
    private Integer addressId;
    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
    @Column(name = "date", columnDefinition = "DATE DEFAULT NOW()")
@@ -28,7 +28,7 @@ public class Topo extends Site{
    private String technic;
    @Column(name = "access", columnDefinition = "TEXT")
    private String access;
-   @Column(name = "climber_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "climber_id")
    private Integer climberId;
    @Enumerated(EnumType.STRING)
    @Column(name = "status", columnDefinition = "VARCHAR(15) DEFAULT 'UNVAILABLE' NOT NULL")
@@ -39,7 +39,7 @@ public class Topo extends Site{
    private Integer cotationMin;
    @Column(name = "cotation_max", columnDefinition = "VARCHAR(2)")
    private Integer cotationMax;
-   @Column(name = "nb_lane", columnDefinition = "INTEGER(3) DEFAULT 0")
+   @Column(name = "nb_lane")
    protected Integer nbLane;
 
 }

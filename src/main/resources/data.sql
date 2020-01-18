@@ -5,15 +5,16 @@ VALUES ('22, rue de la Paix','75111','Paris'),
         ('3, chemin de l’Escale','25000','Besançon');
 
 INSERT INTO user (id,  firstname, lastname, phone, email, alias, password, is_member, address_id, photo_url)
-VALUES (1,'Admin','ADMIN',null,'admin@escalade.org','ADMIN','$2a$10$IRKMI.Gzq83HyHvat5y0feUuxwYl5Eu22Rmr56q1WyVkiqv2vboSO', 1,1, 'ADMIN.png'),
-    (2,'Martin','DUPONT','0324593874','martin.dupont@gmail.com','dupont','$2a$10$TpRLNPP8Q1XJqONRvS4QI.ea2f5.jsB/.U4ZnL3iSyFiGZ6pBPHfe', 0,2, 'dupont.png'),
-    (3,'Paul','TINTIN','0654654874','paul.depres@hotmail.com','tintin','$2a$10$b/DpB2NSMWMokB.ZOP/D4ehRFqXRSx3fKib5BqgWqE8Ox9EaAm6Ty', 0,1, 'tintin.png'),
-    (4,'Emilio','TAILLACQ',null,'eftaillacq@gmail.com','ET','$2a$10$xcMn7o5CGF9Z9btJK9ACLeG/B.GtJeKDcn/W/aHj64BVVpIJ2QMxe', 0,3, 'ET.png');
+VALUES (1,'Admin','ADMIN',null,'admin@escalade.org','ADMIN','$2a$10$IRKMI.Gzq83HyHvat5y0feUuxwYl5Eu22Rmr56q1WyVkiqv2vboSO', TRUE,1, 'ADMIN.png'),
+    (2,'Martin','DUPONT','0324593874','martin.dupont@gmail.com','dupont','$2a$10$TpRLNPP8Q1XJqONRvS4QI.ea2f5.jsB/.U4ZnL3iSyFiGZ6pBPHfe', FALSE,2, 'dupont.png'),
+    (3,'Paul','TINTIN','0654654874','paul.depres@hotmail.com','tintin','$2a$10$b/DpB2NSMWMokB.ZOP/D4ehRFqXRSx3fKib5BqgWqE8Ox9EaAm6Ty', FALSE,1, 'tintin.png'),
+    (4,'Emilio','TAILLACQ',null,'eftaillacq@gmail.com','ET','$2a$10$xcMn7o5CGF9Z9btJK9ACLeG/B.GtJeKDcn/W/aHj64BVVpIJ2QMxe', TRUE,3, 'ET.png');
 
 
 -- insertion roles
 INSERT INTO role(id,name)
 VALUES (1,'ROLE_ADMIN'),(2,'ROLE_USER');
+
 INSERT INTO user_roles VALUES (1,1),(2,2),(3,2);
 
 INSERT INTO cotation (id,FR,US,GB)
@@ -27,7 +28,8 @@ VALUES (1,'3','5.3',''),(2,'3+','5.4',''),(3,'4a','5.5',''),(4,'4b','5.6','4b'),
 -- insertion tags
 INSERT INTO tag (id,name)
 VALUES (1,'Officiel Les amis de l’escalade'),
-        (2,'falaise');
+        (2,'falaise'),
+        (3,'bloc');
 
 INSERT INTO tag_list(topo,tag)
 VALUES (1,1),(1,2),(2,1),(3,2);

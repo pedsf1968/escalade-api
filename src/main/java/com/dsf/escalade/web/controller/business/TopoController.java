@@ -65,8 +65,6 @@ public class TopoController {
         List<TopoDto> topoDtoList = topoService.findAll();
         Map<TopoDto,List<TagDto>> tagsByTopoId = new HashMap<>();
 
-
-
         for(TopoDto topoDto: topoDtoList) {
             tagsByTopoId.put(topoDto, tagService.findByTopoId(topoDto.getId()) );
         }

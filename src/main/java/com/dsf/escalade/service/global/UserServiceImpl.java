@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
    public UserDto findByLastName(String lastName) {
       User user = userRepository.findByLastName(lastName);
 
-      if(user!=null) {
+      if(user !=null) {
          UserDto userDto = new UserDto();
 
          userDto.setId(user.getId());
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
    public UserDto findByAlias(String alias) {
       User user = userRepository.findByAlias(alias);
 
-      if(user!=null) {
+      if(user !=null) {
          UserDto userDto = new UserDto();
 
          userDto.setId(user.getId());
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
    public UserDto findByEmail(String email) {
       User user = userRepository.findByEmail(email);
 
-      if(user!=null) {
+      if(user !=null) {
          UserDto userDto = new UserDto();
 
          userDto.setId(user.getId());

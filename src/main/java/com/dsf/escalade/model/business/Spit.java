@@ -5,8 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Data
+@Entity
 @Table(name = "spit")
 public class Spit implements Serializable {
    @EmbeddedId
@@ -16,11 +16,11 @@ public class Spit implements Serializable {
    })
    private SpitPK spitPK;
 
-   @Column(name = "voie_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "voie_id")
    private Integer voieId;
-   @Column(name = "longueur_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "longueur_id")
    private Integer longueurId;
-   @Column(name = "cotation_id", columnDefinition = "INTEGER(2)")
+   @Column(name = "cotation_id")
    private Integer cotationId;
    @Column(name = "is_relay", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean isRelay;

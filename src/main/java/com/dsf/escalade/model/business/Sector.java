@@ -7,12 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-@Entity
 @Data
+@Entity
 @Table(name="sector")
 @PrimaryKeyJoinColumn(name = "site_id")
 public class Sector extends Site{
-   @Column(name = "topoId", columnDefinition = "INTEGER(10) NOT NULL")
+   @Column(name = "topoId")
    private Integer topoId;
    @Column(name = "equipment", columnDefinition = "TEXT")
    private String equipment;

@@ -217,6 +217,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>escalade</finalName>
 	</build>
 
 </project>

@@ -1,7 +1,12 @@
+
 FROM openjdk:8-jdk-alpine
 
-COPY ./target/escalade-0.0.1-SNAPSHOT.jar /srv/escalade.jar
-VOLUME /srv
+EXPOSE 9090
+
+# Copy escalade app
+COPY ./target/escalade.jar /srv/escalade.jar
+
+# Set working directory
 WORKDIR /srv
 
 RUN sh -c 'touch escalade.jar'

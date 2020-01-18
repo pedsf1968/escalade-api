@@ -6,12 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
 @Data
+@Embeddable
 public class SpitPK implements Serializable {
-   @Column(name = "topo_id", columnDefinition = "INTEGER(10)")
+   @Column(name = "topo_id")
    private Integer topoId;
-   @Column(name = "number", columnDefinition = "INTEGER(3)")
+   @Column(name = "number")
    private Integer number;
 
    public SpitPK() {super(); }
