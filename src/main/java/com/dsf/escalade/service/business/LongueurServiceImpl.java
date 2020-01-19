@@ -23,10 +23,12 @@ public class LongueurServiceImpl implements LongueurService {
       this.spitService = spitService;
    }
 
-
    @Override
-   public LongueurDto getOne(Integer id) {
-      Longueur longueur = longueurRepository.getOne(id);
+   public LongueurDto entityToDto(Longueur longueur) {
+      if(longueur == null){
+         return null;
+      }
+
       LongueurDto longueurDto = new LongueurDto();
 
       longueurDto.setId(longueur.getId());
@@ -39,26 +41,11 @@ public class LongueurServiceImpl implements LongueurService {
    }
 
    @Override
-   public List<LongueurDto> findByVoieId(Integer id) {
-      List<Longueur> longueurs = longueurRepository.findByVoieId(id);
-      List<LongueurDto> longueurDtos = new ArrayList<>();
-
-      for(Longueur l:longueurs){
-         LongueurDto longueurDto = new LongueurDto();
-
-         longueurDto.setId(l.getId());
-         longueurDto.setVoieId(l.getVoieId());
-         longueurDto.setCotationId(l.getCotationId());
-         longueurDto.setHeigth(l.getHeigth());
-         longueurDto.setName(l.getName());
-
-         longueurDtos.add(longueurDto);
+   public Longueur dtoToEntity(LongueurDto longueurDto) {
+      if(longueurDto==null){
+         return null;
       }
-      return longueurDtos;
-   }
 
-   @Override
-   public Integer save(LongueurDto longueurDto) {
       Longueur longueur = new Longueur();
 
       longueur.setId(longueurDto.getId());
@@ -66,6 +53,31 @@ public class LongueurServiceImpl implements LongueurService {
       longueur.setCotationId(longueurDto.getCotationId());
       longueur.setHeigth(longueurDto.getHeigth());
       longueur.setName(longueurDto.getName());
+
+      return longueur;
+   }
+
+   @Override
+   public LongueurDto getOne(Integer id) {
+      Longueur longueur = longueurRepository.getOne(id);
+
+      return entityToDto(longueur);
+   }
+
+   @Override
+   public List<LongueurDto> findByVoieId(Integer id) {
+      List<LongueurDto> longueurDtos = new ArrayList<>();
+
+      for(Longueur longueur : longueurRepository.findByVoieId(id)){
+         longueurDtos.add(entityToDto(longueur));
+      }
+
+      return longueurDtos;
+   }
+
+   @Override
+   public Integer save(LongueurDto longueurDto) {
+      Longueur longueur = dtoToEntity(longueurDto);
 
       return longueurRepository.save(longueur).getId();
    }

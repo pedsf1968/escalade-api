@@ -35,93 +35,12 @@ public class TopoServiceImpl implements TopoService {
       this.userService = userService;
    }
 
-
    @Override
-   public List<TopoDto> findAll() {
-      List<TopoDto> topoDtoList = new ArrayList<>();
-      TopoDto topoDto;
-List<Topo> topos = topoRepository.findAll();
-
-      for (Topo topo : topoRepository.findAll()) {
-         topoDto = new TopoDto();
-
-         topoDto.setId(topo.getId());
-         topoDto.setName(topo.getName());
-         topoDto.setAccess(topo.getAccess());
-         topoDto.setLongitude(topo.getLongitude());
-         topoDto.setLatitude(topo.getLatitude());
-         topoDto.setNbComment(topo.getNbComment());
-         topoDto.setPhotoLink(topo.getPhotoLink());
-         topoDto.setMapLink(topo.getMapLink());
-         topoDto.setRegion(topo.getRegion());
-         topoDto.setAddressId(topo.getAddressId());
-         topoDto.setDate(topo.getDate());
-         topoDto.setDescription(topo.getDescription());
-         topoDto.setTechnic(topo.getTechnic());
-         topoDto.setStatus(topo.getStatus().toString());
-         topoDto.setStatusAuto(topo.getStatusAuto());
-         topoDto.setCotationMin(topo.getCotationMin());
-         topoDto.setCotationMax(topo.getCotationMax());
-         topoDto.setNbLane(topo.getNbLane());
-
-         if (topo.getManagerId() != null) {
-            topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
-         }
-         if (topo.getClimberId() != null) {
-            topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
-         }
-
-         topoDtoList.add(topoDto);
+   public TopoDto entityToDto(Topo topo) {
+      if(topo==null){
+         return null;
       }
 
-      return topoDtoList;
-   }
-
-   @Override
-   public List<TopoDto> findByManagerId(Integer id) {
-      List<TopoDto> topoDtoList = new ArrayList<>();
-      TopoDto topoDto;
-
-      for (Topo topo : topoRepository.findByManagerId(id)) {
-         topoDto = new TopoDto();
-
-         topoDto.setId(topo.getId());
-         topoDto.setName(topo.getName());
-         topoDto.setAccess(topo.getAccess());
-         topoDto.setLongitude(topo.getLongitude());
-         topoDto.setLatitude(topo.getLatitude());
-         topoDto.setNbComment(topo.getNbComment());
-         topoDto.setPhotoLink(topo.getPhotoLink());
-         topoDto.setMapLink(topo.getMapLink());
-         topoDto.setRegion(topo.getRegion());
-         topoDto.setAddressId(topo.getAddressId());
-         topoDto.setDate(topo.getDate());
-         topoDto.setDescription(topo.getDescription());
-         topoDto.setTechnic(topo.getTechnic());
-         topoDto.setStatus(topo.getStatus().toString());
-         topoDto.setStatusAuto(topo.getStatusAuto());
-         topoDto.setCotationMin(topo.getCotationMin());
-         topoDto.setCotationMax(topo.getCotationMax());
-         topoDto.setNbLane(topo.getNbLane());
-
-
-         if (topo.getManagerId() != null) {
-            topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
-         }
-         if (topo.getClimberId() != null) {
-            topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
-         }
-
-         topoDtoList.add(topoDto);
-      }
-
-      return topoDtoList;
-   }
-
-   @Override
-   public TopoDto getOne(Integer id) {
-      Topo topo = new Topo();
-      topo = topoRepository.getOne(id);
       TopoDto topoDto = new TopoDto();
 
       topoDto.setId(topo.getId());
@@ -143,7 +62,6 @@ List<Topo> topos = topoRepository.findAll();
       topoDto.setCotationMax(topo.getCotationMax());
       topoDto.setNbLane(topo.getNbLane());
 
-
       if (topo.getManagerId() != null) {
          topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
       }
@@ -152,10 +70,15 @@ List<Topo> topos = topoRepository.findAll();
       }
 
       return topoDto;
+
    }
 
    @Override
-   public Integer save(TopoDto topoDto) {
+   public Topo dtoToEntity(TopoDto topoDto) {
+      if(topoDto==null){
+         return null;
+      }
+
       Topo topo = new Topo();
 
       topo.setId(topoDto.getId());
@@ -185,6 +108,42 @@ List<Topo> topos = topoRepository.findAll();
       if (topoDto.getAliasClimber() != null) {
          topo.setClimberId(userService.findByAlias(topoDto.getAliasClimber()).getId());
       }
+
+      return topo;
+   }
+
+   @Override
+   public List<TopoDto> findAll() {
+      List<TopoDto> topoDtoList = new ArrayList<>();
+
+      for (Topo topo : topoRepository.findAll()) {
+         topoDtoList.add(entityToDto(topo));
+      }
+
+      return topoDtoList;
+   }
+
+   @Override
+   public List<TopoDto> findByManagerId(Integer id) {
+      List<TopoDto> topoDtoList = new ArrayList<>();
+
+      for (Topo topo : topoRepository.findByManagerId(id)) {
+         topoDtoList.add(entityToDto(topo));
+      }
+
+      return topoDtoList;
+   }
+
+   @Override
+   public TopoDto getOne(Integer id) {
+      Topo topo =  topoRepository.getOne(id);
+
+      return entityToDto(topo);
+   }
+
+   @Override
+   public Integer save(TopoDto topoDto) {
+      Topo topo = dtoToEntity(topoDto);
 
       return topoRepository.save(topo).getId();
    }
@@ -266,37 +225,7 @@ List<Topo> topos = topoRepository.findAll();
       });
 
       for (Topo topo : topos) {
-         topoDto = new TopoDto();
-
-         topoDto.setId(topo.getId());
-         topoDto.setName(topo.getName());
-         topoDto.setAccess(topo.getAccess());
-         topoDto.setLongitude(topo.getLongitude());
-         topoDto.setLatitude(topo.getLatitude());
-         topoDto.setNbComment(topo.getNbComment());
-         topoDto.setPhotoLink(topo.getPhotoLink());
-         topoDto.setMapLink(topo.getMapLink());
-         topoDto.setRegion(topo.getRegion());
-         topoDto.setAddressId(topo.getAddressId());
-         topoDto.setDate(topo.getDate());
-         log.info("\n\nINFO TOPO DATE :" + topoDto.getDate());
-         topoDto.setDescription(topo.getDescription());
-         topoDto.setTechnic(topo.getTechnic());
-         topoDto.setStatus(topo.getStatus().toString());
-         topoDto.setStatusAuto(topo.getStatusAuto());
-         topoDto.setCotationMin(topo.getCotationMin());
-         topoDto.setCotationMax(topo.getCotationMax());
-         topoDto.setNbLane(topo.getNbLane());
-
-
-         if (topo.getManagerId() != null) {
-            topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
-         }
-         if (topo.getClimberId() != null) {
-            topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
-         }
-
-         topoDtos.add(topoDto);
+         topoDtos.add(entityToDto(topo));
       }
 
       return topoDtos;

@@ -29,10 +29,12 @@ public class VoieServiceImpl implements VoieService {
       this.userService = userService;
    }
 
-
    @Override
-   public VoieDto getOne(Integer id) {
-      Voie voie = voieRepository.getOne(id);
+   public VoieDto entityToDto(Voie voie) {
+      if(voie==null){
+         return null;
+      }
+
       VoieDto voieDto = new VoieDto();
 
       voieDto.setId(voie.getId());
@@ -55,43 +57,11 @@ public class VoieServiceImpl implements VoieService {
    }
 
    @Override
-   public List<VoieDto> findByParentId(Integer parentId) {
-      List<VoieDto> voieDtos = new ArrayList<>();
-      VoieDto voieDto = null;
-
-      for(Voie voie : voieRepository.findByParentId(parentId)){
-         voieDto = new VoieDto();
-
-         voieDto.setId(voie.getId());
-         voieDto.setName(voie.getName());
-         voieDto.setLatitude(voie.getLatitude());
-         voieDto.setLongitude(voie.getLongitude());
-         voieDto.setParentId(voie.getParentId());
-         voieDto.setPhotoLink(voie.getPhotoLink());
-         voieDto.setMapLink(voie.getMapLink());
-         voieDto.setNbComment(voie.getNbComment());
-         voieDto.setCotationId(voie.getCotationId());
-         voieDto.setHeigth(voie.getHeigth());
-         voieDto.setIsEquipped(voie.getIsEquipped());
-
-         if (voie.getManagerId() != null) {
-            voieDto.setAliasManager(userService.getOne(voie.getManagerId()).getAlias());
-         }
-
-         voieDtos.add(voieDto);
+   public Voie dtoToEntity(VoieDto voieDto) {
+      if(voieDto==null){
+         return null;
       }
-
-      return voieDtos;
-   }
-
-   @Override
-   public Integer save(VoieDto voieDto) {
       Voie voie = new Voie();
-
-      // if new Lane we increase Topo lane counter
-      if(voieDto.getId() == null){
-         topoService.increaseLaneCounter(siteService.getTopoId(voieDto.getParentId()));
-      }
 
       voie.setType(SiteType.VOIE);
       voie.setId(voieDto.getId());
@@ -108,6 +78,37 @@ public class VoieServiceImpl implements VoieService {
 
       if (voieDto.getAliasManager() != null) {
          voie.setManagerId(userService.findByAlias(voieDto.getAliasManager()).getId());
+      }
+
+      return voie;
+   }
+
+   @Override
+   public VoieDto getOne(Integer id) {
+      Voie voie = voieRepository.getOne(id);
+
+      return entityToDto(voie);
+   }
+
+   @Override
+   public List<VoieDto> findByParentId(Integer parentId) {
+      List<VoieDto> voieDtos = new ArrayList<>();
+
+
+      for(Voie voie : voieRepository.findByParentId(parentId)){
+         voieDtos.add(entityToDto(voie));
+      }
+
+      return voieDtos;
+   }
+
+   @Override
+   public Integer save(VoieDto voieDto) {
+      Voie voie =dtoToEntity(voieDto);
+
+      // if new Lane we increase Topo lane counter
+      if(voieDto.getId() == null){
+         topoService.increaseLaneCounter(siteService.getTopoId(voieDto.getParentId()));
       }
 
       return voieRepository.save(voie).getId();

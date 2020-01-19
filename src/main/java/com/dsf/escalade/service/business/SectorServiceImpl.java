@@ -26,66 +26,13 @@ public class SectorServiceImpl implements SectorService {
       this.userService = userService;
    }
 
-
    @Override
-   public List<SectorDto> findAll() {
-      List<SectorDto> sectorDtos = new ArrayList<>();
-      SectorDto sectorDto;
-
-      for(Sector sector : sectorRepository.findAll()){
-         sectorDto = new SectorDto();
-         sectorDto.setId(sector.getId());
-         sectorDto.setTopoId(sector.getTopoId());
-         sectorDto.setName(sector.getName());
-         sectorDto.setEquipment(sector.getEquipment());
-         sectorDto.setNbComment(sector.getNbComment());
-         sectorDto.setLatitude(sector.getLatitude());
-         sectorDto.setLongitude(sector.getLongitude());
-         sectorDto.setPhotoLink(sector.getPhotoLink());
-         sectorDto.setMapLink(sector.getMapLink());
-
-         if (sector.getManagerId() != null) {
-            sectorDto.setAliasManager(userService.getOne(sector.getManagerId()).getAlias());
-         }
-
-         sectorDtos.add(sectorDto);
+   public SectorDto entityToDto(Sector sector) {
+      if(sector==null){
+         return null;
       }
 
-      return sectorDtos;
-   }
-
-   @Override
-   public List<SectorDto> findByTopoId(Integer id) {
-      List<SectorDto> sectorDtos = new ArrayList<>();
-      SectorDto sectorDto;
-
-      for(Sector sector : sectorRepository.findByTopoId(id)){
-         sectorDto = new SectorDto();
-         sectorDto.setId(sector.getId());
-         sectorDto.setTopoId(sector.getTopoId());
-         sectorDto.setName(sector.getName());
-         sectorDto.setEquipment(sector.getEquipment());
-         sectorDto.setNbComment(sector.getNbComment());
-         sectorDto.setLatitude(sector.getLatitude());
-         sectorDto.setLongitude(sector.getLongitude());
-         sectorDto.setPhotoLink(sector.getPhotoLink());
-         sectorDto.setMapLink(sector.getMapLink());
-
-         if (sector.getManagerId() != null) {
-            sectorDto.setAliasManager(userService.getOne(sector.getManagerId()).getAlias());
-         }
-
-         sectorDtos.add(sectorDto);
-      }
-
-      return sectorDtos;
-   }
-
-   @Override
-   public SectorDto getOne(Integer id) {
       SectorDto sectorDto = new SectorDto();
-      Sector sector = sectorRepository.getOne(id);
-
       sectorDto.setId(sector.getId());
       sectorDto.setTopoId(sector.getTopoId());
       sectorDto.setName(sector.getName());
@@ -104,7 +51,11 @@ public class SectorServiceImpl implements SectorService {
    }
 
    @Override
-   public Integer save(SectorDto sectorDto) {
+   public Sector dtoToEntity(SectorDto sectorDto) {
+      if(sectorDto==null){
+         return null;
+      }
+
       Sector sector =new Sector();
 
       sector.setId(sectorDto.getId());
@@ -121,6 +72,42 @@ public class SectorServiceImpl implements SectorService {
       if (sectorDto.getAliasManager() != null) {
          sector.setManagerId(userService.findByAlias(sectorDto.getAliasManager()).getId());
       }
+
+      return sector;
+   }
+
+   @Override
+   public List<SectorDto> findAll() {
+      List<SectorDto> sectorDtos = new ArrayList<>();
+
+      for(Sector sector : sectorRepository.findAll()){
+         sectorDtos.add(entityToDto(sector));
+      }
+
+      return sectorDtos;
+   }
+
+   @Override
+   public List<SectorDto> findByTopoId(Integer id) {
+      List<SectorDto> sectorDtos = new ArrayList<>();
+
+      for(Sector sector : sectorRepository.findByTopoId(id)){
+         sectorDtos.add(entityToDto(sector));
+      }
+
+      return sectorDtos;
+   }
+
+   @Override
+   public SectorDto getOne(Integer id) {
+      Sector sector = sectorRepository.getOne(id);
+
+      return entityToDto(sector);
+   }
+
+   @Override
+   public Integer save(SectorDto sectorDto) {
+      Sector sector = dtoToEntity(sectorDto);
 
       return sectorRepository.save(sector).getId();
    }

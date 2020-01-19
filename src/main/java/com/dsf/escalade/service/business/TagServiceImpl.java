@@ -25,19 +25,30 @@ public class TagServiceImpl implements TagService {
    }
 
    @Override
+   public TagDto entityToDto(Tag tag) {
+      if(tag==null){
+         return null;
+      }
+
+      TagDto tagDto = new TagDto();
+      tagDto.setId(tag.getId());
+      tagDto.setName(tag.getName());
+      tagDto.setActivated(Boolean.FALSE);
+      return tagDto;
+
+   }
+
+   @Override
+   public Tag dtoToEntity(TagDto tagDto) {
+      return null;
+   }
+
+   @Override
    public TagDto getOne(Integer id) {
 
       Tag tag = tagRepository.getOne(id);
 
-      if(tag!=null) {
-         TagDto tagDto = new TagDto();
-         tagDto.setId(tag.getId());
-         tagDto.setName(tag.getName());
-
-         return tagDto;
-      }
-
-      return null;
+      return entityToDto(tag);
    }
 
 
@@ -46,11 +57,7 @@ public class TagServiceImpl implements TagService {
       List<TagDto> tagDtos = new ArrayList<>();
 
       for(Tag tag : tagRepository.findAll()){
-         TagDto tagDto = new TagDto();
-         tagDto.setId(tag.getId());
-         tagDto.setName(tag.getName());
-         tagDto.setActivated(Boolean.FALSE);
-         tagDtos.add(tagDto);
+         tagDtos.add(entityToDto(tag));
       }
 
       return tagDtos;

@@ -19,16 +19,43 @@ public class CotationServiceImpl implements CotationService {
    }
 
    @Override
+   public CotationDto entityToDto(Cotation cotation) {
+      if(cotation==null){
+         return null;
+      }
+
+      CotationDto cotationDto = new CotationDto();
+
+      cotationDto.setId(cotation.getId());
+      cotationDto.setLevelFR(cotation.getLevelFR());
+      cotationDto.setLevelGB(cotation.getLevelGB());
+      cotationDto.setLevelUS(cotation.getLevelUS());
+
+      return cotationDto;
+   }
+
+   @Override
+   public Cotation dtoToEntity(CotationDto cotationDto) {
+      if(cotationDto==null){
+         return null;
+      }
+
+      Cotation cotation = new Cotation();
+
+      cotation.setId(cotationDto.getId());
+      cotation.setLevelFR(cotationDto.getLevelFR());
+      cotation.setLevelGB(cotationDto.getLevelGB());
+      cotation.setLevelUS(cotationDto.getLevelUS());
+
+      return cotation;
+   }
+
+   @Override
    public List<CotationDto> findAll() {
       List<CotationDto> cotationDtos = new ArrayList<>();
 
       for(Cotation cotation:cotationRepository.findAll()){
-         CotationDto cotationDto = new CotationDto();
-         cotationDto.setId(cotation.getId());
-         cotationDto.setLevelFR(cotation.getLevelFR());
-         cotationDto.setLevelGB(cotation.getLevelGB());
-         cotationDto.setLevelUS(cotation.getLevelUS());
-         cotationDtos.add(cotationDto);
+         cotationDtos.add(entityToDto(cotation));
       }
 
       return cotationDtos;

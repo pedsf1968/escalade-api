@@ -1,9 +1,12 @@
 package com.dsf.escalade.service.business;
 
+import com.dsf.escalade.model.business.Spit;
 import com.dsf.escalade.web.dto.SpitDto;
 import com.dsf.escalade.web.dto.SpitDtoList;
 
 public interface SpitService {
+   SpitDto entityToDto(Spit spit);
+   Spit dtoToEntity(SpitDto spitDto);
    SpitDtoList findByLongueurId(Integer longueurId);
    void save(SpitDto spitDto);
    void saveAll(SpitDtoList spitDtoList);
