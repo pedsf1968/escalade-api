@@ -37,9 +37,9 @@
             </div>
             <div class="card-footer">
                <button  th:if="${topo.status} == 'UNVAILABLE'" class="float-left btn btn-danger mb-2" th:text="${topo.status}"></button>
-               <button  th:if="${topo.status} == 'AVAILABLE'" class="float-left btn btn-success mb-2" th:text="${topo.status}"></button>
-               <button  th:if="${topo.status} == 'REQUESTED'" class="float-left btn btn-infvo mb-2" th:text="${topo.status}"></button>
-               <button  th:if="${topo.status} == 'RESERVED'" class="float-left btn btn-warning mb-2" th:text="${topo.status}"></button>
+               <button  th:if="${topo.status} == 'AVAILABLE'" class="float-left btn btn-info mb-2" th:text="${topo.status}"></button>
+               <button  th:if="${topo.status} == 'REQUESTED'" class="float-left btn btn-warning mb-2" th:text="${topo.status}"></button>
+               <button  th:if="${topo.status} == 'RESERVED'" class="float-left btn btn-success mb-2" th:text="${topo.status}"></button>
                <span class="btn mb-2" th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">Date</span>
                <a class="float-right btn btn-primary mb-2" th:href="@{/topo/edit/{id}(id=${topo.id})}" th:text="#{label.edit}">Edit</a>
             </div>

@@ -1,6 +1,5 @@
 package com.dsf.escalade.web.dto;
 
-import com.dsf.escalade.model.business.StatusType;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -58,10 +57,5 @@ public class TopoDto {
    private Integer cotationMax;
    private Integer nbLane;
 
-   public TopoDto() {
-      this.status = StatusType.UNVAILABLE.toString();
-      this.statusAuto = false;
-      this.nbLane = 0;
-      this.nbComment = 0;
-   }
+
 }

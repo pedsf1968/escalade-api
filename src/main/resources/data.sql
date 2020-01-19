@@ -49,16 +49,18 @@ VALUES (1,'La falaise', 'TOPO', 2,'TOPO1photo.jpg',null, 3,42.123,122.4564),
 
 
 
-INSERT INTO topo (site_id, region, address_id, date, description, technic, access)
+INSERT INTO topo (site_id, region, address_id, date, description, technic, access,status,status_auto,nb_lane,cotation_min,cotation_max)
 VALUES (1, 'Corse',1,'2019-06-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',
 'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.',
-'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.');
-
-INSERT INTO topo (site_id, region, address_id, date, description,status,status_auto,nb_lane,cotation_min,cotation_max)
-VALUES (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,2,3,10),
-        (3, 'Alpes', 1, '2019-11-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','UNVAILABLE',false,0,5,15),
-        (4,'Alpes', 1, '2019-12-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',false,0,3,11),
-        (9,'Franche-Comté', 3, '2020-01-01','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','AVAILABLE',true,0,3,11);
+'Sed porta viverra commodo. Curabitur vehicula sagittis egestas. Nullam et turpis sed mauris molestie rhoncus id et metus. Nulla facilisi.','AVAILABLE', true,0,3,10),
+        (2, 'Corse', 1, '2019-07-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',
+'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.','AVAILABLE',true,2,3,10),
+        (3, 'Alpes', 1, '2019-11-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',
+'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.','UNVAILABLE',false,0,5,15),
+        (4,'Alpes', 1, '2019-12-11','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',
+'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.','AVAILABLE',false,0,3,11),
+        (9,'Franche-Comté', 3, '2020-01-01','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ante eget leo blandit ullamcorper eu ultricies felis.',
+'Sed ac orci egestas, imperdiet libero vitae, dignissim nunc. Sed ultrices fermentum nisi, ut dictum justo laoreet et. Etiam cursus sit amet turpis id cursus. Cras at hendrerit risus.','AVAILABLE',true,0,3,11);
 
 INSERT INTO sector (site_id, topo_id, equipment)
 VALUES (5, 2,'100m de corde'),

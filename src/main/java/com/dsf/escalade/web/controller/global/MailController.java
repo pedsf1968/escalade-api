@@ -94,7 +94,36 @@ public class MailController {
          mailSender.send(mailMessage);
       }
 
-
       return PathTable.TOPO_ALL_R;
    }
+
+   @GetMapping("/topo/book/{response}/{topoId}")
+   public String acceptBookingTopo(@PathVariable("response") String response,@PathVariable("topoId") Integer topoId, Model model){
+      TopoDto topoDto = topoService.getOne(topoId);
+
+      // Create message get
+      if(topoDto.getAliasClimber()!=null) {
+         mailSender.setUsername(environment.getProperty("spring.mail.username"));
+         mailSender.setPassword(environment.getProperty("spring.mail.password"));
+         mailMessage.setFrom(userService.findByAlias(topoDto.getAliasManager()).getEmail());
+         mailMessage.setTo(userService.findByAlias(topoDto.getAliasClimber()).getEmail());
+
+         if (response.equals("accepted")) {
+            mailMessage.setSubject("Réservation de topo");
+            mailMessage.setText("Réservation du topo : " + topoId + "ACCEPTED");
+            topoDto.setStatus(StatusType.RESERVED.toString());
+         } else if (response.equals("refused")) {
+            mailMessage.setSubject("Réservation de topo");
+            mailMessage.setText("Réservation du topo  : " + topoId + "REFUSED");
+            topoDto.setAliasClimber(null);
+            topoDto.setStatus(StatusType.AVAILABLE.toString());
+         }
+         // Send message
+         topoService.save(topoDto);
+         mailSender.send(mailMessage);
+      }
+
+      return PathTable.TOPO_UPDATE_R + topoId;
+   }
+
 }

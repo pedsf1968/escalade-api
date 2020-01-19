@@ -6,19 +6,19 @@
       <div class="form-row">
          <div class="col-md-4">
             <select class="form-control" th:field="${filter.region}">
-               <option th:value="0" th:text="#{label.region}"></option>
+               <option th:value="0" th:text="#{label.region}">Region</option>
                <option th:each="region : ${regionList}" th:value="${region}" th:text="${region}"></option>
             </select>
          </div>
          <div class="col-md-3">
             <select class="form-control" th:field="${filter.status}">
-               <option th:value="0" th:text="#{label.status}"></option>
+               <option th:value="0" th:text="#{label.status}">Status</option>
                <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
             </select>
          </div>
          <div class="col-md-3">
             <select class="form-control" th:field="${filter.aliasManager}">
-               <option th:value="0" th:text="#{label.alias}"></option>
+               <option th:value="0" th:text="#{label.alias}">Alias</option>
                <option th:each="alias : ${aliasList}" th:value="${alias}" th:text="${alias}"></option>
             </select>
          </div>
