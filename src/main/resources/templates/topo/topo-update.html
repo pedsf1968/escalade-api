@@ -103,12 +103,26 @@
                         <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
 
                         <div class="form-inline">
-                           <span class="btn mb-2" th:text="#{label.status}">Status</span>
-                           <select class="btn mb-2" th:field="${topoDto.status}">
-                              <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
-                           </select>
-                           <span class="btn mb-2" th:text="#{label.statusAuto}">Auto</span>
-                           <input class="btn mb-2" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
+                           <div class="input-group mb-2">
+                              <div class="input-group-prepend">
+                                 <div class="input-group-text" th:text="#{label.status}">Status</div>
+                              </div>
+                              <select class="btn mb-2 border" th:field="${topoDto.status}">
+                                 <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+                              </select>
+                           </div>
+                           <div class="input-group mb-2 ml-2">
+                              <div class="input-group-prepend">
+                                 <div class="input-group-text" th:text="#{label.statusAuto}">Auto</div>
+                              </div>
+                              <input class="btn mb-2" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
+                           </div>
+                           <div class="input-group mb-2 ml-2" th:if="${topoDto.aliasClimber!=null}">
+                              <div class="input-group-prepend">
+                                 <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${topoDto.aliasClimber})}" alt="avatar"/>
+                              </div>
+                              <input type="text" class="form-control" th:field="${topoDto.aliasClimber}"  readonly>
+                           </div>
                         </div>
                      </div>
                   </div>

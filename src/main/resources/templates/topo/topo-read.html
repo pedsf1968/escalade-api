@@ -128,7 +128,7 @@
                         <div class="card-header inline-flex">
                            <img class="img-avatar float-left" th:src="@{/images/avatar/{avatar}.png(avatar=${comment.alias})}" alt="avatar"/>
                            <h5  class="center" th:text="${comment.alias}">Alias</h5>
-                           <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger float-right" th:href="@{/topo/comment/delete/{id}(id=${comment.id})}" th:text="#{label.delete}" >Delete</a>
+                           <a sec:authorize="hasRole('ROLE_STAFF')" class="btn btn-danger float-right" th:href="@{/topo/comment/delete/{id}(id=${comment.id})}" th:text="#{label.delete}" >Delete</a>
                         </div>
                         <div class="card-text">
                            <p th:text="${comment.text}"></p>

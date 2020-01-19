@@ -15,6 +15,12 @@
                <td th:text="#{label.status}">Status</td>
                <td th:text="${topoDto.status}">Status</td>
             </tr>
+            <tr th:if="${topoDto.aliasClimber}">
+               <td>
+                  <img class="img-avatar" th:src="@{/images/avatar/{avatar}.png(avatar=${topoDto.aliasClimber})}" alt="avatar"/>
+               </td>
+               <td th:text="${topoDto.aliasClimber}">Climber alias</td>
+            </tr>
             <tr>
                <td th:text="#{label.longitude}">Longitude</td>
                <td th:text="${topoDto.longitude}" >Longitude</td>

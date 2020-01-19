@@ -87,6 +87,8 @@ public class MailController {
             mailMessage.setSubject("Demande de réservation de topo");
             mailMessage.setText("Demande de réservation du topo : " + topoId );
          }
+         // record the requester Alias in the topo aliasClimber attribute
+         topoDto.setAliasClimber(userService.findByEmail(authentication.getName()).getAlias());
          // Send message
          topoService.save(topoDto);
          mailSender.send(mailMessage);
