@@ -92,8 +92,13 @@ public class SpitServiceImpl implements SpitService {
 
    @Override
    public Integer getLastSpitNumber(Integer topoId){
+      Spit spit = spitRepository.findFirstBySpitPKTopoIdOrderBySpitPKNumberDesc(topoId);
 
-      return spitRepository.findFirstBySpitPKTopoIdOrderBySpitPKNumberDesc(topoId).getSpitPK().getNumber();
+      if(spit!=null){
+         return spit.getSpitPK().getNumber();
+      }
+
+      return 0;
    }
 
    @Override

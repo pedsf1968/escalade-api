@@ -115,7 +115,7 @@
                            </div>
                            <input class="btn mb-2" type="checkbox" name="statusAuto"  th:checked="${topoDto.statusAuto}"/>
                            <div class="input-group-prepend ml-2">
-                              <img class="img-avatar" th:src="@{/images/avatar/{avatar}.png(avatar=${topoDto.aliasClimber})}" alt="avatar"/>
+                              <img class="img-avatar" th:src="@{/images/avatar/{avatar}.png(avatar=${topoDto.aliasClimber})}" alt="avatar" th:if="${topoDto.aliasClimber!=null}"/>
                            </div>
                            <input type="text" class="form-control" th:field="${topoDto.aliasClimber}"  readonly>
                         </div>

@@ -10,4 +10,5 @@ import java.util.List;
 public interface SectorRepository extends JpaRepository <Sector, Integer>  {
    Sector getOne(Integer sectorId);
    List<Sector> findByTopoId(Integer topoId);
+   Sector save(Sector sector);
 }
