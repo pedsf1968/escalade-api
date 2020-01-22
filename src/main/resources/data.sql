@@ -90,3 +90,4 @@ VALUES (1,1,2,'C''est super on s''éclate'),(2,1,2,'Bien pour les débutants'),(
        (7,5,2,'C''est super on s''éclate'),(8,6,2,'Bien pour les débutants'),(9,6,3,'Belle vue pendant l''ascension'),
        (10,7,2,'C''est super on s''éclate'),(11,8,2,'Bien pour les débutants'),(12,8,3,'Belle vue pendant l''ascension');
 
+

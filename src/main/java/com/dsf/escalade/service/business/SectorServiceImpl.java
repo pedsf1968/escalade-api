@@ -108,8 +108,9 @@ public class SectorServiceImpl implements SectorService {
    @Override
    public Integer save(SectorDto sectorDto) {
       Sector sector = dtoToEntity(sectorDto);
+      sector = sectorRepository.save(sector);
 
-      return sectorRepository.save(sector).getId();
+      return sector.getId();
    }
 
    @Override
