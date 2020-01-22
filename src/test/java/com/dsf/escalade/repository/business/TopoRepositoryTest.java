@@ -3,6 +3,8 @@ package com.dsf.escalade.repository.business;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.model.business.Topo;
+import com.dsf.escalade.model.global.User;
+import com.dsf.escalade.repository.global.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,6 +19,9 @@ public class TopoRepositoryTest {
 
    @Autowired
    private TopoRepository topoRepository;
+
+   @Autowired
+   private UserRepository userRepository;
 
    @Test
    public void getOne() {
@@ -122,26 +127,86 @@ public class TopoRepositoryTest {
    }
 
    @Test
-   public void findAllFiltered() {
-         }
-
-   @Test
-   public void testFindAllFiltered() {
-   }
-
-   @Test
-   public void testFindAllFiltered1() {
-   }
-
-   @Test
-   public void findFiltered() {
-   }
-
-   @Test
    public void findAllRegion() {
+      List<String> regions = topoRepository.findAllRegion();
+      Integer nbRegions = regions.size();
+      String regionName = "Auvergne";
+
+      Topo topo = new Topo();
+      topo.setType(SiteType.TOPO);
+      topo.setLatitude("123");
+      topo.setLongitude("456");
+      topo.setManagerId(12);
+      topo.setMapLink("maplink");
+      topo.setPhotoLink("photolink");
+      topo.setName("topo");
+      topo.setNbComment(5);
+      topo.setNbLane(4);
+      topo.setCotationMin(3);
+      topo.setCotationMax(13);
+      topo.setDate(Date.valueOf("2020-02-13"));
+      topo.setStatus(StatusType.REQUESTED);
+      topo.setManagerId(12);
+      topo.setRegion(regionName);
+      topo.setAccess("par l'autoroute A1");
+      topo.setAddressId(2);
+      topo.setClimberId(5);
+      topo.setDescription("haute falaise bleu");
+      topo.setTechnic("100m de corde");
+
+      topo = topoRepository.save(topo);
+      regions = topoRepository.findAllRegion();
+
+      assertEquals(regions.contains(regionName),Boolean.TRUE);
+      assertEquals(regions.size(),nbRegions+1);
    }
 
    @Test
    public void findAllAlias() {
+      List<String> aliases = topoRepository.findAllAlias();
+      Integer nbAlias = aliases.size();
+
+      // create new user with new alias
+      User user = new User();
+      String aliasName = "AliasAlias";
+      user.setFirstName("Marcel");
+      user.setAddressId(2);
+      user.setAlias(aliasName);
+      user.setEmail("marcel.marcel@hotmail.com");
+      user.setPassword("lkjlkjhmkjhmlkh");
+      user.setLastName("Marcel");
+      user = userRepository.save(user);
+
+      // create a new topo with new user owner
+      Topo topo = new Topo();
+      topo.setType(SiteType.TOPO);
+      topo.setLatitude("123");
+      topo.setLongitude("456");
+      topo.setManagerId(12);
+      topo.setMapLink("maplink");
+      topo.setPhotoLink("photolink");
+      topo.setName("topo");
+      topo.setNbComment(5);
+      topo.setNbLane(4);
+      topo.setCotationMin(3);
+      topo.setCotationMax(13);
+      topo.setDate(Date.valueOf("2020-02-13"));
+      topo.setStatus(StatusType.REQUESTED);
+      topo.setManagerId(user.getId());
+      topo.setRegion("regionName");
+      topo.setAccess("par l'autoroute A1");
+      topo.setAddressId(2);
+      topo.setClimberId(5);
+      topo.setDescription("haute falaise bleu");
+      topo.setTechnic("100m de corde");
+
+      // save topo
+      topo = topoRepository.save(topo);
+
+      aliases = topoRepository.findAllAlias();
+
+      assertEquals(aliases.contains(aliasName),Boolean.TRUE);
+      assertEquals(aliases.size(),nbAlias+1);
+
    }
 }
