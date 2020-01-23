@@ -12,6 +12,7 @@
          </div>
          <div class="col-sm my-auto">
             <div class="float-right" >
+               <a class="btn btn-primary" th:href="@{/sector/new/{id}(id=${sectorDto.topoId})}" th:text="#{label.newSector}">New sector</a>
                <a class="btn btn-primary" th:href="@{/voie/new/{id}(id=${sectorDto.id})}" th:text="#{label.newLane}">New Lane</a>
                <a class="btn btn-danger" th:href="@{/sector/delete/{id}(id=${sectorDto.id})}" th:text="#{label.delete}" >Delete</a>
                <a class="btn btn-primary" th:href="@{/topo/edit/{id}(id=${sectorDto.topoId})}" th:text="#{label.cancel}">Cancel</a>

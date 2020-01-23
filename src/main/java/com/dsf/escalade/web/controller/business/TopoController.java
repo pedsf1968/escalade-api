@@ -115,6 +115,7 @@ public class TopoController {
 
         model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
         model.addAttribute(PathTable.ATTRIBUTE_TAGS, tagsByTopoId);
+        model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
         return PathTable.TOPO_MYLIST;
     }
 
