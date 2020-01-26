@@ -109,12 +109,12 @@ public class MailController {
          mailMessage.setTo(userService.findByAlias(topoDto.getAliasClimber()).getEmail());
 
          if (response.equals("accepted")) {
-            mailMessage.setSubject("Réservation de topo");
-            mailMessage.setText("Réservation du topo : " + topoId + "ACCEPTED");
+            mailMessage.setSubject("Démande de réservation de topo");
+            mailMessage.setText("Réservation du topo : " + topoId + " ACCEPTED");
             topoDto.setStatus(StatusType.RESERVED.toString());
          } else if (response.equals("refused")) {
-            mailMessage.setSubject("Réservation de topo");
-            mailMessage.setText("Réservation du topo  : " + topoId + "REFUSED");
+            mailMessage.setSubject("Demande de réservation de topo");
+            mailMessage.setText("Réservation du topo  : " + topoId + " REFUSED");
             topoDto.setAliasClimber(null);
             topoDto.setStatus(StatusType.AVAILABLE.toString());
          }
