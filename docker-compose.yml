@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  postgres:
+    restart: always
+    image: postgres:alpine
+    ports:
+      - "5433:5432"
+
+    environment:
+      POSTGRES_USER: Api_escalade
+      POSTGRES_PASSWORD: Api_escalade
+      POSTGRES_DB: escalade
+
+
+  escalade:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: 'postgres://escaladerails_user:rails_password@postgres:5432/rails_db'
+      REDIS_HOST: 'redis:6379'
+
+    volumes:
+      - .:/app
+
+  nginx:
+    image: nginx:latest
+    links:
+      - rails
+    ports:
+      - 3000:80
+
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+PostgreSQL:
+  restart: always
+  image: sameersbn/postgresql:10-2
+  ports:
+    - "5433:5432"
+
+  environment:
+    - DEBUG=false
+    - DB_USER=
+    - DB_PASS=
+    - DB_NAME=
+    - DB_TEMPLATE=
+    - DB_EXTENSION=
+    - REPLICATION_MODE=
+    - REPLICATION_USER=
+    - REPLICATION_PASS=
+    - REPLICATION_SSLMODE=
+
+  volumes:
+    - /PostgreSQL/data/escalade:/var/lib/postgresql
+    - /images:/images

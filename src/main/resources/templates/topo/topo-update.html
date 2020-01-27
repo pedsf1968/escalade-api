@@ -101,18 +101,18 @@
                            <input type="text" class="form-control" th:field="${topoDto.latitude}" th:placeholder="#{placeholder.latitude}">
                         </div>
                         <span th:if="${#fields.hasErrors('topoDto.latitude')}" th:errors="${topoDto.latitude}"></span>
+
                         <div class="input-group mb-2" th:if="${topoDto.aliasClimber==null}">
                            <div class="input-group-prepend">
                               <div class="input-group-text" th:text="#{label.status}">Status</div>
                            </div>
-                           <div class="btn-group" data-toggle="buttons">
-                              <label class="btn btn-success btntgl">
-                                 <input type="radio" name="options" id="option1" th:field="${topoDto.status}" th:value="AVAILABLE" th:text="#{label.available}" th:classappend="${topoDto.status=='AVAILABLE'}?toggle"/>
-                              </label>
-                              <label class="btn btn-danger btntgl"  >
-                                 <input type="radio"  name="options" id="option2"  th:field="${topoDto.status}" th:value="UNVAILABLE" th:text="#{label.unvailable}" th:classappend="${topoDto.status=='UNVAILABLE'}?toggle">
-                              </label>
-                           </div>
+                           <span class="btn radio-inline btn-outline-success ml-2">
+                              <input type="radio" name="optradio" th:field="${topoDto.status}" th:value="AVAILABLE" th:checked="${topoDto.status=='AVAILABLE'}?checked" th:text="#{label.available}">
+                           </span>
+                           <span class="btn radio-inline btn-outline-danger ml-2" >
+                              <input type="radio" name="optradio" th:field="${topoDto.status}" th:value="UNVAILABLE" th:checked="${topoDto.status=='UNVAILABLE'}?checked" th:text="#{label.unvailable}">
+                           </span>
+
                            <div class="input-group-prepend ml-2">
                               <div class="input-group-text" th:text="#{label.statusAuto}">Auto</div>
                            </div>
@@ -124,15 +124,14 @@
                         </div>
                         <div class="input-group mb-2" th:if="${topoDto.aliasClimber!=null}">
                            <div class="input-group-prepend" >
-                              <input type="hidden"  th:field="${topoDto.status}">
                               <div class="input-group-text" th:text="${topoDto.status}">Status</div>
                            </div>
-                           <a class="btn btn-success" th:href="@{/topo/status/RESERVED/{id}(id=${topoDto.id})}" th:if="${topoDto.status} == 'REQUESTED'"  th:text="#{label.accepted}" ></a>
-                           <a class="btn btn-danger" th:href="@{/topo/status/UNVAILABLE/{id}(id=${topoDto.id})}" th:if="${topoDto.status} == 'REQUESTED'"  th:text="#{label.refused}" ></a>
+                           <a class="btn btn-outline-success" th:href="@{/topo/status/RESERVED/{id}(id=${topoDto.id})}" th:if="${topoDto.status} == 'REQUESTED'"  th:text="#{label.accepted}" ></a>
+                           <a class="btn btn-outline-danger" th:href="@{/topo/status/UNVAILABLE/{id}(id=${topoDto.id})}" th:if="${topoDto.status} == 'REQUESTED'"  th:text="#{label.refused}" ></a>
                            <div class="input-group-prepend ml-2">
                               <img class="img-avatar" th:src="@{/images/avatar/{avatar}.png(avatar=${topoDto.aliasClimber})}" alt="avatar" />
                            </div>
-                           <input type="text" class="form-control" th:field="${topoDto.aliasClimber}"  readonly>
+                           <input type="text" class="form-control my-auto" th:field="${topoDto.aliasClimber}"  readonly>
                         </div>
                      </div>
                   </div>
