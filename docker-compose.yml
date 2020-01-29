@@ -1,57 +1,63 @@
 version: "3"
 
 services:
-  postgres:
-    restart: always
-    image: postgres:alpine
-    ports:
-      - "5433:5432"
-
+  properties-server:
+    container_name: properties_server
+    image: properties-server:pedsf
     environment:
-      POSTGRES_USER: Api_escalade
-      POSTGRES_PASSWORD: Api_escalade
-      POSTGRES_DB: escalade
+      - jasypt.encryptor.password=${JASYPT_ENCRYPTOR_SECRET}
+    ports:
+    - "8888:8888"
+    networks:
+      net:
+        ipv4_address: 10.5.0.2
 
+
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_USER: Escalade_Api
+      POSTGRES_PASSWORD: Escalade_Api
+      POSTGRES_DB: escalade
+      PGDATA: /data
+    volumes:
+        - /PostgreSQL/data/escalade:/data
+    ports:
+      - "5432:5432"
+    networks:
+      net:
+        ipv4_address: 10.5.0.5
 
   escalade:
-    build: .
-    depends_on:
-      - postgres
+    container_name: escalade
+    build: ./
     environment:
-      DATABASE_URL: 'postgres://escaladerails_user:rails_password@postgres:5432/rails_db'
-      REDIS_HOST: 'redis:6379'
-
+      - jasypt.encryptor.password=${JASYPT_ENCRYPTOR_SECRET}
+      - spring.cloud.config.uri=http://10.5.0.2:8888
+      - spring.datasource.url=jdbc:postgresql://10.5.0.5:5432/escalade
     volumes:
-      - .:/app
-
-  nginx:
-    image: nginx:latest
-    links:
-      - rails
+      - /images:/images
+    depends_on:
+      - properties-server
+      - postgres
     ports:
-      - 3000:80
+      - "9090:9090"
+    networks:
+      net:
+        ipv4_address: 10.5.0.3
 
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
-PostgreSQL:
-  restart: always
-  image: sameersbn/postgresql:10-2
-  ports:
-    - "5433:5432"
+#networks:
+#  default:
+#    external:
+#      name: escalade-network
 
-  environment:
-    - DEBUG=false
-    - DB_USER=
-    - DB_PASS=
-    - DB_NAME=
-    - DB_TEMPLATE=
-    - DB_EXTENSION=
-    - REPLICATION_MODE=
-    - REPLICATION_USER=
-    - REPLICATION_PASS=
-    - REPLICATION_SSLMODE=
+networks:
+  net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
 
-  volumes:
-    - /PostgreSQL/data/escalade:/var/lib/postgresql
-    - /images:/images
