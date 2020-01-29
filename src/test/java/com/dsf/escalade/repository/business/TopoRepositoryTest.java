@@ -101,11 +101,11 @@ public class TopoRepositoryTest {
       List<Topo> topoSaveds = topoRepository.findByManagerId(managerId);
 
       for(Topo topoSaved:topoSaveds) {
+         assertEquals(topoSaved.getManagerId(), topo.getManagerId());
          if(topoSaved.getId()==topo.getId()) {
             assertEquals(topoSaved.getType(), topo.getType());
             assertEquals(topoSaved.getLatitude(), topo.getLatitude());
             assertEquals(topoSaved.getLongitude(), topo.getLongitude());
-            assertEquals(topoSaved.getManagerId(), topo.getManagerId());
             assertEquals(topoSaved.getMapLink(), topo.getMapLink());
             assertEquals(topoSaved.getPhotoLink(), topo.getPhotoLink());
             assertEquals(topoSaved.getName(), topo.getName());
