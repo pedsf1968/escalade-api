@@ -52,6 +52,7 @@ class UserRepositoryTest {
         assertEquals(userGet.getPhotoLink(), user.getPhotoLink());
         assertEquals(userGet.getRoles(), user.getRoles());
         assertEquals(userGet.getEmail(), user.getEmail());
+        assertEquals(userGet,user);
 
     }
 
