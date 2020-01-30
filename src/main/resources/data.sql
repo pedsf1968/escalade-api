@@ -91,3 +91,11 @@ VALUES (1,1,2,'C''est super on s''éclate'),(2,1,2,'Bien pour les débutants'),(
        (10,7,2,'C''est super on s''éclate'),(11,8,2,'Bien pour les débutants'),(12,8,3,'Belle vue pendant l''ascension');
 
 
+ALTER SEQUENCE address_id_seq RESTART WITH 4;
+ALTER SEQUENCE comment_id_seq RESTART WITH 13;
+ALTER SEQUENCE cotation_id_seq RESTART WITH 29;
+ALTER SEQUENCE longueur_id_seq RESTART WITH 5;
+ALTER SEQUENCE role_id_seq RESTART WITH 5;
+ALTER SEQUENCE site_id_seq RESTART WITH 11;
+ALTER SEQUENCE tag_id_seq RESTART WITH 4;
+ALTER SEQUENCE users_id_seq RESTART WITH 5;
