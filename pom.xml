@@ -147,7 +147,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>compile</scope>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- ====================================================== POSTGRESQL -->
@@ -201,10 +201,15 @@
          <scope>compile</scope>
       </dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.5.2</version>
 		</dependency>
+	<!--dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<scope>test</scope>
+	</dependency-->
 	</dependencies>
 
 	<!-- ==================================================================== -->

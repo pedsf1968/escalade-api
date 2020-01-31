@@ -1,6 +1,7 @@
 package com.dsf.escalade.repository.business;
 
 import com.dsf.escalade.model.business.Longueur;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
