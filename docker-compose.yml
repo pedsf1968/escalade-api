@@ -16,14 +16,16 @@ services:
   db:
     container_name: escalade-db
     image: postgres:12
-    restart: always
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: Escalade_Api
-      POSTGRES_PASSWORD: Escalade_Api
+      POSTGRES_USER: ${ESCALADE_DB_LOGIN}
+      POSTGRES_PASSWORD: ${ESCALADE_DB_PASSWORD}
       POSTGRES_DB: escalade
-      PGDATA: /TMP
+      #PGDATA: /var/lib/postgresql/data
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - pgconf:/etc/postgresql
+      - pglog:/var/log/postgresql
     ports:
       - "5432:5432"
     networks:
@@ -53,10 +55,18 @@ services:
 volumes:
   pgdata:
     driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /f/PostgreSQL/docker/escalade
+  pgconf:
+    driver: local
+  pglog:
+    driver: local
+
+#    external: true
+#        name: pgdata
+#      driver: local
+#        driver_opts:
+#            o: bind
+#      type: none
+#    device: //f/PostgreSQL/docker/escalade
 
 #networks:
 #  default:
