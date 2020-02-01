@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.1.RELEASE</version>
+		<version>2.2.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -35,6 +35,10 @@
 		<java.version>1.8</java.version>
 		<springboot-starter-version>2.2.1.RELEASE</springboot-starter-version>
 		<spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+		<jasypt-spring-boot-starter-version>2.0.0</jasypt-spring-boot-starter-version>
+		<commons-io-version>2.6</commons-io-version>
+		<junit-jupiter-engine-version>5.6.0</junit-jupiter-engine-version>
+		<org-jetbrains-annotations-version>16.0.1</org-jetbrains-annotations-version>
 	</properties>
 
 	<!-- ==================================================================== -->
@@ -56,6 +60,13 @@
 			<id>production</id>
 			<properties>
 				<activatedProperties>production</activatedProperties>
+			</properties>
+		</profile>
+		<!-- ========================================================== DOCKER -->
+		<profile>
+			<id>docker</id>
+			<properties>
+				<activatedProperties>docker</activatedProperties>
 			</properties>
 		</profile>
 	</profiles>
@@ -140,7 +151,7 @@
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
-			<version>2.0.0</version>
+			<version>${jasypt-spring-boot-starter-version}</version>
 		</dependency>
 
 		<!-- ====================================================== H2DATABASE -->
@@ -168,7 +179,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
+			<version>${commons-io-version}</version>
 		</dependency>
 
 		<!-- ==================================================== STARTER TEST -->
@@ -203,14 +214,21 @@
 		<dependency>
          	<groupId>org.jetbrains</groupId>
          	<artifactId>annotations</artifactId>
-         	<version>RELEASE</version>
+         	<version>${org-jetbrains-annotations-version}</version>
          	<scope>compile</scope>
       	</dependency>
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.5.2</version>
+			<version>${junit-jupiter-engine-version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -218,11 +236,8 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
+
+
 	</dependencies>
 
 	<!-- ==================================================================== -->
@@ -233,12 +248,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.0</version>
 			</plugin>
 
 		</plugins>

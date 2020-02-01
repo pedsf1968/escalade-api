@@ -1,9 +1,10 @@
-version: "3"
+version: "3.7"
 
 services:
   properties:
     container_name: escalade-properties
-    image: properties-server:pedsf
+    image: properties-server:latest
+    restart: unless-stopped
     environment:
       - jasypt.encryptor.password=${JASYPT_ENCRYPTOR_SECRET}
     ports:
@@ -21,25 +22,24 @@ services:
       POSTGRES_USER: ${ESCALADE_DB_LOGIN}
       POSTGRES_PASSWORD: ${ESCALADE_DB_PASSWORD}
       POSTGRES_DB: escalade
-      #PGDATA: /var/lib/postgresql/data
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - pgconf:/etc/postgresql
-      - pglog:/var/log/postgresql
     ports:
       - "5432:5432"
     networks:
       net:
         ipv4_address: 10.5.0.5
 
-  escalade:
-    container_name: escalade-web
+  api:
+    container_name: escalade-api
     restart: on-failure
     build: ./
     environment:
       - jasypt.encryptor.password=${JASYPT_ENCRYPTOR_SECRET}
       - spring.cloud.config.uri=http://10.5.0.2:8888
       - spring.datasource.url=jdbc:postgresql://10.5.0.5:5432/escalade
+      #- spring.cloud.config.uri=http://127.0.0.1:8888
+      #- spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/escalade
     volumes:
       - //f/images:/images
     depends_on:
@@ -51,22 +51,23 @@ services:
       net:
         ipv4_address: 10.5.0.3
 
-
 volumes:
   pgdata:
-    driver: local
-  pgconf:
-    driver: local
-  pglog:
-    driver: local
+
+#    driver: local
+#    driver_opts:
+#      o: bind
+#      type: none
+#      device: //f/PostgreSQL/docker/escalade
+
+#    driver: local
+#      driver_opts:
+#        o: bind
+#        type: none
+#        device: //f/PostgreSQL/docker/escalade
+
 
 #    external: true
-#        name: pgdata
-#      driver: local
-#        driver_opts:
-#            o: bind
-#      type: none
-#    device: //f/PostgreSQL/docker/escalade
 
 #networks:
 #  default:

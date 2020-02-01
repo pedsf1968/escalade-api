@@ -12,20 +12,6 @@ RUN mvn -f /srv/pom.xml clean package -DskipTests=true
 FROM openjdk:8-jdk-alpine
 
 RUN mkdir /TMP
-#RUN mkdir /images
-#RUN mkdir /images/background
-#RUN mkdir /images/avatar
-#RUN mkdir /images/topo
-#RUN mkdir /images/sector
-#RUN mkdir /images/voie
-
-#COPY ./images/background/homebg.jpg /images/background
-#COPY ./images/background/simplebg.jpg /images/background
-#COPY ./images/avatar/*.* /images/avatar/
-#COPY ./images/topo/*.* /images/topo/
-#COPY ./images/sector/*.* /images/sector/
-#COPY ./images/voie/*.* /images/voie/
-
 
 COPY --from=build /srv/target/escalade.jar /srv/escalade.jar
 
