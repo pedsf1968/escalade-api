@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="container-fluid">
+   <nav th:replace="~{fragments/nav :: nav}"></nav>
+
+   <header class="jumbotron">
+         <div class="row">
+            <div class="col-sm">
+               <H1 class="display-4 float-left"  th:if="!${topoDtoList.empty}" th:text="#{title.topoReserved}">My reserved Topo's list</H1>
+               <H1  class="display-4 float-left"  th:if="${topoDtoList.empty}" th:text="#{message.noTopo}">No Topo available!</H1>
+            </div>
+         </div>
+   </header>
+
+   <section class="row endpage">
+      <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="topo : ${topoDtoList}">
+         <div class="card">
+            <div class="card-header row">
+               <div class="col-sm">
+                  <h5 th:text="${topo.name}"></h5>
+                  <span th:text="${topo.region}"></span>
+               </div>
+               <div class="col-sm">
+                  <span class="badge badge-info mr-2" th:each="tag:${tagsByTopoId.get(topo)}" th:if="${tag.activated}" th:text="${tag.name}">Tag</span>
+                  <span class="badge badge-success" th:if="${topo.nbLane!=0}" th:text="${#messages.msg('label.lane')} + ' : ' + ${topo.nbLane}">  </span>
+                  <span class="badge badge-success" th:if="${topo.cotationMin!=null && topo.cotationMax!=null}"
+                        th:text="${#messages.msg('label.cotation')} + ' : ' + ${cotationDtoList[topo.cotationMin-1].levelFR} + ' : ' + ${cotationDtoList[topo.cotationMax-1].levelFR}">  </span>
+               </div>
+            </div>
+            <div class="card-body">
+               <img  class="img-fluid" th:src="@{/images/topo/{image}(image=${topo.photoLink})}" alt="photo"/>
+            </div>
+            <div class="card-footer">
+               <button  th:if="${topo.status} == 'REQUESTED'" class="float-left btn btn-warning mb-2" th:text="${topo.status}"></button>
+               <button  th:if="${topo.status} == 'RESERVED'" class="float-left btn btn-success mb-2" th:text="${topo.status}"></button>
+               <span class="btn mb-2" th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">Date</span>
+               <a class="float-right btn btn-primary mb-2" th:href="@{/topo/book/RELEASED/{id}(id=${topo.id})}" th:text="#{label.toAvailable}">Make Available</a>
+            </div>
+         </div>
+      </div>
+   </section>
+
+
+   <footer th:replace="~{fragments/footer :: footer}">&copy; 2019 Escalade</footer>
+</div>
+</body>
+</html>

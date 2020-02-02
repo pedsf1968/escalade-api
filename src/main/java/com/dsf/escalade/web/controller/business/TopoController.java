@@ -119,6 +119,23 @@ public class TopoController {
         return PathTable.TOPO_MYLIST;
     }
 
+    @GetMapping("/topo/reserved")
+    public String reservedTopo(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<TopoDto> topoDtoList = topoService.findByClimberId(userService.findByEmail(authentication.getName()).getId());
+        Map<TopoDto, List<TagDto>> tagsByTopoId = new HashMap<>();
+
+        for (TopoDto topoDto : topoDtoList) {
+            tagsByTopoId.put(topoDto, tagService.findByTopoId(topoDto.getId()));
+        }
+
+        model.addAttribute(PathTable.ATTRIBUTE_TOPO_LIST, topoDtoList);
+        model.addAttribute(PathTable.ATTRIBUTE_TAGS, tagsByTopoId);
+        model.addAttribute(PathTable.ATTRIBUTE_COTATION_LIST, cotationService.findAll());
+        return PathTable.TOPO_RESERVED;
+    }
+
+
     @GetMapping("/topo/new")
     public String newTopo(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -240,7 +257,7 @@ public class TopoController {
             if(topoDto.getAliasClimber()!=null){
                 // accept reservation
                 log.info("Accept reservation of : " + topoDto.getAliasClimber());
-                return "redirect:/topo/book/accepted/" + topoId;
+                return "redirect:/topo/book/ACCEPTED/" + topoId;
             }
         } else if (status.equals(StatusType.REQUESTED.toString())) {
             topoDto.setStatus(StatusType.RESERVED.toString());
@@ -249,7 +266,7 @@ public class TopoController {
             if(topoDto.getAliasClimber()!=null){
                 // refuse reservation
                 log.info("Refuse reservation of : " + topoDto.getAliasClimber());
-                return "redirect:/topo/book/refused/" + topoId;
+                return "redirect:/topo/book/REFUSED/" + topoId;
             }
         }
 

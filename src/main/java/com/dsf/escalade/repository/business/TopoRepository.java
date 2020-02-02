@@ -14,6 +14,8 @@ public interface TopoRepository extends JpaRepository <Topo,Integer>, JpaSpecifi
 
    List<Topo> findByManagerId(Integer id);
 
+   List<Topo> findByClimberId(Integer id);
+
    //@Query("SELECT t FROM Topo t WHERE t.region = ?1 AND t.status = ?2" )
    //List<Topo> findAllFiltered(String region, StatusType status);
 

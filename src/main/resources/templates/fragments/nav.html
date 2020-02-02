@@ -24,6 +24,7 @@
             </li>
 
             <li sec:authorize="isAuthenticated()">
+               <a class="btn btn-lg active align-right" th:href="@{/topo/reserved}"  th:text="#{label.reserved}">Reserved</a>
                <a class="btn btn-lg active align-right" th:href="@{/topo/mylist}"  th:text="#{label.myTopos}">My Topos</a>
                <a class="btn btn-lg active align-right" th:href="@{/user/edit/}"  th:text="#{label.myAccount}">My account</a>
                <i class="fas fa-sign-out-alt"></i>

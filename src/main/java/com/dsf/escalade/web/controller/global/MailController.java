@@ -105,16 +105,25 @@ public class MailController {
       if(topoDto.getAliasClimber()!=null) {
          mailSender.setUsername(environment.getProperty("spring.mail.username"));
          mailSender.setPassword(environment.getProperty("spring.mail.password"));
-         mailMessage.setFrom(userService.findByAlias(topoDto.getAliasManager()).getEmail());
-         mailMessage.setTo(userService.findByAlias(topoDto.getAliasClimber()).getEmail());
 
-         if (response.equals("accepted")) {
-            mailMessage.setSubject("Démande de réservation de topo");
-            mailMessage.setText("Réservation du topo : " + topoId + " ACCEPTED");
+         if (response.equals("ACCEPTED")) {
+            mailMessage.setFrom(userService.findByAlias(topoDto.getAliasManager()).getEmail());
+            mailMessage.setTo(userService.findByAlias(topoDto.getAliasClimber()).getEmail());
+            mailMessage.setSubject("Démande de réservation de Topo");
+            mailMessage.setText("Réservation du topo : " + topoId + " " + response);
             topoDto.setStatus(StatusType.RESERVED.toString());
-         } else if (response.equals("refused")) {
+         } else if (response.equals("RELEASED")) {
+            mailMessage.setFrom(userService.findByAlias(topoDto.getAliasClimber()).getEmail());
+            mailMessage.setTo(userService.findByAlias(topoDto.getAliasManager()).getEmail());
+            mailMessage.setSubject("Libération de Topo");
+            mailMessage.setText("Libération du topo  : " + topoId + " " + response);
+            topoDto.setAliasClimber(null);
+            topoDto.setStatus(StatusType.AVAILABLE.toString());
+         } else if (response.equals("REFUSED")) {
+            mailMessage.setFrom(userService.findByAlias(topoDto.getAliasManager()).getEmail());
+            mailMessage.setTo(userService.findByAlias(topoDto.getAliasClimber()).getEmail());
             mailMessage.setSubject("Demande de réservation de topo");
-            mailMessage.setText("Réservation du topo  : " + topoId + " REFUSED");
+            mailMessage.setText("Réservation du topo  : " + topoId + " " + response);
             topoDto.setAliasClimber(null);
             topoDto.setStatus(StatusType.AVAILABLE.toString());
          }

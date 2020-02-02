@@ -135,6 +135,17 @@ public class TopoServiceImpl implements TopoService {
    }
 
    @Override
+   public List<TopoDto> findByClimberId(Integer id) {
+      List<TopoDto> topoDtoList = new ArrayList<>();
+
+      for (Topo topo : topoRepository.findByClimberId(id)) {
+         topoDtoList.add(entityToDto(topo));
+      }
+
+      return topoDtoList;
+   }
+
+   @Override
    public TopoDto getOne(Integer id) {
       Topo topo =  topoRepository.getOne(id);
 

@@ -11,6 +11,7 @@ public interface TopoService {
    TopoDto getOne(Integer id);
    List<TopoDto> findAll();
    List<TopoDto> findByManagerId(Integer id);
+   List<TopoDto> findByClimberId(Integer id);
    Integer save(TopoDto topoDto);
    Integer delete(TopoDto topoDto);
    List<String> findAllRegion();

@@ -32,6 +32,7 @@ services:
 
   api:
     container_name: escalade-api
+    image: escalade-api:latest
     restart: on-failure
     build: ./
     environment:
@@ -53,26 +54,6 @@ services:
 
 volumes:
   pgdata:
-
-#    driver: local
-#    driver_opts:
-#      o: bind
-#      type: none
-#      device: //f/PostgreSQL/docker/escalade
-
-#    driver: local
-#      driver_opts:
-#        o: bind
-#        type: none
-#        device: //f/PostgreSQL/docker/escalade
-
-
-#    external: true
-
-#networks:
-#  default:
-#    external:
-#      name: escalade-net
 
 networks:
   net:

@@ -8,6 +8,7 @@ public interface PathTable {
    public final static String TOPO_ADD = "topo/topo-add";
    public final static String TOPO_READ = "topo/topo-read";
    public final static String TOPO_READ_R = "redirect:/topo/read/";
+   public final static String TOPO_RESERVED = "topo/topo-reserved";
    public final static String TOPO_UPDATE = "topo/topo-update";
    public final static String TOPO_UPDATE_R = "redirect:/topo/edit/";
 
@@ -36,6 +37,7 @@ public interface PathTable {
    public final static String USER_READ_R = "redirect:/user/read/";
    public final static String USER_UPDATE = "user/user-update";
    public final static String USER_UPDATE_R = "redirect:/user/edit/";
+   public final static String USER_UPDATE_PASSWORD = "user/user-password";
 
 
    public final static String ATTRIBUTE_ADDRESS = "addressDto";

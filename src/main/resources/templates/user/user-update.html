@@ -66,6 +66,7 @@
                   <input id="phone" type="text" th:field="${userDto.phone}" class="form-control" th:placeholder="#{placeholder.phone}">
                   <div th:each="error : ${#fields.errors('userDto.phone')}" th:text="${error}"></div>
                </div>
+               <!--a class="float-right btn btn-primary mb-2" th:href="@{/user/password/edit/{id}(id=${topo.id})}" th:text="#{label.password}">Change password</a-->
             </div>
          </div>
       </form>

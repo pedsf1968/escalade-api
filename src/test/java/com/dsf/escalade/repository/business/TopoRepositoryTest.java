@@ -128,6 +128,61 @@ public class TopoRepositoryTest {
    }
 
    @Test
+   public void findByClimberId() {
+      Topo topo = new Topo();
+      topo.setType(SiteType.TOPO);
+      topo.setLatitude("123");
+      topo.setLongitude("456");
+      topo.setManagerId(12);
+      topo.setMapLink("maplink");
+      topo.setPhotoLink("photolink");
+      topo.setName("topo");
+      topo.setNbComment(5);
+      topo.setNbLane(4);
+      topo.setCotationMin(3);
+      topo.setCotationMax(13);
+      topo.setDate(Date.valueOf("2020-02-13"));
+      topo.setStatus(StatusType.REQUESTED);
+      topo.setManagerId(15);
+      topo.setRegion("Auvergne");
+      topo.setAccess("par l'autoroute A1");
+      topo.setAddressId(2);
+      Integer climberId = 5;
+      topo.setClimberId(climberId);
+      topo.setDescription("haute falaise bleu");
+      topo.setTechnic("100m de corde");
+
+      topo = topoRepository.save(topo);
+      List<Topo> topoSaveds = topoRepository.findByClimberId(climberId);
+
+      for(Topo topoSaved:topoSaveds) {
+         assertEquals(topoSaved.getManagerId(), topo.getManagerId());
+         if(topoSaved.getId()==topo.getId()) {
+            assertEquals(topoSaved.getType(), topo.getType());
+            assertEquals(topoSaved.getLatitude(), topo.getLatitude());
+            assertEquals(topoSaved.getLongitude(), topo.getLongitude());
+            assertEquals(topoSaved.getMapLink(), topo.getMapLink());
+            assertEquals(topoSaved.getPhotoLink(), topo.getPhotoLink());
+            assertEquals(topoSaved.getName(), topo.getName());
+            assertEquals(topoSaved.getNbComment(), topo.getNbComment());
+            assertEquals(topoSaved.getNbLane(), topo.getNbLane());
+            assertEquals(topoSaved.getCotationMin(), topo.getCotationMin());
+            assertEquals(topoSaved.getCotationMin(), topo.getCotationMin());
+            assertEquals(topoSaved.getDate(),topo.getDate());
+            assertEquals(topoSaved.getStatus(), topo.getStatus());
+            assertEquals(topoSaved.getManagerId(), topo.getManagerId());
+            assertEquals(topoSaved.getRegion(), topo.getRegion());
+            assertEquals(topoSaved.getAccess(), topo.getAccess());
+            assertEquals(topoSaved.getAddressId(), topo.getAddressId());
+            assertEquals(topoSaved.getClimberId(), topo.getClimberId());
+            assertEquals(topoSaved.getDescription(), topo.getDescription());
+            assertEquals(topoSaved.getTechnic(), topo.getTechnic());
+         }
+      }
+   }
+
+
+   @Test
    public void findAllRegion() {
       List<String> regions = topoRepository.findAllRegion();
       Integer nbRegions = regions.size();

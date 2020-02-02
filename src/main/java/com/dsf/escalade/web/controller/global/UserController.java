@@ -196,4 +196,52 @@ public class UserController {
 
       return "redirect:/";
    }
+
+
+   @GetMapping("/user/edit/password/{userId}")
+   public String editPassword( @PathVariable("userId") Integer userId, Model model){
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+      // get the authentified user and his address
+      UserDto userDto = userService.getOne(userId);
+      UserDto operator = userService.findByEmail(authentication.getName());
+
+      if (userDto.equals(operator) || operator.getRoles().contains("ROLE_ADMIN")){
+         AddressDto addressDto = addressService.getOne(userDto.getAddressId());
+         log.info("/user/edit user : " + userDto);
+
+         model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
+
+         return PathTable.USER_UPDATE_PASSWORD;
+      }
+
+      return "redirect:/";
+   }
+
+   @PostMapping("/user/update/password")
+   public String updatePassword( @ModelAttribute("userDto") UserDto userDto, Model model) {
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+      // get the authentified user and his address
+      UserDto operator = userService.findByEmail(authentication.getName());
+
+      if (userDto.equals(operator) || operator.getRoles().contains("ROLE_ADMIN")){
+         AddressDto addressDto = addressService.getOne(userDto.getAddressId());
+
+         userService.save(userDto);
+
+         //Le login se fait par l'email
+         securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
+
+
+         model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
+         model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);
+
+         return PathTable.USER_UPDATE;
+      }
+
+      return "redirect:/";
+   }
+
+
 }
