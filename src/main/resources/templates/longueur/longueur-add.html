@@ -56,7 +56,10 @@
                      <div class="input-group-text" th:text="#{label.cotation}">Cotation Id</div>
                   </div>
                   <select class="btn mb-2" th:field="${longueurDto.cotationId}">
-                     <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+                     <option th:if="__${#locale}__=='ko'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelUS}"></option>
+                     <option th:if="__${#locale}__=='fr'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+                     <option th:if="__${#locale}__=='es'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}"></option>
+                     <option th:if="__${#locale}__=='en'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelGB}"></option>
                   </select>
                </div>
 

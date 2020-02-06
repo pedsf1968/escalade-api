@@ -6,7 +6,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -14,10 +13,10 @@ import org.springframework.stereotype.Service;
 public class SecurityServiceImpl implements SecurityService {
 
    private final AuthenticationManager authenticationManager;
-   private final UserDetailsService userDetailsService;
+   private final UserDetailsServiceImpl userDetailsService;
 
    @Autowired
-   public SecurityServiceImpl(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+   public SecurityServiceImpl(AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService) {
       this.authenticationManager = authenticationManager;
       this.userDetailsService = userDetailsService;
    }
@@ -35,10 +34,11 @@ public class SecurityServiceImpl implements SecurityService {
 
    @Override
    public void autoLogin(String email, String motDePasse) {
-      UserDetails userDetails = null;
-      userDetails = userDetailsService.loadUserByUsername(email);
+      UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+      log.info("userDetails :" + userDetails);
 
       UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, motDePasse, userDetails.getAuthorities());
+      log.info("usernamePasswordAuthenticationToken :" + usernamePasswordAuthenticationToken);
 
       authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 

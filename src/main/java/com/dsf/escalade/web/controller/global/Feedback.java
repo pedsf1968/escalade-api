@@ -1,4 +1,4 @@
-package com.dsf.escalade;
+package com.dsf.escalade.web.controller.global;
 
 import lombok.Data;
 

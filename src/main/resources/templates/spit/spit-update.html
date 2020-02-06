@@ -27,7 +27,10 @@
                      </td>
                      <td>
                         <select class="form-control" id="${spit.cotationId}" name="${spit.cotationId}" th:field="*{spitDtos[__${itemStat.index}__].cotationId}">
-                           <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==spit.cotationId}"></option>
+                           <option th:if="__${#locale}__=='ko'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelUS}" th:selected="${cotation.id==spit.cotationId}"></option>
+                           <option th:if="__${#locale}__=='fr'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==spit.cotationId}"></option>
+                           <option th:if="__${#locale}__=='es'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==spit.cotationId}"></option>
+                           <option th:if="__${#locale}__=='en'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelGB}" th:selected="${cotation.id==spit.cotationId}"></option>
                         </select>
                      </td>
                      <td>

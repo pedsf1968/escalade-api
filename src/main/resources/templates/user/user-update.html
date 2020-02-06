@@ -55,18 +55,20 @@
                <h5 th:text="#{label.login.title}">Connection</h5>
             </div>
             <div class="card-body row">
-               <div class="form-group col-md-4" >
+               <div class="form-group col-md-6" >
                   <label for="email" th:text="#{label.email}">Email</label>
                   <input id="email" type="email" th:field="${userDto.email}" class="form-control" th:placeholder="#{placeholder.email}">
                   <small id="emailHelp" class="form-text text-muted">We dont reveale your Email address.</small>
                   <div th:each="error : ${#fields.errors('userDto.email')}" th:error="${userDto.email}" th:text="${error}"></div>
                </div>
-               <div class="form-group col-md-2">
+               <div class="form-group col-md-3">
                   <label for="phone" th:text="#{label.phone}">Phone</label>
                   <input id="phone" type="text" th:field="${userDto.phone}" class="form-control" th:placeholder="#{placeholder.phone}">
                   <div th:each="error : ${#fields.errors('userDto.phone')}" th:text="${error}"></div>
                </div>
-               <!--a class="float-right btn btn-primary mb-2" th:href="@{/user/password/edit/{id}(id=${topo.id})}" th:text="#{label.password}">Change password</a-->
+               <div class="my-auto">
+                  <a class="float-right btn btn-primary mb-2" th:href="@{/user/password/edit/{id}(id=${userDto.id})}" th:text="#{label.password}">Change password</a>
+               </div>
             </div>
          </div>
       </form>

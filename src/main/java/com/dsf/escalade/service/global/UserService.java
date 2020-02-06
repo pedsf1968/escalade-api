@@ -8,5 +8,4 @@ public interface UserService {
    UserDto findByAlias(String alias);
    UserDto findByEmail(String email);
    Integer save(UserDto userDto);
-
 }

@@ -2,6 +2,7 @@ package com.dsf.escalade.web.controller.global;
 
 import com.dsf.escalade.service.global.AddressService;
 import com.dsf.escalade.service.global.SecurityServiceImpl;
+import com.dsf.escalade.service.global.UserDetailsServiceImpl;
 import com.dsf.escalade.service.global.UserServiceImpl;
 import com.dsf.escalade.web.controller.path.PathTable;
 import com.dsf.escalade.web.dto.AddressDto;
@@ -10,8 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +36,19 @@ public class UserController {
    private final UserServiceImpl userService;
    private final AddressService addressService;
    private final  SecurityServiceImpl securityService;
+   private final BCryptPasswordEncoder bCryptPasswordEncoder;
+   private final AuthenticationManager authenticationManager;
+   private final UserDetailsServiceImpl userDetailsService;
 
 
    @Autowired
-   public UserController(UserServiceImpl userService, AddressService addressService, SecurityServiceImpl securityService) {
+   public UserController(UserServiceImpl userService, AddressService addressService, SecurityServiceImpl securityService, BCryptPasswordEncoder bCryptPasswordEncoder, AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService) {
       this.userService = userService;
       this.addressService = addressService;
       this.securityService = securityService;
+      this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+      this.authenticationManager = authenticationManager;
+      this.userDetailsService = userDetailsService;
    }
 
    @GetMapping("/login")
@@ -115,7 +125,18 @@ public class UserController {
 
       log.info("/user/add user : " + userDto);
       log.info("/user/add address : " + addressDto);
-      return PathTable.USER_UPDATE_R + userService.save(userDto);
+
+      // encode password
+      String pw = userDto.getPassword();
+      userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+      userDto.setMatchingPassword(userDto.getPassword());
+      Integer userId = userService.save(userDto);
+
+      //Le login se fait par l'email
+      //securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
+      securityService.autoLogin(userDto.getEmail(), pw);
+
+      return PathTable.USER_UPDATE_R + userId;
    }
 
    @GetMapping("/user/edit")
@@ -191,14 +212,11 @@ public class UserController {
 
       userService.save(userDto);
 
-      //Le login se fait par l'email
-      securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
-
       return "redirect:/";
    }
 
 
-   @GetMapping("/user/edit/password/{userId}")
+   @GetMapping("/user/password/edit/{userId}")
    public String editPassword( @PathVariable("userId") Integer userId, Model model){
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -207,9 +225,7 @@ public class UserController {
       UserDto operator = userService.findByEmail(authentication.getName());
 
       if (userDto.equals(operator) || operator.getRoles().contains("ROLE_ADMIN")){
-         AddressDto addressDto = addressService.getOne(userDto.getAddressId());
          log.info("/user/edit user : " + userDto);
-
          model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
 
          return PathTable.USER_UPDATE_PASSWORD;
@@ -218,8 +234,24 @@ public class UserController {
       return "redirect:/";
    }
 
-   @PostMapping("/user/update/password")
-   public String updatePassword( @ModelAttribute("userDto") UserDto userDto, Model model) {
+   @PostMapping("/user/password/update")
+   public String updatePassword( @ModelAttribute("userDto") @Valid UserDto userDto, BindingResult bindingResultUser,
+                                 @Param("oldPassword") String oldPassword,
+                                 @Param("newPassword") String newPassword,
+                                 @Param("newMatchingPassword") String newMatchingPassword, Model model) {
+
+      // verify the matching with old password
+      if(!bCryptPasswordEncoder.matches(oldPassword,userDto.getPassword())){
+         bindingResultUser.rejectValue("password", "6", "Bad password !");
+         return PathTable.USER_UPDATE_PASSWORD;
+      }
+
+      // verify matching between two password
+      if(!newPassword.equals(newMatchingPassword)){
+         bindingResultUser.rejectValue("password", "7", "Bad matching password !");
+         return PathTable.USER_UPDATE_PASSWORD;
+      }
+
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
       // get the authentified user and his address
@@ -228,11 +260,12 @@ public class UserController {
       if (userDto.equals(operator) || operator.getRoles().contains("ROLE_ADMIN")){
          AddressDto addressDto = addressService.getOne(userDto.getAddressId());
 
+         // encode password
+         userDto.setPassword(bCryptPasswordEncoder.encode(newPassword));
+         userDto.setMatchingPassword(userDto.getPassword());
+
          userService.save(userDto);
-
-         //Le login se fait par l'email
-         securityService.autoLogin(userDto.getEmail(), userDto.getMatchingPassword());
-
+         securityService.autoLogin(userDto.getEmail(), newPassword);
 
          model.addAttribute(PathTable.ATTRIBUTE_USER, userDto);
          model.addAttribute(PathTable.ATTRIBUTE_ADDRESS, addressDto);

@@ -15,7 +15,10 @@
             <tbody class="card-body">
             <tr th:each="spit : ${spitDtoList}">
                <td th:text="${spit.number}">Number</td>
-               <td th:text="${cotationDtoList[spit.cotationId-1].levelFR}">Cotation</td>
+               <td th:if="__${#locale}__=='ko'" th:text="${cotationDtoList[spit.cotationId-1].levelUS}">Cotation</td>
+               <td th:if="__${#locale}__=='fr'" th:text="${cotationDtoList[spit.cotationId-1].levelFR}">Cotation</td>
+               <td th:if="__${#locale}__=='es'" th:text="${cotationDtoList[spit.cotationId-1].levelFR}">Cotation</td>
+               <td th:if="__${#locale}__=='en'" th:text="${cotationDtoList[spit.cotationId-1].levelGB}">Cotation</td>
                <td>
                   <span  th:if="${spit.isRelay}" >&#10004</span>
                </td>

@@ -2,13 +2,11 @@ package com.dsf.escalade.service.global;
 
 import com.dsf.escalade.model.global.Role;
 import com.dsf.escalade.model.global.User;
-import com.dsf.escalade.repository.global.AddressRepository;
 import com.dsf.escalade.repository.global.RoleRepository;
 import com.dsf.escalade.repository.global.UserRepository;
 import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,20 +15,16 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-@Service
+@Service("UserService")
 public class UserServiceImpl implements UserService {
 
    private final UserRepository userRepository;
    private final RoleRepository roleRepository;
-   private final AddressRepository addressRepository;
-   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
    @Autowired
-   public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, AddressRepository addressRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+   public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
       this.userRepository = userRepository;
       this.roleRepository = roleRepository;
-      this.addressRepository = addressRepository;
-      this.bCryptPasswordEncoder = bCryptPasswordEncoder;
    }
 
    @Override
@@ -153,7 +147,7 @@ public class UserServiceImpl implements UserService {
       user.setFirstName(userDto.getFirstName());
       user.setLastName(userDto.getLastName());
       user.setAlias(userDto.getAlias());
-      user.setPassword((bCryptPasswordEncoder.encode(userDto.getPassword())));
+      user.setPassword(userDto.getPassword());
       user.setEmail(userDto.getEmail());
       user.setPhone(userDto.getPhone());
       user.setAddressId(userDto.getAddressId());

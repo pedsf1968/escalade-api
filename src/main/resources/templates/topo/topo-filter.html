@@ -32,7 +32,10 @@
          </div>
          <div class="col-md-3">
             <select class="form-control" id="${filter.cotationMax}" name="${filter.cotationMax}">
-               <option th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==28}"></option>
+               <option th:if="__${#locale}__=='ko'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelUS}" th:selected="${cotation.id==28}"></option>
+               <option th:if="__${#locale}__=='fr'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==28}"></option>
+               <option th:if="__${#locale}__=='es'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" th:selected="${cotation.id==28}"></option>
+               <option th:if="__${#locale}__=='en'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelGB}" th:selected="${cotation.id==28}"></option>
             </select>
          </div>
          <div class="col-md-3">

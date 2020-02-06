@@ -17,7 +17,10 @@
             </tr>
             <tr>
                <td th:text="#{label.cotation}">Cotation</td>
-               <td th:text="${cotationDtoList[longueurDto.cotationId-1].levelFR}" >Cotation</td>
+               <td th:if="__${#locale}__=='ko'" th:text="${cotationDtoList[longueurDto.cotationId-1].levelUS}" >Cotation</td>
+               <td th:if="__${#locale}__=='fr'" th:text="${cotationDtoList[longueurDto.cotationId-1].levelFR}" >Cotation</td>
+               <td th:if="__${#locale}__=='es'" th:text="${cotationDtoList[longueurDto.cotationId-1].levelFR}" >Cotation</td>
+               <td th:if="__${#locale}__=='en'" th:text="${cotationDtoList[longueurDto.cotationId-1].levelGB}" >Cotation</td>
             </tr>
          </table>
       </div>

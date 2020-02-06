@@ -1,7 +1,6 @@
 package com.dsf.escalade.web.controller.global;
 
 import com.dsf.escalade.EmailConfiguration;
-import com.dsf.escalade.Feedback;
 import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.service.business.TopoService;
 import com.dsf.escalade.service.global.UserService;

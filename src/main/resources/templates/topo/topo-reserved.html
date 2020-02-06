@@ -11,8 +11,7 @@
    <header class="jumbotron">
          <div class="row">
             <div class="col-sm">
-               <H1 class="display-4 float-left"  th:if="!${topoDtoList.empty}" th:text="#{title.topoReserved}">My reserved Topo's list</H1>
-               <H1  class="display-4 float-left"  th:if="${topoDtoList.empty}" th:text="#{message.noTopo}">No Topo available!</H1>
+               <H1  class="display-4 float-left" th:text="${topoDtoList.empty} ? #{message.noTopo} : #{title.topoReserved}">My reserved Topo's list</H1>
             </div>
          </div>
    </header>
@@ -30,6 +29,7 @@
                   <span class="badge badge-success" th:if="${topo.nbLane!=0}" th:text="${#messages.msg('label.lane')} + ' : ' + ${topo.nbLane}">  </span>
                   <span class="badge badge-success" th:if="${topo.cotationMin!=null && topo.cotationMax!=null}"
                         th:text="${#messages.msg('label.cotation')} + ' : ' + ${cotationDtoList[topo.cotationMin-1].levelFR} + ' : ' + ${cotationDtoList[topo.cotationMax-1].levelFR}">  </span>
+
                </div>
             </div>
             <div class="card-body">
