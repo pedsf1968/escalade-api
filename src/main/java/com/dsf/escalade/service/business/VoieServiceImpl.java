@@ -4,7 +4,6 @@ import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.Voie;
 import com.dsf.escalade.repository.business.VoieRepository;
 import com.dsf.escalade.service.global.UserService;
-import com.dsf.escalade.web.dto.LongueurDto;
 import com.dsf.escalade.web.dto.UserDto;
 import com.dsf.escalade.web.dto.VoieCompleteDto;
 import com.dsf.escalade.web.dto.VoieDto;
