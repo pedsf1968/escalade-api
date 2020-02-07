@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm">
                <a class="fas fa-question" ></a>
-               <a th:href="@{/help}" th:text="#{label.footer.help}"> Help</a>
+               <a th:href="@{/help?lang=__${#locale}__}" th:text="#{label.footer.help}"> Help</a>
             </div>
          </div>
       </div>

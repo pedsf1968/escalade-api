@@ -16,7 +16,7 @@
    <div class="col-md-8 mx-auto">
       <div class="card mt-2 mb-2">
          <div class="card-header">
-            <h5 th:text="#{label.about}"></h5>
+            <h1 th:text="#{label.about}"></h1>
          </div>
          <div class="card-body" th:if="__${#locale}__=='ko'" th:insert="~{help/help-ko :: about}"></div>
          <div class="card-body" th:if="__${#locale}__=='fr'" th:insert="~{help/help-fr :: about}"></div>
@@ -26,7 +26,7 @@
 
       <div class="card mt-2 mb-2">
          <div class="card-header">
-            <h5 th:text="#{label.howto}"></h5>
+            <h1 th:text="#{label.howto}"></h1>
          </div>
          <div class="card-body" th:if="__${#locale}__=='ko'" th:insert="~{help/help-ko :: howto}"></div>
          <div class="card-body" th:if="__${#locale}__=='fr'" th:insert="~{help/help-fr :: howto}"></div>
@@ -36,7 +36,7 @@
 
       <div class="card mt-2 mb-2">
          <div class="card-header">
-            <h5 th:text="#{label.architecture}"></h5>
+            <h1 th:text="#{label.architecture}"></h1>
          </div>
          <div class="card-body" th:if="__${#locale}__=='ko'" th:insert="~{help/help-ko :: architecture}"></div>
          <div class="card-body" th:if="__${#locale}__=='fr'" th:insert="~{help/help-fr :: architecture}"></div>
