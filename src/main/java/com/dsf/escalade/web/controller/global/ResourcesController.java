@@ -1,9 +1,11 @@
 package com.dsf.escalade.web.controller.global;
 
 
+import com.dsf.escalade.web.controller.path.PathTable;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +48,12 @@ public class ResourcesController {
          }
       }
       return IOUtils.toByteArray(in);
+   }
+
+
+   @GetMapping("/help")
+   public String help(Model model){
+      return PathTable.HELP;
    }
 
 }

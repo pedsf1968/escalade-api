@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+
+   <div th:fragment="about">
+      <p>Climbing community site project for a fictional association “Les amis de l'escalade”.</p>
+      <p>The purpose of this site will be to connect and share information. It allows to give visibility to the association in order to encourage independent climbers to join it.</p>
+   </div>
+
+   <div th:fragment="howto">
+      <p> Any user can see the Member Topographies.</p>
+      <p> A member can upload his Topographies </p>
+      <p> A member can reserve a Topography </p>
+   </div>
+
+   <div th:fragment="architecture">
+      <H2> Topography </H2>
+      <p> A topography is a collection containing all the useful information on climbing sites in a region. </p>
+      <p> It is characterized by information, a photo, a map, a description </p>
+      <p> It can contain sectors and tracks. </p>
+      <p> It is managed by a manager </p>
+      <H2> Sector </H2>
+      <p> It is characterized by information, a photo, a map, a description </p>
+      <p> It may contain pathways. </p>
+      <H2> Way </H2>
+      <p> It is characterized by information, a photo, a map, a description </p>
+      <p> It can contain lengths. </p>
+      <H2> Length </H2>
+      <p> A length is a part to climb of a route. There is a relay at the top of each length. </p>
+      <p> It is made up of Spits anchor points. </p>
+      <H2> Spit </H2>
+      <p> Anchor point for the length that can be fitted. </p>
+   </div>
+</body>

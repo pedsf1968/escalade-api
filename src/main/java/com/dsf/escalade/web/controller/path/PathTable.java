@@ -1,6 +1,7 @@
 package com.dsf.escalade.web.controller.path;
 
 public interface PathTable {
+   public final static String HELP = "help/help";
    public final static String TOPO_ALL = "topo/topo-all";
    public final static String TOPO_ALL_R = "redirect:/topo/all/";
    public final static String TOPO_MYLIST = "topo/topo-mylist";

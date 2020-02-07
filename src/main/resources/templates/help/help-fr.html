@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+
+<div th:fragment="about">
+   <p>Projet de ce site communautaire autour de l’escalade pour une association fictive “Les amis de l’escalade”.</p>
+   <p>Ce site aura pour but la mise en relation et le partage d’informations. Il permet de donner de la visibilité à l’association afin d’encourager des grimpeurs indépendants à y adhérer.</p>
+</div>
+
+<div th:fragment="howto">
+   <p>Tout utilisateur peut voir les Topographies des membres.</p>
+   <p>Un membre peut mettre en ligne ses Topographies</p>
+   <p>Un membre peut réserver une Topographie</p>
+</div>
+
+<div th:fragment="architecture">
+   <H2>Topographie</H2>
+   <p>Une topographie est un recueil contenant toutes les informations utiles sur les sites d’escalade d’une région.</p>
+   <p>Il est caractérisé par des informations, une photo, une carte, une description</p>
+   <p>Il peut contenir des secteurs et des voies.</p>
+   <p>Il est gèré par un manageur</p>
+   <H2>Secteur</H2>
+   <p>Il est caractérisé par des informations, une photo, une carte, une description</p>
+   <p>Il peut contenir des voies.</p>
+   <H2>Voie</H2>
+   <p>Il est caractérisé par des informations, une photo, une carte, une description</p>
+   <p>Il peut contenir des longueurs.</p>
+   <H2>Longueur</H2>
+   <p>Une longueur est une partie à grimper d'une voie. On trouve un relai en haut de chaque longueur.</p>
+   <p>Elle est constituée de points d'encrage les Spits.</p>
+   <H2>Spit</H2>
+   <p>Point d'encrage de la longueur qui peut être équipé.</p>
+</div>
+</body>

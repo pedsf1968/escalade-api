@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+
+<div th:fragment="about">
+   <p> Proyecto de sitio comunitario de escalada para una asociación ficticia "Les amis de l'escalade". </p>
+   <p> El propósito de este sitio será conectarse y compartir información. Da visibilidad a la asociación para alentar a los escaladores independientes a unirse. </p>
+</div>
+
+<div th:fragment="howto">
+   <p> Cualquier usuario puede ver las Topografías de miembros. </p>
+   <p> Un miembro puede subir sus Topografías </p>
+   <p> Un miembro puede reservar una Topografía </p>
+</div>
+
+<div th:fragment="architecture">
+   <H2> Topografía </H2>
+   <p> Una topografía es una colección que contiene toda la información útil sobre sitios de escalada en una región. </p>
+   <p> Se caracteriza por información, una foto, un mapa, una descripción </p>
+   <p> Puede contener sectores y pistas. </p>
+   <p> Es administrado por un administrador </p>
+   <H2> Sector </H2>
+   <p> Se caracteriza por información, una foto, un mapa, una descripción </p>    <p> Puede contener vías. </p>
+   <H2> Camino </H2>
+   <p> Se caracteriza por información, una foto, un mapa, una descripción </p>
+   <p> Puede contener longitudes. </p>
+   <H2> Longitud </H2>
+   <p> Una longitud es una parte para escalar una ruta. Hay un relé en la parte superior de cada longitud. </p>
+   <p> Está formado por puntos de anclaje de Spits. </p>
+   <H2> Spit </H2>
+   <p> Punto de anclaje para la longitud que se puede ajustar. </p>
+</div>
+</body>
