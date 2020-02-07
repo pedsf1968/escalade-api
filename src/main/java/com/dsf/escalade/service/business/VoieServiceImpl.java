@@ -4,7 +4,9 @@ import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.Voie;
 import com.dsf.escalade.repository.business.VoieRepository;
 import com.dsf.escalade.service.global.UserService;
+import com.dsf.escalade.web.dto.LongueurDto;
 import com.dsf.escalade.web.dto.UserDto;
+import com.dsf.escalade.web.dto.VoieCompleteDto;
 import com.dsf.escalade.web.dto.VoieDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,9 +17,9 @@ import java.util.List;
 
 @Service("VoieService")
 public class VoieServiceImpl implements VoieService {
+   private final VoieRepository voieRepository;
    private final SiteService siteService;
    private final TopoService topoService;
-   private final VoieRepository voieRepository;
    private final SpitService spitService;
    private final UserService userService;
 
@@ -151,5 +153,17 @@ public class VoieServiceImpl implements VoieService {
 
       save(voieDto);
       topoService.updateCotationRange(topoId);
+   }
+
+   @Override
+   public VoieCompleteDto getFull(Integer voieId) {
+      VoieCompleteDto voieCompleteDto = new VoieCompleteDto();
+
+
+      voieCompleteDto.setVoieDto(this.getOne(voieId));
+
+
+
+      return null;
    }
 }

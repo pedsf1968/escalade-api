@@ -1,7 +1,7 @@
 package com.dsf.escalade.restcontroller;
 
-import com.dsf.escalade.repository.business.SiteRepository;
 import com.dsf.escalade.model.business.Site;
+import com.dsf.escalade.repository.business.SiteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +12,16 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
 @Slf4j
+@RestController
 public class SiteRestController {
 
+   private final SiteRepository siteRepository;
+
    @Autowired
-   private SiteRepository siteRepository;
+   public SiteRestController(SiteRepository siteRepository) {
+      this.siteRepository = siteRepository;
+   }
 
    @GetMapping(value = "/site")
    public List<Site> findAll(){

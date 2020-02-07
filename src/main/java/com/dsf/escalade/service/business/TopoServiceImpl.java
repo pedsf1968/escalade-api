@@ -5,6 +5,7 @@ import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.model.business.Topo;
 import com.dsf.escalade.repository.business.TopoRepository;
 import com.dsf.escalade.service.global.UserService;
+import com.dsf.escalade.web.dto.TopoCompleteDto;
 import com.dsf.escalade.web.dto.TopoDto;
 import com.dsf.escalade.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
@@ -292,4 +293,12 @@ public class TopoServiceImpl implements TopoService {
       return Boolean.FALSE;
    }
 
+   @Override
+   public TopoCompleteDto getFull(Integer topoId) {
+      TopoDto topoDto = getOne(topoId);
+      TopoCompleteDto topoCompleteDto = new TopoCompleteDto();
+
+      topoCompleteDto.setTopoDto(topoDto);
+      return null;
+   }
 }

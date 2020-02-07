@@ -1,6 +1,7 @@
 package com.dsf.escalade.service.business;
 
 import com.dsf.escalade.model.business.Topo;
+import com.dsf.escalade.web.dto.TopoCompleteDto;
 import com.dsf.escalade.web.dto.TopoDto;
 
 import java.util.List;
@@ -21,4 +22,5 @@ public interface TopoService {
    Integer increaseLaneCounter(Integer topoId);
    Integer decreaseLaneCounter(Integer topoId);
    Boolean hasRight(TopoDto topoDto);
+   TopoCompleteDto getFull(Integer topoId);
 }

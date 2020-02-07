@@ -2,8 +2,7 @@ package com.dsf.escalade.service.business;
 
 import com.dsf.escalade.model.business.Longueur;
 import com.dsf.escalade.repository.business.LongueurRepository;
-import com.dsf.escalade.web.dto.LongueurDto;
-import com.dsf.escalade.web.dto.VoieDto;
+import com.dsf.escalade.web.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -65,10 +64,10 @@ public class LongueurServiceImpl implements LongueurService {
    }
 
    @Override
-   public List<LongueurDto> findByVoieId(Integer id) {
+   public List<LongueurDto> findByVoieId(Integer voieId) {
       List<LongueurDto> longueurDtos = new ArrayList<>();
 
-      for(Longueur longueur : longueurRepository.findByVoieId(id)){
+      for(Longueur longueur : longueurRepository.findByVoieId(voieId)){
          longueurDtos.add(entityToDto(longueur));
       }
 
@@ -104,5 +103,16 @@ public class LongueurServiceImpl implements LongueurService {
       longueurDto.setCotationId(cotationId);
       save(longueurDto);
       voieService.updateCotation(voieDto);
+   }
+
+   @Override
+   public LongueurCompleteDto getFull(Integer longueurId) {
+      LongueurDto longueurDto = getOne(longueurId);
+      LongueurCompleteDto longueurCompleteDto = new LongueurCompleteDto();
+
+      longueurCompleteDto.setLongueurDto(longueurDto);
+      longueurCompleteDto.setSpitDtoList(spitService.findByLongueurId(longueurId));
+
+      return longueurCompleteDto;
    }
 }

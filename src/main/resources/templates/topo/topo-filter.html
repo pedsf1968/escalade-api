@@ -31,16 +31,16 @@
             <input type="date" class="form-control" th:field="${filter.date}" th:placeholder="#{placeholder.date}">
          </div>
          <div class="col-md-3">
-            <select class="form-control" id="${filter.cotationMax}" name="${filter.cotationMax}">
-               <option th:value="0" th:text="#{label.cotation}">Cotation</option>
+            <select class="form-control" th:field="${filter.cotationMax}" >
+               <option th:value="28" th:text="#{label.cotationMax}">Cotation Max</option>
                <option th:if="__${#locale}__=='ko'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelUS}"></option>
                <option th:if="__${#locale}__=='fr'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" ></option>
                <option th:if="__${#locale}__=='es'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelFR}" ></option>
-               <option th:if="__${#locale}__=='en'" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelGB}" ></option>
+               <option th:if="__${#locale}__=='en' and ${cotation.levelGB}!=''" th:each="cotation : ${cotationDtoList}" th:value="${cotation.id}" th:text="${cotation.levelGB}" ></option>
             </select>
          </div>
          <div class="col-md-3">
-            <input id="lane" type="text" class="form-control" th:field="${filter.nbLane}" th:placeholder="#{placeholder.lane}">
+            <input id="lane" type="text" class="form-control" th:field="${filter.nbLane}" th:placeholder="#{placeholder.laneMin}">
          </div>
       </div>
    </form>

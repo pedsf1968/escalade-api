@@ -4,6 +4,7 @@ import com.dsf.escalade.model.business.Sector;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.repository.business.SectorRepository;
 import com.dsf.escalade.service.global.UserService;
+import com.dsf.escalade.web.dto.SectorCompleteDto;
 import com.dsf.escalade.web.dto.SectorDto;
 import com.dsf.escalade.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,4 +139,8 @@ public class SectorServiceImpl implements SectorService {
       return Boolean.FALSE;
    }
 
+   @Override
+   public SectorCompleteDto getFull(Integer voieId) {
+      return null;
+   }
 }

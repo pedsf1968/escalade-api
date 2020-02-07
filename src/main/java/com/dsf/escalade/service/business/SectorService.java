@@ -1,6 +1,7 @@
 package com.dsf.escalade.service.business;
 
 import com.dsf.escalade.model.business.Sector;
+import com.dsf.escalade.web.dto.SectorCompleteDto;
 import com.dsf.escalade.web.dto.SectorDto;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface SectorService {
    Integer save(SectorDto sectorDto);
    Integer delete(SectorDto sectorDto);
    Boolean hasRight(SectorDto sectorDto);
+   SectorCompleteDto getFull(Integer voieId);
 }
