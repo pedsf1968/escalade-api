@@ -66,8 +66,8 @@
                   <input id="phone" type="text" th:field="${userDto.phone}" class="form-control" th:placeholder="#{placeholder.phone}">
                   <div th:each="error : ${#fields.errors('userDto.phone')}" th:text="${error}"></div>
                </div>
-               <div class="my-auto">
-                  <a class="float-right btn btn-primary mb-2" th:href="@{/user/password/edit/{id}(id=${userDto.id})}" th:text="#{label.password}">Change password</a>
+               <div class="mx-auto my-auto">
+                  <a class="btn btn-primary mb-2" th:href="@{/user/password/edit/{id}(id=${userDto.id})}" th:text="#{label.password}">Change password</a>
                </div>
             </div>
          </div>
