@@ -21,7 +21,7 @@
 
    <div class="row endpage">
       <div class="card-deck col-lg-4 col-sm-6 col-xs-12 mx-auto" th:each="topo : ${topoDtoList}">
-         <div class="card">
+         <div class="card col-md-12">
             <div class="card-header row">
                <div class="col-sm">
                   <h5 th:text="${topo.name}"></h5>
@@ -42,7 +42,7 @@
                <span class="btn mb-2" th:text="${topo.aliasManager}"></span>
                <button  th:if="${topo.status} == 'UNVAILABLE'" class="btn btn-danger mb-2" th:text="${topo.status}"></button>
 
-               <a class="btn btn-primary mb-2" th:href="@{/topo/book/{id}(id=${topo.id})}" th:if="${topo.status} == 'AVAILABLE'"  th:text="#{label.book}" sec:authorize="isAuthenticated()"></a>
+               <a class="btn btn-primary mb-2" th:href="@{/topo/request/{id}(id=${topo.id})}" th:if="${topo.status} == 'AVAILABLE'"  th:text="#{label.book}" sec:authorize="isAuthenticated()"></a>
                <button  th:if="${topo.status} == 'AVAILABLE'" class="btn btn-info mb-2" th:text="${topo.status}" sec:authorize="!isAuthenticated()"></button>
 
                <button  th:if="${topo.status} == 'REQUESTED'" class="btn btn-warning mb-2" th:text="${topo.status}"></button>

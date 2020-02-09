@@ -257,7 +257,7 @@ public class TopoController {
             if(topoDto.getAliasClimber()!=null){
                 // accept reservation
                 log.info("Accept reservation of : " + topoDto.getAliasClimber());
-                return "redirect:/topo/book/ACCEPTED/" + topoId;
+                return "redirect:/topo/response/ACCEPTED/" + topoId;
             }
         } else if (status.equals(StatusType.REQUESTED.toString())) {
             topoDto.setStatus(StatusType.RESERVED.toString());
@@ -266,7 +266,7 @@ public class TopoController {
             if(topoDto.getAliasClimber()!=null){
                 // refuse reservation
                 log.info("Refuse reservation of : " + topoDto.getAliasClimber());
-                return "redirect:/topo/book/REFUSED/" + topoId;
+                return "redirect:/topo/response/REFUSED/" + topoId;
             }
         }
 

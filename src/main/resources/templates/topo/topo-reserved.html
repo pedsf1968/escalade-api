@@ -18,7 +18,7 @@
 
    <section class="row endpage">
       <div class="card-deck mx-auto col-lg-4 col-sm-6 col-xs-12" th:each="topo : ${topoDtoList}">
-         <div class="card">
+         <div class="card col-md-12">
             <div class="card-header row">
                <div class="col-sm">
                   <h5 th:text="${topo.name}"></h5>
@@ -39,7 +39,7 @@
                <button  th:if="${topo.status} == 'REQUESTED'" class="float-left btn btn-warning mb-2" th:text="${topo.status}"></button>
                <button  th:if="${topo.status} == 'RESERVED'" class="float-left btn btn-success mb-2" th:text="${topo.status}"></button>
                <span class="btn mb-2" th:text="${#dates.format(topo.date,'dd MMMM yyyy')}">Date</span>
-               <a class="float-right btn btn-primary mb-2" th:href="@{/topo/book/RELEASED/{id}(id=${topo.id})}" th:text="#{label.toAvailable}">Make Available</a>
+               <a class="float-right btn btn-primary mb-2" th:href="@{/topo/response/RELEASED/{id}(id=${topo.id})}" th:text="#{label.toAvailable}">Make Available</a>
             </div>
          </div>
       </div>
