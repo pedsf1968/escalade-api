@@ -18,11 +18,18 @@
                     </div>
 
                     <div style="padding: 15px 15px 30px 15px; font-family: Verdana, Arial, Helvetica, sans-serif; font-size:1em; background-color: #fff; color:#333;">
-                        <h5 data-th-text="${topoName}">Topo</h5>
+
                         <p><span th:text="#{mail.greeting}">Hello </span> <b data-th-text="${name}">User</b>! </p>
 
-                        <p> <span data-th-text="${mailContent}">mail content</span> <b data-th-text="${climber}">Climber</b></p>
-                        <p><span data-th-text="${#dates.format(date)}">28-12-2012</span></p>
+                        <p>
+                            <span data-th-text="${mailContent}">mail content</span> <b data-th-text="${climber}">Climber</b>
+                        </p>
+                        <p>
+                            <span th:text="#{label.topo} + ' : '">Topo</span><b data-th-text="${topoName}">Topo</b>
+                        </p>
+                        <p>
+                            <span data-th-text="${#dates.format(date)}">28-12-2012</span>
+                        </p>
                         <p th:text="#{mail.regards}">Regards </p>
                     </div>
                     <div style="background-color: #555; padding: 4px 4px 0px 4px; text-align: right;">
