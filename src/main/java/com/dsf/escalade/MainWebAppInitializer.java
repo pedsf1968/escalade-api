@@ -11,7 +11,7 @@ import javax.servlet.ServletRegistration;
 
 public class MainWebAppInitializer implements WebApplicationInitializer {
 
-   private String TMP_FOLDER = "/tmp";
+   private String TMP_FOLDER = "${app.upload.tmp}";
    private int MAX_UPLOAD_SIZE = 5 * 1024 * 1024;
 
    @Override

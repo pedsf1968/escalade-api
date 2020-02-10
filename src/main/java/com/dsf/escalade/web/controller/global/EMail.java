@@ -7,7 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class Feedback {
+public class EMail {
    @NotNull
    private String name;
    @NotNull
@@ -15,5 +15,5 @@ public class Feedback {
    private String email;
    @NotNull
    @Min(10)
-   private String feedback;
+   private String message;
 }
