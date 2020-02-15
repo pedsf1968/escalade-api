@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-public class SectorDto {
+public class SectorDto implements AutoCloseable {
    private static final int NAME_MIN = 1;
    private static final int NAME_MAX = 50;
    private static final String LATITUDE_REGEXP="^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?)|)$";
@@ -34,4 +34,9 @@ public class SectorDto {
    //Sector attributes
    private Integer topoId;
    private String equipment;
+
+   @Override
+   public void close() throws Exception {
+
+   }
 }

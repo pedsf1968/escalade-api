@@ -23,24 +23,21 @@ public class SectorRestController {
 
    @GetMapping("/sector/summary/{sectorId}")
    public ResponseEntity<SectorDto> getSectorSummary(@PathVariable("sectorId") Integer sectorId) {
-      SectorDto sectorDto = sectorService.getOne(sectorId);
 
-      if (sectorDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+      try(SectorDto sectorDto = sectorService.getOne(sectorId)) {
          return ResponseEntity.ok(sectorDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 
-
    @GetMapping("/sector/complete/{sectorId}")
    public ResponseEntity<SectorCompleteDto> getSectorComplete(@PathVariable("sectorId") Integer sectorId) {
-      SectorCompleteDto sectorCompleteDto = sectorService.getFull(sectorId);
 
-      if (sectorCompleteDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+      try (SectorCompleteDto sectorCompleteDto = sectorService.getFull(sectorId)) {
          return ResponseEntity.ok(sectorCompleteDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 }

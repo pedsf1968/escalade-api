@@ -5,10 +5,9 @@ import com.dsf.escalade.model.business.StatusType;
 import com.dsf.escalade.model.business.Topo;
 import com.dsf.escalade.repository.business.TopoRepository;
 import com.dsf.escalade.service.global.UserService;
-import com.dsf.escalade.web.dto.TopoCompleteDto;
-import com.dsf.escalade.web.dto.TopoDto;
-import com.dsf.escalade.web.dto.UserDto;
+import com.dsf.escalade.web.dto.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,11 +26,15 @@ import java.util.List;
 @Service("TopoService")
 public class TopoServiceImpl implements TopoService {
    private final TopoRepository topoRepository;
+   private final SectorService sectorService;
+   private final VoieService voieService;
    private final SpitService spitService;
    private final UserService userService;
 
-   public TopoServiceImpl(TopoRepository topoRepository, SpitService spitService, UserService userService) {
+   public TopoServiceImpl(TopoRepository topoRepository, @Lazy SectorService sectorService, @Lazy VoieService voieService, @Lazy SpitService spitService, UserService userService) {
       this.topoRepository = topoRepository;
+      this.sectorService = sectorService;
+      this.voieService = voieService;
       this.spitService = spitService;
       this.userService = userService;
    }
@@ -295,10 +298,25 @@ public class TopoServiceImpl implements TopoService {
 
    @Override
    public TopoCompleteDto getFull(Integer topoId) {
-      TopoDto topoDto = getOne(topoId);
       TopoCompleteDto topoCompleteDto = new TopoCompleteDto();
+      List<SectorDto> sectorDtos = sectorService.findByTopoId(topoId);
+      List<SectorCompleteDto> sectorCompleteDtos = new ArrayList<>();
+      List<VoieDto> voieDtos = voieService.findByParentId(topoId);
+      List<VoieCompleteDto> voieCompleteDtos = new ArrayList<>();
 
-      topoCompleteDto.setTopoDto(topoDto);
-      return null;
+      for(SectorDto s: sectorDtos) {
+         sectorCompleteDtos.add(sectorService.getFull(s.getId()));
+      }
+
+      for (VoieDto v: voieDtos){
+         voieCompleteDtos.add(voieService.getFull(v.getId()));
+      }
+
+
+      topoCompleteDto.setTopo(this.getOne(topoId));
+      topoCompleteDto.setSectorList(sectorCompleteDtos);
+      topoCompleteDto.setVoieList(voieCompleteDtos);
+
+      return topoCompleteDto;
    }
 }

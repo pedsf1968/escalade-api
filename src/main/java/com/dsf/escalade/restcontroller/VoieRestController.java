@@ -1,6 +1,7 @@
 package com.dsf.escalade.restcontroller;
 
 import com.dsf.escalade.service.business.VoieService;
+import com.dsf.escalade.web.dto.VoieCompleteDto;
 import com.dsf.escalade.web.dto.VoieDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,20 @@ public class VoieRestController {
 
    @GetMapping("/voie/summary/{voieId}")
    public ResponseEntity<VoieDto> getVoieSummary(@PathVariable("voieId") Integer voieId) {
-      VoieDto voieDto = voieService.getOne(voieId);
 
-      if (voieDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+      try (VoieDto voieDto = voieService.getOne(voieId)) {
          return ResponseEntity.ok(voieDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 
-
    @GetMapping("/voie/complete/{voieId}")
-   public ResponseEntity<VoieDto> getVoieComplete(@PathVariable("voieId") Integer voieId) {
-      VoieDto voieCompleteDto = voieService.getOne(voieId);
-
-      if (voieCompleteDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+   public ResponseEntity<VoieCompleteDto> getVoieComplete(@PathVariable("voieId") Integer voieId) {
+      try (VoieCompleteDto voieCompleteDto = voieService.getFull(voieId)) {
          return ResponseEntity.ok(voieCompleteDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 

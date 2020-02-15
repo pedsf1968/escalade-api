@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class SpitDto {
+public class SpitDto implements AutoCloseable {
    @NotNull
    private Integer topoId;
    @NotNull
@@ -18,4 +18,9 @@ public class SpitDto {
    private Integer cotationId;
    private Boolean isRelay;
    private String comment;
+
+   @Override
+   public void close() throws Exception {
+
+   }
 }

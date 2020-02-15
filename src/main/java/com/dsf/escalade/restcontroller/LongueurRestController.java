@@ -22,24 +22,21 @@ public class LongueurRestController {
 
    @GetMapping("/longueur/summary/{longueurId}")
    public ResponseEntity<LongueurDto> getLongueurSummary(@PathVariable("longueurId") Integer longueurId) {
-      LongueurDto longueurDto = longueurService.getOne(longueurId);
 
-      if (longueurDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+      try (LongueurDto longueurDto = longueurService.getOne(longueurId)) {
          return ResponseEntity.ok(longueurDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 
-
    @GetMapping("/longueur/complete/{longueurId}")
    public ResponseEntity<LongueurCompleteDto> getLongueurComplete(@PathVariable("longueurId") Integer longueurId) {
-      LongueurCompleteDto longueurCompleteDto = longueurService.getFull(longueurId);
 
-      if (longueurCompleteDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+      try (LongueurCompleteDto longueurCompleteDto = longueurService.getFull(longueurId)) {
          return ResponseEntity.ok(longueurCompleteDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 

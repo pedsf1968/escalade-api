@@ -3,6 +3,7 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.Longueur;
 import com.dsf.escalade.repository.business.LongueurRepository;
 import com.dsf.escalade.web.dto.*;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class LongueurServiceImpl implements LongueurService {
    private final LongueurRepository longueurRepository;
    private final SpitService spitService;
 
-   public LongueurServiceImpl(SiteService siteService, VoieService voieService, LongueurRepository longueurRepository, SpitService spitService) {
+   public LongueurServiceImpl(@Lazy SiteService siteService,@Lazy VoieService voieService,@Lazy LongueurRepository longueurRepository,@Lazy SpitService spitService) {
       this.siteService = siteService;
       this.voieService = voieService;
       this.longueurRepository = longueurRepository;
@@ -110,8 +111,8 @@ public class LongueurServiceImpl implements LongueurService {
       LongueurDto longueurDto = getOne(longueurId);
       LongueurCompleteDto longueurCompleteDto = new LongueurCompleteDto();
 
-      longueurCompleteDto.setLongueurDto(longueurDto);
-      longueurCompleteDto.setSpitDtoList(spitService.findByLongueurId(longueurId));
+      longueurCompleteDto.setLongueur(longueurDto);
+      longueurCompleteDto.setSpitList(spitService.findByLongueurId(longueurId));
 
       return longueurCompleteDto;
    }

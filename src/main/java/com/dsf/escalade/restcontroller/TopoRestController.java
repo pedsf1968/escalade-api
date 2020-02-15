@@ -22,24 +22,22 @@ public class TopoRestController {
 
    @GetMapping("/topo/summary/{topoId}")
    public ResponseEntity<TopoDto> getTopoSummary(@PathVariable("topoId") Integer topoId) {
-      TopoDto topoDto = topoService.getOne(topoId);
 
-      if (topoDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+      try(TopoDto topoDto = topoService.getOne(topoId)) {
          return ResponseEntity.ok(topoDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 
 
    @GetMapping("/topo/complete/{topoId}")
    public ResponseEntity<TopoCompleteDto> getTopoComplete(@PathVariable("topoId") Integer topoId) {
-      TopoCompleteDto topoCompleteDto = topoService.getFull(topoId);
 
-      if (topoCompleteDto == null) {
-         return ResponseEntity.notFound().build();
-      } else {
+      try(TopoCompleteDto topoCompleteDto = topoService.getFull(topoId)) {
          return ResponseEntity.ok(topoCompleteDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
       }
    }
 
