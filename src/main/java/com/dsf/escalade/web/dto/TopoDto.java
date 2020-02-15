@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
-public class TopoDto {
+public class TopoDto implements AutoCloseable{
    private static final int NAME_MIN = 1;
    private static final int NAME_MAX = 50;
    private static final int REGION_MIN = 1;
@@ -58,4 +58,8 @@ public class TopoDto {
    private Integer nbLane;
 
 
+   @Override
+   public void close() throws Exception {
+
+   }
 }

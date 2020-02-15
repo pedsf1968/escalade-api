@@ -5,7 +5,15 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class VoieCompleteDto {
-   private VoieDto voieDto;
-   private List<LongueurCompleteDto> longueurCompleteDtos;
+public class VoieCompleteDto implements AutoCloseable {
+   private VoieDto voie;
+   private List<LongueurCompleteDto> longueurList;
+
+   @Override
+   public void close() throws Exception {
+      voie.close();
+      for (LongueurCompleteDto l: longueurList) {
+         l.close();
+      }
+   }
 }

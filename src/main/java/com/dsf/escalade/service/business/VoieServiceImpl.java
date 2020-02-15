@@ -4,9 +4,7 @@ import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.Voie;
 import com.dsf.escalade.repository.business.VoieRepository;
 import com.dsf.escalade.service.global.UserService;
-import com.dsf.escalade.web.dto.UserDto;
-import com.dsf.escalade.web.dto.VoieCompleteDto;
-import com.dsf.escalade.web.dto.VoieDto;
+import com.dsf.escalade.web.dto.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,13 +17,15 @@ public class VoieServiceImpl implements VoieService {
    private final VoieRepository voieRepository;
    private final SiteService siteService;
    private final TopoService topoService;
+   private final LongueurService longueurService;
    private final SpitService spitService;
    private final UserService userService;
 
-   public VoieServiceImpl(SiteService siteService, TopoService topoService, VoieRepository voieRepository, SpitService spitService, UserService userService) {
+   public VoieServiceImpl(SiteService siteService, TopoService topoService, VoieRepository voieRepository, LongueurService longueurService, SpitService spitService, UserService userService) {
       this.siteService = siteService;
       this.topoService = topoService;
       this.voieRepository = voieRepository;
+      this.longueurService = longueurService;
       this.spitService = spitService;
       this.userService = userService;
    }
@@ -157,12 +157,15 @@ public class VoieServiceImpl implements VoieService {
    @Override
    public VoieCompleteDto getFull(Integer voieId) {
       VoieCompleteDto voieCompleteDto = new VoieCompleteDto();
+      List<LongueurDto> longueurDtos = longueurService.findByVoieId(voieId);
+      List<LongueurCompleteDto> longueurCompleteDtos =new ArrayList<>();
 
+      for (LongueurDto l: longueurDtos) {
+         longueurCompleteDtos.add(longueurService.getFull(l.getId()));
+      }
+      voieCompleteDto.setVoie(this.getOne(voieId));
+      voieCompleteDto.setLongueurList(longueurCompleteDtos);
 
-      voieCompleteDto.setVoieDto(this.getOne(voieId));
-
-
-
-      return null;
+      return voieCompleteDto;
    }
 }

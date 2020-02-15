@@ -4,10 +4,9 @@ import com.dsf.escalade.model.business.Sector;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.repository.business.SectorRepository;
 import com.dsf.escalade.service.global.UserService;
-import com.dsf.escalade.web.dto.SectorCompleteDto;
-import com.dsf.escalade.web.dto.SectorDto;
-import com.dsf.escalade.web.dto.UserDto;
+import com.dsf.escalade.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,11 +18,13 @@ import java.util.List;
 public class SectorServiceImpl implements SectorService {
 
    private final SectorRepository sectorRepository;
+   private final VoieService voieService;
    private final UserService userService;
 
    @Autowired
-   public SectorServiceImpl(SectorRepository sectorRepository, UserService userService) {
+   public SectorServiceImpl(SectorRepository sectorRepository, @Lazy VoieService voieService, UserService userService) {
       this.sectorRepository = sectorRepository;
+      this.voieService = voieService;
       this.userService = userService;
    }
 
@@ -100,8 +101,8 @@ public class SectorServiceImpl implements SectorService {
    }
 
    @Override
-   public SectorDto getOne(Integer id) {
-      Sector sector = sectorRepository.getOne(id);
+   public SectorDto getOne(Integer sectorId) {
+      Sector sector = sectorRepository.getOne(sectorId);
 
       return entityToDto(sector);
    }
@@ -140,7 +141,18 @@ public class SectorServiceImpl implements SectorService {
    }
 
    @Override
-   public SectorCompleteDto getFull(Integer voieId) {
-      return null;
+   public SectorCompleteDto getFull(Integer sectorId) {
+      SectorCompleteDto sectorCompleteDto = new SectorCompleteDto();
+      List<VoieDto> voieDtos = voieService.findByParentId(sectorId);
+      List<VoieCompleteDto> voieCompleteDtos = new ArrayList<>();
+
+      for (VoieDto v: voieDtos){
+         voieCompleteDtos.add(voieService.getFull(v.getId()));
+      }
+
+      sectorCompleteDto.setSector(this.getOne(sectorId));
+      sectorCompleteDto.setVoieList(voieCompleteDtos);
+
+      return sectorCompleteDto;
    }
 }

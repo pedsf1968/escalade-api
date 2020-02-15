@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-public class VoieDto {
+public class VoieDto implements AutoCloseable {
    private static final int NAME_MIN = 1;
    private static final int NAME_MAX = 50;
    private static final String LATITUDE_REGEXP="^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?)|)$";
@@ -36,4 +36,9 @@ public class VoieDto {
    private Boolean isEquipped;
    private Integer heigth;
    private Integer cotationId;
+
+   @Override
+   public void close() throws Exception {
+
+   }
 }

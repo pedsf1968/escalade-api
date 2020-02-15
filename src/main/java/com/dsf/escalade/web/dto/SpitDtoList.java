@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class SpitDtoList {
+public class SpitDtoList implements AutoCloseable {
    private List<SpitDto> spitDtos;
 
    public void addSpitDto(SpitDto spitDto){
@@ -15,5 +15,12 @@ public class SpitDtoList {
       }
 
       this.spitDtos.add(spitDto);
+   }
+
+   @Override
+   public void close() throws Exception {
+      for (SpitDto s: spitDtos) {
+         s.close();
+      }
    }
 }
