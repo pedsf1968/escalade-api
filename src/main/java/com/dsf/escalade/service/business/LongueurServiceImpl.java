@@ -3,12 +3,14 @@ package com.dsf.escalade.service.business;
 import com.dsf.escalade.model.business.Longueur;
 import com.dsf.escalade.repository.business.LongueurRepository;
 import com.dsf.escalade.web.dto.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service("LongueurService")
 public class LongueurServiceImpl implements LongueurService {
    private final SiteService siteService;
@@ -25,40 +27,43 @@ public class LongueurServiceImpl implements LongueurService {
 
    @Override
    public LongueurDto entityToDto(Longueur longueur) {
-      if(longueur == null){
-         return null;
+
+      if(longueur != null){
+         LongueurDto longueurDto = new LongueurDto();
+
+         longueurDto.setId(longueur.getId());
+         longueurDto.setVoieId(longueur.getVoieId());
+         longueurDto.setCotationId(longueur.getCotationId());
+         longueurDto.setHeigth(longueur.getHeigth());
+         longueurDto.setName(longueur.getName());
+
+         return longueurDto;
       }
 
-      LongueurDto longueurDto = new LongueurDto();
-
-      longueurDto.setId(longueur.getId());
-      longueurDto.setVoieId(longueur.getVoieId());
-      longueurDto.setCotationId(longueur.getCotationId());
-      longueurDto.setHeigth(longueur.getHeigth());
-      longueurDto.setName(longueur.getName());
-
-      return longueurDto;
+      return null;
    }
 
    @Override
    public Longueur dtoToEntity(LongueurDto longueurDto) {
-      if(longueurDto==null){
-         return null;
+
+      if(longueurDto!=null){
+         Longueur longueur = new Longueur();
+
+         longueur.setId(longueurDto.getId());
+         longueur.setVoieId(longueurDto.getVoieId());
+         longueur.setCotationId(longueurDto.getCotationId());
+         longueur.setHeigth(longueurDto.getHeigth());
+         longueur.setName(longueurDto.getName());
+
+         return longueur;
       }
 
-      Longueur longueur = new Longueur();
-
-      longueur.setId(longueurDto.getId());
-      longueur.setVoieId(longueurDto.getVoieId());
-      longueur.setCotationId(longueurDto.getCotationId());
-      longueur.setHeigth(longueurDto.getHeigth());
-      longueur.setName(longueurDto.getName());
-
-      return longueur;
+      return null;
    }
 
    @Override
    public LongueurDto getOne(Integer id) {
+
       Longueur longueur = longueurRepository.getOne(id);
 
       return entityToDto(longueur);
@@ -78,8 +83,9 @@ public class LongueurServiceImpl implements LongueurService {
    @Override
    public Integer save(LongueurDto longueurDto) {
       Longueur longueur = dtoToEntity(longueurDto);
+      longueur = longueurRepository.save(longueur);
 
-      return longueurRepository.save(longueur).getId();
+      return longueur.getId();
    }
 
    @Override
@@ -96,24 +102,52 @@ public class LongueurServiceImpl implements LongueurService {
 
    @Override
    public void updateCotation(LongueurDto longueurDto){
-      Integer cotationId;
       VoieDto voieDto = voieService.getOne(longueurDto.getVoieId());
       Integer topoId = siteService.getTopoId(voieDto.getParentId());
+      Integer cotationId = spitService.getLongueurCotationAverage(topoId, voieDto.getId(), longueurDto.getId());
 
-      cotationId = spitService.getLongueurCotationAverage(topoId, voieDto.getId(), longueurDto.getId());
+      log.info("New cotation average :" + cotationId);
       longueurDto.setCotationId(cotationId);
-      save(longueurDto);
+      this.save(longueurDto);
       voieService.updateCotation(voieDto);
    }
 
    @Override
-   public LongueurCompleteDto getFull(Integer longueurId) {
+   public LongueurFullDto getFull(Integer longueurId) {
       LongueurDto longueurDto = getOne(longueurId);
-      LongueurCompleteDto longueurCompleteDto = new LongueurCompleteDto();
+      LongueurFullDto longueurFullDto = new LongueurFullDto();
 
-      longueurCompleteDto.setLongueur(longueurDto);
-      longueurCompleteDto.setSpitList(spitService.findByLongueurId(longueurId));
+      longueurFullDto.setLongueur(longueurDto);
+      longueurFullDto.setSpitList(spitService.findByLongueurId(longueurId));
 
-      return longueurCompleteDto;
+      return longueurFullDto;
+   }
+
+   @Override
+   public Integer saveFull(LongueurFullDto longueurFullDto) {
+      LongueurDto longueurDto = longueurFullDto.getLongueur();
+      Integer oldLongueurId = longueurDto.getId();
+      Integer longueurId = this.save(longueurFullDto.getLongueur());
+      Integer voieId;
+      List<SpitDto> spitDtos = longueurFullDto.getSpitList().getSpitDtos();
+
+
+      if(longueurId!=oldLongueurId){
+         for(SpitDto s:spitDtos){
+            voieId = longueurDto.getVoieId();
+            s.setLongueurId(longueurId);
+            s.setVoieId(voieId);
+            s.setTopoId(siteService.getTopoId(voieId));
+         }
+      }
+
+      SpitDtoList spitDtoList = new SpitDtoList();
+      spitDtoList.setSpitDtos(spitDtos);
+
+      spitService.saveAll(spitDtoList);
+      this.save(longueurDto);
+      this.updateCotation(longueurDto);
+
+      return longueurId;
    }
 }

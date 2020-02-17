@@ -78,7 +78,13 @@ public class VoieServiceImpl implements VoieService {
       voie.setIsEquipped(voieDto.getIsEquipped());
 
       if (voieDto.getAliasManager() != null) {
-         voie.setManagerId(userService.findByAlias(voieDto.getAliasManager()).getId());
+         UserDto userDto = userService.findByAlias(voieDto.getAliasManager());
+         if(userDto!=null) {
+            voie.setManagerId(userDto.getId());
+         } else {
+            // set topo manager default manager
+            voie.setManagerId(siteService.getManagerId(voieDto.getParentId()));
+         }
       }
 
       return voie;
@@ -105,7 +111,7 @@ public class VoieServiceImpl implements VoieService {
 
    @Override
    public Integer save(VoieDto voieDto) {
-      Voie voie =dtoToEntity(voieDto);
+      Voie voie = dtoToEntity(voieDto);
 
       // if new Lane we increase Topo lane counter
       if(voieDto.getId() == null){
@@ -155,17 +161,35 @@ public class VoieServiceImpl implements VoieService {
    }
 
    @Override
-   public VoieCompleteDto getFull(Integer voieId) {
-      VoieCompleteDto voieCompleteDto = new VoieCompleteDto();
+   public VoieFullDto getFull(Integer voieId) {
+      VoieFullDto voieFullDto = new VoieFullDto();
       List<LongueurDto> longueurDtos = longueurService.findByVoieId(voieId);
-      List<LongueurCompleteDto> longueurCompleteDtos =new ArrayList<>();
+      List<LongueurFullDto> longueurFullDtos =new ArrayList<>();
 
       for (LongueurDto l: longueurDtos) {
-         longueurCompleteDtos.add(longueurService.getFull(l.getId()));
+         longueurFullDtos.add(longueurService.getFull(l.getId()));
       }
-      voieCompleteDto.setVoie(this.getOne(voieId));
-      voieCompleteDto.setLongueurList(longueurCompleteDtos);
 
-      return voieCompleteDto;
+      voieFullDto.setVoie(this.getOne(voieId));
+      voieFullDto.setLongueurList(longueurFullDtos);
+
+      return voieFullDto;
+   }
+
+   @Override
+   public Integer saveFull(VoieFullDto voieFullDto) {
+      Integer oldVoieId = voieFullDto.getVoie().getId();
+      Integer voieId = this.save(voieFullDto.getVoie());
+
+      // save longueurs
+      for(LongueurFullDto l: voieFullDto.getLongueurList()){
+         if(voieId!=oldVoieId) {
+            // modify voie ID of the longueur because it's a new one
+            l.getLongueur().setVoieId(voieId);
+            l.getLongueur().setId(null);
+         }
+         longueurService.saveFull(l);
+      }
+      return voieId;
    }
 }

@@ -3,7 +3,7 @@ package com.dsf.escalade.web.dto;
 import lombok.Data;
 
 @Data
-public class LongueurCompleteDto implements AutoCloseable{
+public class LongueurFullDto implements AutoCloseable{
    private LongueurDto longueur;
    private SpitDtoList spitList;
 

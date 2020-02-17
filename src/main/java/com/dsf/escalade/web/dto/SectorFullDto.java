@@ -5,13 +5,13 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SectorCompleteDto implements AutoCloseable{
+public class SectorFullDto implements AutoCloseable{
    private SectorDto sector;
-   private List<VoieCompleteDto> voieList;
+   private List<VoieFullDto> voieList;
 
    @Override
    public void close() throws Exception {
-      for (VoieCompleteDto v: voieList) {
+      for (VoieFullDto v: voieList) {
          v.close();
       }
    }

@@ -27,7 +27,8 @@ body,html {
 }
 
 [class*="col-"] {
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 footer {
@@ -64,6 +65,28 @@ img {
     width: 50px;
 }
 
+.jumbotron {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.navbar {
+    height: 50px;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.navbar-toggle {
+  margin-top: 23px;
+  padding: 9px 10px;
+}
 
 nav .navbar-nav li i  {
     color : white;

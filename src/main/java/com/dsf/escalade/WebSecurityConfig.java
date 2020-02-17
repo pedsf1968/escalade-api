@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
          .csrf()
-         .ignoringAntMatchers("/h2-console/**","/uploadFile","/feedback")//don't apply CSRF protection to /h2-console
+         .ignoringAntMatchers("/h2-console/**","/uploadFile","/feedback","/site/**","/topo/**","/sector/**","/voie/**","/longueur/**")//don't apply CSRF
             .and()
          .headers()
             .frameOptions()

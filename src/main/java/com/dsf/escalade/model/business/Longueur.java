@@ -21,5 +21,7 @@ public class Longueur implements Serializable {
    private Integer cotationId;
    @Column(name = "heigth")
    private Integer heigth;
-   public Longueur() { super();   }
+   public Longueur() { super();
+   }
+
 }
