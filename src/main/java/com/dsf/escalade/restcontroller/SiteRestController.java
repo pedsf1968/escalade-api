@@ -1,53 +1,46 @@
 package com.dsf.escalade.restcontroller;
 
-import com.dsf.escalade.model.business.Site;
-import com.dsf.escalade.repository.business.SiteRepository;
+import com.dsf.escalade.service.business.SiteService;
+import com.dsf.escalade.web.dto.SiteDto;
+import com.dsf.escalade.web.dto.SiteFullDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 public class SiteRestController {
 
-   private final SiteRepository siteRepository;
+   private final SiteService siteService;
 
    @Autowired
-   public SiteRestController(SiteRepository siteRepository) {
-      this.siteRepository = siteRepository;
+   public SiteRestController(SiteService siteService) {
+
+      this.siteService = siteService;
    }
 
-   @GetMapping(value = "/site")
-   public List<Site> findAll(){
-      return siteRepository.findAll();
+
+   @GetMapping("/site/get/{siteId}")
+   public ResponseEntity<SiteDto> getSite(@PathVariable("siteId") Integer siteId) {
+
+      try(SiteDto siteDto = siteService.getOne(siteId)) {
+         return ResponseEntity.ok(siteDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
+      }
    }
 
-   @GetMapping(value = "/site/{id}")
-   public Optional<Site> findById(@PathVariable Integer id){
-      log.info("id : " + id + siteRepository.findById(1).toString());
-      return siteRepository.findById(id);
-   }
+   @GetMapping("/site/get/full/{siteId}")
+   public ResponseEntity<SiteFullDto> getSiteFull(@PathVariable("siteId") Integer siteId) {
 
-   @PostMapping(value = "/site")
-   public ResponseEntity<Object> save(@RequestBody Site site){
-      Site siteAdded = siteRepository.save(site);
-
-      if (siteAdded == null)
-         return ResponseEntity.noContent().build();
-
-      URI location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(siteAdded.getId())
-            .toUri();
-
-      return ResponseEntity.created(location).build();
+      try (SiteFullDto siteFullDto = siteService.getFull(siteId)) {
+         return ResponseEntity.ok(siteFullDto);
+      } catch (Exception e) {
+         return ResponseEntity.notFound().build();
+      }
    }
 
 

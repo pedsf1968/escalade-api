@@ -69,6 +69,7 @@ public class TopoServiceImpl implements TopoService {
       if (topo.getManagerId() != null) {
          topoDto.setAliasManager(userService.getOne(topo.getManagerId()).getAlias());
       }
+
       if (topo.getClimberId() != null) {
          topoDto.setAliasClimber(userService.getOne(topo.getClimberId()).getAlias());
       }
@@ -84,6 +85,7 @@ public class TopoServiceImpl implements TopoService {
       }
 
       Topo topo = new Topo();
+      UserDto userDto = userService.findByAlias(topoDto.getAliasManager());
 
       topo.setId(topoDto.getId());
       topo.setName(topoDto.getName());
@@ -107,10 +109,18 @@ public class TopoServiceImpl implements TopoService {
 
 
       if (topoDto.getAliasManager() != null) {
-         topo.setManagerId(userService.findByAlias(topoDto.getAliasManager()).getId());
+         if(userDto!=null) {
+            topo.setManagerId(userDto.getId());
+         }
       }
+
+
       if (topoDto.getAliasClimber() != null) {
-         topo.setClimberId(userService.findByAlias(topoDto.getAliasClimber()).getId());
+         userDto = userService.findByAlias(topoDto.getAliasClimber());
+         if(userDto!=null) {
+            topo.setClimberId(userDto.getId());
+         }
+         topo.setClimberId(null);
       }
 
       return topo;
@@ -297,26 +307,56 @@ public class TopoServiceImpl implements TopoService {
    }
 
    @Override
-   public TopoCompleteDto getFull(Integer topoId) {
-      TopoCompleteDto topoCompleteDto = new TopoCompleteDto();
+   public TopoFullDto getFull(Integer topoId) {
+      TopoFullDto topofullDto = new TopoFullDto();
       List<SectorDto> sectorDtos = sectorService.findByTopoId(topoId);
-      List<SectorCompleteDto> sectorCompleteDtos = new ArrayList<>();
+      List<SectorFullDto> sectorFullDtos = new ArrayList<>();
       List<VoieDto> voieDtos = voieService.findByParentId(topoId);
-      List<VoieCompleteDto> voieCompleteDtos = new ArrayList<>();
+      List<VoieFullDto> voieFullDtos = new ArrayList<>();
 
       for(SectorDto s: sectorDtos) {
-         sectorCompleteDtos.add(sectorService.getFull(s.getId()));
+         sectorFullDtos.add(sectorService.getFull(s.getId()));
       }
 
       for (VoieDto v: voieDtos){
-         voieCompleteDtos.add(voieService.getFull(v.getId()));
+         voieFullDtos.add(voieService.getFull(v.getId()));
       }
 
 
-      topoCompleteDto.setTopo(this.getOne(topoId));
-      topoCompleteDto.setSectorList(sectorCompleteDtos);
-      topoCompleteDto.setVoieList(voieCompleteDtos);
+      topofullDto.setTopo(this.getOne(topoId));
+      topofullDto.setSectorList(sectorFullDtos);
+      topofullDto.setVoieList(voieFullDtos);
 
-      return topoCompleteDto;
+      return topofullDto;
+   }
+
+   @Override
+   public Integer saveFull(TopoFullDto topoFullDto) {
+      Integer oldTopoId = topoFullDto.getTopo().getId();
+      Integer topoId = this.save(topoFullDto.getTopo());
+      SectorDto sectorDto;
+      VoieDto voieDto;
+
+      for(SectorFullDto s: topoFullDto.getSectorList()){
+         if(topoId!=oldTopoId) {
+            sectorDto = s.getSector();
+            sectorDto.setId(null);
+            sectorDto.setTopoId(topoId);
+            s.setSector(sectorDto);
+         }
+         sectorService.saveFull(s);
+      }
+
+      for(VoieFullDto v: topoFullDto.getVoieList()){
+         if(topoId!=oldTopoId) {
+            voieDto = v.getVoie();
+            voieDto.setId(null);
+            voieDto.setParentId(topoId);
+            v.setVoie(voieDto);
+         }
+         voieService.saveFull(v);
+      }
+
+      return topoId;
    }
 }

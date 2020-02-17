@@ -5,18 +5,18 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TopoCompleteDto implements AutoCloseable{
+public class TopoFullDto implements AutoCloseable{
    private TopoDto topo;
-   private List<SectorCompleteDto> sectorList;
-   private List<VoieCompleteDto> voieList;
+   private List<SectorFullDto> sectorList;
+   private List<VoieFullDto> voieList;
 
    @Override
    public void close() throws Exception {
-      for (SectorCompleteDto s: sectorList) {
+      for (SectorFullDto s: sectorList) {
          s.close();
       }
 
-      for(VoieCompleteDto v: voieList){
+      for(VoieFullDto v: voieList){
          v.close();
       }
    }

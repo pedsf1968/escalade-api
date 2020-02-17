@@ -18,12 +18,14 @@ import java.util.List;
 public class SectorServiceImpl implements SectorService {
 
    private final SectorRepository sectorRepository;
+   private final SiteService siteService;
    private final VoieService voieService;
    private final UserService userService;
 
    @Autowired
-   public SectorServiceImpl(SectorRepository sectorRepository, @Lazy VoieService voieService, UserService userService) {
+   public SectorServiceImpl(SectorRepository sectorRepository, SiteService siteService, @Lazy VoieService voieService, UserService userService) {
       this.sectorRepository = sectorRepository;
+      this.siteService = siteService;
       this.voieService = voieService;
       this.userService = userService;
    }
@@ -72,7 +74,13 @@ public class SectorServiceImpl implements SectorService {
       sector.setMapLink(sectorDto.getMapLink());
 
       if (sectorDto.getAliasManager() != null) {
-         sector.setManagerId(userService.findByAlias(sectorDto.getAliasManager()).getId());
+         UserDto userDto = userService.findByAlias(sectorDto.getAliasManager());
+         if(userDto!=null) {
+            sector.setManagerId(userDto.getId());
+         } else {
+            // set topo manager default manager
+            sector.setManagerId(siteService.getManagerId(sectorDto.getTopoId()));
+         }
       }
 
       return sector;
@@ -141,18 +149,36 @@ public class SectorServiceImpl implements SectorService {
    }
 
    @Override
-   public SectorCompleteDto getFull(Integer sectorId) {
-      SectorCompleteDto sectorCompleteDto = new SectorCompleteDto();
+   public SectorFullDto getFull(Integer sectorId) {
+      SectorFullDto sectorFullDto = new SectorFullDto();
       List<VoieDto> voieDtos = voieService.findByParentId(sectorId);
-      List<VoieCompleteDto> voieCompleteDtos = new ArrayList<>();
+      List<VoieFullDto> voieFullDtos = new ArrayList<>();
 
       for (VoieDto v: voieDtos){
-         voieCompleteDtos.add(voieService.getFull(v.getId()));
+         voieFullDtos.add(voieService.getFull(v.getId()));
       }
 
-      sectorCompleteDto.setSector(this.getOne(sectorId));
-      sectorCompleteDto.setVoieList(voieCompleteDtos);
+      sectorFullDto.setSector(this.getOne(sectorId));
+      sectorFullDto.setVoieList(voieFullDtos);
 
-      return sectorCompleteDto;
+      return sectorFullDto;
+   }
+
+   @Override
+   public Integer saveFull(SectorFullDto sectorFullDto) {
+      Integer oldSectorId = sectorFullDto.getSector().getId();
+      Integer sectorId = this.save(sectorFullDto.getSector());
+
+      // save voie of the sector
+      for(VoieFullDto v: sectorFullDto.getVoieList()){
+         if(sectorId!=oldSectorId) {
+            // change id of the voie if the sector is new
+            v.getVoie().setId(null);
+            v.getVoie().setParentId(sectorId);
+         }
+         voieService.saveFull(v);
+      }
+
+      return sectorId;
    }
 }
