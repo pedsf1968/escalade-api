@@ -3,18 +3,18 @@
 <body>
    <footer class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom" th:fragment="footer">
       <div class="col-md-12">
-         <div class="row">
-            <div class="col-sm" style="margin-bottom: 0px; padding-top: 20px;">
+         <div class="row my-auto">
+            <div class="col-sm">
                <a class="fas fa-at" ></a>
                <a th:href="'mailto:'+ ${@environment.getProperty('admin.mail')}" th:text="#{label.footer.joinus}"> Join Us</a>
             </div>
-            <div class="col-sm" style="margin-bottom: 0px; padding-top: 20px;">
+            <div class="col-sm" >
                <a href="?lang=ko" th:text="#{label.footer.Korean}">Korean</a> |
                <a href="?lang=en" th:text="#{label.footer.English}">English</a> |
                <a href="?lang=es" th:text="#{label.footer.Spanish}">Spanish</a> |
                <a href="?lang=fr" th:text="#{label.footer.French}">French</a>
             </div>
-            <div class="col-sm" style="margin-bottom: 0px; padding-top: 20px;">
+            <div class="col-sm">
                <a class="fas fa-question" ></a>
                <a th:href="@{/help?lang=__${#locale}__}" th:text="#{label.footer.help}"> Help</a>
             </div>

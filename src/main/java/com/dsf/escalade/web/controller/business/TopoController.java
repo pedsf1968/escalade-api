@@ -29,6 +29,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,7 +62,7 @@ public class TopoController {
     }
 
     @GetMapping("/topo/all")
-    public String listTopo(Model model) {
+    public String listTopo(Model model, Locale locale) {
         List<TopoDto> topoDtoList = topoService.findAll();
         Map<TopoDto, List<TagDto>> tagsByTopoId = new HashMap<>();
 
@@ -81,9 +82,11 @@ public class TopoController {
     }
 
     @PostMapping("/topo/all")
-    public String listTopoFiltered(@ModelAttribute("filter") TopoDto filter, Model model) {
-        List<TopoDto> topoDtoList = topoDtoList = topoService.findAllFiltered(filter);
+    public String listTopoFiltered(@ModelAttribute("filter") TopoDto filter, Model model, Locale locale) {
 
+        log.info("\nLOCALE :" + locale + "\n");
+        log.info("\nFILTER :" + filter + "\n");
+        List<TopoDto> topoDtoList = topoDtoList = topoService.findAllFiltered(filter);
 
         Map<TopoDto, List<TagDto>> tagsByTopoId = new HashMap<>();
 

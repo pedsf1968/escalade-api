@@ -35,9 +35,9 @@ public class Topo extends Site{
    private StatusType status;
    @Column(name = "status_auto", columnDefinition = "BOOLEAN DEFAULT FALSE")
    private Boolean statusAuto;
-   @Column(name = "cotation_min", columnDefinition = "VARCHAR(2)")
+   @Column(name = "cotation_min")
    private Integer cotationMin;
-   @Column(name = "cotation_max", columnDefinition = "VARCHAR(2)")
+   @Column(name = "cotation_max")
    private Integer cotationMax;
    @Column(name = "nb_lane")
    protected Integer nbLane;

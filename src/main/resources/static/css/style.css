@@ -33,7 +33,7 @@ body,html {
 
 footer {
 	text-align: center;
-	padding-top: 20px;
+	padding-bottom: 20px;
 	color : white;
 }
 .endpage {
@@ -42,7 +42,7 @@ footer {
 
 footer a {
 	color : white;
-    margin-top:10px;
+    margin-bottom:20px;
 }
 
 header {

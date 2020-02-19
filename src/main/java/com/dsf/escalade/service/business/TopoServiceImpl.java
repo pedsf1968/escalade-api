@@ -108,11 +108,9 @@ public class TopoServiceImpl implements TopoService {
       topo.setNbLane(topoDto.getNbLane());
 
 
-      if (topoDto.getAliasManager() != null) {
-         if(userDto!=null) {
+      if (topoDto.getAliasManager() != null && userDto!=null) {
             topo.setManagerId(userDto.getId());
          }
-      }
 
 
       if (topoDto.getAliasClimber() != null) {
@@ -199,8 +197,6 @@ public class TopoServiceImpl implements TopoService {
    public List<TopoDto> findAllFiltered(TopoDto filter) {
 
       List<TopoDto> topoDtos = new ArrayList<>();
-      TopoDto topoDto;
-
 
       List<Topo> topos = topoRepository.findAll(new Specification<Topo>() {
 
@@ -236,7 +232,7 @@ public class TopoServiceImpl implements TopoService {
             //filter by cotation maximum
             if ((filter.getCotationMax() != null) && ! filter.getCotationMax().equals("0")) {
                log.info("\nFilter cotation max : " + filter.getCotationMax());
-               predicates.add(cb.lessThan(root.get("cotationMax"), filter.getCotationMax()));
+               predicates.add(cb.lessThanOrEqualTo(root.get("cotationMax"), filter.getCotationMax()));
             }
 
             //filter by lane min
@@ -244,6 +240,7 @@ public class TopoServiceImpl implements TopoService {
                log.info("\nFilter lane min : " + filter.getNbLane());
                predicates.add(cb.greaterThanOrEqualTo(root.get("nbLane"), filter.getNbLane()));
             }
+
 
             return cb.and(predicates.toArray(new Predicate[0]));
          }
@@ -338,7 +335,7 @@ public class TopoServiceImpl implements TopoService {
       VoieDto voieDto;
 
       for(SectorFullDto s: topoFullDto.getSectorList()){
-         if(topoId!=oldTopoId) {
+         if(!topoId.equals(oldTopoId)) {
             sectorDto = s.getSector();
             sectorDto.setId(null);
             sectorDto.setTopoId(topoId);
@@ -348,7 +345,7 @@ public class TopoServiceImpl implements TopoService {
       }
 
       for(VoieFullDto v: topoFullDto.getVoieList()){
-         if(topoId!=oldTopoId) {
+         if(!topoId.equals(oldTopoId)) {
             voieDto = v.getVoie();
             voieDto.setId(null);
             voieDto.setParentId(topoId);
