@@ -33,14 +33,14 @@
                <td th:text="#{label.cotationMin}">Cotation min</td>
 
                <td th:if="__${#locale}__=='ko'" th:text="${topoDto.cotationMin} ? ${cotationDtoList[topoDto.cotationMin-1].levelUS} : None" >Cotation min</td>
-               <td th:if="__${#locale}__=='fr'" th:text="${topoDto.cotationMin} ? ${cotationDtoList[topoDto.cotationMin-1].levelFR} : None" >Cotation min</td>
+               <td th:if="__${#locale}__=='fr' or __${#locale}__=='fr_FR'" th:text="${topoDto.cotationMin} ? ${cotationDtoList[topoDto.cotationMin-1].levelFR} : None" >Cotation min</td>
                <td th:if="__${#locale}__=='es'" th:text="${topoDto.cotationMin} ? ${cotationDtoList[topoDto.cotationMin-1].levelFR} : None" >Cotation min</td>
                <td th:if="__${#locale}__=='en'" th:text="${topoDto.cotationMin} ? ${cotationDtoList[topoDto.cotationMin-1].levelGB} : None" >Cotation min</td>
             </tr>
             <tr>
                <td th:text="#{label.cotationMax}">Cotation max</td>
                <td th:if="__${#locale}__=='ko'" th:text="${topoDto.cotationMax} ? ${cotationDtoList[topoDto.cotationMax-1].levelUS} : None" >Cotation max</td>
-               <td th:if="__${#locale}__=='fr'" th:text="${topoDto.cotationMax} ? ${cotationDtoList[topoDto.cotationMax-1].levelFR} : None" >Cotation max</td>
+               <td th:if="__${#locale}__=='fr' or __${#locale}__=='fr_FR'" th:text="${topoDto.cotationMax} ? ${cotationDtoList[topoDto.cotationMax-1].levelFR} : None" >Cotation max</td>
                <td th:if="__${#locale}__=='es'" th:text="${topoDto.cotationMax} ? ${cotationDtoList[topoDto.cotationMax-1].levelFR} : None" >Cotation max</td>
                <td th:if="__${#locale}__=='en'" th:text="${topoDto.cotationMax} ? ${cotationDtoList[topoDto.cotationMax-1].levelGB} : None" >Cotation max</td>
             </tr>
