@@ -2,7 +2,7 @@
 <html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:fragment="nav">
-      <a class="navbar-brand">Escalade</a>
+      <a class="navbar-brand"><em>Escalade</em></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
       </button>
@@ -17,18 +17,15 @@
          </ul>
          <ul class="navbar-nav ml-auto">
             <li sec:authorize="!isAuthenticated()">
-               <i class="fas fa-sign-in-alt" ></i>
-               <a class="btn btn-lg align-right" th:href="@{/login}"  th:text="#{label.nav.login}">Sign In</a>
-               <i class="fas fa-sign-in-alt"></i>
-               <a class="btn btn-lg" th:href="@{/user/new}" onclick="$('#form').submit();"  th:text="#{label.nav.registration}">Sign Up</a>
+                  <a class="fas fa-sign-in-alt btn btn-lg align-right" th:href="@{/login}"  th:text="' ' +  #{label.nav.login}">Sign In</a>
+                  <a class="fas fa-sign-in-alt btn btn-lg" th:href="@{/user/new}" onclick="$('#form').submit();"  th:text="' ' +  #{label.nav.registration}">Sign Up</a>
             </li>
 
             <li sec:authorize="isAuthenticated()">
                <a class="btn btn-lg active align-right" th:href="@{/topo/reserved}"  th:text="#{label.reserved}">Reserved</a>
                <a class="btn btn-lg active align-right" th:href="@{/topo/mylist}"  th:text="#{label.myTopos}">My Topos</a>
                <a class="btn btn-lg active align-right" th:href="@{/user/edit/}"  th:text="#{label.myAccount}">My account</a>
-               <i class="fas fa-sign-out-alt"></i>
-               <a class="btn btn-lg active" th:href="@{/logout}"  th:text="#{label.nav.logout}">Logout</a>
+               <a class="fas fa-sign-out-alt btn btn-lg active" th:href="@{/logout}"  th:text="' ' +  #{label.nav.logout}">Logout</a>
             </li>
          </ul>
       </div>
