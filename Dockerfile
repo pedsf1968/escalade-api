@@ -20,5 +20,5 @@ WORKDIR /srv
 RUN sh -c 'touch escalade.jar'
 VOLUME /images:/images
 EXPOSE 9090
-ENTRYPOINT ["java","-Djasypt.encryptor.password=Jasypt1418$","-jar","escalade.jar"]
+ENTRYPOINT ["java","-Djasypt.encryptor.password=$JASYPT_ENCRYPT_SECRET","-jar","escalade.jar"]
 

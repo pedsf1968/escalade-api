@@ -30,6 +30,19 @@ services:
       net:
         ipv4_address: 10.5.0.5
 
+  rest:
+    container_name: escalade-rest
+    image: escalade-rest:latest
+    restart: on-failure
+    depends_on:
+      - "properties"
+      - "db"
+    ports:
+    - "9191:9191"
+    networks:
+      net:
+        - ipv4_address: 10.5.0.3
+
   api:
     container_name: escalade-api
     image: escalade-api:latest
