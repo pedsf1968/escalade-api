@@ -16,7 +16,7 @@ services:
 
   db:
     container_name: escalade-db
-    image: postgres:12
+    image: postgres:alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${ESCALADE_DB_LOGIN}
@@ -34,6 +34,9 @@ services:
     container_name: escalade-rest
     image: escalade-rest:latest
     restart: on-failure
+    environment:
+      - jasypt.encryptor.password=${JASYPT_ENCRYPTOR_SECRET}
+      - spring.cloud.config.uri=http://10.5.0.2:8888
     depends_on:
       - "properties"
       - "db"
@@ -41,7 +44,7 @@ services:
     - "9191:9191"
     networks:
       net:
-        - ipv4_address: 10.5.0.3
+        ipv4_address: 10.5.0.4
 
   api:
     container_name: escalade-api
