@@ -15,7 +15,7 @@
 
 	<!-- ================================================= MAVEN INFORMATIONS -->
 	<groupId>com.dsf</groupId>
-	<artifactId>escalade</artifactId>
+	<artifactId>escalade-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Escalade</name>
 	<description>Projet de site d'escalade</description>
@@ -251,7 +251,7 @@
 			</plugin>
 
 		</plugins>
-		<finalName>escalade</finalName>
+		<finalName>escalade-api</finalName>
 	</build>
 
 </project>

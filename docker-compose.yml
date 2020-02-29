@@ -41,7 +41,7 @@ services:
       - "properties"
       - "db"
     ports:
-    - "9191:9191"
+      - "9191:9191"
     networks:
       net:
         ipv4_address: 10.5.0.4
@@ -54,8 +54,8 @@ services:
     environment:
       - jasypt.encryptor.password=${JASYPT_ENCRYPTOR_SECRET}
       - spring.cloud.config.uri=http://10.5.0.2:8888
+      #- spring.cloud.config.uri=http://localhost:8888
       - spring.datasource.url=jdbc:postgresql://10.5.0.5:5432/escalade
-      #- spring.cloud.config.uri=http://127.0.0.1:8888
       #- spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/escalade
     volumes:
       - //f/images:/images
