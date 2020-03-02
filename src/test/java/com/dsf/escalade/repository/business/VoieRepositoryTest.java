@@ -1,6 +1,5 @@
 package com.dsf.escalade.repository.business;
 
-import com.dsf.escalade.model.business.Site;
 import com.dsf.escalade.model.business.SiteType;
 import com.dsf.escalade.model.business.Voie;
 import org.junit.jupiter.api.Test;

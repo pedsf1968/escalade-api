@@ -1,6 +1,5 @@
 package com.dsf.escalade.repository.global;
 
-import com.dsf.escalade.model.business.Longueur;
 import com.dsf.escalade.model.global.Address;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
